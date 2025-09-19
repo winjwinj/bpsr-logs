@@ -8,6 +8,7 @@ use once_cell::sync::Lazy;
 pub struct DPSWindow {
     pub dps_rows: DPSRows,
     pub total_dmg: u128,
+    pub elapsed_ms: u128,
 }
 
 pub type DPSRows = Vec<DPSRow>;

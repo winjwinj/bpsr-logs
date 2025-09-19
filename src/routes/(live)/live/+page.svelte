@@ -4,7 +4,7 @@
   import type { DPSRow, DPSWindow, SkillRow } from "$lib/bindings";
   import SelectedPlayerSkillsTable from "$lib/components/SelectedPlayerSkillsTable.svelte";
   import "../../../app.css";
-  import { pct } from "$lib/utils";
+  import { formatElapsed, pct } from "$lib/utils";
 
   let interval: number;
   onMount(() => {
@@ -18,7 +18,7 @@
   });
 
   let dpsRows: DPSRow[] = $state([]);
-  let dpsWindowPayload: DPSWindow = $state({ dpsRows: [], totalDmg: 0n });
+  let dpsWindowPayload: DPSWindow = $state({ dpsRows: [], totalDmg: 0n, elapsedMs: 0n });
 
   // store the clicked player
   let selectedPlayerUID: bigint | null = $state(null);
@@ -53,6 +53,8 @@
 </script>
 
 <main class="container">
+  <h1 class="text-white">DPS Meter - Time Elapsed: {formatElapsed(dpsWindowPayload.elapsedMs)}</h1>
+
   {#if selectedPlayerUID == null}
     <!-- First table -->
     <table class="table-auto border-collapse border border-gray-300 w-full">

@@ -21,7 +21,7 @@ async getDamageRow() : Promise<DPSWindow> {
 /** user-defined types **/
 
 export type DPSRow = { uid: bigint; name: string; class: string; abilityScore: number; totalDmg: bigint; dps: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: bigint; hitsPerSecond: number; skills: SkillRow[] }
-export type DPSWindow = { dpsRows: DPSRow[]; totalDmg: bigint }
+export type DPSWindow = { dpsRows: DPSRow[]; totalDmg: bigint; elapsedMs: bigint }
 export type SkillRow = { name: string; totalDmg: bigint; dps: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: bigint; hitsPerSecond: number }
 
 /** tauri-specta globals **/

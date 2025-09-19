@@ -2,7 +2,7 @@ use crate::live::opcodes_process::{on_server_change, process_aoi_sync_delta, pro
 use crate::packets;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
-use log::{error, info, warn};
+use log::{error, info, trace, warn};
 use prost::{Message};
 use tauri::{AppHandle, Manager};
 use crate::live::opcodes_models::EncounterMutex;
@@ -84,8 +84,8 @@ pub async fn start(app_handle: AppHandle) { // todo: add app_handle?
                 // todo: this is skipped, not sure what info it has
             }
             packets::opcodes::Pkt::SyncToMeDeltaInfo => { // todo: fix this, attrs dont include name, no idea why
-                // info!("Received {op:?}");
-                // trace!("Received {op:?} and data {data:?}");
+                trace!("Received {op:?}");
+                // info!("Received {op:?} and data {data:?}");
                 let sync_to_me_delta_info = match blueprotobuf::SyncToMeDeltaInfo::decode(Bytes::from(data)) {
                     Ok(sync_to_me_delta_info) => sync_to_me_delta_info,
                     Err(e) => {
@@ -100,8 +100,8 @@ pub async fn start(app_handle: AppHandle) { // todo: add app_handle?
                 }
             }
             packets::opcodes::Pkt::SyncNearDeltaInfo => {
-                // info!("Received {op:?}");
-                // trace!("Received {op:?} and data {data:?}");
+                trace!("Received {op:?}");
+                // info!("Received {op:?} and data {data:?}");
                 let sync_near_delta_info = match blueprotobuf::SyncNearDeltaInfo::decode(Bytes::from(data)) {
                     Ok(v) => v,
                     Err(e) => {

@@ -12,10 +12,11 @@ use crate::packets::utils::{TCPReassembler, BinaryReader, Server};
 
 pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Vec<u8>)> {
     let (packet_sender, packet_receiver) = tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(1);
-    tauri::async_runtime::spawn(async move { read_packets(packet_sender).await });
+    tauri::async_runtime::spawn(async move { read_packets(packet_sender).await; info!("oopsies {}", line!());});
     packet_receiver
 }
 
+#[allow(clippy::too_many_lines)]
 async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>) {
     let windivert = match WinDivert::network(
         "!loopback && ip && tcp", // todo: idk why but filtering by port just crashes the program, investigate?
@@ -68,12 +69,14 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
             let tcp_payload = tcp_packet.payload();
             // 1. 5th byte from offset = Scene change?
             let mut tcp_payload_reader = BinaryReader::from(tcp_payload.to_vec());
-            if tcp_payload_reader.remaining() >= 5 && tcp_payload_reader.read_bytes(5).unwrap()[4] == 0 { // 5th byte has to be 0x00
+            if tcp_payload_reader.remaining() >= 10 && tcp_payload_reader.read_bytes(10).unwrap()[4] == 0 { // 5th byte has to be 0x00 + start at offset 10 (5+5)
                 const FRAG_LENGTH_SIZE: usize = 4;
                 const SIGNATURE: [u8; 6] = [0x00, 0x63, 0x33, 0x53, 0x42, 0x00];
-                let _ = tcp_payload_reader.read_bytes(5); // Start at offset 10 (5+5)
 
+                // info!("ffffff {:?}", tcp_payload_reader.cursor.get_ref());
                 while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE {
+                    // info!("while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE");
+
                     // Read fragment length
                     let tcp_frag_payload_len = tcp_payload_reader.read_u32().unwrap().saturating_sub(FRAG_LENGTH_SIZE as u32) as usize;
 
@@ -89,6 +92,8 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
                                 debug!("Failed to send packet: {err}");
                             }
                         }
+                    } else {
+                        break;
                     }
                 }
             }
@@ -133,6 +138,7 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
 
         // info!("{}", line!());
         while tcp_reassembler.cache.contains_key(&tcp_reassembler.next_seq.unwrap()) {
+            // info!("tcp_reassembler.cache.contains_key(&tcp_reassembler.next_seq.unwrap())");
             let seq = &tcp_reassembler.next_seq.unwrap();
             let cached_tcp_data = tcp_reassembler.cache.get(seq).unwrap();
             if tcp_reassembler._data.is_empty() {
@@ -147,6 +153,7 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
 
         // info!("{}", line!());
         while tcp_reassembler._data.len() > 4 {
+            // info!(" tcp_reassembler._data.len() > 4");
             // info!("{}", line!());
             let packet_size = BinaryReader::from(tcp_reassembler._data.clone()).read_u32().unwrap();
             if tcp_reassembler._data.len() < packet_size as usize {
@@ -157,7 +164,7 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
                 let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
                 let packet = left.to_vec();
                 tcp_reassembler._data = right.to_vec();
-                // info!("Reassembled: Seq - {} - {:?}", tcp_reassembler.next_seq.unwrap(), packet.as_slice()); // todo: comment
+                // trace!("Reassembled: Seq - {} - {:?}", tcp_reassembler.next_seq.unwrap(), packet.as_slice()); // todo: comment
                 process_packet(BinaryReader::from(packet), packet_sender.clone()).await;
                 // info!("{}", line!());
             }
@@ -173,5 +180,5 @@ async fn read_packets(packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes
         //     process_packet(BinaryReader::from(tcp_payload), packet_sender.clone()).await; // todo: optimize: instead of cloning, is it better to just move it to the function and return?
         // }
     } // todo: if it errors, it breaks out of the loop but will it ever error?
-    // info!("{}", line!());
+    info!("{}", line!());
 }

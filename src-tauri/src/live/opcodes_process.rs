@@ -24,7 +24,7 @@ pub fn process_sync_near_entities(
         target_entity.entity_type = target_entity_type;
 
         match target_entity_type {
-            EEntityType::EntChar => {process_player_attrs(target_entity, pkt_entity.attrs?.attrs);}
+            EEntityType::EntChar => {process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs);}
             // EEntityType::EntMonster => {process_monster_attrs();} // todo
             _ => {}
         }
@@ -72,16 +72,6 @@ pub fn process_aoi_sync_delta(
     encounter: &mut Encounter,
     aoi_sync_delta: blueprotobuf::AoiSyncDelta,
 ) -> Option<()> {
-    // Figure out timestamps
-    let now = SystemTime::now();
-    let timestamp_ms = now.duration_since(UNIX_EPOCH)
-        .expect("Time went backwards")
-        .as_millis();
-    if encounter.time_fight_start == Default::default() {
-        encounter.time_fight_start = timestamp_ms;
-    }
-    encounter.time_last_combat_packet = timestamp_ms;
-
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
 
@@ -94,14 +84,18 @@ pub fn process_aoi_sync_delta(
             ..Default::default()
         });
 
-    match target_entity_type {
-        EEntityType::EntChar => {process_player_attrs(&mut target_entity, aoi_sync_delta.attrs?.attrs);}
-        // EEntityType::EntMonster => {process_monster_attrs();} // todo:
-        _ => {}
+    if let Some(attrs_collection) = aoi_sync_delta.attrs {
+        match target_entity_type {
+            EEntityType::EntChar => {
+                process_player_attrs(&mut target_entity, target_uid, attrs_collection.attrs);
+            }
+            // EEntityType::EntMonster => { process_monster_attrs(attrs); } // todo
+            _ => {}
+        }
     }
 
     let Some(skill_effect) = aoi_sync_delta.skill_effects else {
-        return Some(()); // early return since this variable usually doesn't exist
+        return Some(()); // return ok since this variable usually doesn't exist
     };
 
     // Process Damage
@@ -149,13 +143,24 @@ pub fn process_aoi_sync_delta(
         }
         skill.hits += 1;
         skill.total_dmg += actual_dmg;
-        // info!("dmgpacket: {attacker_uid} to {target_uuid}: {actual_dmg} dmg {} total dmg", attacker_entity.damage_stats.damage_dealt);
+        info!("dmgpacket: {attacker_uid} to {target_uid}: {actual_dmg} dmg {} total dmg", skill.total_dmg);
     }
+    // Figure out timestamps
+    let timestamp_ms = SystemTime::now().duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
+        .as_millis();
+    if encounter.time_fight_start == Default::default() {
+        encounter.time_fight_start = timestamp_ms;
+    }
+    encounter.time_last_combat_packet = timestamp_ms;
+    // info!("buff_effect {:?}", aoi_sync_delta.buff_effect?);
+    // info!("buff_infos {:?}", aoi_sync_delta.buff_infos?);
     Some(())
 }
 
 fn process_player_attrs(
     player_entity: &mut Entity,
+    target_uid: i64,
     attrs: Vec<Attr>)
 {
     for attr in attrs {
@@ -166,6 +171,7 @@ fn process_player_attrs(
         match attr_id {
             attr_type::ATTR_NAME => { // todo: fix these brackets
                 player_entity.name = BinaryReader::from(raw_bytes).read_string().unwrap();
+                info!{"Found player {} with UID {}", player_entity.name, target_uid} // todo: remove comment
             },
             #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_PROFESSION_ID => {

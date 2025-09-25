@@ -1,0 +1,3402 @@
+{
+    "1": {
+        "TalentName$chinese": "力量",
+        "TalentName$english": "Strength"
+    },
+    "2": {
+        "TalentName$chinese": "智力",
+        "TalentName$english": "Intellect"
+    },
+    "3": {
+        "TalentName$chinese": "敏捷",
+        "TalentName$english": "Agility"
+    },
+    "4": {
+        "TalentName$chinese": "耐力",
+        "TalentName$english": "Endurance"
+    },
+    "5": {
+        "TalentName$chinese": "暴击",
+        "TalentName$english": "Crit"
+    },
+    "6": {
+        "TalentName$chinese": "急速",
+        "TalentName$english": "Haste"
+    },
+    "7": {
+        "TalentName$chinese": "幸运",
+        "TalentName$english": "Luck"
+    },
+    "8": {
+        "TalentName$chinese": "精通",
+        "TalentName$english": "Mastery"
+    },
+    "9": {
+        "TalentName$chinese": "全能",
+        "TalentName$english": "Versatility"
+    },
+    "20": {
+        "TalentName$chinese": "冰元素攻击",
+        "TalentName$english": "Ice Attack"
+    },
+    "21": {
+        "TalentName$chinese": "岩元素攻击",
+        "TalentName$english": "Rock Attack"
+    },
+    "22": {
+        "TalentName$chinese": "雷元素攻击",
+        "TalentName$english": "Thunder Attack"
+    },
+    "23": {
+        "TalentName$chinese": "森元素攻击",
+        "TalentName$english": "Forest Attack"
+    },
+    "24": {
+        "TalentName$chinese": "光元素攻击",
+        "TalentName$english": "Light Attack"
+    },
+    "25": {
+        "TalentName$chinese": "暗元素攻击",
+        "TalentName$english": "Dark Attack"
+    },
+    "26": {
+        "TalentName$chinese": "风元素攻击",
+        "TalentName$english": "Wind Attack"
+    },
+    "27": {
+        "TalentName$chinese": "火元素攻击",
+        "TalentName$english": "Fire Attack"
+    },
+    "40": {
+        "TalentName$chinese": "暴击几率",
+        "TalentName$english": "Crit Chance"
+    },
+    "41": {
+        "TalentName$chinese": "攻击速度",
+        "TalentName$english": "Attack Speed"
+    },
+    "42": {
+        "TalentName$chinese": "施法速度",
+        "TalentName$english": "Cast Speed"
+    },
+    "43": {
+        "TalentName$chinese": "技能冷却",
+        "TalentName$english": "Skill CD"
+    },
+    "44": {
+        "TalentName$chinese": "幸运几率",
+        "TalentName$english": "Luck Chance"
+    },
+    "45": {
+        "TalentName$chinese": "暴击伤害",
+        "TalentName$english": "Crit DMG"
+    },
+    "46": {
+        "TalentName$chinese": "幸运伤害",
+        "TalentName$english": "Luck Damage"
+    },
+    "47": {
+        "TalentName$chinese": "治疗效果",
+        "TalentName$english": "Healing"
+    },
+    "48": {
+        "TalentName$chinese": "护盾减伤",
+        "TalentName$english": "Shield Defense"
+    },
+    "49": {
+        "TalentName$chinese": "格挡减伤",
+        "TalentName$english": "Block Defense"
+    },
+    "50": {
+        "TalentName$chinese": "全能增伤",
+        "TalentName$english": "Universal Damage Bonus"
+    },
+    "51": {
+        "TalentName$chinese": "全能减伤",
+        "TalentName$english": "Universal Defense"
+    },
+    "52": {
+        "TalentName$chinese": "易伤强度",
+        "TalentName$english": "Vulnerability Intensity"
+    },
+    "53": {
+        "TalentName$chinese": "易伤增伤",
+        "TalentName$english": "Vulnerability Damage Bonus"
+    },
+    "54": {
+        "TalentName$chinese": "压制增伤",
+        "TalentName$english": "Suppress Damage Bonus"
+    },
+    "55": {
+        "TalentName$chinese": "压制减伤",
+        "TalentName$english": "Suppress Defense"
+    },
+    "56": {
+        "TalentName$chinese": "鼓舞效果",
+        "TalentName$english": "Inspiring Effect"
+    },
+    "57": {
+        "TalentName$chinese": "忽视防御",
+        "TalentName$english": "Ignore Defense"
+    },
+    "100": {
+        "TalentName$chinese": "刀意",
+        "TalentDes$chinese": "施放专精技能时可获得3点刀意。",
+        "TalentName$english": "Blade Intent",
+        "TalentDes$english": "Gain 3 points of Blade Intent when releasing Expertise."
+    },
+    "101": {
+        "TalentName$chinese": "敏捷转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">8</style>点敏捷提供<style=\"accent-gn\">1</style>点物理攻击力。",
+        "TalentName$english": "Agility Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">8</style> Agility grants <style=\"accent-gn\">1</style> ATK."
+    },
+    "102": {
+        "TalentName$chinese": "霹雳回旋",
+        "TalentDes$chinese": "看破斩可使超高出力获得1层充能。",
+        "TalentName$english": "Thunder Whirl",
+        "TalentDes$english": "Piercing Slash grants Overdrive 1 charge."
+    },
+    "103": {
+        "TalentName$chinese": "心眼一击",
+        "TalentDes$chinese": "普通攻击造成伤害时有10%固定几率触发看破斩，每1秒最多生效一次。",
+        "TalentName$english": "Keen Strike",
+        "TalentDes$english": "Normal attacks have a fixed 10% chance to trigger Piercing Slash, effective at most once per second."
+    },
+    "104": {
+        "TalentName$chinese": "心眼强化",
+        "TalentDes$chinese": "看破斩的固定触发几率+10%。",
+        "TalentName$english": "Keen Enhancement",
+        "TalentDes$english": "Fixed trigger chance of Piercing Slash +10%."
+    },
+    "105": {
+        "TalentName$chinese": "居合天授",
+        "TalentDes$chinese": "居合斩暴击+10%。<br>居合斩暴击超出60%的部分，每1%提供1%的暴击伤害。",
+        "TalentName$english": "Iaido Mastery",
+        "TalentDes$english": "Crit rate of Iaido Slash +10%.<br>For every 1% exceeding 60% Crit rate, provide 1% Crit DMG."
+    },
+    "106": {
+        "TalentName$chinese": "追击风袭·上式",
+        "TalentDes$chinese": "以任何方式获取的暴击属性提升12%，但是以任何方式获取的幸运属性都降低10%。",
+        "TalentName$english": "Wind Assault I",
+        "TalentDes$english": "Critical attributes obtained in any way are +12%, but luck attributes obtained in any way are -10%."
+    },
+    "107": {
+        "TalentName$chinese": "禅瞬之机",
+        "TalentDes$chinese": "特殊攻击触发暴击获得100刀意。",
+        "TalentName$english": "Zen Moment",
+        "TalentDes$english": "Special attacks triggering Crits gain 100 Blade Intent."
+    },
+    "108": {
+        "TalentName$chinese": "霹雳符印",
+        "TalentDes$chinese": "雷之印上限+1。",
+        "TalentName$english": "Thunder Sigil Charm",
+        "TalentDes$english": "Thunder Sigil limit +1."
+    },
+    "109": {
+        "TalentName$chinese": "雷返",
+        "TalentDes$chinese": "消耗100点刀意获得雷返印记，当雷返印记叠加满5层时，施放居合斩可获得雷返效果，同时清除雷返印记。<br>雷返：获得10%雷元素加成，持续15秒。",
+        "TalentName$english": "Thunder Reversal",
+        "TalentDes$english": "Consume 100 Blade Intent to gain a Thunder Reversal Mark. When the Thunder Reversal Mark stacks to 5 layers, Casting Iaido Slash grants the Thunder Reversal effect and clears the Thunder Reversal Mark.<br>Thunder Reversal: Gain 10% Thunder Elemental Bonus, lasts for 15s."
+    },
+    "110": {
+        "TalentName$chinese": "拔刀真空波",
+        "TalentDes$chinese": "每次施放一闪、飞雷神叠加1层雷压，当雷压积蓄满5层时，居合斩派生为雷切。<br>施放雷切后消耗5层雷压，雷压最多可叠加8层。",
+        "TalentName$english": "Vacuum Slash",
+        "TalentDes$english": "Each time Flash or Raijin Dash is cast, stack 1 layer of Thundrage. When Thundrage accumulates to 5 layers, Iaido Slash evolves into Thunder Cut.<br>After Casting Thunder Cut, consume 5 layers of Thundrage, Thundrage can stack up to 8 layers."
+    },
+    "112": {
+        "TalentName$chinese": "一闪狂刃",
+        "TalentDes$chinese": "居合斩暴击时有10%固定几率重置一闪、飞雷神剩余冷却时间，每消耗1枚雷之印几率+10%。",
+        "TalentName$english": "Flash Frenzy Blade",
+        "TalentDes$english": "When Iaido Slash critically hits, 10% chance to reset the remaining CD time of Flash or Raijin Dash, with an additional 10% chance for each Thunder Sigil consumed."
+    },
+    "113": {
+        "TalentName$chinese": "刃风界域",
+        "TalentDes$chinese": "每施放3次超高出力后的下一次居合斩在前方形成一个刃风界域。<br>刃风界域每造成一次伤害，极诣·大破灭连斩剩余冷却时间缩减1.5秒。",
+        "TalentName$english": "Bladewind Domain",
+        "TalentDes$english": "After Casting Overdrive three times, the next Iaido Slash forms a Bladewind Domain in front. <br>Each time the Bladewind Domain deals damage, the remaining CD time of Oblivion Combo -1.5s."
+    },
+    "114": {
+        "TalentName$chinese": "雷魂之触",
+        "TalentDes$chinese": "月刃触发幸运一击时，有30%固定几率施放雷击。<br>月刃可自主移动攻击敌方目标。",
+        "TalentName$english": "Touch of Thunder Soul",
+        "TalentDes$english": "When Moon Blade triggers a Lucky Strike, there is a 30% fixed chance to cast Thunder Strike. <br>Moon Blade can autonomously move to attack enemy targets."
+    },
+    "115": {
+        "TalentName$chinese": "印记之息",
+        "TalentDes$chinese": "月刃触发幸运一击时，有30%固定几率回复1枚雷之印，每1秒最多生效一次。",
+        "TalentName$english": "Breath of Mark",
+        "TalentDes$english": "When Moon Blade triggers a Lucky Strike, there is a 30% fixed chance to restore 1 Thunder Sigil, effective once per second."
+    },
+    "116": {
+        "TalentName$chinese": "幻影时延",
+        "TalentDes$chinese": "霹雳连斩触发幸运一击时延长月刃1秒持续时间。",
+        "TalentName$english": "Phantom Delay",
+        "TalentDes$english": "When Thundercut triggers a Lucky Strike, it extends Moon Blade's duration by 1s."
+    },
+    "118": {
+        "TalentName$chinese": "幻镰之境·一式",
+        "TalentDes$chinese": "月刃上限+1。<br>月刃伤害-35%。",
+        "TalentName$english": "Phantom Scythe Realm I",
+        "TalentDes$english": "Moon Blade limit +1. <br>Moon Blade damage -35%."
+    },
+    "119": {
+        "TalentName$chinese": "幻镰之境·二式",
+        "TalentDes$chinese": "月刃上限+1。<br>月刃伤害-35%。",
+        "TalentName$english": "Phantom Scythe Realm II",
+        "TalentDes$english": "Moon Blade limit +1. <br>Moon Blade damage -35%."
+    },
+    "120": {
+        "TalentName$chinese": "雷电之力",
+        "TalentDes$chinese": "自身每造成10次伤害，触发雷之力。<br>雷之力：雷元素攻击+10，持续10秒，最多叠加10层。",
+        "TalentName$english": "Power of Thunder",
+        "TalentDes$english": "Every 10 hits, trigger Thunder Power.<br>Thunder Power: Thunder Elemental Attack +10, lasts 10s, stacks up to 10 times."
+    },
+    "121": {
+        "TalentName$chinese": "月影时延",
+        "TalentDes$chinese": "刀意上限+25。<br>在一次连续的霹雳连斩中，每第5次会施展强力的一记霹雳升龙斩，造成更高伤害。",
+        "TalentName$english": "Moonstrike Delay",
+        "TalentDes$english": "Blade Intent limit +25. <br>During a continuous Thundercut, every 5th strike will perform a powerful Thundercleave, dealing higher damage."
+    },
+    "122": {
+        "TalentName$chinese": "霹雳之光",
+        "TalentDes$chinese": "千雷闪影之意持续期间，月刃攻击速度+100%。",
+        "TalentName$english": "Lightning Flash",
+        "TalentDes$english": "During Stormflash, Moon Blade attack speed +100%."
+    },
+    "123": {
+        "TalentName$chinese": "雷咒",
+        "TalentDes$chinese": "特殊攻击造成伤害时为敌方目标施加雷咒。<br>雷咒：每层雷咒使敌方目标受到自身的伤害+2%，持续10秒，最多叠加4层。",
+        "TalentName$english": "Thunder Curse",
+        "TalentDes$english": "When Special Attacks deal damage, apply Thunder Curse to the enemy target.<br>Thunder Curse: Each stack of Thunder Curse increases the damage the enemy target takes by 2%, lasts 10s, stacks up to 4 times."
+    },
+    "124": {
+        "TalentName$chinese": "决斗意识",
+        "TalentDes$chinese": "对生命值80%以上敌方目标造成伤害时，物理伤害+20%。",
+        "TalentName$english": "Duel Awareness",
+        "TalentDes$english": "When dealing damage to enemy targets with more than 80% HP, Attack Damage +20%."
+    },
+    "126": {
+        "TalentName$chinese": "狂戮雷鸣",
+        "TalentDes$chinese": "击败敌方目标时触发雷爆，每3秒最多生效一次。",
+        "TalentName$english": "Frenzied Thunder Roar",
+        "TalentDes$english": "When defeating an enemy target, trigger Thunder Explosion, can only occur once every 3s."
+    },
+    "128": {
+        "TalentName$chinese": "敌影蔑视",
+        "TalentDes$chinese": "自身3米内每有1个敌方目标，忽视物理防御+3%，最高15%（精英及以上目标效果翻倍）。",
+        "TalentName$english": "Shadow Despise",
+        "TalentDes$english": "For each enemy target within 3 meters, Armor Penetration +3%, up to a maximum of 15% (effect doubled for elite and above targets)."
+    },
+    "129": {
+        "TalentName$chinese": "居合雷舞",
+        "TalentDes$chinese": "雷之印大于3（包含3）时施放特殊攻击，会连续攻击2次。",
+        "TalentName$english": "Iai Thunder Dance",
+        "TalentDes$english": "When Thunder Sigil is greater than or equal to 3, Special Attacks will attack twice consecutively."
+    },
+    "130": {
+        "TalentName$chinese": "居合斩流",
+        "TalentDes$chinese": "继续增强使用居合斩的能力。<br>居合斩消耗的雷之印数量等于5时，居合斩伤害+10%且居合斩施放期间霸体。",
+        "TalentName$english": "Iaido Slash Spec",
+        "TalentDes$english": "Further enhance the ability to use Iaido Slash.<br>When the number of Thunder Sigils consumed by Iaido Slash equals 5, Iaido Slash damage +10% and grants super armor during its execution."
+    },
+    "131": {
+        "TalentName$chinese": "霹雳电种",
+        "TalentDes$chinese": "霹雳连斩必定获得1枚电荷之种。",
+        "TalentName$english": "Thunder Seed",
+        "TalentDes$english": "Thundercut always grants 1 Charge Seed."
+    },
+    "132": {
+        "TalentName$chinese": "一闪锐击",
+        "TalentDes$chinese": "施放居合斩时触发锐击，每10秒最多生效一次。<br>锐击：一闪暴击+10%，如果一闪暴击，获得3枚雷之印，持续10秒。",
+        "TalentName$english": "Flash Sharp Strike",
+        "TalentDes$english": "When Casting Iaido Slash, it triggers Sharp Strike, effective once every 10s. <br>Sharp Strike: Flash Crit +10%, if Flash Crits, gain 3 Thunder Sigils for 10s."
+    },
+    "133": {
+        "TalentName$chinese": "疾电破袭",
+        "TalentDes$chinese": "技能每多消耗1枚雷之印，伤害+3%。",
+        "TalentName$english": "Rapid Thunder Assault",
+        "TalentDes$english": "For each additional Thunder Sigil consumed by a skill, damage +3%."
+    },
+    "134": {
+        "TalentName$chinese": "破灭之终结",
+        "TalentDes$chinese": "极诣·大破灭连斩最后一击强化为终极一斩。",
+        "TalentName$english": "End of Annihilation",
+        "TalentDes$english": "The final strike of Oblivion Combo is enhanced to Ultimate Slash."
+    },
+    "135": {
+        "TalentName$chinese": "迅捷",
+        "TalentDes$chinese": "每<style=\"accent-gn\">1%</style>急速提供<style=\"accent-gn\">1%</style>攻击速度。",
+        "TalentName$english": "Swift",
+        "TalentDes$english": "Each <style=\"accent-gn\">1%</style> Haste provides <style=\"accent-gn\">1%</style> Attack Speed."
+    },
+    "136": {
+        "TalentName$chinese": "霹雳符印",
+        "TalentDes$chinese": "雷之印上限+1。",
+        "TalentName$english": "Thunder Sigil Charm",
+        "TalentDes$english": "Thunder Sigil limit +1."
+    },
+    "137": {
+        "TalentName$chinese": "迅捷之刃",
+        "TalentDes$chinese": "敏捷达到500点时，暴击伤害、幸运伤害+5%。",
+        "TalentName$english": "Swift Blade",
+        "TalentDes$english": "When Agility reaches 500 points, Crit DMG and Lucky Damage +5%."
+    },
+    "138": {
+        "TalentName$chinese": "雷符刀意",
+        "TalentDes$chinese": "专精技能每消耗1枚雷之印，额外获得3点刀意。",
+        "TalentName$english": "Thunder Charm Blade",
+        "TalentDes$english": "For each Thunder Sigil consumed by a Expertise Skill, gain an additional 3 points of Blade Intent."
+    },
+    "139": {
+        "TalentName$chinese": "无穷雷霆",
+        "TalentDes$chinese": "每消耗5枚雷之印，无穷雷霆之力剩余冷却时间缩减0.5秒。",
+        "TalentName$english": "Infinite Thunder",
+        "TalentDes$english": "For every 5 Thunder Sigils consumed, the remaining CD time of Volt Surge -0.5s."
+    },
+    "140": {
+        "TalentName$chinese": "雷印回溯",
+        "TalentDes$chinese": "消耗雷之印时有几率返还1枚雷之印，每多消耗1枚雷之印返还几率+8%。",
+        "TalentName$english": "Thunder Sigil Rewind",
+        "TalentDes$english": "When consuming Thunder Sigils, there is a chance to return 1 Thunder Sigil. For each additional Thunder Sigil consumed, the return chance +8%."
+    },
+    "141": {
+        "TalentName$chinese": "雷霆神威",
+        "TalentDes$chinese": "开启无穷雷霆之力，一闪、飞雷神派生为坠龙闪、神影斩。",
+        "TalentName$english": "Thunder Might",
+        "TalentDes$english": "Activate Volt Surge, Flash and Raijin Dash derive into Dracoflash and Phantom Slash."
+    },
+    "142": {
+        "TalentName$chinese": "无双飞雷神",
+        "TalentDes$chinese": "飞雷神无视目标物理防御。<br>飞雷神每多命中1个目标，伤害+10%。",
+        "TalentName$english": "Unmatched Raijin Dash",
+        "TalentDes$english": "Raijin Dash ignores target's Armor. <br>For each additional target hit by Raijin Dash, damage +10%."
+    },
+    "143": {
+        "TalentName$chinese": "暴斩",
+        "TalentDes$chinese": "居合斩暴击+12%。",
+        "TalentName$english": "Violent Slash",
+        "TalentDes$english": "Iaido Slash Crit +12%."
+    },
+    "144": {
+        "TalentName$chinese": "追击风袭·下式",
+        "TalentDes$chinese": "以任何方式获取的暴击属性提升12%，但是以任何方式获取的幸运属性都降低10%。",
+        "TalentName$english": "Wind Assault II",
+        "TalentDes$english": "Critical attributes obtained in any way are +12%, but luck attributes obtained in any way are -10%."
+    },
+    "145": {
+        "TalentName$chinese": "刀意双绝",
+        "TalentDes$chinese": "刀意大于等于100时一闪、飞雷神暴击+10%。",
+        "TalentName$english": "Dual Blade Intent",
+        "TalentDes$english": "When Blade Intent is greater than or equal to 100, One Flash and Raijin Dash Crit +10%."
+    },
+    "146": {
+        "TalentName$chinese": "雷印亲和",
+        "TalentDes$chinese": "专精技能、特殊攻击造成伤害时每多消耗1枚雷之印，获得1%雷元素加成。",
+        "TalentName$english": "Thunder Sigil Affinity",
+        "TalentDes$english": "When dealing damage with Expertise and special attacks, for each additional Thunder Sigil consumed, gain 1% Thunder Element bonus."
+    },
+    "147": {
+        "TalentName$chinese": "雷霆之压",
+        "TalentDes$chinese": "每次施放坠龙闪、神影斩叠加5层雷压，雷压最多可叠加8层。",
+        "TalentName$english": "Thundrage",
+        "TalentDes$english": "Each time Dracoflash and Phantom Slash are cast, stack 5 layers of Thundrage, up to a maximum of 8 layers."
+    },
+    "148": {
+        "TalentName$chinese": "超高出力精进",
+        "TalentDes$chinese": "超高出力冷却时间-30%。",
+        "TalentName$english": "Overdrive Refinement",
+        "TalentDes$english": "Overdrive CD -30%."
+    },
+    "149": {
+        "TalentName$chinese": "刀意雷击",
+        "TalentDes$chinese": "居合斩造成暴击伤害时，当前刀意如果大于20点，触发雷击（每次居合斩最多触发一次）。",
+        "TalentName$english": "Blade Intent Thunder Strike",
+        "TalentDes$english": "When Iaido Slash deals Crit DMG, if the Blade Intent is greater than 20 points, trigger Thunder Strike (Iaido Slash can trigger only once per use)."
+    },
+    "150": {
+        "TalentName$chinese": "霹雳符印",
+        "TalentDes$chinese": "雷之印上限+1。",
+        "TalentName$english": "Thunder Sigil Charm",
+        "TalentDes$english": "Thunder Sigil limit +1."
+    },
+    "151": {
+        "TalentName$chinese": "破斩",
+        "TalentDes$chinese": "居合斩造成暴击伤害时，忽视目标30%物理防御。",
+        "TalentName$english": "Break Slash",
+        "TalentDes$english": "When Iaido Slash deals Crit DMG, ignore 30% of the target's Armor."
+    },
+    "152": {
+        "TalentName$chinese": "暴裂",
+        "TalentDes$chinese": "暴击伤害+10%。",
+        "TalentName$english": "Arcane",
+        "TalentDes$english": "Crit DMG +10%."
+    },
+    "153": {
+        "TalentName$chinese": "瞬斩",
+        "TalentDes$chinese": "瞬发居合斩命中目标使目标物理防御降低6%，持续5秒，最多叠加5层。",
+        "TalentName$english": "Instant Slash",
+        "TalentDes$english": "Instant Iaido Slash hitting the target reduces the target's Armor by 6% for 5s, stacking up to 5 layers."
+    },
+    "154": {
+        "TalentName$chinese": "精进",
+        "TalentDes$chinese": "精通+6%。",
+        "TalentName$english": "Advancement",
+        "TalentDes$english": "Mastery +6%."
+    },
+    "155": {
+        "TalentName$chinese": "雷霆之镰精进",
+        "TalentDes$chinese": "雷霆之镰消耗的电荷之种数量-3。",
+        "TalentName$english": "Thunder Scythe",
+        "TalentDes$english": "Number of Charge Seeds consumed by Thunder Scythe -3."
+    },
+    "156": {
+        "TalentName$chinese": "刀意回复",
+        "TalentDes$chinese": "每1%急速提供1%刀意回复速度。",
+        "TalentName$english": "Blade Intent Recovery",
+        "TalentDes$english": "Each 1% Haste provides 1% Blade Intent recovery speed."
+    },
+    "157": {
+        "TalentName$chinese": "月刃召唤流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>替换为<linktext=1507><style=\"ItemQuality_5\">月影</style></linktext>，并增强使用该技能的能力。<br>施放<linktext=1507><style=\"ItemQuality_5\">月影</style></linktext>，获得<style=\"accent-gn\">30</style><linktext=1167><style=\"ItemQuality_5\">刀意</style></linktext>。<br><br><i><style=\"text_third_gray\"><size=20>频繁消耗雷之印，召唤月刃持续的攻击目标。高额的急速，能让月刃的攻击加快；高额的幸运，能让月刃更加频繁的触发雷击。</size></style></i>",
+        "TalentName$english": "Moonstrike Spec",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Special Attack</style> with <linktext=1507><style=\"ItemQuality_5\">Moonstrike</style></linktext>, enhancing the ability.<br>Cast <linktext=1507><style=\"ItemQuality_5\">Moonstrike</style></linktext> to gain <style=\"accent-gn\">30</style> <linktext=1167><style=\"ItemQuality_5\">Blade Intent</style></linktext>.<br><br><i><style=\"text_third_gray\"><size=20>Frequent consumption of Thunder Sigils summons Moon Blade to continuously attack the target. High Haste accelerates Moon Blade's attacks. High Luck increases the frequency of Moon Blade triggering Thunder Strike.</size></style></i>"
+    },
+    "158": {
+        "TalentName$chinese": "神罚之镰",
+        "TalentDes$chinese": "每施放7次雷霆之镰触发神罚之镰。<br>神罚之镰必定暴击。",
+        "TalentName$english": "Divine Sickle",
+        "TalentDes$english": "Every 7 casts of Thunder Scythe trigger Divine Punishment Scythe.<br>Divine Punishment Scythe is guaranteed to critically hit."
+    },
+    "159": {
+        "TalentName$chinese": "月光电荷",
+        "TalentDes$chinese": "月刃触发幸运一击时有30%固定几率，获得1枚电荷之种。",
+        "TalentName$english": "Moonlight Charge",
+        "TalentDes$english": "When Moon Blade triggers a Lucky Strike, 30% chance to gain 1 Charge Seed."
+    },
+    "160": {
+        "TalentName$chinese": "刀意·极",
+        "TalentDes$chinese": "刀意上限+75。",
+        "TalentName$english": "Blade Intent - Rare",
+        "TalentDes$english": "Blade Intent cap +75."
+    },
+    "161": {
+        "TalentName$chinese": "雷鸣千闪",
+        "TalentDes$chinese": "每触发2次雷击，千雷闪影之意剩余冷却时间缩减0.5秒。",
+        "TalentName$english": "Thousand Thunder Flashes",
+        "TalentDes$english": "For every 2 Thunder Strikes triggered, reduce the remaining CD time of Stormflash by 0.5s."
+    },
+    "162": {
+        "TalentName$chinese": "缭乱兜割",
+        "TalentDes$chinese": "开启千雷闪影之意，月影派生为缭乱兜割。",
+        "TalentName$english": "Chaos Breaker",
+        "TalentDes$english": "Activating Stormflash transforms Moonstrike into Chaos Breaker."
+    },
+    "163": {
+        "TalentName$chinese": "雷击强化",
+        "TalentDes$chinese": "雷击伤害+20%。<br>每1%幸运提供1%雷击伤害加成。",
+        "TalentName$english": "Thunder Strike Enhancement",
+        "TalentDes$english": "Lightning damage +20%.<br>Each 1% Luck provides 1% Lightning damage bonus."
+    },
+    "164": {
+        "TalentName$chinese": "电荷捕手",
+        "TalentDes$chinese": "每参与击败1个敌方目标，获得1个电荷之种。",
+        "TalentName$english": "Charge Catcher",
+        "TalentDes$english": "Gain 1 Charge Seed for each enemy target defeated."
+    },
+    "165": {
+        "TalentName$chinese": "雷击低语",
+        "TalentDes$chinese": "雷击获得50%雷元素加成，但是雷击无法造成暴击伤害。",
+        "TalentName$english": "Thunder Strike Whisper",
+        "TalentDes$english": "Lightning strikes gain 50% Thunder Element bonus, but cannot deal Crit DMG."
+    },
+    "166": {
+        "TalentName$chinese": "月影锐击",
+        "TalentDes$chinese": "当刀意大于等于50时，月影必定暴击。",
+        "TalentName$english": "Moonstrike Sharp Strike",
+        "TalentDes$english": "When Blade Intent is greater than or equal to 50, Moonstrike is guaranteed to crit."
+    },
+    "167": {
+        "TalentName$chinese": "霹雳符印",
+        "TalentDes$chinese": "雷之印上限+1。<br>雷霆之镰、神罚之镰必定触发看破斩。",
+        "TalentName$english": "Thunder Sigil Charm",
+        "TalentDes$english": "Lightning Sigil limit +1.<br>Storm Scythe and Divine Sickle are guaranteed to trigger Piercing Slash."
+    },
+    "168": {
+        "TalentName$chinese": "雷符极意",
+        "TalentDes$chinese": "刀意上限翻倍。",
+        "TalentName$english": "Thunder Rune Mastery",
+        "TalentDes$english": "Blade Intent limit doubled."
+    },
+    "169": {
+        "TalentName$chinese": "霹雳电荷",
+        "TalentDes$chinese": "霹雳连斩触发幸运一击时，获得1枚电荷之种。",
+        "TalentName$english": "Raijin Dash Charge",
+        "TalentDes$english": "When lightning storm Combo triggers a Lucky Strike, gain 1 Charge Seed."
+    },
+    "170": {
+        "TalentName$chinese": "月刃神速",
+        "TalentDes$chinese": "月刃每隔6秒触发1次回旋伤害。每2%急速缩短其1%触发间隔。",
+        "TalentName$english": "Moon Blade Swift",
+        "TalentDes$english": "Moon Blade triggers a spinning damage every 6s. Each 2% Haste reduces its trigger interval by 1%."
+    },
+    "171": {
+        "TalentName$chinese": "雷霆神威",
+        "TalentDes$chinese": "千雷闪影之意持续期间雷霆之镰会连续触发2次。",
+        "TalentName$english": "Thunder Might",
+        "TalentDes$english": "During Stormflash, Storm Scythe will activate twice in succession."
+    },
+    "172": {
+        "TalentName$chinese": "回溯冥想",
+        "TalentDes$chinese": "无穷雷霆之力持续期间，雷印回溯的返还几率翻倍，但是期间雷之印对消耗雷之印的技能伤害增加效果从25%变为10%。",
+        "TalentName$english": "Thunder Sigil Rewind",
+        "TalentDes$english": "During Volt Surge, the return chance of Thunder Sigil Rewind doubles, but the damage bonus of skills that consume Thunder Sigil is reduced from 25% to 10%."
+    },
+    "200": {
+        "TalentName$chinese": "寒意·锐",
+        "TalentDes$chinese": "寒冰能量上限+10。<br>冰霜之矛伤害+12%。",
+        "TalentName$english": "Cold Intent - Sharp",
+        "TalentDes$english": "Ice Energy limit +10.<br>Frost Lance damage +12%."
+    },
+    "201": {
+        "TalentName$chinese": "智力转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">10</style>点智力提供<style=\"accent-gn\">1</style>点魔法攻击力。",
+        "TalentName$english": "Intellect Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">10</style> points of Intellect provides <style=\"accent-gn\">1</style> point of MATK."
+    },
+    "202": {
+        "TalentName$chinese": "寒霜咒印",
+        "TalentDes$chinese": "特殊攻击造成伤害时有5%固定几率为目标施加冰冻。",
+        "TalentName$english": "Frost Curse Sigil",
+        "TalentDes$english": "When Special Attacks deal damage, 5% chance to apply Frozen to the target."
+    },
+    "203": {
+        "TalentName$chinese": "寒冰启示",
+        "TalentDes$chinese": "获得2个常驻的冰晶核心悬浮在身旁。<br>冰晶核心<br>普通攻击造成伤害时，冰晶核心有10%固定几率施放2支冰箭。<br>冰箭：对敌方目标造成50%攻击力魔法伤害，同时获得1枚玄冰，玄冰最多存储2枚。",
+        "TalentName$english": "Ice Revelation",
+        "TalentDes$english": "Gain 2 permanent Ice Crystal Cores floating around you.<br>Ice Crystal Core<br>When normal attacks deal damage, Ice Crystal Core has a fixed 10% chance to cast 2 Ice Arrows.<br>Ice Arrow: Deals 50% ATK Magic Damage to enemy targets and gains 1 Frost, up to a maximum of 2 Frosts."
+    },
+    "204": {
+        "TalentName$chinese": "玄冰之息",
+        "TalentDes$chinese": "玄冰上限+1。",
+        "TalentName$english": "Breath of Frost",
+        "TalentDes$english": "Frost Crystal limit +1."
+    },
+    "206": {
+        "TalentName$chinese": "浪潮精通",
+        "TalentDes$chinese": "施放寒冰射线时，可同时引导施放浪潮汇聚。",
+        "TalentName$english": "Tide Mastery",
+        "TalentDes$english": "When Casting Frostbeam, you can channel and cast Tidepool."
+    },
+    "207": {
+        "TalentName$chinese": "冰晶共鸣",
+        "TalentDes$chinese": "寒冰射线造成伤害时有10%固定几率使冰晶核心施放冰箭。",
+        "TalentName$english": "Crystal Resonance",
+        "TalentDes$english": "When Frostbeam deals damage, it has a fixed 10% chance to make Ice Crystal Core cast Ice Arrow."
+    },
+    "208": {
+        "TalentName$chinese": "霜爆",
+        "TalentDes$chinese": "冰晶核心施放的冰箭可额外造成一次100%攻击力魔法伤害，且该伤害为范围伤害。",
+        "TalentName$english": "Frost Explosion",
+        "TalentDes$english": "Ice Arrows cast by Ice Crystal Core can deal an additional 100% ATK Magic Damage, and this damage is area damage."
+    },
+    "209": {
+        "TalentName$chinese": "冰晶扩充",
+        "TalentDes$chinese": "寒冰能量上限+40。",
+        "TalentName$english": "Ice Crystal Expansion",
+        "TalentDes$english": "Ice Energy limit +40."
+    },
+    "210": {
+        "TalentName$chinese": "冰凌之约",
+        "TalentDes$chinese": "水之涡流寒冰能量回复效率+200%。",
+        "TalentName$english": "Ice shard pact",
+        "TalentDes$english": "Maelstrom Ice Energy recovery efficiency +200%."
+    },
+    "211": {
+        "TalentName$chinese": "寒风凝聚",
+        "TalentDes$chinese": "冻结寒风命中目标时（命中多个目标时只触发一次）扣除所有玄冰召唤冰晶坠落，冰晶坠落数量等于扣除的玄冰数量。<br>冰晶坠落造成伤害，回复5点寒冰能量，且接下来5秒内技能消耗的寒冰能量-5%，最多叠加4层。",
+        "TalentName$english": "Cold Wind Convergence",
+        "TalentDes$english": "When Frozen Gale hits a target (only triggers once when hitting multiple targets), it consumes all Frosts to summon Ice Crystal Fall, with the number of Ice Crystal Falls equal to the consumed Frosts.<br>Ice Crystal Fall deals damage, recovers 5 Ice Energy, and reduces the Ice Energy cost of skills by 5% for the next 5s, stacking up to 4 times."
+    },
+    "212": {
+        "TalentName$chinese": "射线流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>替换为<linktext=1509><style=\"ItemQuality_5\">寒冰射线</style></linktext>，并增强使用该技能的能力。<br>每拥有一个<linktext=1161><style=\"ItemQuality_5\">玄冰</style></linktext>使得<linktext=1509><style=\"ItemQuality_5\">寒冰射线</style></linktext>伤害+<style=\"accent-gn\">15%</style>同时消耗的<style=\"accent-gn\">寒冰能量</style>+<style=\"accent-gn\">30%</style>。<br><br><i><style=\"text_third_gray\"><size=20>持续消耗寒冰能量引导寒冰射线打击目标。高额的急速和精通，可使得射线引导更快同时强化寒冰能量的回复。</size></style></i>",
+        "TalentName$english": "Frostbeam Spec",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Special Attack</style> with <linktext=1509><style=\"ItemQuality_5\">Frostbeam</style></linktext>, enhancing its effectiveness. <br>Each possessed <linktext=1161><style=\"ItemQuality_5\">Frost Crystal</style></linktext> increases <linktext=1509><style=\"ItemQuality_5\">Frostbeam</style></linktext> DMG by <style=\"accent-gn\">15%</style> and <style=\"accent-gn\">Ice Energy</style> consumption by <style=\"accent-gn\">30%</style>.<br><br><i><style=\"text_third_gray\"><size=20>Continuously consumes Ice Energy to maintain Frostbeam against targets. High Haste and Mastery result in faster beam channeling and superior Ice Energy recovery.</size></style></i>"
+    },
+    "214": {
+        "TalentName$chinese": "滝流雪影",
+        "TalentDes$chinese": "每消耗50寒冰能量，缩减清滝绕珠剩余冷却时间1秒。",
+        "TalentName$english": "Snow Shadow",
+        "TalentDes$english": "For every 50 Ice Energy consumed, reduce the remaining CD time of Crystal Veil by 1s."
+    },
+    "215": {
+        "TalentName$chinese": "冰霜彗星",
+        "TalentDes$chinese": "消耗玄冰的冰霜之矛触发暴击或幸运一击时，有50%固定几率召唤冰霜彗星。",
+        "TalentName$english": "Frost Comet",
+        "TalentDes$english": "When Frost Lance that consumes Frost triggers a crit or Lucky Strike, it has a fixed 50% chance to summon Frost Comet."
+    },
+    "216": {
+        "TalentName$chinese": "冻结星辰",
+        "TalentDes$chinese": "冰霜之矛同时触发暴击和幸运一击时，使得陨星风暴立即冷却。",
+        "TalentName$english": "Frozen Stars",
+        "TalentDes$english": "When Frost Lance triggers both a Crit and a Lucky Strike, Meteor Storm's CD is immediately reset."
+    },
+    "217": {
+        "TalentName$chinese": "冰暴双矛",
+        "TalentDes$chinese": "施放寒冰风暴后的8秒内，冰霜之矛可额外对目标附近的另外一个目标发射冰霜之矛。",
+        "TalentName$english": "Blizzard Dual Spears",
+        "TalentDes$english": "For 8s after Casting Blizzard, Frost Lance can additionally fire at another target near the original target."
+    },
+    "219": {
+        "TalentName$chinese": "风雨际会",
+        "TalentDes$chinese": "清滝绕珠造成伤害时有固定几率缩减寒冰风暴1秒剩余冷却时间，几率等同于你幸运%的一半。",
+        "TalentName$english": "Stormy encounter",
+        "TalentDes$english": "When Crystal Veil deals damage, it has a fixed chance to reduce the remaining CD time of Blizzard by 1s, with the chance equal to half of your Luck%."
+    },
+    "220": {
+        "TalentName$chinese": "碎冰之击",
+        "TalentDes$chinese": "陨星风暴造成伤害时使得冰晶核心施放冰箭（单次陨星风暴最多生效一次）。",
+        "TalentName$english": "Shattering Strike",
+        "TalentDes$english": "When Meteor Storm deals damage, it makes Ice Crystal Core cast Ice Arrow (Meteor Storm can only trigger this effect once per instance)."
+    },
+    "221": {
+        "TalentName$chinese": "冰川怒潮",
+        "TalentDes$chinese": "累计消耗15个玄冰之后，接下来10秒内施放的寒冰风暴得到强化。<br>寒冰风暴：免除吟唱过程，伤害+50%。",
+        "TalentName$english": "Glacier fury",
+        "TalentDes$english": "After consuming 15 Frost Crystals, the next Blizzard cast within 10s is enhanced.<br>Blizzard: No Casting time, damage +50%."
+    },
+    "222": {
+        "TalentName$chinese": "极寒之矛",
+        "TalentDes$chinese": "每施放15次冰霜之矛，向前方发射一支贯穿冰矛。",
+        "TalentName$english": "Icicle Volley",
+        "TalentDes$english": "Every 15 Frost Lances cast, a piercing ice spear is launched forward."
+    },
+    "223": {
+        "TalentName$chinese": "琉璃浩瀚",
+        "TalentDes$chinese": "冰元素技能对精英及以上目标伤害+8%。",
+        "TalentName$english": "Glazed Vastness",
+        "TalentDes$english": "Ice skills deal +8% damage to elite and above targets."
+    },
+    "224": {
+        "TalentName$chinese": "涓流连绵",
+        "TalentDes$chinese": "造成伤害时，触发涓流。<br>涓流：获得1%冰元素加成，持续6秒，最高5层。",
+        "TalentName$english": "Continuous Stream",
+        "TalentDes$english": "When dealing damage, trigger Trickle.<br>Trickle: Gain 1% Ice bonus, lasts for 6s, up to 5 stacks."
+    },
+    "225": {
+        "TalentName$chinese": "玄冰无界",
+        "TalentDes$chinese": "每消耗50寒冰能量可获得1枚玄冰。<br>玄冰上限+3。",
+        "TalentName$english": "Boundless Frost",
+        "TalentDes$english": "Every 50 Ice Energy consumed grants 1 Frost Crystal.<br>Frost Crystal cap +3."
+    },
+    "226": {
+        "TalentName$chinese": "冰霜冲击",
+        "TalentDes$chinese": "专精技能、终极技能触发幸运一击时，有30%固定几率触发冰霜冲击。每3秒最多生效一次。",
+        "TalentName$english": "Frost Shock",
+        "TalentDes$english": "When a Expertise Skill or Ultimate triggers a Lucky Strike, there is a 30% fixed chance to trigger Frost Shock. This effect can occur once every 3s."
+    },
+    "227": {
+        "TalentName$chinese": "速冻爆破",
+        "TalentDes$chinese": "专精技能、终极技能对冰冻目标造成伤害时，触发冰霜冲击，每1秒最多生效一次。",
+        "TalentName$english": "Quick Frozen Blast",
+        "TalentDes$english": "When a Expertise Skill or Ultimate deals damage to a frozen target, trigger Frost Shock, can occur once every 1s."
+    },
+    "228": {
+        "TalentName$chinese": "冰息宁静",
+        "TalentDes$chinese": "专精技能、终极技能每多命中一个目标（最多不超过5），精通或急速或暴击或幸运+2%（以当前最高属性为准），持续5秒。",
+        "TalentName$english": "Icy Calm",
+        "TalentDes$english": "For each additional target hit by Expertise or Ultimates (up to 5), mastery or haste or critical or luck +2% (based on the highest attribute), lasts for 5s."
+    },
+    "229": {
+        "TalentName$chinese": "冷却瞬息",
+        "TalentDes$chinese": "每消耗35点寒冰能量缩减陨星风暴、冻结寒风1秒剩余冷却时间。",
+        "TalentName$english": "Instant Cooling",
+        "TalentDes$english": "Every 35 Ice Energy consumed reduces the remaining CD of Meteor Storm and Frozen Gale by 1s."
+    },
+    "230": {
+        "TalentName$chinese": "寒流",
+        "TalentDes$chinese": "寒冰能量上限+25。<br>每1%急速使得寒冰能量自然回复速度+1%。",
+        "TalentName$english": "Cold Stream",
+        "TalentDes$english": "Ice Energy cap +25.<br>Each 1% haste increases the natural recovery rate of Ice Energy by 1%."
+    },
+    "231": {
+        "TalentName$chinese": "冰光共鸣",
+        "TalentDes$chinese": "冰晶核心施放的冰箭造成伤害的时候有30%固定几率回复3点寒冰能量。<br>冰之灌注持续期间几率翻倍。",
+        "TalentName$english": "Frostjade Staff",
+        "TalentDes$english": "Ice Arrows cast by Ice Crystal Core have a fixed 30% chance to restore 3 Ice Energy when dealing damage.<br>During Permafrost, the chance is doubled."
+    },
+    "233": {
+        "TalentName$chinese": "冰矛流",
+        "TalentDes$chinese": "继续增强使用冰霜之矛的能力。<br>冰霜之矛暴击时有30%固定几率使得冰晶核心施放冰箭。",
+        "TalentName$english": "Icicle Spec",
+        "TalentDes$english": "Further enhance the ability to use Frost Lance.<br>When Frost Lance critically hits, it has a 30% fixed chance to cause Cryo Core to cast Ice Arrow."
+    },
+    "234": {
+        "TalentName$chinese": "寒冰领域",
+        "TalentDes$chinese": "极寒·冰雪颂歌领域范围缩小50%，自身处于领域内获得25%冰元素加成。",
+        "TalentName$english": "Frost Domain",
+        "TalentDes$english": "The range of Glacier Hymn Field -50%, and you gain a 25% Ice bonus while within the field."
+    },
+    "235": {
+        "TalentName$chinese": "冰冷脉冲",
+        "TalentDes$chinese": "寒冰射线每造成50次伤害，爆发一次冰冷脉冲。",
+        "TalentName$english": "Cold Pulse",
+        "TalentDes$english": "Every 50 hits by Frostbeam triggers a Cold Pulse."
+    },
+    "236": {
+        "TalentName$chinese": "智力冷却",
+        "TalentDes$chinese": "智力达到300点时，技能冷却-10%。",
+        "TalentName$english": "Intellect Cooling",
+        "TalentDes$english": "When Intellect reaches 300 points, skill CD -10%."
+    },
+    "237": {
+        "TalentName$chinese": "次级增幅",
+        "TalentDes$chinese": "暴击%、急速%、幸运%、精通%、全能%这5项属性中最高的一项+5%。",
+        "TalentName$english": "Secondary Amp",
+        "TalentDes$english": "Increases the highest among Crit, Haste, Luck, Mastery, and Versatility by +5%."
+    },
+    "238": {
+        "TalentName$chinese": "寒意·流",
+        "TalentDes$chinese": "寒冰能量上限+40。<br>冰霜之矛伤害+4%。",
+        "TalentName$english": "Cold Intent - Flow",
+        "TalentDes$english": "Ice Energy cap +40.<br>Frost Lance damage +4%."
+    },
+    "239": {
+        "TalentName$chinese": "冰彗",
+        "TalentDes$chinese": "智力达到500点时，获得5%冰元素加成。",
+        "TalentName$english": "Ice Comet",
+        "TalentDes$english": "When Intellect reaches 500 points, gain 5% Ice bonus."
+    },
+    "240": {
+        "TalentName$chinese": "无尽苦寒",
+        "TalentDes$chinese": "每消耗30枚个玄冰，获得无尽苦寒效果。<br>无尽苦寒：10秒持续时间内，施放陨星风暴不会进入冷却，但是持续时间内陨星风暴触发的冰箭无法获得玄冰。",
+        "TalentName$english": "Endless Cold",
+        "TalentDes$english": "Every 30 Frost Crystals consumed grants Endless Cold effect.<br>Endless Cold: During the 10-second duration, Casting Meteor Storm does not enter CD, but Ice Arrows triggered by Meteor Storm during this period cannot gain Frost Crystals."
+    },
+    "241": {
+        "TalentName$chinese": "冰矛连弹",
+        "TalentDes$chinese": "冰之灌注持续期间寒冰之矛会连续施放2发。",
+        "TalentName$english": "Frost Lance Barrage",
+        "TalentDes$english": "During Permafrost, Frost Lance will be cast twice consecutively."
+    },
+    "242": {
+        "TalentName$chinese": "陨星风暴之冻结",
+        "TalentDes$chinese": "陨星风暴造成伤害时，有20%固定几率对目标施加冰冻。",
+        "TalentName$english": "Freezing Meteor Storm",
+        "TalentDes$english": "When Meteor Storm deals damage, 20% chance to apply Frozen to the target."
+    },
+    "243": {
+        "TalentName$chinese": "节能",
+        "TalentDes$chinese": "消耗玄冰的冰霜之矛施放后返还其消耗的50%寒冰能量。<br>不消耗玄冰的冰霜之矛施放后额外扣除其消耗的50%寒冰能量。",
+        "TalentName$english": "Energy Saving",
+        "TalentDes$english": "Frost Lance cast with Frost Crystal returns 50% of its consumed Ice Energy.<br>Frost Lance cast without Frost Crystal deducts an additional 50% of its consumed Ice Energy."
+    },
+    "244": {
+        "TalentName$chinese": "霜之利刃",
+        "TalentDes$chinese": "消耗玄冰的冰霜之矛伤害+20%。",
+        "TalentName$english": "Frost Blade",
+        "TalentDes$english": "Frost Lance cast with Frost Crystal deals +20% damage."
+    },
+    "245": {
+        "TalentName$chinese": "深寒法矛",
+        "TalentDes$chinese": "冰霜之矛伤害+70%。<br>冰霜之矛施法时间+100%。",
+        "TalentName$english": "Deep Cold Magic Spear",
+        "TalentDes$english": "Frost Lance damage +70%.<br>Frost Lance casting time +100%."
+    },
+    "246": {
+        "TalentName$chinese": "陨星风暴之倍扩",
+        "TalentDes$chinese": "陨星风暴掉落数量+1。",
+        "TalentName$english": "Meteor Storm Expansion",
+        "TalentDes$english": "Meteor Storm drop quantity +1."
+    },
+    "247": {
+        "TalentName$chinese": "冰矛暴击",
+        "TalentDes$chinese": "冰霜之矛暴击时暴击伤害+1.5%，持续6秒，最多叠加10层。",
+        "TalentName$english": "Frost Lance Crit",
+        "TalentDes$english": "Frost Lance Crit DMG +1.5% for 6s, stacking up to 10 times."
+    },
+    "248": {
+        "TalentName$chinese": "灌注升华",
+        "TalentDes$chinese": "玄冰上限+1。<br>冰之灌注持续期间，冰元素攻击+100。<br>冰之灌注结束后，你的玄冰数量将重置为冰之灌注开启前。",
+        "TalentName$english": "Infusion Sublimation",
+        "TalentDes$english": "Frost Crystal Limit +1.<br>During Permafrost, Iceal Attack +100.<br>After Permafrost ends, your Frost Crystal Limit will reset to the amount before Permafrost started."
+    },
+    "249": {
+        "TalentName$chinese": "致命冰矛",
+        "TalentDes$chinese": "冰霜之矛对生命值低于35%的目标伤害+20%。",
+        "TalentName$english": "Deadly Frost Lance",
+        "TalentDes$english": "Frost Lance damage +20% to targets with less than 35% HP."
+    },
+    "250": {
+        "TalentName$chinese": "暴击之寒",
+        "TalentDes$chinese": "冰之灌注持续期间，暴击伤害+15%。<br>冰之灌注持续期间，队友暴击几率+3%。",
+        "TalentName$english": "Critical Cold",
+        "TalentDes$english": "During Permafrost, Crit DMG +15%.<br>During Permafrost, Allies' Crit chance +3%."
+    },
+    "251": {
+        "TalentName$chinese": "凛冽",
+        "TalentDes$chinese": "每100点智力提供0.5%暴击伤害。",
+        "TalentName$english": "Bitter Cold",
+        "TalentDes$english": "Every 100 points of Intellect provides 0.5% Crit DMG."
+    },
+    "252": {
+        "TalentName$chinese": "锐利冰暴",
+        "TalentDes$chinese": "寒冰风暴暴击+50%。<br>寒冰风暴暴击伤害+15%。",
+        "TalentName$english": "Sharp Blizzard",
+        "TalentDes$english": "Blizzard Crit chance +50%.<br>Blizzard Crit DMG +15%."
+    },
+    "253": {
+        "TalentName$chinese": "玄冰赋能",
+        "TalentDes$chinese": "每消耗1枚玄冰智力+25，持续10秒，最多叠加5层。",
+        "TalentName$english": "Frost Crystal Empowerment",
+        "TalentDes$english": "Every 1 consumed Frost Crystal Limit increases Intellect by 25 for 10s, stacking up to 5 times."
+    },
+    "254": {
+        "TalentName$chinese": "寒霜侵袭",
+        "TalentDes$chinese": "寒冰风暴命中目标，使其冰元素抗性-10%，持续10秒，不可叠加。（仅对自身生效）",
+        "TalentName$english": "Frost Assault",
+        "TalentDes$english": "Blizzard hits reduce target's Iceal Resistance by 10% for 10s, non-stackable. (Only effective for self)"
+    },
+    "255": {
+        "TalentName$chinese": "幸运伤害",
+        "TalentDes$chinese": "幸运一击伤害+15%。<br>每2%幸运提供1%幸运一击伤害。",
+        "TalentName$english": "Luck Damage",
+        "TalentDes$english": "Lucky Strike damage +15%.<br>Every 2% Luck provides 1% Lucky Strike damage."
+    },
+    "256": {
+        "TalentName$chinese": "寒意留存",
+        "TalentDes$chinese": "冰之灌注持续期间，寒冰射线消耗-30%。",
+        "TalentName$english": "Cold Retention",
+        "TalentDes$english": "During Permafrost, Frostbeam consumption -30%."
+    },
+    "257": {
+        "TalentName$chinese": "霜华启示",
+        "TalentDes$chinese": "浪潮汇聚首次命中目标回复5点寒冰能量，每多拥有一枚玄冰，回复寒冰能量+5。",
+        "TalentName$english": "Frost Revelation",
+        "TalentDes$english": "Tidepoolfirst hit restores 5 points of Ice Energy, with an additional 5 points of Ice Energy restored for each extra Ice Limit."
+    },
+    "258": {
+        "TalentName$chinese": "涌能法则",
+        "TalentDes$chinese": "寒冰射线触发冰箭几率+5%。<br>冰之灌注持续期间，寒冰射线触发冰箭几率翻倍。",
+        "TalentName$english": "Law of Energy Surge",
+        "TalentDes$english": "Frostbeam triggers Ice Arrow chance +5%.<br>During Permafrost, Frostbeam triggers Ice Arrow chance doubled."
+    },
+    "259": {
+        "TalentName$chinese": "冰晶之力",
+        "TalentDes$chinese": "当前拥有的寒冰能量高于50%时，获得8%冰元素加成。",
+        "TalentName$english": "Power of Ice Crystals",
+        "TalentDes$english": "When Ice Energy is above 50%, gain 8% Iceal bonus."
+    },
+    "260": {
+        "TalentName$chinese": "冰晶回升",
+        "TalentDes$chinese": "当前拥有的寒冰能量低于50%时，寒冰能量回复效率+10%。",
+        "TalentName$english": "Ice Crystal Recovery",
+        "TalentDes$english": "When Ice Energy is below 50%, Ice Energy recovery efficiency +10%."
+    },
+    "261": {
+        "TalentName$chinese": "冰箭速射",
+        "TalentDes$chinese": "冰之灌注持续期间，寒冰射线引发冰晶核心触发的冰箭数量+2。<br>但冰之灌注持续期间，寒冰射线无法再触发幸运一击。",
+        "TalentName$english": "Rapid Ice Arrow",
+        "TalentDes$english": "During Permafrost, Frostbeam triggers 2 additional Ice Arrows from Ice Crystal Core.<br>However, during Permafrost, Frostbeam can no longer trigger Lucky Strike."
+    },
+    "262": {
+        "TalentName$chinese": "潮流无尽",
+        "TalentDes$chinese": "冰之灌注持续期间，施放浪潮汇聚可延长其3秒持续时间。",
+        "TalentName$english": "Endless Tide",
+        "TalentDes$english": "During Permafrost, Casting Tidepoolcan extend its duration by 3s."
+    },
+    "263": {
+        "TalentName$chinese": "玄冰潮汐",
+        "TalentDes$chinese": "寒冰射线造成伤害时有20%固定几率直接获得玄冰，如果玄冰已达上限，则获得5%冰元素加成，持续3秒。",
+        "TalentName$english": "Frost Tide",
+        "TalentDes$english": "When Frost Beam deals damage, 20% chance to directly gain Frost Crystal. If Frost Crystal is at its maximum, gain 5% Iceal bonus for 3s."
+    },
+    "264": {
+        "TalentName$chinese": "射线精进一式",
+        "TalentDes$chinese": "寒冰射线冰元素加成+2%。<br>寒冰射线对主目标冰元素加成+5%。",
+        "TalentName$english": "Ray Mastery I",
+        "TalentDes$english": "Frost Beam Iceal bonus +2%.<br>Frost Beam Iceal bonus to the main target +5%."
+    },
+    "265": {
+        "TalentName$chinese": "广域冰箭",
+        "TalentDes$chinese": "专精技能每造成15次伤害使得冰晶核心触发冰箭。",
+        "TalentName$english": "Wide Area Ice Arrow",
+        "TalentDes$english": "Every 15 hits from the Expertise Skill trigger Ice Arrow from the Ice Crystal Core."
+    },
+    "266": {
+        "TalentName$chinese": "智力冰晶",
+        "TalentDes$chinese": "每50点智力提供1点寒冰能量上限（通过此途径获取的寒冰能量上限不超过100）。",
+        "TalentName$english": "Intellect Ice Crystal",
+        "TalentDes$english": "Every 50 points of Intellect provide 1 point of maximum Frost Crystal (maximum Frost Crystal obtained through this method does not exceed 100)."
+    },
+    "267": {
+        "TalentName$chinese": "快速吟唱",
+        "TalentDes$chinese": "急速+500。<br>冰之灌注期间，施法速度+15%。",
+        "TalentName$english": "Quick Chant",
+        "TalentDes$english": "Haste +500.<br>During Permafrost, Cast Speed +15%."
+    },
+    "268": {
+        "TalentName$chinese": "冰箭锐击",
+        "TalentDes$chinese": "冰晶核心施放的冰箭暴击+50%。<br>冰晶核心施放的冰箭暴击伤害+10%。",
+        "TalentName$english": "Sharp Ice Arrow",
+        "TalentDes$english": "Ice Arrows cast by Ice Crystal Core have +50% Crit chance.<br>Ice Arrows cast by Ice Crystal Core have +10% Crit DMG."
+    },
+    "269": {
+        "TalentName$chinese": "射线绝唱",
+        "TalentDes$chinese": "寒冰射线造成伤害（只触发一次）时，有10%固定几率使得接下来3秒内，精通属性值翻倍。",
+        "TalentName$english": "Ray's Swan Song",
+        "TalentDes$english": "When Frost Beam deals damage (triggered only once), 10% chance to double the mastery attribute value for the next 3s."
+    },
+    "270": {
+        "TalentName$chinese": "冰晶扩充",
+        "TalentDes$chinese": "寒冰能量上限+40。",
+        "TalentName$english": "Ice Crystal Expansion",
+        "TalentDes$english": "Ice Energy limit +40."
+    },
+    "271": {
+        "TalentName$chinese": "智力增幅",
+        "TalentDes$chinese": "智力+5%。",
+        "TalentName$english": "Intellect Amp",
+        "TalentDes$english": "Intellect +5%."
+    },
+    "400": {
+        "TalentName$chinese": "疾风流影",
+        "TalentDes$chinese": "每消耗50点勇气。螺旋击刺、破追、飞鸟投剩余冷却时间缩减1秒。",
+        "TalentName$english": "Swift Shadow",
+        "TalentDes$english": "For every 50 Courage consumed, reduce the remaining CD of Spiral Stab, Breach Pursuit, and Falcon Toss by 1s."
+    },
+    "401": {
+        "TalentName$chinese": "力量转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">8</style>点力量提供<style=\"accent-gn\">1</style>点物理攻击力。",
+        "TalentName$english": "Power Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">8</style> Strength grants <style=\"accent-gn\">1</style> ATK."
+    },
+    "402": {
+        "TalentName$chinese": "易伤一击",
+        "TalentDes$chinese": "造成伤害时，有30%固定几率对敌方目标施加易伤效果。",
+        "TalentName$english": "Vulnerable Strike",
+        "TalentDes$english": "When dealing damage, there is a 30% fixed chance to apply Vulnerable effect to the enemy target."
+    },
+    "403": {
+        "TalentName$chinese": "锐利",
+        "TalentDes$chinese": "特殊攻击造成伤害时获得锐利。",
+        "TalentName$english": "Sharp",
+        "TalentDes$english": "When special attacks deal damage, gain Sharp."
+    },
+    "404": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1."
+    },
+    "405": {
+        "TalentName$chinese": "风裂扩散",
+        "TalentDes$chinese": "专精技能、终极技能对撕裂目标伤害+10%，同时可引爆目标的撕裂使其扩散到周围。",
+        "TalentName$english": "Wind Rift Diffusion",
+        "TalentDes$english": "Expertise and Ultimates deal 10% more damage to bleeding targets and can cause the bleed to spread to nearby enemies."
+    },
+    "406": {
+        "TalentName$chinese": "风裂",
+        "TalentDes$chinese": "疾风刺造成伤害时有5%固定几率施加撕裂。<br>每3%精通使得撕裂伤害倍率额外+1%。",
+        "TalentName$english": "Wind Tear",
+        "TalentDes$english": "When Gale Thrust deals damage, 5% chance to apply Rend.<br>Every 3% mastery +1% of Teardamage."
+    },
+    "407": {
+        "TalentName$chinese": "快枪流星",
+        "TalentDes$chinese": "疾风刺获得强化，打击段数+2。",
+        "TalentName$english": "Quickshot Meteor",
+        "TalentDes$english": "Gale Thrust is enhanced, hit count +2."
+    },
+    "409": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。<br>锐利持续时间-4秒。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1.<br>The duration of Sharp -4s."
+    },
+    "410": {
+        "TalentName$chinese": "疾驰锋刃",
+        "TalentDes$chinese": "勇气风环造成伤害时，有7%固定几率使普通攻击派生为疾驰锋刃。",
+        "TalentName$english": "Swift Blade",
+        "TalentDes$english": "When Valor Cyclone deals damage, 7% chance for normal attacks to derive into Swift Blade."
+    },
+    "411": {
+        "TalentName$chinese": "风舞轻灵",
+        "TalentDes$chinese": "每秒额外回复勇气：每拥有2层锐利回复勇气+1。",
+        "TalentName$english": "Zephyr Waltz Agility",
+        "TalentDes$english": "Additional Courage recovery per second: for every 2 layers of Sharp, recover +1 Courage."
+    },
+    "412": {
+        "TalentName$chinese": "追风逐影",
+        "TalentDes$chinese": "勇气风环技能施放期间，每消耗20点勇气，使得勇气风环伤害+2%，最高+50%。",
+        "TalentName$english": "Wind Chaser",
+        "TalentDes$english": "During the Casting of Valor Cyclone skill, for every 20 points of Courage consumed, Valor Cyclone damage +2%, up to a maximum of +50%."
+    },
+    "413": {
+        "TalentName$chinese": "神影螺旋",
+        "TalentDes$chinese": "每施放3次龙击炮使你接下来10秒内的螺旋击刺派生为神影螺旋。",
+        "TalentName$english": "Vortex Strike",
+        "TalentDes$english": "Every 3 casts of Drake Cannon make your next Spiral Thrust within 10s derive into Vortex Strike."
+    },
+    "414": {
+        "TalentName$chinese": "刹那暴击",
+        "TalentDes$chinese": "追击身法下，刹那、锐利冲击暴击几率翻倍。",
+        "TalentName$english": "Instantaneous Crit",
+        "TalentDes$english": "Under Chasing Step, the Crit chance of Instant Strike and Sharp Impact is doubled."
+    },
+    "416": {
+        "TalentName$chinese": "长矛贯穿",
+        "TalentDes$chinese": "翔返触发幸运一击时触发长矛贯穿，每2秒最多生效一次。<br>长矛贯穿造成伤害回复8点勇气。",
+        "TalentName$english": "Spear Penetration",
+        "TalentDes$english": "When Skyfall triggers Lucky Strike, it triggers Spear Penetration, which can occur once every 2s.<br>Spear Penetration deals damage and recovers 8 points of Courage."
+    },
+    "417": {
+        "TalentName$chinese": "风怒",
+        "TalentDes$chinese": "施放锐利冲击获得风怒。",
+        "TalentName$english": "Wind Fury",
+        "TalentDes$english": "Casting Sharp Impact grants Wind Fury."
+    },
+    "418": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1."
+    },
+    "419": {
+        "TalentName$chinese": "空舞重击",
+        "TalentDes$chinese": "锐利冲击使得下一个风姿卓绝回复的勇气+50%，同时获得1锐利。",
+        "TalentName$english": "Air Dance Strike",
+        "TalentDes$english": "Sharp Impact makes the next Elegant Posture recover +50% Courage and grants 1 Sharp."
+    },
+    "420": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1."
+    },
+    "421": {
+        "TalentName$chinese": "龙卷之舞",
+        "TalentDes$chinese": "风怒持续期间，刹那造成伤害触发龙卷风。",
+        "TalentName$english": "Tornado Dance",
+        "TalentDes$english": "During Wind Fury, Instant Edge Strike deals damage and triggers Tornado."
+    },
+    "422": {
+        "TalentName$chinese": "追击身法",
+        "TalentDes$chinese": "翔返暴击时，触发追击身法。",
+        "TalentName$english": "Chasing Step",
+        "TalentDes$english": "When a Crit is achieved by Skyfall, a follow-up attack technique is triggered."
+    },
+    "423": {
+        "TalentName$chinese": "神风之助",
+        "TalentDes$chinese": "飞鸟投、刹那击中1个目标时伤害+10%。",
+        "TalentName$english": "Divine Wind Support",
+        "TalentDes$english": "When Falcon Toss and Instant Edge Hit hit a target, damage +10%."
+    },
+    "424": {
+        "TalentName$chinese": "战斗专长",
+        "TalentDes$chinese": "随着战斗时间的拉长，获得不断增长的攻击力。每15秒攻击力+2%，最高提升8%，战斗结束后清除。",
+        "TalentName$english": "Combat Expertise",
+        "TalentDes$english": "As the battle duration increases, gain continuously growing ATK. Every 15s, ATK +2%, up to a maximum of 8%, cleared after the battle ends."
+    },
+    "425": {
+        "TalentName$chinese": "势涨",
+        "TalentDes$chinese": "锐利效果+1%，自身5米内每有1个敌方目标额外+1%，最高+3%。",
+        "TalentName$english": "Momentum Surge",
+        "TalentDes$english": "Sharp effect +1%, for each enemy target within 5 meters of self, an additional +1%, up to a maximum of 3%."
+    },
+    "427": {
+        "TalentName$chinese": "捕手",
+        "TalentDes$chinese": "战斗中，每参与击败1个敌方目标，攻击力+20，持续30秒，最高上限200。",
+        "TalentName$english": "Catcher",
+        "TalentDes$english": "During battle, for each enemy target defeated, ATK +20, lasts for 30s, up to a maximum of 200."
+    },
+    "428": {
+        "TalentName$chinese": "风裂身法",
+        "TalentDes$chinese": "撕裂造成伤害时，有50%固定几率获得2点勇气。",
+        "TalentName$english": "Wind Split Technique",
+        "TalentDes$english": "When Tear causes damage, 50% chance to gain 2 points of Courage."
+    },
+    "429": {
+        "TalentName$chinese": "风雷破击",
+        "TalentDes$chinese": "风姿卓绝结束时施加风雷破击效果，使接下来8秒时间内自身力量+12%。<br>在风姿卓绝生效期间每消耗50点勇气，可使风雷破击时间延长1秒。",
+        "TalentName$english": "Wind and Thunder Strike",
+        "TalentDes$english": "When Wind Grace ends, apply Wind Thunder Break effect, increasing self strength by 12% for the next 8s.<br>During Wind Grace, every 50 points of Courage consumed extends Wind Thunder Break duration by 1s."
+    },
+    "430": {
+        "TalentName$chinese": "神隐",
+        "TalentDes$chinese": "消耗勇气时急速+1%，移速+2%，持续5秒，最多叠加5层。",
+        "TalentName$english": "Divine Concealment",
+        "TalentDes$english": "When consuming Courage, Haste +1%, Speed +2%, lasts for 5s, stacks up to 5 layers."
+    },
+    "431": {
+        "TalentName$chinese": "刚勇",
+        "TalentDes$chinese": "勇气上限+30。",
+        "TalentName$english": "Valor",
+        "TalentDes$english": "Courage limit +30."
+    },
+    "432": {
+        "TalentName$chinese": "空战流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>替换为<linktext=1520><style=\"ItemQuality_5\">翔返</style></linktext>，并增强使用该技能的能力。<br>拥有<linktext=1152><style=\"ItemQuality_5\">锐利</style></linktext>时其攻击力按照当前最大<linktext=1152><style=\"ItemQuality_5\">锐利</style></linktext>上限数量进行加成。<br><br><i><style=\"text_third_gray\"><size=20>翔返和刹那的技能连击将为彼此省略掉滞空的前摇过程，高额的幸运和暴击，可以让翔返触发更低消耗的刹那。</size></style></i>",
+        "TalentName$english": "Skyward Spec",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Special Attack</style> with <linktext=1520><style=\"ItemQuality_5\">Skyfall</style></linktext> enhances the skill.<br>When having <linktext=1152><style=\"ItemQuality_5\">Sharp</style></linktext>, gains ATK based on the max number of <linktext=1152><style=\"ItemQuality_5\">Sharp</style></linktext>.<br><br><i><style=\"text_third_gray\"><size=20>Skyfall and Instant Edge can chain together, skipping the aerial cast delay. High Luck and critical rate enable Skyfall to trigger a low-cost Instant Edge.</size></style></i>"
+    },
+    "433": {
+        "TalentName$chinese": "重装流",
+        "TalentDes$chinese": "继续增强使用疾风刺的能力。<br>疾风刺造成伤害时有15%固定几率使普通攻击派生为疾驰锋刃，每拥有1锐利提升5%几率。",
+        "TalentName$english": "Vanguard Spec",
+        "TalentDes$english": "Further enhances Gale Thrust.<br>Gale Thrust has a 15% base chance to trigger a Swift Blade from Basic Attacks. Each stack of Sharp increases this chance by 5%."
+    },
+    "434": {
+        "TalentName$chinese": "斗志昂扬",
+        "TalentDes$chinese": "<linktext=1525><style=\"ItemQuality_5\">风神·破阵之风</style></linktext>将举起旗枪，为队友施加<style=\"accent-gn\">激励</style>。随后可施加二段追击奋力跃入敌阵，对范围内的敌方目标造成<style=\"physical\">物理伤害</style>并将其击飞，同时回复<style=\"accent-gn\">100</style>点<style=\"accent-gn\">勇气</style>。<br><style=\"accent-gn\">激励</style>：持续<style=\"accent-gn\">10</style>秒，期间所有队友急速+<style=\"accent-gn\">10%</style>（该效果同时最多生效一个），自身每<style=\"accent-gn\">1</style>秒回复<style=\"accent-gn\">10</style>点<style=\"accent-gn\">勇气</style>每<style=\"accent-gn\">2</style>秒回复<style=\"accent-gn\">1</style>层<linktext=1152><style=\"ItemQuality_5\">锐利</style></linktext>。",
+        "TalentName$english": "Battle Cry",
+        "TalentDes$english": "<linktext=1525><style=\"ItemQuality_5\">Typhoon Cleave</style></linktext>Raises the banner spear, granting <style=\"accent-gn\">Inspire</style> to Allies. Afterward, a follow-up leap can be launched, dealing <style=\"physical\">Attack Damage</style> to the enemies within range and knocking them airborne, while restoring <style=\"accent-gn\">100</style> <style=\"accent-gn\">Courage</style>. <br><style=\"accent-gn\">Inspire</style>: Lasts for <style=\"accent-gn\">10s</style>. All Allies gain <style=\"accent-gn\">10%</style> Haste (Only one effect can be active at a time). You restore <style=\"accent-gn\">10</style> <style=\"accent-gn\">Courage</style> <style=\"accent-gn\">per</style> second and <style=\"accent-gn\">1</style> <linktext=1152><style=\"ItemQuality_5\">Sharpness</style></linktext> every <style=\"accent-gn\">2s</style>."
+    },
+    "435": {
+        "TalentName$chinese": "迅捷",
+        "TalentDes$chinese": "每<style=\"accent-gn\">1%</style>急速提供<style=\"accent-gn\">1%</style>攻击速度。",
+        "TalentName$english": "Swift",
+        "TalentDes$english": "Each <style=\"accent-gn\">1%</style> Haste provides <style=\"accent-gn\">1%</style> Attack Speed."
+    },
+    "436": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1."
+    },
+    "437": {
+        "TalentName$chinese": "长枪利刃",
+        "TalentDes$chinese": "力量达到300点时，专精技能伤害+7%。",
+        "TalentName$english": "Long Lance Sharp Blade",
+        "TalentDes$english": "When strength reaches 300 points, Expertise Skill damage +7%."
+    },
+    "438": {
+        "TalentName$chinese": "锋锐",
+        "TalentDes$chinese": "力量达到500点时，锐利附加攻击力提升至6%。",
+        "TalentName$english": "Sharp",
+        "TalentDes$english": "When strength reaches 500 points, Sharp additional ATK increases to 6%."
+    },
+    "439": {
+        "TalentName$chinese": "破追精进",
+        "TalentDes$chinese": "在施放终极技能后的10秒内，施放破追不会进入冷却。时间结束或施放3次破追后，该效果移除。",
+        "TalentName$english": "Break Pursuit Advancement",
+        "TalentDes$english": "Within 10s after Casting the Ultimate, Casting Breach Pursuit will not enter CD. This effect is removed after time ends or after Casting Breach Pursuit 3 times."
+    },
+    "440": {
+        "TalentName$chinese": "风螺旋",
+        "TalentDes$chinese": "疾风刺造成伤害时有10%固定几率获得时1层风螺旋，持续10秒，最多叠加10层。<br>风螺旋：施放螺旋击刺、勇气风环时附带螺旋爆炸对周围敌方目标造成100%攻击力物理赏花，每触发一次螺旋爆炸风螺旋减少1层。",
+        "TalentName$english": "Wind Spiral",
+        "TalentDes$english": "When Gale Thrust causes damage, 10% chance to gain 1 layer of Wind Spiral, lasting for 10s, stacking up to 10 layers.<br>Wind Spiral: When Casting Spiral Stab or Valor Cyclone, it triggers Spiral Explosion causing Attack Damage equal to 100% ATK to surrounding enemy targets. Each time Spiral Explosion is triggered, Wind Spiral decreases by 1 layer."
+    },
+    "441": {
+        "TalentName$chinese": "气劲加持",
+        "TalentDes$chinese": "锐利达到满额时进入气劲加持状态，每30秒最多生效一次。",
+        "TalentName$english": "Vigor Spike",
+        "TalentDes$english": "When Sharp reaches full amount, enter Qi Energy Boost state, effective at most once every 30s."
+    },
+    "442": {
+        "TalentName$chinese": "无畏疾风",
+        "TalentDes$chinese": "施放螺旋击刺或破追或勇气风环后，下次施放的疾风刺无需消耗勇气，脱离战斗后该效果移除。",
+        "TalentName$english": "Fearless Gale",
+        "TalentDes$english": "After Casting Spiral Stab or Breach Pursuit or Valor Cyclone, the next cast of Gale Thrust does not consume Courage, this effect is removed after leaving combat."
+    },
+    "443": {
+        "TalentName$chinese": "微风低语",
+        "TalentDes$chinese": "当前勇气低于等于50%时，勇气风环能量消耗-15%。<br>当前勇气高于50%时，勇气风环伤害+12%。",
+        "TalentName$english": "Whispering Breeze",
+        "TalentDes$english": "When Courage is less than or equal to 50%, Valor Cyclone energy consumption -15%.<br>When Courage is greater than 50%, Valor Cyclone damage +12%."
+    },
+    "444": {
+        "TalentName$chinese": "疾驰龙炮",
+        "TalentDes$chinese": "施放疾驰锋刃有25%固定几率在接下来10秒内派生为龙击炮。",
+        "TalentName$english": "Rapid Drake Cannon",
+        "TalentDes$english": "Casting Swift Blade has a fixed 25% chance to evolve into Drake Cannon within the next 10s."
+    },
+    "445": {
+        "TalentName$chinese": "千疮百孔",
+        "TalentDes$chinese": "勇气风环造成伤害时，有50%固定几率施加千疮百孔。",
+        "TalentName$english": "Thousand Wounds",
+        "TalentDes$english": "When Valor Cyclone causes damage, 50% chance to apply Thousand Wounds."
+    },
+    "446": {
+        "TalentName$chinese": "螺旋撕裂",
+        "TalentDes$chinese": "螺旋击刺命中撕裂目标，伤害+30%。",
+        "TalentName$english": "Spiral Tear",
+        "TalentDes$english": "When Spiral Stab hits a Tear target, damage +30%."
+    },
+    "447": {
+        "TalentName$chinese": "刚毅",
+        "TalentDes$chinese": "勇气风环持续期间，获得霸体。<br>勇气风环造成伤害时回复10%攻击力点生命值。",
+        "TalentName$english": "Fortitude",
+        "TalentDes$english": "During Valor Cyclone duration, gain Super Armor.<br>When Valor Cyclone causes damage, restore health equal to 10% ATK."
+    },
+    "448": {
+        "TalentName$chinese": "微风迅捷",
+        "TalentDes$chinese": "每1%急速提供勇气2%自然回复速度。",
+        "TalentName$english": "Swift Breeze",
+        "TalentDes$english": "Each 1% haste provides natural Courage recovery speed by 2%."
+    },
+    "449": {
+        "TalentName$chinese": "风元素之息",
+        "TalentDes$chinese": "消耗勇气的技能获得8%风元素加成。",
+        "TalentName$english": "Breath of Wind",
+        "TalentDes$english": "Skills that consume courage gain 8% Wind bonus."
+    },
+    "450": {
+        "TalentName$chinese": "风起",
+        "TalentDes$chinese": "勇气风环造成伤害时，龙击炮、神影螺旋暴击几率+7%，持续5秒，最多叠加7层。",
+        "TalentName$english": "Wind Rise",
+        "TalentDes$english": "When Valor Cyclone deals damage, Drake Cannon and Vortex Strike have a +7% Crit chance, lasting for 5s, stacking up to 7 layers."
+    },
+    "451": {
+        "TalentName$chinese": "强攻",
+        "TalentDes$chinese": "螺旋击刺、破追伤害+20%。",
+        "TalentName$english": "Strong Attack",
+        "TalentDes$english": "Spiral Stab and Breach Pursuit damage +20%."
+    },
+    "452": {
+        "TalentName$chinese": "螺旋爆炎",
+        "TalentDes$chinese": "施放神影螺旋使你接下来10秒内急速+25%。",
+        "TalentName$english": "Spiral Flame",
+        "TalentDes$english": "Casting Vortex Strike increases your haste by 25% for the next 10s."
+    },
+    "453": {
+        "TalentName$chinese": "龙之怒焰",
+        "TalentDes$chinese": "龙击炮、神影螺旋触发暴击的几率翻倍。<br>龙击炮、神影螺旋暴击伤害+8%。",
+        "TalentName$english": "Dragon's Fury Flame",
+        "TalentDes$english": "The Crit chance of Drake Cannon and Vortex Strike is doubled.<br>Drake Cannon and Vortex Strike Crit DMG +8%."
+    },
+    "454": {
+        "TalentName$chinese": "风环龙炮",
+        "TalentDes$chinese": "勇气风环每触发30次，接下来10秒内普通攻击必定派生为龙击炮。",
+        "TalentName$english": "Wind Gate Drake Cannon",
+        "TalentDes$english": "Every 30 triggers of Valor Cyclone, the next 10s of normal attacks will definitely derive into Drake Cannon."
+    },
+    "455": {
+        "TalentName$chinese": "飞鸟精进",
+        "TalentDes$chinese": "飞鸟投充能次数+1。<br>飞鸟投勇气消耗-50%。",
+        "TalentName$english": "Bird Advancement",
+        "TalentDes$english": "Falcon Toss charge +1.<br>Falcon Toss courage consumption -50%."
+    },
+    "456": {
+        "TalentName$chinese": "锐利精进",
+        "TalentDes$chinese": "风怒效果+50%。<br>刹那消耗追击身法时，对锐利冲击的充能效果翻倍。",
+        "TalentName$english": "Sharp Advancement",
+        "TalentDes$english": "Wind Fury effectiveness +50%.<br>When Instant Edge consumes Chasing Step, doubles the charge efficiency of Sharp Impact."
+    },
+    "457": {
+        "TalentName$chinese": "长矛回复",
+        "TalentDes$chinese": "长矛贯穿缩减飞鸟投剩余冷却时间2秒。",
+        "TalentName$english": "Spear Recovery",
+        "TalentDes$english": "Spear Penetration reduces the remaining CD time of Falcon Toss by 2s."
+    },
+    "458": {
+        "TalentName$chinese": "锐利长息",
+        "TalentDes$chinese": "风怒持续期间，飞鸟投派生1次极·岚切。",
+        "TalentName$english": "Sharp Long Breath",
+        "TalentDes$english": "During Wind Fury, Falcon Toss derives into Azure Sever once."
+    },
+    "459": {
+        "TalentName$chinese": "锐利扩充",
+        "TalentDes$chinese": "锐利上限+1。",
+        "TalentName$english": "Sharp Expansion",
+        "TalentDes$english": "Sharp cap +1."
+    },
+    "460": {
+        "TalentName$chinese": "锐利翔返",
+        "TalentDes$chinese": "翔返造成伤害有15%固定几率额外获得1层锐利。",
+        "TalentName$english": "Skyfall",
+        "TalentDes$english": "When Skyfall deals damage, 15% chance to gain an additional layer of Sharp."
+    },
+    "461": {
+        "TalentName$chinese": "追击之力",
+        "TalentDes$chinese": "消耗追击身法使得接下来10秒内力量+10%，最多叠加2层。",
+        "TalentName$english": "Pursuit Power",
+        "TalentDes$english": "Consuming Chase Stance increases strength by 10% for the next 10s, stacking up to 2 layers."
+    },
+    "462": {
+        "TalentName$chinese": "卓绝风华",
+        "TalentDes$chinese": "风姿卓绝持续期间刹那、翔返伤害+25%。",
+        "TalentName$english": "Exceptional Elegance",
+        "TalentDes$english": "During the duration of Galeform, Instant Edge and Skyfall damage +25%."
+    },
+    "463": {
+        "TalentName$chinese": "风神·锐利冲击",
+        "TalentDes$chinese": "锐利冲击得到强化，变为风神·锐利冲击。",
+        "TalentName$english": "Typhoon: Sharp Impact",
+        "TalentDes$english": "Sharp Impact is enhanced, becoming Typhoon Sharp Impact."
+    },
+    "464": {
+        "TalentName$chinese": "刹那破式",
+        "TalentDes$chinese": "刹那消耗锐利+1。<br>刹那伤害+90%。",
+        "TalentName$english": "Instant Edge Break Style",
+        "TalentDes$english": "Instant Edge consumes Sharp +1.<br>Instant Edge damage +90%."
+    },
+    "465": {
+        "TalentName$chinese": "风卷劲击",
+        "TalentDes$chinese": "龙卷风伤害+30%。<br>长矛贯穿伤害+10%。",
+        "TalentName$english": "Wind Swirl Strike",
+        "TalentDes$english": "Tornado damage +30%.<br>Spear Penetration damage +10%."
+    },
+    "466": {
+        "TalentName$chinese": "追击之锐",
+        "TalentDes$chinese": "刹那消耗追击身法时获得1层锐利。",
+        "TalentName$english": "Sharp Pursuit",
+        "TalentDes$english": "When Instant Edge consumes Chase Stance, gain 1 layer of Sharp."
+    },
+    "467": {
+        "TalentName$chinese": "刹那连击",
+        "TalentDes$chinese": "刹那消耗追击身法时，有15%固定几率额外触发一次伤害。",
+        "TalentName$english": "Instant Edge Combo",
+        "TalentDes$english": "When Instant Edge consumes Chase Stance, 15% chance to trigger an additional damage."
+    },
+    "468": {
+        "TalentName$chinese": "破式",
+        "TalentDes$chinese": "专精技能造成暴击伤害时，忽视目标40%物理防御。",
+        "TalentName$english": "Break Style",
+        "TalentDes$english": "When Expertise deal Crit DMG, ignore 40% of the target's Armor."
+    },
+    "469": {
+        "TalentName$chinese": "锐利回响",
+        "TalentDes$chinese": "锐利未达到满额时，翔返伤害+15%。",
+        "TalentName$english": "Sharp Echo",
+        "TalentDes$english": "When Sharp is not at full capacity, Skyfall damage +15%."
+    },
+    "470": {
+        "TalentName$chinese": "神风幸运",
+        "TalentDes$chinese": "每消耗1层锐利，获得3点勇气。",
+        "TalentName$english": "Kamikaze Luck",
+        "TalentDes$english": "For each Sharp consumed, gain 3 Courage."
+    },
+    "500": {
+        "TalentName$chinese": "活力充盈",
+        "TalentDes$chinese": "能量回复速度提升20%。",
+        "TalentName$english": "Brimming Vitality",
+        "TalentDes$english": "REG SPD of Energy +20%"
+    },
+    "501": {
+        "TalentName$chinese": "智力转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">10</style>点智力提供<style=\"accent-gn\">1</style>点魔法攻击力。",
+        "TalentName$english": "Intellect Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">10</style> points of Intellect provides <style=\"accent-gn\">1</style> point of MATK."
+    },
+    "502": {
+        "TalentName$chinese": "鼓舞",
+        "TalentDes$chinese": "为自身及30米内队友施加鼓舞。",
+        "TalentName$english": "Inspiration",
+        "TalentDes$english": "Grants Inspiration to yourself and allies within 30 meters."
+    },
+    "503": {
+        "TalentName$chinese": "再生蓓蕾",
+        "TalentDes$chinese": "施放特殊攻击时获得1个再生蓓蕾。<br><br>再生蓓蕾：初始上限4个。<br>专精技能、终极技能施加治疗时，消耗2个再生蓓蕾抛出一个滋养之种，每1秒最多生效一次。<br>专精技能、终极技能造成伤害时，消耗2个再生蓓蕾发射一个狂野之种，每1秒最多生效一次。",
+        "TalentName$english": "Regen Bud",
+        "TalentDes$english": "Casting a Special Attack grants 1 Regen Bud.<br><br>Initial cap of Regen Buds: 4.<br>When an Expertise Skill or Ultimate generates healing, 2 Regen Buds are consumed to throw a Nourishing Seed, triggering up to once per second.<br>When an Expertise Skill or Ultimate deals DMG, 2 Regen Buds are consumed to shoot a Wild Seed, occurring up to once per second."
+    },
+    "504": {
+        "TalentName$chinese": "蓓蕾之息",
+        "TalentDes$chinese": "再生蓓蕾上限+4。",
+        "TalentName$english": "Breath of Buds",
+        "TalentDes$english": "Increases the cap of Regen Buds by 4."
+    },
+    "505": {
+        "TalentName$chinese": "自然护盾",
+        "TalentDes$chinese": "狂野绽放施加治疗时，同时为受治疗目标施加自然护盾。<br>拥有自然护盾的目标受到攻击时回复生命值，回复的生命值为你攻击力的10%，每1秒最多生效一次。",
+        "TalentName$english": "Nature Shield",
+        "TalentDes$english": "When Wild Bloom heals a target, it also applies Nature Shield to them.<br>Targets with Nature Shield restore HP when hit, with the amount equal to 10% of your ATK. This effect can occur up to once per second."
+    },
+    "506": {
+        "TalentName$chinese": "绿意之爆发",
+        "TalentDes$chinese": "不羁之种造成伤害使得接下来10秒内灌注、狂野绽放、鹿之奔袭伤害+20%。",
+        "TalentName$english": "Arcane of Green",
+        "TalentDes$english": "When Feral Seed deals DMG, it increases the DMG dealt by Infusion, Wild Bloom, Deer Charge in the next 10s by 20%."
+    },
+    "507": {
+        "TalentName$chinese": "治愈灵息",
+        "TalentDes$chinese": "特殊攻击、专精技能、终极技能施加直接治疗时，有20%几率触发治疗链接，每2%幸运提升1%触发几率。",
+        "TalentName$english": "Healing Breath",
+        "TalentDes$english": "When a Special Attack, Expertise Skill, or Ultimate generates healing, there is a 20% chance to trigger Healing Chain. For every 2% Luck, the chance +1%."
+    },
+    "508": {
+        "TalentName$chinese": "狂野祝福",
+        "TalentDes$chinese": "狂野绽放现在可充能2次。<br>狂野绽放能量消耗-15%。",
+        "TalentName$english": "Wild Blessing",
+        "TalentDes$english": "Wild Bloom now holds up to 2 charges.<br>Wild Bloom's Energy cost -15%."
+    },
+    "509": {
+        "TalentName$chinese": "繁盛",
+        "TalentDes$chinese": "灌注、不羁之种、狂野绽放造成伤害时有30%固定几率使终极技能剩余冷却时间缩减1秒，每1秒最多生效一次。",
+        "TalentName$english": "Flourish",
+        "TalentDes$english": "When Infusion, Feral Seed, or Wild Bloom deals DMG, 30% chance to reduce the remaining CD of the Ultimate by 1s, occurring up to once per second."
+    },
+    "510": {
+        "TalentName$chinese": "惩击流",
+        "TalentDes$chinese": "继续增强使用狂野绽放的能力。<br>狂野绽放、再生脉冲、自然庇护将为友方目标施加共生印记。<br>共生印记：持续10秒，自身造成的所有伤害为共生印记目标回复伤害量20%点生命。",
+        "TalentName$english": "Smite Spec",
+        "TalentDes$english": "Further enhances Wild Bloom.<br>Wild Bloom, Regen Pulse, and Nature Ward now apply Symbiotic Mark to allied targets.<br>Symbiotic Mark: All of your DMG will heal allies with Symbiotic Mark for 20% of the DMG dealt, lasting for 10s."
+    },
+    "511": {
+        "TalentName$chinese": "双重灌注",
+        "TalentDes$chinese": "施放鹿之奔袭后，接下来灌注的引导数量+100%。",
+        "TalentName$english": "Double Infusion",
+        "TalentDes$english": "After casting Stag Charge, the number of channeling for the next Infusion +100%."
+    },
+    "512": {
+        "TalentName$chinese": "终焉光轮",
+        "TalentDes$chinese": "狂野绽放触发幸运一击伤害时，灌注剩余冷却时间缩减3秒。",
+        "TalentName$english": "Final Bloomwheel",
+        "TalentDes$english": "When Wild Bloom triggers a Lucky Strike, it reduces the remaining CD of Infusion by 3s."
+    },
+    "514": {
+        "TalentName$chinese": "翠绿根基",
+        "TalentDes$chinese": "战斗状态下，站立不动2秒，生成草领域。<br>草领域：自身处在草领域中急速+10%，离开草领域时0.5秒内移动速度+50%同时草领域消失。",
+        "TalentName$english": "Verdant Root",
+        "TalentDes$english": "While in battle state, standing still for 2s creates a Grass Domain.<br>Grass Domain: While inside, your Haste +10%. Upon exiting, the Grass Domain disappears and your movement speed +50% for 0.5s."
+    },
+    "515": {
+        "TalentName$chinese": "盛放",
+        "TalentDes$chinese": "施放生命绽放时有50%固定几率使得盛放注能、再生脉冲剩余冷却时间缩减2秒。",
+        "TalentName$english": "Full Bloom",
+        "TalentDes$english": "Casting Life Bloom grants a fixed 50% chance to reduce the remaining CD of Blossom Charge and Regen Pulse by 2s."
+    },
+    "516": {
+        "TalentName$chinese": "治疗充盈",
+        "TalentDes$chinese": "每施放5次生命绽放，使得下一个治疗型专精技能治疗量+100%。",
+        "TalentName$english": "Healing Infusion",
+        "TalentDes$english": "After casting Life Bloom 5 times, your next healing Expertise Skill will have its healing +100%."
+    },
+    "518": {
+        "TalentName$chinese": "绿意二连奏",
+        "TalentDes$chinese": "生命绽放有20%固定几率额外治疗1次。",
+        "TalentName$english": "Verdant Duet",
+        "TalentDes$english": "Life Bloom has a fixed 20% chance to heal 1 additional time."
+    },
+    "519": {
+        "TalentName$chinese": "花语",
+        "TalentDes$chinese": "治疗型专精技能+20%治疗加成，但生命绽放-50%治疗加成。",
+        "TalentName$english": "Floral Whisper",
+        "TalentDes$english": "Healing Expertise generate 20% more healing, but healing from Life Bloom -50%."
+    },
+    "520": {
+        "TalentName$chinese": "生命延展",
+        "TalentDes$chinese": "治疗链接治疗效果+10%；每7%精通治疗链接跳数+1。",
+        "TalentName$english": "Lifeforce Extension",
+        "TalentDes$english": "Increases the Healing of Healing Chain by 10%. For every 7% Mastery, Healing Chain jumps an additional time."
+    },
+    "521": {
+        "TalentName$chinese": "滋养之华",
+        "TalentDes$chinese": "生命绽放施加治疗时有50%固定几率施加滋养。",
+        "TalentName$english": "Nourish Essence",
+        "TalentDes$english": "When Life Bloom generates healing, 50% chance to apply Nourish."
+    },
+    "522": {
+        "TalentName$chinese": "花开无尽",
+        "TalentDes$chinese": "盛放注能、森之祈愿、再生脉冲施放时有20%固定几率使得5秒内下一个生命绽放施放时不消耗能量。",
+        "TalentName$english": "Endless Blossom",
+        "TalentDes$english": "When casting Blossom Charge, Grove Wish, or Regen Pulse, 20% chance that the next cast of Life Bloom within 5s consumes no Energy."
+    },
+    "523": {
+        "TalentName$chinese": "鹿之奔袭",
+        "TalentDes$chinese": "在累计触发10个滋养之种或狂野之种后，狂野绽放派生为鹿之奔袭。<br>施放鹿之奔袭后，立即获得3个再生蓓蕾。",
+        "TalentName$english": "Stag Charge",
+        "TalentDes$english": "After triggering a total of 10 Nourishing Seeds or Wild Seeds, Wild Bloom evolves into Stag Charge.<br>Casting Deer Charge instants grants 3 Regen Buds."
+    },
+    "524": {
+        "TalentName$chinese": "复苏之翼",
+        "TalentDes$chinese": "自身20米内有友方目标受到高于生命值30%的伤害时，触发复苏，同一个目标每45秒最多生效一次。<br>复苏：5秒内回复50%生命值。",
+        "TalentName$english": "Wings of Revival",
+        "TalentDes$english": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once every 45s.<br>Revival: Restores 50% HP over 5s."
+    },
+    "525": {
+        "TalentName$chinese": "自然绽放",
+        "TalentDes$chinese": "治疗生命值低于30%的友方目标时，对其触发自然绽放，立即为其回复200%攻击力生命值，每30秒最多生效一次。",
+        "TalentName$english": "Natural Bloom",
+        "TalentDes$english": "When healing an ally with lower than 30% HP, Natural Bloom triggers, instantly restoring HP equal to 200% ATK to them. This effect can occur up to once every 30s."
+    },
+    "526": {
+        "TalentName$chinese": "治愈脉动",
+        "TalentDes$chinese": "自身10米内有参与攻击的敌方目标被击败时，生成治疗脉冲，每10秒最多生效一次。",
+        "TalentName$english": "Healing Pulse",
+        "TalentDes$english": "When an enemy within 10 meters that you have attacked is defeated, a Healing Pulse is generated, occurring up to once every 10s."
+    },
+    "527": {
+        "TalentName$chinese": "生命馈赠",
+        "TalentDes$chinese": "自身10米内有参与攻击的敌方目标被击败时，生成治疗球，每2秒最多生效一次。",
+        "TalentName$english": "Gift of Life",
+        "TalentDes$english": "When an enemy within 10 meters that you have attacked is defeated, a Healing Orb is generated, occurring up to once every 2s."
+    },
+    "528": {
+        "TalentName$chinese": "蓓蕾获取",
+        "TalentDes$chinese": "自身10米内有参与攻击的敌方目标被击败时，生成能量球，靠近拾取后获得1个再生蓓蕾。",
+        "TalentName$english": "Bud Acquisition",
+        "TalentDes$english": "When an enemy within 10 meters that you have attacked is defeated, an Engram Orb is generated. Picking it up grants 1 Regen Bud."
+    },
+    "529": {
+        "TalentName$chinese": "防御加持",
+        "TalentDes$chinese": "鼓舞额外给目标提供100点物理防御。",
+        "TalentName$english": "Defensive Blessing",
+        "TalentDes$english": "Inspiration additionally grants the target 100 Armor."
+    },
+    "530": {
+        "TalentName$chinese": "花界神升",
+        "TalentDes$chinese": "狂野之种造成伤害或滋养之种造成治疗时使得接下来8秒内获得10%森元素加成。",
+        "TalentName$english": "Divine Ascension of the Flower Realm",
+        "TalentDes$english": "When Wild Seed deals DMG or Nourishing Seed generates healing, you gain a 10% Forest bonus for the next 8s."
+    },
+    "531": {
+        "TalentName$chinese": "愈合流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>替换为<linktext=1527><style=\"ItemQuality_5\">生命绽放</style></linktext>，并增强使用该技能的能力。<br><linktext=1527><style=\"ItemQuality_5\">生命绽放</style></linktext>治疗效果+<style=\"accent-gn\">20%</style>。<br>施放<linktext=1527><style=\"ItemQuality_5\">生命绽放</style></linktext>额外获得<style=\"accent-gn\">1</style>个<linktext=1108><style=\"ItemQuality_5\">再生蓓蕾</style></linktext>。<br><br><i><style=\"text_third_gray\"><size=20>保证安全的前提下，尽可能多的吟唱各种治疗技能。急速和精通会提升吟唱的速度和治疗技能的强度。</size></style></i>",
+        "TalentName$english": "Lifebind Spec",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Special Attack</style> with <linktext=1527><style=\"ItemQuality_5\">Life Bloom</style></linktext> and enhances the skill.<br><linktext=1527><style=\"ItemQuality_5\">Life Bloom</style></linktext> generates <style=\"accent-gn\">20%</style> more healing.<br>Casting <linktext=1527><style=\"ItemQuality_5\">Life Bloom</style></linktext> grants <style=\"accent-gn\">1</style> additional <linktext=1108><style=\"ItemQuality_5\">Regen Bud</style></linktext>.<br><br><i><style=\"text_third_gray\"><size=20>Whenever safety allows, aim to cast as many healing skills as possible. Haste increases cast speed, and Mastery enhances healing potency.</size></style></i>"
+    },
+    "532": {
+        "TalentName$chinese": "荆棘",
+        "TalentDes$chinese": "狂野之种命中目标时为其施加荆棘。<br>荆棘目标受到来自玩家的森元素伤害 +5%。",
+        "TalentName$english": "Thorns",
+        "TalentDes$english": "Wild Seed inflicts Thorn on the targets hit.<br>You deal 5% more Verdant DMG to the targets with Thorn."
+    },
+    "533": {
+        "TalentName$chinese": "生机涌动",
+        "TalentDes$chinese": "<style=\"accent-gn\">终极技能</style><linktext=1531><style=\"ItemQuality_5\">繁盛·希望结界</style></linktext>替换成<linktext=1551><style=\"ItemQuality_5\">生机涌动</style></linktext>。",
+        "TalentName$english": "Vital Surge",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Ultimate</style>, <linktext=1531><style=\"ItemQuality_5\">Divine Circle Bloom</style></linktext> with <linktext=1551><style=\"ItemQuality_5\">Vital Surge</style></linktext>."
+    },
+    "534": {
+        "TalentName$chinese": "绿意护佑",
+        "TalentDes$chinese": "受到自鼓舞的队友生命值低于20%时，触发护佑。<br>护佑：获得自然护盾同时8秒内受到的伤害降低35%，每60秒最多生效一次。",
+        "TalentName$english": "Verdant Blessing",
+        "TalentDes$english": "When an inspired ally's HP drops below 20%, triggers the Blessing.<br>Blessing: Grants a Nature Shield and reduces the DMG taken by 35% for 8s. The effect can be triggered once every 60s."
+    },
+    "535": {
+        "TalentName$chinese": "花语回升",
+        "TalentDes$chinese": "<style=\"accent-gn\">终极技能</style><linktext=1531><style=\"ItemQuality_5\">繁盛·希望结界</style></linktext>替换成<linktext=1552><style=\"ItemQuality_5\">花语回升</style></linktext>。",
+        "TalentName$english": "Bloomheal",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Ultimate</style>, <linktext=1531><style=\"ItemQuality_5\">Divine Circle Bloom</style></linktext> with <linktext=1552><style=\"ItemQuality_5\">Bloomheal</style></linktext>."
+    },
+    "536": {
+        "TalentName$chinese": "舞动之种",
+        "TalentDes$chinese": "伤害型专精技能触发幸运一击时，狂野之种发射数量+1。<br>每抛出5个滋养之种，下次滋养之种抛出数量+1。",
+        "TalentName$english": "Dancing Seed",
+        "TalentDes$english": "When a Expertise Skill that deals damage triggers a Lucky Strike, the number of Wild Seeds fired ++1.<br>For every 5 Nourishing Seeds thrown, the next throw of Nourishing Seeds will increase by +1."
+    },
+    "537": {
+        "TalentName$chinese": "能量涌动",
+        "TalentDes$chinese": "每2%急速提供1%能量自然回复效率。",
+        "TalentName$english": "Energy Surge",
+        "TalentDes$english": "Every 2% Haste provides 1% energy natural recovery efficiency."
+    },
+    "538": {
+        "TalentName$chinese": "再生之芽",
+        "TalentDes$chinese": "普通攻击造成伤害时有10%固定几率获得1个再生蓓蕾。",
+        "TalentName$english": "Regeneration Bud",
+        "TalentDes$english": "Normal attacks have a 10% fixed chance to gain 1 Regen Bud."
+    },
+    "539": {
+        "TalentName$chinese": "全能之息",
+        "TalentDes$chinese": "智力达到500点时，全能+4%。",
+        "TalentName$english": "Omnipotent Breath",
+        "TalentDes$english": "When Intellect reaches 500 points, Versatility +4%."
+    },
+    "540": {
+        "TalentName$chinese": "庇护",
+        "TalentDes$chinese": "施放灌注后的5秒内，狂野绽放或自然庇护添加的自然护盾吸收伤害量翻倍。",
+        "TalentName$english": "Shelter",
+        "TalentDes$english": "Within 5s after Casting Infusion, the Nature Shield added by Wild Bloom or Nature Ward absorbs double the damage."
+    },
+    "541": {
+        "TalentName$chinese": "脉冲之息",
+        "TalentDes$chinese": "如果装配有再生脉冲技能，每当自然庇护、终极技能冷却完成时可触发再生脉冲。",
+        "TalentName$english": "Pulse Breath",
+        "TalentDes$english": "If equipped with the Regen Pulse skill, Regen Pulse can be triggered whenever Nature Ward or Ultimate CD is completed."
+    },
+    "542": {
+        "TalentName$chinese": "不羁之种共生",
+        "TalentDes$chinese": "当前激活的共生印记数量大于等于5时，不羁之种伤害+100%。",
+        "TalentName$english": "Feral Seed Symbiosis",
+        "TalentDes$english": "When the number of active Symbiotic Marks is greater than or equal to 5, Feral Seed damage +100%."
+    },
+    "543": {
+        "TalentName$chinese": "狂野庇护",
+        "TalentDes$chinese": "拥有再生蓓蕾数量大于等于6时，不羁之种消耗再生蓓蕾数量+2，同时狂野之种抛出数量+1。<br>拥有再生蓓蕾数量小于6时，不羁之种额外获得10能量。",
+        "TalentName$english": "Wild Protection",
+        "TalentDes$english": "When the number of Regen Buds is greater than or equal to 6, Feral Seed consumes +2 Regen Buds, and the number of Wild Seeds thrown ++1.<br>When the number of Regen Buds is less than 6, Feral Seed gains an additional 10 energy."
+    },
+    "544": {
+        "TalentName$chinese": "广域荆棘",
+        "TalentDes$chinese": "不羁之种命中荆棘目标可将荆棘效果扩散给目标周围10米内的其他目标。",
+        "TalentName$english": "Wide-area Thorns",
+        "TalentDes$english": "When Feral Seed hits a target affected by Thorns, it can spread the Thorns effect to other targets within 10 meters of the target."
+    },
+    "545": {
+        "TalentName$chinese": "割裂",
+        "TalentDes$chinese": "灌注造成伤害时，为目标施加割裂。<br>割裂：2秒时间内受到荆棘伤害+100%。",
+        "TalentName$english": "Laceration",
+        "TalentDes$english": "When Infusion deals damage, it applies Tearto the target.<br>Rend: Thorns damage received +100% for 2s."
+    },
+    "546": {
+        "TalentName$chinese": "脉冲二重",
+        "TalentDes$chinese": "主动施放再生脉冲时，会连续扩散2次。",
+        "TalentName$english": "Pulse Duality",
+        "TalentDes$english": "When actively Casting Regen Pulse, it will spread twice consecutively."
+    },
+    "547": {
+        "TalentName$chinese": "庇护迅捷",
+        "TalentDes$chinese": "每施放或触发1次再生脉冲，缩减自然庇护剩余冷却时间2秒。",
+        "TalentName$english": "Swift Shelter",
+        "TalentDes$english": "Each time Regen Pulse is cast or triggered, it reduces the remaining CD time of Nature Ward by 2s."
+    },
+    "548": {
+        "TalentName$chinese": "脉冲回望",
+        "TalentDes$chinese": "再生脉冲达到最大距离时会返回你当前所在位置。<br>再生脉冲现在可同时对敌方目标造成伤害。",
+        "TalentName$english": "Pulse Retrospect",
+        "TalentDes$english": "When Regen Pulse reaches its maximum distance, it will return to your location.<br>Regen Pulse can now also deal damage to enemy targets."
+    },
+    "549": {
+        "TalentName$chinese": "迅捷蓓蕾",
+        "TalentDes$chinese": "每获得1个再生蓓蕾，不羁之种剩余冷却时间缩减1秒。",
+        "TalentName$english": "Swift Bud",
+        "TalentDes$english": "For each Regen Bud gained, the remaining CD time of Feral Seed -1s."
+    },
+    "550": {
+        "TalentName$chinese": "共生之息",
+        "TalentDes$chinese": "共生印记转换治疗量+2%。每5%精通额外+1%。",
+        "TalentName$english": "Breath of Symbiosis",
+        "TalentDes$english": "Symbiotic Mark conversion healing amount +2%. Every 5% Mastery provides an additional +1%."
+    },
+    "551": {
+        "TalentName$chinese": "共生延长",
+        "TalentDes$chinese": "每发射一个狂野之种当前激活的共生印记时间延长1秒。",
+        "TalentName$english": "Symbiosis Extension",
+        "TalentDes$english": "Each time a Wild Seed is fired, the duration of active Symbiotic Marks is extended by 1s."
+    },
+    "552": {
+        "TalentName$chinese": "脉冲回响",
+        "TalentDes$chinese": "灌注造成伤害时，获得1层脉冲回响。<br>脉冲回响：再生脉冲伤害+20%，持续5秒，最多叠加5层。",
+        "TalentName$english": "Pulse Echo",
+        "TalentDes$english": "When Infusion deals damage, you gain 1 stack of Pulse Echo.<br>Pulse Echo: Regen Pulse damage +20%, lasts for 5s, stacks up to 5 times."
+    },
+    "553": {
+        "TalentName$chinese": "幸运伤害",
+        "TalentDes$chinese": "幸运一击伤害+5%。<br>每1%幸运提供1%幸运一击伤害。",
+        "TalentName$english": "Luck Damage",
+        "TalentDes$english": "Lucky Strike damage +5%.<br>Each 1% Luck provides 1% Lucky Strike damage."
+    },
+    "554": {
+        "TalentName$chinese": "绿意冲击",
+        "TalentDes$chinese": "每获得20层脉冲回响，下一次再生脉冲结束会在你当前位置爆发绿意冲击。",
+        "TalentName$english": "Verdant Impact",
+        "TalentDes$english": "For every 20 stacks of Pulse Echo, the next Regen Pulse will end with a burst of Verdant Impact at your location."
+    },
+    "555": {
+        "TalentName$chinese": "狂野幸运",
+        "TalentDes$chinese": "狂野绽放、再生脉冲造成伤害时，有幸运%/2的几率，获得1枚再生蓓蕾。如果受到荆棘影响，触发几率翻倍。",
+        "TalentName$english": "Wild Luck",
+        "TalentDes$english": "When Wild Bloom and Regen Pulse deal damage, there is a chance of luck%/2 to gain 1 Regen Bud. If affected by Thorns, the trigger chance is doubled."
+    },
+    "556": {
+        "TalentName$chinese": "绿意滋养",
+        "TalentDes$chinese": "自身拥有滋养效果时，受到的所有伤害-10%。<br>拥有滋养效果的目标受到治疗+2%，滋养大于等于3层时，受到治疗额外+2%。",
+        "TalentName$english": "Verdant Nourishment",
+        "TalentDes$english": "When you have the Nourish effect, all damage taken -10%.<br>Targets with the Nourish effect receive +2% healing, and if Nourish is equal to or greater than 3 stacks, they receive an additional +2% healing."
+    },
+    "557": {
+        "TalentName$chinese": "极意鼓舞",
+        "TalentDes$chinese": "鼓舞效果翻倍。",
+        "TalentName$english": "Ultimate Inspiration",
+        "TalentDes$english": "The Inspire effect is doubled."
+    },
+    "558": {
+        "TalentName$chinese": "生命盛放",
+        "TalentDes$chinese": "施放盛放注能后下一次生命绽放得到强化，免除吟唱同时治疗量+50%。",
+        "TalentName$english": "Life Bloom",
+        "TalentDes$english": "After Casting Blossom Charge, the next Life Bloom is enhanced, eliminating the Casting time and increasing healing by 50%."
+    },
+    "559": {
+        "TalentName$chinese": "生机",
+        "TalentDes$chinese": "滋养可以堆叠至5层。<br>每次施放生命绽放，受到滋养效果影响的目标获得1层滋养效果。",
+        "TalentName$english": "Vitality",
+        "TalentDes$english": "Nourish can stack up to 5 layers.<br>Each time Life Bloom is cast, targets affected by the Nourish effect gain 1 layer of Nourish."
+    },
+    "560": {
+        "TalentName$chinese": "盛放精进",
+        "TalentDes$chinese": "施放盛放注能不再消耗再生蓓蕾。",
+        "TalentName$english": "Flourishing Progress",
+        "TalentDes$english": "Casting Blossom Charge no longer consumes Regen Buds."
+    },
+    "561": {
+        "TalentName$chinese": "绽放轮回",
+        "TalentDes$chinese": "施放生命绽放使得接下来4秒内生命绽放治疗量+20%，能量消耗+10%，最多叠加5层。",
+        "TalentName$english": "Blooming Reincarnation",
+        "TalentDes$english": "Casting Life Bloom increases its healing by 20% for the next 4s and energy consumption by 10%, stacking up to 5 times."
+    },
+    "562": {
+        "TalentName$chinese": "能量勃发",
+        "TalentDes$chinese": "加速生长持续期间，能量回复速度+50%。",
+        "TalentName$english": "Energy Arcane",
+        "TalentDes$english": "During Growth Arcane, energy recovery speed +50%."
+    },
+    "563": {
+        "TalentName$chinese": "超然",
+        "TalentDes$chinese": "滋养每治疗自身200次，获得超然。",
+        "TalentName$english": "Transcendence",
+        "TalentDes$english": "For every 200 self-heals from Nourish, gain Transcendence."
+    },
+    "564": {
+        "TalentName$chinese": "花株繁盛",
+        "TalentDes$chinese": "当处于草领域时，花株出现的时间加快50%。",
+        "TalentName$english": "Flourishing Flower",
+        "TalentDes$english": "When in the Grass Field, the appearance time of Flower Stalks is accelerated by 50%."
+    },
+    "565": {
+        "TalentName$chinese": "三色启示",
+        "TalentDes$chinese": "消耗苍月慰藉触发花时轮舞·三色启示。<br>花时轮舞·三色启示：获得所有花株效果，该效果每60秒最多生效一次。",
+        "TalentName$english": "Tricolor Revelation",
+        "TalentDes$english": "Consuming Moonlight Solace triggers Flower Dance - Tricolor Revelation.<br>Flower Dance - Tricolor Revelation - Gain all Flower Stalk effects, this effect can only occur once every 60s."
+    },
+    "566": {
+        "TalentName$chinese": "花时轮舞",
+        "TalentDes$chinese": "每过45秒，生成1株花株，生成顺序为红莲洞察，金辉虔诚、苍月慰藉。",
+        "TalentName$english": "Flower Time Dance",
+        "TalentDes$english": "Every 45s, generate 1 Flower Stalk in the order of Crimson True Sight, Golden Devotion, Moonlight Solace."
+    },
+    "567": {
+        "TalentName$chinese": "蓓蕾生花",
+        "TalentDes$chinese": "当有花株生成时，每2秒获得1个再生蓓蕾，持续8秒。",
+        "TalentName$english": "Bud to Blossom",
+        "TalentDes$english": "When a Flower Stalk is generated, gain 1 Regen Bud every 2s for 8s."
+    },
+    "568": {
+        "TalentName$chinese": "鼓舞强化",
+        "TalentDes$chinese": "鼓舞效果额外提供30点智力、力量、敏捷、耐力。",
+        "TalentName$english": "Inspire and Strengthen",
+        "TalentDes$english": "The Inspire effect additionally provides 30 points of Intellect, Strength, Agility, and Endurance."
+    },
+    "569": {
+        "TalentName$chinese": "能量扩展",
+        "TalentDes$chinese": "能量上限+20。<br>施放盛放注能，回复30%已损失能量。",
+        "TalentName$english": "Energy Expansion",
+        "TalentDes$english": "Energy cap +20.<br>Casting Blossom Charge restores 30% of lost energy."
+    },
+    "570": {
+        "TalentName$chinese": "救护",
+        "TalentDes$chinese": "治疗型专精技能对当前生命值低于50%的目标治疗量+25%。",
+        "TalentName$english": "Rescue",
+        "TalentDes$english": "Healing Expertise heal targets with less than 50% HP +25%."
+    },
+    "571": {
+        "TalentName$chinese": "绽放瞬发",
+        "TalentDes$chinese": "每施放10次生命绽放，15秒内下一次森之祈愿或再生脉冲施法速度+100%，同时治疗量+10%。",
+        "TalentName$english": "Instant Bloom",
+        "TalentDes$english": "After casting Life Bloom 10 times, the next Grove Wish or Regen Pulse within 15s has a Cast Speed of +100% and healing of +10%."
+    },
+    "900": {
+        "TalentName$chinese": "碎石引潮",
+        "TalentDes$chinese": "施放岩御·崩裂回环后的8秒内，每次普通攻击可将自身8米外20米内的目标拖拽至你的位置，同个目标3秒内不能被重复拖拽。",
+        "TalentName$english": "Stone Fragment Tide",
+        "TalentDes$english": "For 8s after you use Tectonic Ring, each Basic Attack pulls a target within 20 meters and at least 8 meters away toward you. The same target cannot be pulled again within 3s."
+    },
+    "901": {
+        "TalentName$chinese": "力量转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">3</style>点力量提供<style=\"accent-gn\">2</style>点物理防御。",
+        "TalentName$english": "Power Conversion",
+        "TalentDes$english": "<style=\"accent-gn\">3</style> Strength provides <style=\"accent-gn\">2</style> Armor."
+    },
+    "902": {
+        "TalentName$chinese": "生命压制",
+        "TalentDes$chinese": "获得压制专精效果。",
+        "TalentName$english": "Life Suppress",
+        "TalentDes$english": "Gains the effects of Suppress Expertise."
+    },
+    "903": {
+        "TalentName$chinese": "弱点打击",
+        "TalentDes$chinese": "普通攻击造成伤害时有10%固定几率触发一次弱点打击。",
+        "TalentName$english": "Weak Point Strike",
+        "TalentDes$english": "When dealing DMG, Basic Attacks have a fixed 10% chance to trigger Weak Point Strike."
+    },
+    "904": {
+        "TalentName$chinese": "弱点强化",
+        "TalentDes$chinese": "弱点打击的固定触发几率+10%。",
+        "TalentName$english": "Enhanced Weak Point Strike",
+        "TalentDes$english": "Increases the fixed chance to trigger Weak Point Strike by 10%."
+    },
+    "906": {
+        "TalentName$chinese": "格挡回复",
+        "TalentDes$chinese": "格挡成功回复自身2%生命和3怒气，每1秒最多生效一次。<br>触发幸运格挡时，回复自身6%生命和10怒气，每1秒最多生效一次。",
+        "TalentName$english": "Block Recovery",
+        "TalentDes$english": "Successful Block restores 2% HP and 3 Rage, once per second.<br>On Lucky Block, restore 6% HP and 10 Rage, once per second."
+    },
+    "907": {
+        "TalentName$chinese": "格挡反击",
+        "TalentDes$chinese": "格挡成功触发格挡反击，每1秒最多生效一次。<br>触发幸运格挡时，触发强化格挡反击，每1秒最多生效一次。",
+        "TalentName$english": "Countercrush",
+        "TalentDes$english": "Successful Block triggers Countercrush, once per second.<br>On Lucky Block, trigger Enhanced Countercrush, once per second."
+    },
+    "911": {
+        "TalentName$chinese": "砂岩之握精进",
+        "TalentDes$chinese": "砂岩之握冷却时间-15秒。<br>施放砂岩之握后获得格挡冲击效果。",
+        "TalentName$english": "Sandgrip",
+        "TalentDes$english": "Reduces the CD of Sandstone Grasp by 15s.<br>After using Sandgrip, gains Countercrush."
+    },
+    "912": {
+        "TalentName$chinese": "愈合之砂",
+        "TalentDes$chinese": "生命上限+10%。",
+        "TalentName$english": "Healing Sands",
+        "TalentDes$english": "Max HP +10%"
+    },
+    "913": {
+        "TalentName$chinese": "幸运壁垒",
+        "TalentDes$chinese": "勇者壁垒期间，格挡几率翻倍。",
+        "TalentName$english": "Fortune Bastion",
+        "TalentDes$english": "During Brave Bastion, doubles the Block chance."
+    },
+    "914": {
+        "TalentName$chinese": "猛击庇护",
+        "TalentDes$chinese": "护盾猛击命中目标使得目标对自身造成伤害降低3%，持续10秒，最多叠加3层。",
+        "TalentName$english": "Slam Shelter",
+        "TalentDes$english": "Successful hit of Shield Bash reduces the DMG targets deal to you by 3% for 10s, stacking up to 3 times."
+    },
+    "916": {
+        "TalentName$chinese": "坚毅之息",
+        "TalentDes$chinese": "处于护盾状态时，在空中施放普通攻击会猛烈下砸，将自身护盾引爆，对周围目标造成自身30%最大生命值伤害，每30秒最多生效一次。",
+        "TalentName$english": "Resolute Breath",
+        "TalentDes$english": "While shielded, use Basic Attack midair to slam down, detonating the Shield and dealing DMG equal to 30% max HP to nearby enemies. Once every 30s."
+    },
+    "917": {
+        "TalentName$chinese": "猛击援护",
+        "TalentDes$chinese": "护盾猛击施加的护盾值+30%。",
+        "TalentName$english": "Smash Support",
+        "TalentDes$english": "Increases the effectiveness of Shield granted by Shield Bash by 30%."
+    },
+    "918": {
+        "TalentName$chinese": "砂之庇护",
+        "TalentDes$chinese": "巨岩躯体状态下，每获得20点怒气，触发砂之庇护。",
+        "TalentName$english": "Sandy Shelter",
+        "TalentDes$english": "During Stoneform, gains Sandy Shelter for every 20 Rage accumulated."
+    },
+    "919": {
+        "TalentName$chinese": "护盾连击",
+        "TalentDes$chinese": "普通攻击造成伤害时有5%固定几率触发护盾连击。每1%精通附加0.2%触发概率。",
+        "TalentName$english": "Shield Combo",
+        "TalentDes$english": "Basic Attacks have a fixed 5% chance to trigger Shield Combo. Each 1% Mastery adds 0.2% to the trigger chance."
+    },
+    "920": {
+        "TalentName$chinese": "巨岩之息",
+        "TalentDes$chinese": "每消耗1枚砂晶石，缩减巨岩躯体1秒剩余冷却时间。",
+        "TalentName$english": "Breath of Stone",
+        "TalentDes$english": "Consumes 1 Sand Crystal to reduce the CD of Stoneform by 1s."
+    },
+    "921": {
+        "TalentName$chinese": "元素协调",
+        "TalentDes$chinese": "护盾状态下，受到魔法伤害-25%，受到风元素攻击伤害-50%。",
+        "TalentName$english": "Elemental Harmony",
+        "TalentDes$english": "While shielded, reduces Magic Damage taken by 25% and Wind DMG taken by 50%."
+    },
+    "922": {
+        "TalentName$chinese": "护盾回声",
+        "TalentDes$chinese": "在砂石斗篷持续期间，对自身添加护盾触发护盾回声。",
+        "TalentName$english": "Shield Echo",
+        "TalentDes$english": "During Sandshroud, gaining a shield triggers Shield Echo."
+    },
+    "923": {
+        "TalentName$chinese": "破碎怒击",
+        "TalentDes$chinese": "岩怒之击造成伤害时，有20%几率使你的普通攻击派生为怒击，每2%幸运附加1%触发几率。<br>怒击施放后格挡减伤+10%，持续10秒。",
+        "TalentName$english": "Shattering Rageblow",
+        "TalentDes$english": "When dealing DMG, Granite Fury has a 20% chance to allow your next Basic Attack to evolve into Rageblow. Each 2% Luck adds 1% chance.<br>After using Rageblow, increases Block DMG RED by 10% for 10s."
+    },
+    "924": {
+        "TalentName$chinese": "首领之牙",
+        "TalentDes$chinese": "受到精英及以上目标伤害-12%。",
+        "TalentName$english": "Fang of the Alpha",
+        "TalentDes$english": "Reduces the DMG Elites or stronger enemies deal to you by 12%."
+    },
+    "925": {
+        "TalentName$chinese": "绝境逢生",
+        "TalentDes$chinese": "生命值低于30%时，触发绝境逢生，每60秒最多生效一次。",
+        "TalentName$english": "Survival Instinct",
+        "TalentDes$english": "When HP falls below 30%, trigger Last Stand. Once every 60s."
+    },
+    "926": {
+        "TalentName$chinese": "敌影之盾",
+        "TalentDes$chinese": "自身3米内每有1个敌方目标，格挡几率+3%，最高15%（精英及以上目标效果翻倍）。",
+        "TalentName$english": "Shadow Veil",
+        "TalentDes$english": "Each enemy within 3 meters increases Block chance by 3%, up to 15%. (Doubles the effect against Elite or stronger enemies.)"
+    },
+    "927": {
+        "TalentName$chinese": "奋勇",
+        "TalentDes$chinese": "激怒状态下，物理防御+30%，每秒扣除5%。",
+        "TalentName$english": "Valiant Fury",
+        "TalentDes$english": "During Enraged, increases Armor by 30%, yet it loses 5% per second."
+    },
+    "928": {
+        "TalentName$chinese": "群敌压制",
+        "TalentDes$chinese": "自身3米内每有一个敌方目标，压制效果+3%，最高15%（精英及以上目标效果翻倍）。",
+        "TalentName$english": "Group Suppress",
+        "TalentDes$english": "Each enemy within 3 meters enhances Suppress effect by 3%, up to 15%. (Doubles the effect against Elite or stronger enemies.)"
+    },
+    "929": {
+        "TalentName$chinese": "怒火觉醒",
+        "TalentDes$chinese": "消耗怒气时有几率使自身激怒，每消耗1怒气提供1%几率。",
+        "TalentName$english": "Rage Awakening",
+        "TalentDes$english": "Consuming Rage has a chance to trigger Enraged. Each 1 Rage consumed grants 1% chance."
+    },
+    "930": {
+        "TalentName$chinese": "格挡流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>更换为<linktext=1538><style=\"ItemQuality_5\">格挡冲击</style></linktext>，并增强使用该技能的能力。<br>触发<linktext=1126><style=\"ItemQuality_5\">幸运格挡</style></linktext>可格挡减伤+<style=\"accent-gn\">10%</style>。<br><br><i><style=\"text_third_gray\"><size=20>尽可能保持格挡冲击的覆盖，格挡冲击下受到的部分伤害会被格挡抵消掉，高额的幸运能让格挡时附加各种收益。</size></style></i>",
+        "TalentName$english": "Block Spec",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Special Attack</style> with <linktext=1538><style=\"ItemQuality_5\">Countercrush</style></linktext>, and enhance the ability. <br>When <linktext=1126><style=\"ItemQuality_5\">Lucky Block</style></linktext> triggers, increases Block DMG RED by <style=\"accent-gn\">10%</style>. <br><br><i><style=\"text_third_gray\"><size=20>Try to keep Countercrush active as much as possible. While it's active, part of incoming DMG can be blocked. High Luck allows parry to yield various buffs.</size></style></i>"
+    },
+    "931": {
+        "TalentName$chinese": "岩盾流",
+        "TalentDes$chinese": "继续增强使用护盾猛击的能力。<br>护盾猛击每多命中1个敌方目标伤害+30%，最高+150%。",
+        "TalentName$english": "Earthfort Spec",
+        "TalentDes$english": "Further enhances Shield Bash.<br>Each additional enemy hit increases the DMG deal by Shield Bash by 30%, up to 150%."
+    },
+    "932": {
+        "TalentName$chinese": "同调领域",
+        "TalentDes$chinese": "岩御·崩裂回环衍生出一块持续5秒的沙石区域。",
+        "TalentName$english": "Resonant Domain",
+        "TalentDes$english": "Tectonic Ring generates a Sandfield that lasts 5s."
+    },
+    "933": {
+        "TalentName$chinese": "砂岩回溯",
+        "TalentDes$chinese": "怒击造成伤害时，使勇者壁垒冷却时间缩减3秒。",
+        "TalentName$english": "Sandstone Rewind",
+        "TalentDes$english": "When Rageblow deals DMG, reduces the CD of Brave Bastion by 3s."
+    },
+    "934": {
+        "TalentName$chinese": "砂石震荡",
+        "TalentDes$chinese": "勇者壁垒状态下，施放格挡冲击、岩怒之击时触发砂晶石震荡。",
+        "TalentName$english": "Sandstone Shock",
+        "TalentDes$english": "During Brave Bastion, using Countercrush or Granite Fury triggers a Sand Crystal Shock."
+    },
+    "935": {
+        "TalentName$chinese": "格挡祝福",
+        "TalentDes$chinese": "格挡成功，有30%固定几率使得下一次施放岩怒之击不消耗砂晶石，每3秒最多生效一次。",
+        "TalentName$english": "Block Blessing",
+        "TalentDes$english": "A successful Block grants you a fixed 30% chance that your next Granite Fury won't consume Sand Crystal. Once every 3s."
+    },
+    "936": {
+        "TalentName$chinese": "狂怒庇护",
+        "TalentDes$chinese": "激怒状态下，生命上限+20%。",
+        "TalentName$english": "Fury Shelter",
+        "TalentDes$english": "In enraged state, Max HP +20%."
+    },
+    "937": {
+        "TalentName$chinese": "激怒压制",
+        "TalentDes$chinese": "激怒状态下，压制效果翻倍。",
+        "TalentName$english": "Enraged Suppress",
+        "TalentDes$english": "In enraged state, Suppress effect is doubled."
+    },
+    "938": {
+        "TalentName$chinese": "激怒延时",
+        "TalentName$english": "Enrage Delay"
+    },
+    "939": {
+        "TalentName$chinese": "砂石复苏",
+        "TalentDes$chinese": "每消耗1枚砂晶石，回复1%最大生命值。",
+        "TalentName$english": "Sandstone Revival",
+        "TalentDes$english": "For every Sand Crystal consumed, recover 1% of Max HP."
+    },
+    "940": {
+        "TalentName$chinese": "激怒扩充",
+        "TalentDes$chinese": "激怒状态下攻击速度+8%。",
+        "TalentName$english": "Enrage Expansion",
+        "TalentDes$english": "In enraged state, attack speed +8%."
+    },
+    "941": {
+        "TalentName$chinese": "怒爆精进",
+        "TalentDes$chinese": "怒爆充能次数+1。<br>激怒状态下，怒爆变为瞬发。",
+        "TalentName$english": "Rage Burst improvement",
+        "TalentDes$english": "Rage Burst charge +1.<br>While Enraged, Rage Burst becomes instant cast."
+    },
+    "942": {
+        "TalentName$chinese": "星之狂怒",
+        "TalentDes$chinese": "碎星冲伤害+30%，且必定获得激怒。",
+        "TalentName$english": "Star Fury",
+        "TalentDes$english": "Star Shatter damage +30%, and always gains enraged."
+    },
+    "943": {
+        "TalentName$chinese": "石域",
+        "TalentDes$chinese": "砂石斗篷持续期间，受到攻击时使自身5米范围内敌方目标攻击速度降低30%，持续3秒。<br>砂石斗篷持续期间，自身8米范围内友方物理防御+10%。",
+        "TalentName$english": "Stone Domain",
+        "TalentDes$english": "During the duration of Sandshroud, being attacked reduces the attack speed of enemy targets within 5 meters by 30%, lasting for 3s.<br>During the duration of Sandshroud, Armor of friendly targets within 8 meters +10%."
+    },
+    "944": {
+        "TalentName$chinese": "岩盾倍增",
+        "TalentDes$chinese": "普通攻击造成伤害时，有10%固定几率触发岩盾倍增，每30秒最多生效一次。",
+        "TalentName$english": "Amplified Earthfort",
+        "TalentDes$english": "When normal attacks deal damage, 10% chance to trigger Rock Shield, this effect can occur once every 30s."
+    },
+    "945": {
+        "TalentName$chinese": "巨石护体",
+        "TalentDes$chinese": "巨岩躯体持续期间受到所有伤害-10%。",
+        "TalentName$english": "Boulder Shield",
+        "TalentDes$english": "During the duration of Stoneform, all damage received -10%."
+    },
+    "946": {
+        "TalentName$chinese": "猛击护盾",
+        "TalentDes$chinese": "护盾强度+10%。<br>当处于砂石斗篷期间时，护盾强度+20%。",
+        "TalentName$english": "Shield Bash",
+        "TalentDes$english": "Shield +10%.<br>When in Sandshroud duration, Shield +20%."
+    },
+    "947": {
+        "TalentName$chinese": "回复",
+        "TalentDes$chinese": "专精技能、特殊攻击每攻击目标1次，5秒内力量+2%，最多叠加10层。当拥有10层效果时，专精技能造成伤害的20%回复自身生命，同时移除叠层效果。",
+        "TalentName$english": "Recovery",
+        "TalentDes$english": "Expertise and special attacks increase strength by 2% for 5s for each target hit, stacking up to 10 layers. When having 10 layers, Expertise heal for 20% of the damage dealt and remove the stack effect."
+    },
+    "948": {
+        "TalentName$chinese": "碎星崩裂",
+        "TalentDes$chinese": "每消耗20枚砂晶石，碎星冲派生为碎星崩裂。",
+        "TalentName$english": "Starfall",
+        "TalentDes$english": "For every 20 Sand Crystals consumed, Star Shatter evolves into Starfall."
+    },
+    "949": {
+        "TalentName$chinese": "岩之主",
+        "TalentDes$chinese": "施放碎星崩裂后，获得岩之主。<br>岩之主：15秒内，普通攻击派生为1次崩裂，怒爆派生为1次地崩山摧。",
+        "TalentName$english": "Lord of Rocks",
+        "TalentDes$english": "After Casting Starfall Arcane, gain Rock Master.<br>Rock Master: For 15s, normal attacks evolve into 1 Arcane, and Rage Burst evolves into 1 Terra Sunder."
+    },
+    "950": {
+        "TalentName$chinese": "碎击",
+        "TalentDes$chinese": "碎星冲击败目标时，碎星冲立即冷却。",
+        "TalentName$english": "Shatter Strike",
+        "TalentDes$english": "When Star Shatter defeats a target, Star Shatter immediately cools down."
+    },
+    "951": {
+        "TalentName$chinese": "激怒崩裂",
+        "TalentDes$chinese": "激怒状态下，崩裂必定触发弱点打击。",
+        "TalentName$english": "Enraged Rupture",
+        "TalentDes$english": "In Enraged state, Arcane is guaranteed to trigger Weak Point Strike."
+    },
+    "952": {
+        "TalentName$chinese": "碎星冲追击",
+        "TalentDes$chinese": "碎星冲对当前生命值低于等于35%的目标伤害+100%。",
+        "TalentName$english": "Star Shatter Pursuit",
+        "TalentDes$english": "Star Shatter deals +100% damage to targets with HP less than or equal to 35%."
+    },
+    "953": {
+        "TalentName$chinese": "巨岩之主",
+        "TalentDes$chinese": "每激怒7次，获得岩之主。<br>岩之主：15秒内，普通攻击派生为1次崩裂，怒爆派生为1次地崩山摧。",
+        "TalentName$english": "Lord of the Great Rock",
+        "TalentDes$english": "For every 7 Enrages, gain Rock Master.<br>Rock Master: For 15s, normal attacks evolve into 1 Arcane, and Rage Burst evolves into 1 Terra Sunder."
+    },
+    "954": {
+        "TalentName$chinese": "愈战愈勇",
+        "TalentDes$chinese": "战斗状态下，每5秒回复1%最大生命值。",
+        "TalentName$english": "Bravery in Battle",
+        "TalentDes$english": "In combat state, recover 1% of max HP every 5s."
+    },
+    "955": {
+        "TalentName$chinese": "岩护",
+        "TalentDes$chinese": "物理防御+300。<br>地崩山摧额外对目标造成一次物理伤害，伤害值等于200%物理防御。",
+        "TalentName$english": "Rock Guard",
+        "TalentDes$english": "Armor +300.<br>Terra Sunder additionally deals Attack Damage to the target equal to 200% of Armor."
+    },
+    "956": {
+        "TalentName$chinese": "壁垒怒火",
+        "TalentDes$chinese": "勇者壁垒持续期间岩怒之击、格挡冲击伤害+30%。",
+        "TalentName$english": "Rampart Fury",
+        "TalentDes$english": "During Brave Bastion, Granite Fury and Countercrush damage +30%."
+    },
+    "957": {
+        "TalentName$chinese": "格挡庇护",
+        "TalentDes$chinese": "触发幸运格挡时，本次格挡伤害减免+30%。",
+        "TalentName$english": "Block Shelter",
+        "TalentDes$english": "When triggering Lucky Block, Defense for this block +30%."
+    },
+    "958": {
+        "TalentName$chinese": "格挡砂石",
+        "TalentDes$chinese": "格挡可对魔法伤害生效。",
+        "TalentName$english": "Sand Block",
+        "TalentDes$english": "Block can be effective against Magic Damage."
+    },
+    "959": {
+        "TalentName$chinese": "岩之心",
+        "TalentDes$chinese": "每施放5次岩怒之击，获得岩之心。<br>岩之心：10秒内，岩怒之击派生为巨岩轰击。",
+        "TalentName$english": "Heart of Rock",
+        "TalentDes$english": "After Casting Granite Fury 5 times, gain Rock Heart.<br>Rock Heart: For 10s, Granite Fury evolves into Stone Fist."
+    },
+    "960": {
+        "TalentName$chinese": "岩弹",
+        "TalentDes$chinese": "施放巨岩轰击后，接下来6秒时间内，每2秒召唤1记岩弹。",
+        "TalentName$english": "Earth Shard",
+        "TalentDes$english": "After Casting Stone Fist, summon 1 Rock Bullet every 2s for the next 6s."
+    },
+    "961": {
+        "TalentName$chinese": "岩弹激怒",
+        "TalentDes$chinese": "每产生50点怒气，召唤1记岩弹。",
+        "TalentName$english": "Granite Fury",
+        "TalentDes$english": "For every 50 Rage generated, summon 1 Rock Bullet."
+    },
+    "962": {
+        "TalentName$chinese": "岩拳回复",
+        "TalentDes$chinese": "巨岩轰击为你回复5%最大生命值，每额外击中1个敌方目标，回复效果+2%，最终回复量不超过15%。溢出的回复值转化为等额护盾。",
+        "TalentName$english": "Rock Heal",
+        "TalentDes$english": "Stone Fist restores 5% of max HP, with an additional 2% restoration for each extra enemy hit, up to a maximum of 15%. Excess restoration converts into an equivalent shield."
+    },
+    "963": {
+        "TalentName$chinese": "壁垒刚毅",
+        "TalentDes$chinese": "勇者壁垒持续期间受到伤害，格挡反击、强化格挡反击伤害+10%，持续10秒，最多叠加10层。",
+        "TalentName$english": "Rampart Fortitude",
+        "TalentDes$english": "During Brave Bastion, when taking damage, Block Counter and Enhanced Block Counter damage +10%, lasting for 10s, stacking up to 10 layers."
+    },
+    "964": {
+        "TalentName$chinese": "怒击强化",
+        "TalentDes$chinese": "岩怒之击消耗砂晶石-1。",
+        "TalentName$english": "Rage Enhancement",
+        "TalentDes$english": "Granite Fury Sand Crystal consumption -1."
+    },
+    "965": {
+        "TalentName$chinese": "岩弹二连击",
+        "TalentDes$chinese": "岩弹有几率额外召唤1记岩弹，其几率等于幸运几率。",
+        "TalentName$english": "Granite Combo",
+        "TalentDes$english": "Rock Bullet has a chance to summon an additional Rock Bullet, with the chance equal to Lucky Chance."
+    },
+    "966": {
+        "TalentName$chinese": "威压",
+        "TalentDes$chinese": "岩弹命中目标使其接下来5秒内对我造成的所有伤害-10%。",
+        "TalentName$english": "Intimidation",
+        "TalentDes$english": "Rock Bullet hitting a target reduces all damage dealt to me by that target by -10% for the next 5s."
+    },
+    "967": {
+        "TalentName$chinese": "岩弹怒击",
+        "TalentDes$chinese": "每召唤20记岩弹，获得岩之心。<br>岩之心：10秒内，岩怒之击派生为巨岩轰击。",
+        "TalentName$english": "Granite Fury",
+        "TalentDes$english": "Every 20 rock bullets summoned grants a Heart of Rock.<br>Heart of Rock: For 10s, Granite Fury transforms into Stone Fist."
+    },
+    "968": {
+        "TalentName$chinese": "反击风暴",
+        "TalentDes$chinese": "施放岩御·崩裂回环后的10秒内，每2秒触发1次强化格挡反击。",
+        "TalentName$english": "Counter Storm",
+        "TalentDes$english": "For 10s after Casting Tectonic Ring, triggers Enhanced Block Counter every 2s."
+    },
+    "969": {
+        "TalentName$chinese": "刚岩幸运",
+        "TalentDes$chinese": "幸运几率+5%。<br>格挡反击、强化格挡反击必定暴击。",
+        "TalentName$english": "Rock Luck",
+        "TalentDes$english": "Luck chance +5%.<br>Block Counter and Enhanced Block Counter are guaranteed Crits."
+    },
+    "970": {
+        "TalentName$chinese": "刚岩精通",
+        "TalentDes$chinese": "精通+600。<br>勇者壁垒持续期间精通+8%。",
+        "TalentName$english": "Rock Mastery",
+        "TalentDes$english": "Mastery +600.<br>During Brave Bastion, mastery +8%."
+    },
+    "971": {
+        "TalentName$chinese": "激怒岩之心",
+        "TalentDes$chinese": "激怒状态下，幸运几率+10%。",
+        "TalentName$english": "Enraged Rock Heart",
+        "TalentDes$english": "In enraged state, luck chance +10%."
+    },
+    "1100": {
+        "TalentName$chinese": "光储限界",
+        "TalentDes$chinese": "激活驭兽流时，光能上限+20，使光能重铸获得更长的持续时间。<br>如果激活了驯鹰流，效果修正为：光能上限-20，使自身可以更快的进入光能重铸状态。",
+        "TalentName$english": "Photon Limit",
+        "TalentDes$english": "When Wildpack Spec is active, increases Max Photon Energy by 20, and extends the duration of Photon Reforge.<br>If Falconry Spec is active, reduces Max Photon Energy by 20, and enables faster access to Photon Reforge."
+    },
+    "1101": {
+        "TalentName$chinese": "敏捷转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">10</style>点敏捷提供<style=\"accent-gn\">2</style>点急速。",
+        "TalentName$english": "Agility Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">10</style> points of Agility provide <style=\"accent-gn\">2</style> point of Haste."
+    },
+    "1102": {
+        "TalentName$chinese": "易伤一击",
+        "TalentDes$chinese": "造成伤害时，有30%固定几率对敌方目标施加易伤效果。",
+        "TalentName$english": "Vulnerable Strike",
+        "TalentDes$english": "When dealing damage, there is a 30% fixed chance to apply Vulnerable effect to the enemy target."
+    },
+    "1103": {
+        "TalentName$chinese": "狼之契约",
+        "TalentDes$chinese": "驯化一只野狼跟随自身战斗，施放暴风箭矢有30%固定几率使其触发协同攻击。<br><br>野狼<br>野狼同你一起协同作战。<br>普通攻击：对敌方目标进行横扫，造成50%攻击力物理伤害，跟随普通攻击技能升级/进阶进行成长。<br>协同攻击：野狼立刻扑向目标对其进行撕咬，造成80%攻击力物理伤害，跟随普通攻击技能升级/进阶进行成长。",
+        "TalentName$english": "Wolf Pact",
+        "TalentDes$english": "Tames a Wild Wolf to fight alongside you. Storm Arrow has a 30% fixed chance to trigger Coordinated Attack.<br><br>Wild Wolf<br>Fights alongside you.<br>Basic Attack: Sweeps the enemy, dealing Attack Damage equal to 50% ATK (which scales with the Level/Tier of your Basic Attack).<br>Coordinated Attack: Wild Wolf leaps to the enemy and bites, dealing Attack Damage equal to 80% ATK (which scales with the Level/Tier of your Basic Attack)."
+    },
+    "1104": {
+        "TalentName$chinese": "灵能激流",
+        "TalentDes$chinese": "每施放15次特殊攻击，下一次箭雨获得的光能提升100%。",
+        "TalentName$english": "Psychic Surge",
+        "TalentDes$english": "Every 15 Special Attacks increases the Photon Energy granted by the next Arrow Rain by 100%."
+    },
+    "1105": {
+        "TalentName$chinese": "战吼之法",
+        "TalentDes$chinese": "狂野呼唤激活期间，野狼命中目标必定暴击。",
+        "TalentName$english": "Battle Howl",
+        "TalentDes$english": "While Wildcall is active, the Wild Wolf is bound to deal Crit DMG."
+    },
+    "1106": {
+        "TalentName$chinese": "魔狼之嗜",
+        "TalentDes$chinese": "野狼造成暴击伤害时，使得你和你的宠物急速+2%，持续10秒，最多叠加5层。",
+        "TalentName$english": "Direwolf's Hunger",
+        "TalentDes$english": "When the Wild Wolf deals Crit DMG, you and your Companions gain 2% Haste. The effect lasts 10s and stacks up to 5 times."
+    },
+    "1107": {
+        "TalentName$chinese": "冥想",
+        "TalentDes$chinese": "激活驭兽流时，光能重铸状态下每秒损失的光能从25点减少至20点，使光能重铸获得更长的持续时间。<br>如果激活了驯鹰流，效果修正为：光能每秒回复从2点提升至3点，使根据时间进入光能重铸的速度加快。",
+        "TalentName$english": "Meditation",
+        "TalentDes$english": "When Wildpack Spec is active, reduces Photon Energy drain during Photon Reforge from 25 to 20 per second.<br>If Falconry Spec is active, increases Photon Energy regain from 2 to 3 per second, speeding up activation of Photon Reforge via time-based mechanics."
+    },
+    "1108": {
+        "TalentName$chinese": "幻影狼袭",
+        "TalentDes$chinese": "野狼触发协同攻击时有30%固定几率召唤一只幻影魔狼扑咬当前敌方目标。<br>扑咬必定附加生命流失，如果目标已经处于生命流失状态扑咬必定暴击。",
+        "TalentName$english": "Phantom Wolfstrike",
+        "TalentDes$english": "The Wild Wolf's Coordinated Attack grants a fixed 30% chance to summon a Phantom Direwolves, which pounces on the enemy.<br>Pounce and Bite always inflicts Bleed. If the target is already bleeding, the pounce is bound to deal Crit DMG."
+    },
+    "1109": {
+        "TalentName$chinese": "魔狼撕咬",
+        "TalentDes$chinese": "野狼的协同攻击有30%固定几率施加生命流失。",
+        "TalentName$english": "Direwolf Bite",
+        "TalentDes$english": "The Wild Wolf's Coordinated Attack has a 30% fixed chance to inflict Bleed."
+    },
+    "1110": {
+        "TalentName$chinese": "魔狼双生",
+        "TalentDes$chinese": "战斗状态下，暴风箭矢造成伤害有10%固定几率召唤一只野狼，野狼持续存在8秒，每30秒最多生效一次。",
+        "TalentName$english": "Demon Wolf Twin",
+        "TalentDes$english": "When dealing DMG in battle, Storm Arrow has a fixed 10% chance to summon a Wild Wolf for 8s. Once every 30s."
+    },
+    "1111": {
+        "TalentName$chinese": "光铸学识",
+        "TalentDes$chinese": "光能重铸状态下，野狼的协同攻击忽视目标物理防御。",
+        "TalentName$english": "Photon Reforge Lore",
+        "TalentDes$english": "During Photon Reforge, the Wild Wolf's Coordinated Attack ignores the target's Armor."
+    },
+    "1112": {
+        "TalentName$chinese": "双星之矢",
+        "TalentDes$chinese": "锐眼·光能巨箭额外附带一次光能爆炸，造成1000%攻击力物理伤害（跟随终极大招技能升级/升阶进行成长），同时附带击飞效果。",
+        "TalentName$english": "Twin Arrows",
+        "TalentDes$english": "Luminary Bolt generates an additional Photon Explosion, dealing Attack Damage equal to 1,000% ATK (which scales with the Level/Tier of Ultimate), and inflicting Airborne."
+    },
+    "1114": {
+        "TalentName$chinese": "灵箭神踪",
+        "TalentDes$chinese": "光能重铸期间暴风箭矢射出额外光追箭矢，场上每有1只宠物射出1支。",
+        "TalentName$english": "Tracer Arrows",
+        "TalentDes$english": "During Photon Reforge, for each Companion in battle, Storm Arrow fires 1 Lightseeker Arrow."
+    },
+    "1115": {
+        "TalentName$chinese": "精神之辉",
+        "TalentDes$chinese": "精神凝聚持续时间延长3秒。",
+        "TalentName$english": "Radiant Spirit",
+        "TalentDes$english": "Extends the duration of Focus by 3s."
+    },
+    "1116": {
+        "TalentName$chinese": "迅捷",
+        "TalentDes$chinese": "猎鹰施放闪电冲击时可触发迅捷。<br>迅捷：攻击速度+10%，持续8秒，最多叠加3层。",
+        "TalentName$english": "Swift",
+        "TalentDes$english": "Applies Swiftness to Falcon when using Lightning Strike.<br>Swiftness: Increases Attack SPD by 10%. The effect lasts 8s and stacks up to 3 times."
+    },
+    "1117": {
+        "TalentName$chinese": "光耀射手",
+        "TalentDes$chinese": "光能上限-20。",
+        "TalentName$english": "Radiant Sharpshooter",
+        "TalentDes$english": "Reduces Max Photon Energy by 20."
+    },
+    "1118": {
+        "TalentName$chinese": "鹰眼闪电破",
+        "TalentDes$chinese": "二连矢每暴击3次，猎鹰立刻发动闪电冲击。",
+        "TalentName$english": "Falcon Raid",
+        "TalentDes$english": "Every 3 Crit hits with Double Arrow allows the Falcon to instantly perform Lightning Strike."
+    },
+    "1119": {
+        "TalentName$chinese": "天空之落星",
+        "TalentDes$chinese": "猎鹰出击时有30%固定几率获得一层弱点瞄准。<br>施放光意·四连矢时在空中留下光能裂隙，光能裂隙消耗当前弱点瞄准层数发射光能箭矢，对目标造成80%攻击力物理伤害。",
+        "TalentName$english": "Meteor",
+        "TalentDes$english": "When the Falcon strikes, grants you a fixed 30% chance to gain 1 stack of Weak Point Aim.<br>Using Quadraflare leaves behind a Radiance Rift midair. The Rift consumes the stacks of Weak Point Aim to fire Photon Arrows, each dealing Attack Damage equal to 80% ATK."
+    },
+    "1120": {
+        "TalentName$chinese": "锐射",
+        "TalentDes$chinese": "二连矢暴击+7%。",
+        "TalentName$english": "Piercing Shot",
+        "TalentDes$english": "Crit of Double Arrow +7%"
+    },
+    "1121": {
+        "TalentName$chinese": "心之鹰击",
+        "TalentDes$chinese": "猎鹰忽视目标20%物理防御。",
+        "TalentName$english": "Falcon's Heart",
+        "TalentDes$english": "The Falcon ignores 20% of the targets' Armor."
+    },
+    "1122": {
+        "TalentName$chinese": "光落",
+        "TalentDes$chinese": "每1%暴击提供0.3%暴击伤害。<br>二连矢暴击时，回复2点光能。",
+        "TalentName$english": "Lightfall",
+        "TalentDes$english": "Every 1% critical rate grants 0.3% Crit DMG.<br>Crit hits of Double Arrow grants 2 Photon Energy."
+    },
+    "1123": {
+        "TalentName$chinese": "专注射击",
+        "TalentDes$chinese": "命中1个目标时，3秒内获得1%光元素加成，最高叠加4层。",
+        "TalentName$english": "Focused Shot",
+        "TalentDes$english": "Every target hit grants 1% Light DMG bonus. The effect lasts 3s and stacks up to 4 times."
+    },
+    "1124": {
+        "TalentName$chinese": "勇者之心",
+        "TalentDes$chinese": "宠物对精英及以上目标伤害+8%。",
+        "TalentName$english": "Valiant Heart",
+        "TalentDes$english": "Companions deal 8% more DMG to Elites or stronger enemies."
+    },
+    "1125": {
+        "TalentName$chinese": "激能",
+        "TalentDes$chinese": "普通攻击造成伤害时，有5%固定几率使得特殊攻击立即获得一次充能，但是不得超过特攻最大充能次数限制。",
+        "TalentName$english": "Overcharge",
+        "TalentDes$english": "When Basic Attacks deal DMG, there is a 5% fixed chance to instantly grant Special Attack 1 charge, up to the maximum charge limit."
+    },
+    "1126": {
+        "TalentName$chinese": "驭兽流",
+        "TalentDes$chinese": "继续增强使用暴风箭矢以及与野狼一起战斗的能力。<br>非光能重铸状态下，施放暴风箭矢有25%固定几率使野兽立即触发协同攻击。光能重铸状态下，触发几率翻倍。",
+        "TalentName$english": "Wildpack Spec",
+        "TalentDes$english": "Enhances usage of Storm Arrow and synergy with the Wild Wolf.<br>When Photon Reforge is not activated, using Storm Arrow grants the Wild Wolf a fixed 25% chance to launch a Coordinated Attack. During Photon Reforge, doubles the chance."
+    },
+    "1127": {
+        "TalentName$chinese": "连珠箭雨",
+        "TalentDes$chinese": "普通攻击施放时有20%固定几率对目标周围最多3个敌方目标射出一支箭矢。",
+        "TalentName$english": "Arrow Barrage",
+        "TalentDes$english": "Basic Attacks grants a 20% fixed chance to fire extra arrows at up to 3 nearby enemies."
+    },
+    "1128": {
+        "TalentName$chinese": "裂空之矢",
+        "TalentDes$chinese": "普通攻击造成伤害时有15%固定几率触发分裂箭矢，每1秒最多生效一次。",
+        "TalentName$english": "Sundering Arrow",
+        "TalentDes$english": "Basic Attacks gains a fixed 15% chance to generate Split Arrow. Once per second."
+    },
+    "1129": {
+        "TalentName$chinese": "驯鹰流",
+        "TalentDes$chinese": "<style=\"accent-gn\">特殊攻击</style>替换成<linktext=1547><style=\"ItemQuality_5\">二连矢</style></linktext>，并增强使用该技能的能力。<br>每秒回复<style=\"accent-gn\">2</style>点<style=\"accent-gn\">光能</style>。<br>每<style=\"accent-gn\">1%</style>急速提供<style=\"accent-gn\">1%</style><linktext=1547><style=\"ItemQuality_5\">二连矢</style></linktext>冷却速度。<br>可以驯化<style=\"accent-gn\">猎鹰</style>，协助自己进行战斗。<br><br><style=\"accent-gn\">猎鹰</style>始终陪伴自身，当自身<style=\"accent-gn\">职业技能</style>造成暴击伤害时，<style=\"accent-gn\">猎鹰</style>迅速向目标出击，造成自身<style=\"accent-gn\">100%</style>攻击力<style=\"physical\">物理伤害</style>，跟随<style=\"accent-gn\">普通攻击</style>技能升级/进阶进行成长。<br><br><i><style=\"text_third_gray\"><size=20>猎鹰将响应你的攻击，急速和暴击会加强猎鹰的响应频率，猎鹰习得闪电冲击后伤害得到大额提升。</size></style></i>",
+        "TalentName$english": "Falconry Spec",
+        "TalentDes$english": "Replaces <style=\"accent-gn\">Special Attack</style> with <linktext=1547><style=\"ItemQuality_5\">Double Arrow</style></linktext>, and enhances the ability to use this skill. <br>Recovers <style=\"accent-gn\">2</style> points of <style=\"accent-gn\">Photon Energy</style> per second. <br>Every <style=\"accent-gn\">1%</style> haste provides <style=\"accent-gn\">1%</style> CD Speed Increase for <linktext=1547><style=\"ItemQuality_5\">Double Arrow</style></linktext>.<br>Can tame a <style=\"accent-gn\">Falcon</style> to assist in combat. <br><br><style=\"accent-gn\">Falcon</style> always accompanies you. When your <style=\"accent-gn\">Class Skill</style> deals Crit DMG, the <style=\"accent-gn\">Falcon</style> swiftly attacks the target, dealing <style=\"physical\">Attack Damage</style> equal to <style=\"accent-gn\">150%</style> ATK. Scales with the Level/Tier of <style=\"accent-gn\">Basic Attack</style>. <br><br><i><style=\"text_third_gray\"><size=20>The Falcon will respond to your attacks. Haste and Crit will enhance the Falcon's action frequency. After the Falcon learns Lightning Strike, its DMG is greatly increased.</size></style></i>"
+    },
+    "1130": {
+        "TalentName$chinese": "猎狼之舞",
+        "TalentDes$chinese": "施放箭雨后，野狼持续施放扫尾，直到箭雨结束。<br>野狼扫尾，必定暴击，且必定施加生命流失。",
+        "TalentName$english": "Wolf Dancer",
+        "TalentDes$english": "After you use Arrow Rain, the Wild Wolf continuously sweeps its tail until the storm ends.<br>Tail Sweep is bound to deal Crit DMG and inflicts Bleed."
+    },
+    "1131": {
+        "TalentName$chinese": "爆破箭矢",
+        "TalentDes$chinese": "普通攻击或特殊攻击造成伤害时，有10%固定几率射出一支爆炸箭矢，每3秒最多生效一次。",
+        "TalentName$english": "Explosive Arrow",
+        "TalentDes$english": "When dealing DMG, Basic or Special Attacks gain a fixed 10% chance to fire an Explosive Arrow. Once every 3s."
+    },
+    "1132": {
+        "TalentName$chinese": "急速射击",
+        "TalentDes$chinese": "每5%急速额外提供1%攻击速度。",
+        "TalentName$english": "Rapid Shot",
+        "TalentDes$english": "Every 5% haste provides an additional 1% attack speed."
+    },
+    "1133": {
+        "TalentName$chinese": "野兽之力",
+        "TalentDes$chinese": "宠物伤害+10%。",
+        "TalentName$english": "Beast Power",
+        "TalentDes$english": "Pet damage +10%."
+    },
+    "1134": {
+        "TalentName$chinese": "灵巧",
+        "TalentDes$chinese": "敏捷达到500点时，攻击速度+5%。",
+        "TalentName$english": "Dexterity",
+        "TalentDes$english": "When agility reaches 500 points, attack speed +5%."
+    },
+    "1135": {
+        "TalentName$chinese": "迅射",
+        "TalentDes$chinese": "攻击速度+<style=\"accent-gn\">5%</style>。",
+        "TalentName$english": "Quick Shot",
+        "TalentDes$english": "Attack speed +<style=\"accent-gn\">5%</style>."
+    },
+    "1136": {
+        "TalentName$chinese": "野狼锐击",
+        "TalentDes$chinese": "光能重铸状态下，野狼暴击伤害+50%。",
+        "TalentName$english": "Wolf Sharp Strike",
+        "TalentDes$english": "In Light Energy Reforge state, wolf's Crit DMG +50%."
+    },
+    "1137": {
+        "TalentName$chinese": "野兽怒涛之力",
+        "TalentDes$chinese": "宠物伤害+2%。<br>施放怒涛射击后的5秒内，宠物伤害+10%。",
+        "TalentName$english": "Beast Tidal Power",
+        "TalentDes$english": "Companion damage +2%.<br>Within 5s after Casting Torrent Volley, Companion damage +10%."
+    },
+    "1138": {
+        "TalentName$chinese": "箭雨加速",
+        "TalentDes$chinese": "每召唤1次野狼或幻影魔狼，箭雨剩余冷却时间缩减0.5秒。",
+        "TalentName$english": "Arrow Rain Acceleration",
+        "TalentDes$english": "Each time a wolf or phantom wolf is summoned, Arrow Rain's remaining CD -0.5s."
+    },
+    "1139": {
+        "TalentName$chinese": "生命猎杀",
+        "TalentDes$chinese": "目标身上每多一个生命流失效果，野狼对其造成的伤害+3%。",
+        "TalentName$english": "Life Hunt",
+        "TalentDes$english": "For each additional bleed effect on the target, the wolf's damage to that target +3%."
+    },
+    "1140": {
+        "TalentName$chinese": "狼牙之契",
+        "TalentDes$chinese": "野狼的协同攻击缩减暴风箭矢1秒剩余冷却时间。",
+        "TalentName$english": "Wolf Fang Pact",
+        "TalentDes$english": "The wolf's coordinated attack reduces Storm Arrow's remaining CD by 1s."
+    },
+    "1141": {
+        "TalentName$chinese": "光影流失",
+        "TalentDes$chinese": "光追箭矢有50%固定几率对目标施加生命流失。",
+        "TalentName$english": "Light and Shadow Drain",
+        "TalentDes$english": "Light Chasing Arrow has a 50% fixed chance to inflict bleed on the target."
+    },
+    "1142": {
+        "TalentName$chinese": "野狼进化",
+        "TalentDes$chinese": "野狼进化为成年形态，伤害+30%，伤害范围+50%。",
+        "TalentName$english": "Wolf Evolution",
+        "TalentDes$english": "The wolf evolves into an adult form, damage +30%, damage range +50%."
+    },
+    "1143": {
+        "TalentName$chinese": "传奇野兽",
+        "TalentDes$chinese": "每次施放狂野呼唤，强大的传奇雄鹰或传奇野猪会回应你的呼唤。",
+        "TalentName$english": "Legendary Beast",
+        "TalentDes$english": "Each time Wild Call is cast, a powerful legendary eagle or legendary Boarrier will respond to your call."
+    },
+    "1144": {
+        "TalentName$chinese": "光意怒涛射击",
+        "TalentDes$chinese": "光能重铸状态下，怒涛射击持续充能，30秒充能完成后怒涛射击派生为光意·怒涛射击。",
+        "TalentName$english": "Lumi Torrent",
+        "TalentDes$english": "In Photon Reforge state, Torrent Volley continuously charges, and after 30s of charging, it evolves into Lumi Torrent."
+    },
+    "1145": {
+        "TalentName$chinese": "狂野呼唤冷却",
+        "TalentDes$chinese": "每射出1支光追箭矢，狂野呼唤剩余冷却时间缩减1秒。",
+        "TalentName$english": "Wild Call CD",
+        "TalentDes$english": "Each time a Light Chasing Arrow is shot, Wild Call's remaining CD -1s."
+    },
+    "1146": {
+        "TalentName$chinese": "生命流失之精通",
+        "TalentDes$chinese": "每2%精通提供1%生命流失伤害。",
+        "TalentName$english": "Mastery of bleed",
+        "TalentDes$english": "Every 2% mastery provides 1% bleed damage."
+    },
+    "1147": {
+        "TalentName$chinese": "追光锋锐",
+        "TalentDes$chinese": "光追箭矢伤害+50%。",
+        "TalentName$english": "Light Chasing Sharp",
+        "TalentDes$english": "Light Chasing Arrow damage +50%."
+    },
+    "1148": {
+        "TalentName$chinese": "追光之箭",
+        "TalentDes$chinese": "箭雨、光追箭矢必定暴击。",
+        "TalentName$english": "Arrow of Light",
+        "TalentDes$english": "Arrow Rain and Light Chasing Arrow are guaranteed to critically hit."
+    },
+    "1149": {
+        "TalentName$chinese": "光意",
+        "TalentDes$chinese": "光能上限+20。",
+        "TalentName$english": "Light Intent",
+        "TalentDes$english": "Light energy cap +20."
+    },
+    "1150": {
+        "TalentName$chinese": "魔狼嗜咬",
+        "TalentDes$chinese": "魔狼对当前生命值低于等于35%的目标伤害+30%。",
+        "TalentName$english": "Wolf's Bite",
+        "TalentDes$english": "Damage of the demon wolf to targets with HP less than or equal to 35% increased by 30%."
+    },
+    "1151": {
+        "TalentName$chinese": "践踏",
+        "TalentDes$chinese": "施放狂野呼唤后的10秒内再次施放狂野呼唤，可命令场上的所有宠物立即施放践踏。",
+        "TalentName$english": "Stomp",
+        "TalentDes$english": "Within 10s after Casting Wild Call, Casting Wild Call again can command all pets on the field to immediately cast Trample."
+    },
+    "1152": {
+        "TalentName$chinese": "钢制喙",
+        "TalentDes$chinese": "你和猎鹰造成暴击伤害时对目标施加1层钢制喙。",
+        "TalentName$english": "Steel Beak",
+        "TalentDes$english": "When you and the falcon deal Crit DMG, apply 1 layer of Steel Beak to the target."
+    },
+    "1153": {
+        "TalentName$chinese": "幻影猎鹰",
+        "TalentDes$chinese": "每触发5次内爆，召唤一只幻影猎鹰冲向目标。",
+        "TalentName$english": "Phantom Falcon",
+        "TalentDes$english": "Every 5 triggers of Implosion summon a phantom falcon to rush towards the target."
+    },
+    "1154": {
+        "TalentName$chinese": "凝神专注",
+        "TalentDes$chinese": "精神凝聚持续期间，每1秒+0.5%暴击、1%暴击伤害，该效果最多叠加12层。",
+        "TalentName$english": "Focused Concentration",
+        "TalentDes$english": "During the duration of Focus, +0.5% Crit and +1% Crit DMG every second, this effect can stack up to 12 layers."
+    },
+    "1155": {
+        "TalentName$chinese": "双矢极意",
+        "TalentDes$chinese": "二连矢暴击时缩减爆炸射击、聚能射击1秒剩余冷却时间。",
+        "TalentName$english": "Dual Arrow Mastery",
+        "TalentDes$english": "When Double Arrow hits critically, reduce the remaining CD time of Blast Shot and Powerdraw by 1s."
+    },
+    "1156": {
+        "TalentName$chinese": "锐利二连矢·一",
+        "TalentDes$chinese": "二连矢暴击伤害+15%。",
+        "TalentName$english": "Sharp Double Arrow I",
+        "TalentDes$english": "Crit DMG of Double Arrow +15%."
+    },
+    "1157": {
+        "TalentName$chinese": "光能凝滞",
+        "TalentDes$chinese": "光能轰炸命中目标对其施加光能凝滞。<br>光能凝滞：移动速度-30%，被聚能射击命中必定暴击，持续5秒。",
+        "TalentName$english": "Light Energy Stasis",
+        "TalentDes$english": "Radiance Barragehitting the target applies Light Stasis to it.<br>Light Stasis: Speed -30%, guaranteed Crit when hit by Powerdraw, lasts for 5s."
+    },
+    "1158": {
+        "TalentName$chinese": "猎鹰破式",
+        "TalentDes$chinese": "猎鹰暴击时忽视目标50%物理防御。",
+        "TalentName$english": "Falcon Break",
+        "TalentDes$english": "When the falcon hits critically, ignore 50% of the target's Armor."
+    },
+    "1159": {
+        "TalentName$chinese": "鹰眼",
+        "TalentDes$chinese": "猎鹰触发协同攻击时，敏捷+20，持续5秒，最多叠加10层。",
+        "TalentName$english": "Eagle Eye",
+        "TalentDes$english": "When the falcon triggers Coordinated Attack, agility +20 for 5s, can stack up to 10 layers."
+    },
+    "1160": {
+        "TalentName$chinese": "天界雄鹰",
+        "TalentDes$chinese": "精神凝聚持续期间，光能轰炸在目标位置召唤1只天界雄鹰。",
+        "TalentName$english": "Celestial Eagle",
+        "TalentDes$english": "During the duration of Focus, Radiance Barrage summons a celestial eagle at the target's location."
+    },
+    "1161": {
+        "TalentName$chinese": "辉爆蓄势",
+        "TalentDes$chinese": "光能裂隙发射的箭矢每造成1次伤害，使得下一次爆炸射击伤害+10%，最高不超过100%。",
+        "TalentName$english": "Radiant Charge",
+        "TalentDes$english": "Each arrow fired by Radiance Rift that deals damage increases the damage of the next Blast Shot by +10%, up to a maximum of 100%."
+    },
+    "1162": {
+        "TalentName$chinese": "光棱",
+        "TalentDes$chinese": "闪电冲击命中目标触发光棱。<br>光棱：对周围最多5个敌方目标分别造成100%攻击力造成连锁伤害，同时额外附加3层钢制喙。",
+        "TalentName$english": "Light Prism",
+        "TalentDes$english": "Lightning Strike hitting the target triggers Prism.<br>Prism: Deals chain damage equal to 100% ATK to up to 5 surrounding enemy targets, additionally applies 3 layers of Steel Beak."
+    },
+    "1163": {
+        "TalentName$chinese": "闪电破",
+        "TalentDes$chinese": "闪电冲击伤害+30%。",
+        "TalentName$english": "Lightning Strike",
+        "TalentDes$english": "Lightning Strike damage +30%."
+    },
+    "1164": {
+        "TalentName$chinese": "聚能之力",
+        "TalentDes$chinese": "聚能射击冷却时间-50%。",
+        "TalentName$english": "Energy Gathering Power",
+        "TalentDes$english": "CD time of Powerdraw -50%."
+    },
+    "1165": {
+        "TalentName$chinese": "钢喙之击",
+        "TalentDes$chinese": "聚能射击命中目标施加2层钢制喙，如果暴击则施加5层钢制喙。",
+        "TalentName$english": "Steel Beak Strike",
+        "TalentDes$english": "Powerdraw hitting the target applies 2 layers of Steel Beak, if it hits critically, applies 5 layers of Steel Beak."
+    },
+    "1166": {
+        "TalentName$chinese": "钢制喙聚集",
+        "TalentDes$chinese": "天界雄鹰命中目标时，使得目标钢制喙不会自然扣除。",
+        "TalentName$english": "Steel Beak Gathering",
+        "TalentDes$english": "When the celestial eagle hits the target, Steel Beak on the target will not naturally decrease."
+    },
+    "1167": {
+        "TalentName$chinese": "连环爆炸",
+        "TalentDes$chinese": "二连矢暴击伤害+15%。",
+        "TalentName$english": "Chain Explosion",
+        "TalentDes$english": "Crit DMG of Double Arrow +15%."
+    },
+    "1200": {
+        "TalentName$chinese": "光铸身躯",
+        "TalentDes$chinese": "消耗圣令，使自身进入光铸身躯。每多消耗1枚圣令，添加100%攻击力光明圣盾。",
+        "TalentName$english": "Lightforged Body",
+        "TalentDes$english": "Consumes Holy Sigils to activate Lightforged Body. Each additional Holy Sigil consumed grants a Radiant shield equal to 100% ATK."
+    },
+    "1201": {
+        "TalentName$chinese": "断罪",
+        "TalentDes$chinese": "消耗光明能量的技能施放时有15%固定几率使普通攻击派生为断罪。",
+        "TalentName$english": "Condemn",
+        "TalentDes$english": "When using a Skill that consumes Photon Energy, gains a 15% fixed chance to allow Basic Attack to evolve into Condemn."
+    },
+    "1202": {
+        "TalentName$chinese": "圣令的恩惠",
+        "TalentDes$chinese": "消耗圣令的技能施放时有20%固定几率使下一个消耗圣令的技能不消耗圣令。该效果持续8秒，施放消耗圣令的技能后该效果移除。",
+        "TalentName$english": "Blessing of Holy Sigil",
+        "TalentDes$english": "When using a Skill that consumes Holy Sigils, gains a 20% fixed chance to allow the next such Skill does not consume the Sigil. The effect lasts 8s or until a Sigil-consuming Skill is used."
+    },
+    "1203": {
+        "TalentName$chinese": "裁决之环",
+        "TalentDes$chinese": "施放裁决可触发圣环，触发间隔为30秒。<br>每消耗1枚圣令，减少1秒剩余间隔时间。",
+        "TalentName$english": "Ring of Judgment",
+        "TalentDes$english": "Using Judgment generates a Divine Circle, with a CD of 30s.<br>Each Holy Sigil consumed reduces the CD by 1s."
+    },
+    "1204": {
+        "TalentName$chinese": "光铸延续",
+        "TalentDes$chinese": "每消耗20点神圣能量，使得当前光铸身躯获得100%攻击力光明护盾。",
+        "TalentName$english": "Lightforge Continuum",
+        "TalentDes$english": "Every 20 Holy Energy consumed grants Lightforged Body a Light Shield equal to 100% ATK."
+    },
+    "1205": {
+        "TalentName$chinese": "急速圣令",
+        "TalentDes$chinese": "每1%急速使得圣令回复速度加快1%。",
+        "TalentName$english": "Haste Sigil",
+        "TalentDes$english": "Each 1% Haste accelerates the REG SPD of Holy Sigils by 1%."
+    },
+    "1206": {
+        "TalentName$chinese": "力量转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">3</style>点力量提供<style=\"accent-gn\">2</style>点物理防御。",
+        "TalentName$english": "Power Conversion",
+        "TalentDes$english": "<style=\"accent-gn\">3</style> Strength provides <style=\"accent-gn\">2</style> Armor."
+    },
+    "1207": {
+        "TalentName$chinese": "断罪之光",
+        "TalentDes$chinese": "当处在圣环内时，断罪派生为强化断罪，强化断罪在断罪伤害基础上+100%。",
+        "TalentName$english": "Light of Condemn",
+        "TalentDes$english": "Within the Divine Circle, Condemn evolves into Enhanced Condemn, dealing 100% more DMG."
+    },
+    "1208": {
+        "TalentName$chinese": "防护回复流",
+        "TalentDes$chinese": "继续增强使用<linktext=1257><style=\"ItemQuality_5\">英勇盾击</style></linktext>的能力。<br><linktext=1257><style=\"ItemQuality_5\">英勇盾击</style></linktext>附带<linktext=1162><style=\"ItemQuality_5\">光明冲击</style></linktext>。<br>连续施放两次<linktext=1257><style=\"ItemQuality_5\">英勇盾击</style></linktext>时，<linktext=1162><style=\"ItemQuality_5\">光明冲击</style></linktext>命中敌方目标会强迫目标攻击自身，同时沉默目标<style=\"accent-gn\">0</style>.<style=\"accent-gn\">5</style>秒。<br><br><i><style=\"text_third_gray\"><size=20>尽可能的保持英勇盾击带来的物理防御效果，通过高暴击触发炽热清算来获得更多光明能量。光明能量的充足意味着在裁决和灼热裁决的加持下可以源源不断地进行自愈。</size></style></i>",
+        "TalentName$english": "Recovery Spec",
+        "TalentDes$english": "Further enhances your use of <linktext=1257><style=\"ItemQuality_5\">Valor Bash</style></linktext>.<br><linktext=1257><style=\"ItemQuality_5\">Valor Bash</style></linktext> now generates <linktext=1162><style=\"ItemQuality_5\">Radiant Impact</style></linktext>.<br>Using <linktext=1257><style=\"ItemQuality_5\">Valor Bash</style></linktext> twice in succession allows <linktext=1162><style=\"ItemQuality_5\">Radiant Impact</style></linktext> to force enemies to attack you and silences them for <style=\"accent-gn\">0</style>.<style=\"accent-gn\">5s</style>.<br><br><i><style=\"text_third_gray\"><size=20>Maintain the bonus Armor from Valor Bash to perform Inferno Reckon via high critical rate, thus gaining more Photon Energy. Ample Photon Energy allows you to constantly recover HP with Judgment and Scorching Judgment.</size></style></i>"
+    },
+    "1209": {
+        "TalentName$chinese": "神谕",
+        "TalentDes$chinese": "消耗圣令的技能暴击时额外获得30%光明能量。<br>消耗光明能量的技能暴击伤害+30%。",
+        "TalentName$english": "Oracle",
+        "TalentDes$english": "Skills that consume Holy Sigils grant 30% more Photon Energy on Crit hits.<br>Increases the Crit DMG of Skills that consume Photon Energy by 30%."
+    },
+    "1210": {
+        "TalentName$chinese": "裁决启示",
+        "TalentDes$chinese": "神圣之击暴击时有50%固定几率使你接下来10秒内裁决不消耗光明能量，最多叠加2层。<br>施放裁决之后该效果层数-1。",
+        "TalentName$english": "Judgment Revelation",
+        "TalentDes$english": "When Divine Strike lands a Crit hit, grants a fixed 50% chance that Judgment does not consume Photon Energy. The effect lasts 10s and stacks up to 2 times.<br>Using Judgment consumes 1 stack."
+    },
+    "1211": {
+        "TalentName$chinese": "圣环护卫",
+        "TalentDes$chinese": "处在圣环内时，英勇盾击物理防御效果+30%。",
+        "TalentName$english": "Divine Circle Defender",
+        "TalentDes$english": "Within the Divine Circle, increases the Armor of Valor Bash by 30%."
+    },
+    "1212": {
+        "TalentName$chinese": "光护",
+        "TalentDes$chinese": "施放投掷盾牌使得当前光铸身躯获得300%攻击力光明护盾。<br>投掷盾牌充能次数+1。",
+        "TalentName$english": "Radiant Guard",
+        "TalentDes$english": "Using Shield Toss grants the Lightforged Body a Light Shield equal to 300% ATK.<br>Increases the charge of Shield Toss by 1."
+    },
+    "1213": {
+        "TalentName$chinese": "圣光守卫赞歌",
+        "TalentDes$chinese": "每消耗2枚圣令圣光守卫剩余冷却时间缩减1秒。",
+        "TalentName$english": "Aegis Ward's Anthem",
+        "TalentDes$english": "Every 2 Holy Sigils consumed reduces the CD of Aegis Ward by 1s."
+    },
+    "1214": {
+        "TalentName$chinese": "无畏之盾",
+        "TalentDes$chinese": "投掷盾牌每次造成伤害都有50%固定几率使得当前光铸身躯获得100%攻击力光明护盾。",
+        "TalentName$english": "Fearless Shield",
+        "TalentDes$english": "Each time Shield Toss deals DMG, there's a fixed 50% chance to grant the Lightforged Body a Light Shield equal to 100% ATK."
+    },
+    "1215": {
+        "TalentName$chinese": "圣光守卫惩戒",
+        "TalentDes$chinese": "圣光守卫持续期间，格挡几率翻倍。<br>受到攻击时，圣光守卫剩余冷却时间缩减0.2秒，该效果每0.5秒最多生效一次。",
+        "TalentName$english": "Aegis Ward's Retribution",
+        "TalentDes$english": "While Aegis Ward is active, doubles your Block chance.<br>When you take DMG, reduces Aegis Ward's CD by 0.2s. Once every 0.5s."
+    },
+    "1216": {
+        "TalentName$chinese": "光明圣剑",
+        "TalentDes$chinese": "每施放10次裁决，下一次裁决将强化为灼热裁决。<br>灼热裁决：召唤由圣光构造的巨剑降临目标区域，随后停留5秒，持续对周围敌方目标造成伤害同时附加灼热效果，总计造成600%攻击力物理伤害（跟随裁决技能升级/进阶进行成长）。<br>灼热：使目标对自身造成的伤害降低3%，持续10秒，最多叠加10层，暴击时添加3层灼热。",
+        "TalentName$english": "Lightforged Greatsword",
+        "TalentDes$english": "Every 10 uses of Judgment allows the next Judgment to evolve into Scorching Judgment.<br>Scorching Judgment: Summon a holy greatsword to descend upon the target area for 5s, dealing DMG over time to nearby enemies and inflicting Scorch, totally dealing Attack Damage equal to 600% ATK (which scales with the Level/Tier of Judgment).<br>Scorch: Reduces target's DMG dealt to you by 3% for 10s The effect stacks up to 10 times. Crit hits grant 3 stacks."
+    },
+    "1217": {
+        "TalentName$chinese": "神圣壁垒",
+        "TalentDes$chinese": "施放终极技能后留下神圣壁垒，为范围内的友方目标抵挡伤害。神圣壁垒受到自身最大生命值200%的总伤害或持续15秒后消失。",
+        "TalentName$english": "Holy Barrier",
+        "TalentDes$english": "After using Ultimate, creates a Holy Barrier, shielding nearby allies from DMG. It lasts for 15s or until it absorbs DMG equal to 200% Max HP."
+    },
+    "1218": {
+        "TalentName$chinese": "光盾回复流",
+        "TalentDes$chinese": "特殊攻击替换成<linktext=1566><style=\"ItemQuality_5\">先锋打击</style></linktext>，并增强使用该技能的能力。<br><linktext=1566><style=\"ItemQuality_5\">先锋打击</style></linktext>每额外命中<style=\"accent-gn\">1</style>个敌方目标额外获得<style=\"accent-gn\">2</style>点光明能量，最多额外获得<style=\"accent-gn\">10</style>点。<br>成功格挡掉攻击时，该次攻击不会扣除<style=\"accent-gn\">光铸屏障</style>。<br><br><style=\"accent-gn\">光铸屏障</style>：每层使自身最终生命上限+<style=\"accent-gn\">2%</style>。最多可以拥有<style=\"accent-gn\">10</style>层光铸屏障，受到任何伤害都会消耗<style=\"accent-gn\">1</style>层。持续<style=\"accent-gn\">25</style>秒或所有层数被消耗完为止，每次获得层数时重置持续时间。<br><br><i><style=\"text_third_gray\"><size=20>光铸屏障可以使得生命值获得大幅成长，结合裁决、冷酷征伐和光明决心针对生命上限进行治疗和减伤的特质达到不俗的生存能力，需要掌控好光铸屏障的监控和扭转时机。</size></style></i>",
+        "TalentName$english": "Shield Spec",
+        "TalentDes$english": "Replaces Special Attack with <linktext=1566><style=\"ItemQuality_5\">Vanguard Strike</style></linktext> and enhances its power.<br><style=\"accent-gn\">Each</style> additional enemy hit by <linktext=1566><style=\"ItemQuality_5\">Vanguard Strike</style></linktext> grants <style=\"accent-gn\">2</style> extra Photon Energy, up to <style=\"accent-gn\">10</style>.<br>Successfully Block prevents losing the stacks of <style=\"accent-gn\">Lightforged Barrier</style>.<br><br><style=\"accent-gn\">Lightforged Barrier</style>: Each stack increases Max HP by <style=\"accent-gn\">2%</style>, up to <style=\"accent-gn\">10</style> stacks, with each instance of DMG removing <style=\"accent-gn\">1</style> stack. It lasts <style=\"accent-gn\">25s</style> or until all stacks are consumed. gaining stacks resets the duration.<br><br><i><style=\"text_third_gray\"><size=20>Managing Lightforged Barrier is crucial for sustaining high HP and triggering self-healing and Defense effects from Judgment, Zeal Crusade, and Radiance.</size></style></i>"
+    },
+    "1219": {
+        "TalentName$chinese": "光障",
+        "TalentDes$chinese": "光铸屏障上限+2。",
+        "TalentName$english": "Light Barrier",
+        "TalentDes$english": "Lightforged Barrier limit +2."
+    },
+    "1220": {
+        "TalentName$chinese": "光铸屏障的升华",
+        "TalentDes$chinese": "先锋打击造成伤害时有20%固定几率使得接下来5秒内下一个裁决消耗的光明能量降低50%，且裁决必定造成暴击伤害。",
+        "TalentName$english": "Ascension of the Lightforged Barrier",
+        "TalentDes$english": "When Vanguard Strike deals damage, 20% chance that the next Judgment within 5s will consume 50% less Light Energy and will definitely deal Crit DMG."
+    },
+    "1221": {
+        "TalentName$chinese": "圣环咏叹",
+        "TalentDes$chinese": "急速带来的圣令回复效果提升100%。",
+        "TalentName$english": "Divine Circle Chant",
+        "TalentDes$english": "The Holy Sigil recovery effect from Haste +100%."
+    },
+    "1222": {
+        "TalentName$chinese": "圣击",
+        "TalentDes$chinese": "每消耗1层光铸屏障，有10%固定几率获得1枚圣令。",
+        "TalentName$english": "Holy Strike",
+        "TalentDes$english": "Each time a stack of Lightforged Barrier is consumed, 10% chance to gain 1 Holy Sigil."
+    },
+    "1223": {
+        "TalentName$chinese": "神圣光辉",
+        "TalentDes$chinese": "圣剑命中敌方目标给目标施加神圣印记。<br>先锋打击可将该神圣印记扩散给命中的敌方目标。",
+        "TalentName$english": "Holy Radiance",
+        "TalentDes$english": "When Sacred Blade hits an enemy target, it applies a Holy Mark to the target.<br>Vanguard Strike can spread this Holy Mark to hit enemy targets."
+    },
+    "1224": {
+        "TalentName$chinese": "决心斩击",
+        "TalentDes$chinese": "对神圣印记目标造成伤害时，伤害的2%转化为自己生命值。<br>光明决心持续期间，效果提升至4%。",
+        "TalentName$english": "Determination Slash",
+        "TalentDes$english": "When dealing damage to targets with Holy Mark, 2% of the damage is converted into your own HP.<br>During the duration of Radiance, this effect is increased to 4%."
+    },
+    "1225": {
+        "TalentName$chinese": "光铸驱动",
+        "TalentDes$chinese": "施放光明决心时，自动向周围最多5个敌方目标释放裁决。",
+        "TalentName$english": "Lightforged Drive",
+        "TalentDes$english": "When Casting Radiance, automatically releases Judgment to up to 5 surrounding enemy targets."
+    },
+    "1226": {
+        "TalentName$chinese": "冷酷回溯",
+        "TalentDes$chinese": "冷酷征伐持续期间，每秒获得1层光铸屏障同时每消耗1枚圣令，可为冷酷征伐进行1层充能；当充能达到3层时，冷酷征伐向外爆裂，造成200%攻击力物理伤害且必定暴击。",
+        "TalentName$english": "Ruthless Rewind",
+        "TalentDes$english": "During Zeal Crusade, gains 1 stack of Lightforged Barrier per second and each Holy Decree consumed grants Zeal Crusade 1 charge. When 3 charges are reached, Zeal Crusade explodes outward, dealing 200% Attack Damage and guaranteed Crit."
+    },
+    "1227": {
+        "TalentName$chinese": "圣环激荡",
+        "TalentDes$chinese": "圣环内每有1个敌方目标，圣环伤害+25%，圣环治疗效果+5%。",
+        "TalentName$english": "Divine Circle Resonance",
+        "TalentDes$english": "For each enemy target within the Divine Circle, Divine Circle damage +25%, Divine Circle Healing +5%."
+    },
+    "1228": {
+        "TalentName$chinese": "众生裁决",
+        "TalentDes$chinese": "裁决只命中1个敌方目标时，伤害+25%。",
+        "TalentName$english": "Judgment of All Beings",
+        "TalentDes$english": "When Judgment hits only one enemy target, damage +25%."
+    },
+    "1229": {
+        "TalentName$chinese": "圣环祝福",
+        "TalentDes$chinese": "处于圣环内时，自身受到治疗效果+10%。",
+        "TalentName$english": "Divine Circle Blessing",
+        "TalentDes$english": "While within the Divine Circle, self-Healing are +10%."
+    },
+    "1230": {
+        "TalentName$chinese": "光铸平衡",
+        "TalentDes$chinese": "自身生命值百分比高于当前敌方目标时，受到目标伤害降低5%。<br>自身生命值百分比低于当前敌方目标时，裁决伤害+50%。",
+        "TalentName$english": "Lightforged Balance",
+        "TalentDes$english": "When your HP percentage is higher than the enemy target, damage taken from the target -5%.<br>When your HP percentage is lower than the enemy target, Judgment damage +50%."
+    },
+    "1231": {
+        "TalentName$chinese": "光铸刚毅",
+        "TalentDes$chinese": "光铸身躯状态下，获得霸体。",
+        "TalentName$english": "Lightforged Fortitude",
+        "TalentDes$english": "Gain Super Armor while in Lightforged Body state."
+    },
+    "1232": {
+        "TalentName$chinese": "光能援护",
+        "TalentDes$chinese": "终极技能持续期间，队友造成的威胁值转移给自身。",
+        "TalentName$english": "Energy Guard",
+        "TalentDes$english": "During Ultimate duration, threat generated by Allies is transferred to you."
+    },
+    "1233": {
+        "TalentName$chinese": "生命强化",
+        "TalentDes$chinese": "力量达到500点时，最大生命值+12%。",
+        "TalentName$english": "Life Enhancement",
+        "TalentDes$english": "When Strength reaches 500 points, Max HP +12%."
+    },
+    "1234": {
+        "TalentName$chinese": "断罪时效",
+        "TalentDes$chinese": "断罪造成伤害时使得1枚圣令立即冷却（优先冷却剩余时间最长的圣令）。",
+        "TalentName$english": "Condemn Time Limit",
+        "TalentDes$english": "When Condemn deals damage, immediately cool down 1 Holy Decree (prioritizing the one with the longest remaining CD)."
+    },
+    "1235": {
+        "TalentName$chinese": "剑舞",
+        "TalentDes$chinese": "专精技能造成暴击治疗时，获得15%治疗加成。",
+        "TalentName$english": "Sword Dance",
+        "TalentDes$english": "When Expertise critically heal, gain 15% healing bonus."
+    },
+    "1236": {
+        "TalentName$chinese": "持盾冲击",
+        "TalentDes$chinese": "英勇盾击长按可蓄力，随后向前方冲出一段距离。",
+        "TalentName$english": "Shield Impact",
+        "TalentDes$english": "Valor Bash can be charged by holding down, then rush forward a certain distance."
+    },
+    "1237": {
+        "TalentName$chinese": "清算炎盾",
+        "TalentDes$chinese": "炽热清算、清算每对1个敌方目标造成暴击伤害，格挡几率+5%，持续10秒，最多叠加5层。",
+        "TalentName$english": "Reckon Shield",
+        "TalentDes$english": "When Inferno Reckon or Reckoning deals Crit DMG to an enemy target, block chance +5%, lasts for 10s, stacks up to 5 times."
+    },
+    "1238": {
+        "TalentName$chinese": "圣光时效",
+        "TalentDes$chinese": "圣光守卫持续期间，专精技能造成暴击伤害时，有50%固定几率使得1枚圣令立即冷却（优先冷却剩余时间最长的圣令）。",
+        "TalentName$english": "Holy Light Time Limit",
+        "TalentDes$english": "During Aegis Ward duration, when Expertise deal Crit DMG, 50% chance to immediately cool down 1 Holy Decree (prioritizing the one with the longest remaining CD)."
+    },
+    "1239": {
+        "TalentName$chinese": "圣光召唤",
+        "TalentDes$chinese": "投掷盾牌、裁决造成伤害时有10%固定几率触发神圣之击，如果造成暴击伤害触发几率提升至30%。",
+        "TalentName$english": "Holy Summon",
+        "TalentDes$english": "When Shield Toss or Judgment deals damage, 10% chance to trigger Holy Strike. If Crit DMG is dealt, trigger chance increases to 30%."
+    },
+    "1240": {
+        "TalentName$chinese": "光击连锁",
+        "TalentDes$chinese": "圣光守卫持续期间神圣之击触发几率翻倍。<br>每触发3次神圣之击，圣光守卫持续时间延长1秒。",
+        "TalentName$english": "Light Chain",
+        "TalentDes$english": "During Aegis Ward duration, Holy Strike trigger chance is doubled.<br>Every 3 times Holy Strike is triggered, Aegis Ward duration is extended by 1s."
+    },
+    "1241": {
+        "TalentName$chinese": "清算爆炎",
+        "TalentDes$chinese": "英勇盾击造成暴击伤害时获得炽热。<br>施放圣光守卫必定获得炽热。<br>炽热：持续5秒时间内，清算派生为炽热清算，施放炽热清算后炽热层数-1，最多叠加5层。",
+        "TalentName$english": "Reckon Blaze",
+        "TalentDes$english": "When Valor Bash deals Crit DMG, gain Scorching.<br>Casting Aegis Ward guarantees Scorching.<br>Scorching: For 5s, Reckoning evolves into Inferno Reckon. Casting Inferno Reckon reduces Scorching stacks by 1, stacks up to 5 times."
+    },
+    "1242": {
+        "TalentName$chinese": "圣体治愈",
+        "TalentDes$chinese": "光铸身躯状态下，获得12%治疗加成。",
+        "TalentName$english": "Holy Heal",
+        "TalentDes$english": "Gain 12% healing bonus while in Lightforged Body state."
+    },
+    "1243": {
+        "TalentName$chinese": "光元素加护",
+        "TalentDes$chinese": "光铸身躯状态下，获得5%光元素加成。",
+        "TalentName$english": "Light Protection",
+        "TalentDes$english": "Gain 5% Light bonus while in Lightforged Body state."
+    },
+    "1244": {
+        "TalentName$chinese": "守护极意",
+        "TalentDes$chinese": "施放终极技能后的10秒内，格挡几率+30%。",
+        "TalentName$english": "Ultimate Guard",
+        "TalentDes$english": "For 10s after Casting Ultimate, block chance +30%."
+    },
+    "1245": {
+        "TalentName$chinese": "盾击守护",
+        "TalentDes$chinese": "英勇盾击造成暴击伤害时，回复120%攻击力生命值。",
+        "TalentName$english": "Shield Guard",
+        "TalentDes$english": "Valor Bash restores 120% ATK as HP when it deals Crit DMG."
+    },
+    "1246": {
+        "TalentName$chinese": "光愈裁断",
+        "TalentDes$chinese": "裁决治疗效果+25%。",
+        "TalentName$english": "Radiant Heal",
+        "TalentDes$english": "Judgment Healing +25%."
+    },
+    "1247": {
+        "TalentName$chinese": "极意神圣之击",
+        "TalentDes$chinese": "神圣之击造成伤害力量+2%，持续10秒，最多叠加5层。",
+        "TalentName$english": "Ultimate Strike",
+        "TalentDes$english": "Holy Strike damage power +2%, lasts for 10s, stacks up to 5 times."
+    },
+    "1248": {
+        "TalentName$chinese": "盾击强化",
+        "TalentDes$chinese": "英勇盾击伤害+10%。",
+        "TalentName$english": "Shield Strike Enhancement",
+        "TalentDes$english": "Valor Bash damage +10%."
+    },
+    "1249": {
+        "TalentName$chinese": "极意征伐",
+        "TalentDes$chinese": "冷酷征伐伤害+50%。",
+        "TalentName$english": "Ultimate Conquest",
+        "TalentDes$english": "Zeal Crusade damage +50%."
+    },
+    "1250": {
+        "TalentName$chinese": "光之暴击",
+        "TalentDes$chinese": "暴击几率+<style=\"accent-gn\">3%</style>。",
+        "TalentName$english": "Light's Crit",
+        "TalentDes$english": "Critical chance +<style=\"accent-gn\">3%</style>."
+    },
+    "1251": {
+        "TalentName$chinese": "逆境强化",
+        "TalentDes$chinese": "特殊攻击、伤害型专精技能基于当前已损失生命值得到强化，每损失1%生命值其伤害+1%。",
+        "TalentName$english": "Adversity Enhancement",
+        "TalentDes$english": "Special Attack and damage-focused Expertise are enhanced based on lost HP, with damage increasing by 1% for every 1% of HP lost."
+    },
+    "1252": {
+        "TalentName$chinese": "广域征伐",
+        "TalentDes$chinese": "冷酷征伐范围+100%。<br>冷酷征伐持续期间，悍勇无畏效果翻倍。",
+        "TalentName$english": "Wide Raid",
+        "TalentDes$english": "Zeal Crusade range +100%.<br>During Zeal Crusade, the effect of Indomitable Courage is doubled."
+    },
+    "1253": {
+        "TalentName$chinese": "悍勇无畏",
+        "TalentDes$chinese": "圣剑、裁决造成伤害时有10%固定几率使先锋打击派生为先锋追击。<br>先锋追击：对目标造成200%攻击力物理伤害，回复自身2%最大生命值，并获得悍勇无畏。<br>悍勇无畏：急速+3%，持续8秒，最多叠加10层。",
+        "TalentName$english": "Bold Fearless",
+        "TalentDes$english": "Sacred Blade and Judgment have a fixed 10% chance to trigger Vanguard Hunt when dealing damage.<br>Vanguard Hunt: Deals 200% ATK Attack Damage to the target, restores 2% of Max HP, and grants Indomitable Courage.<br>Indomitable Courage: Haste +3%, lasts for 8s, stacks up to 10 times."
+    },
+    "1254": {
+        "TalentName$chinese": "光芒核心",
+        "TalentDes$chinese": "先锋追击可获得光芒核心。<br>重复获得光芒核心，缩减其2秒爆发时间。",
+        "TalentName$english": "Radiant Core",
+        "TalentDes$english": "Vanguard Hunt can obtain Radiant Core.<br>Repeatedly obtaining Radiant Core reduces its burst time by 2s."
+    },
+    "1255": {
+        "TalentName$chinese": "征伐追击",
+        "TalentDes$chinese": "冷酷征伐持续期间先锋打击派生为先锋追击。",
+        "TalentName$english": "Conquest Pursuit",
+        "TalentDes$english": "During Zeal Crusade, Vanguard Strike triggers Vanguard Hunt."
+    },
+    "1256": {
+        "TalentName$chinese": "决断之刃",
+        "TalentDes$chinese": "圣剑、裁决对当前生命值百分比低于自身的目标造成伤害时触发先锋追击的固定几率+10%。",
+        "TalentName$english": "Decisive Blade",
+        "TalentDes$english": "Sacred Blade and Judgment have a fixed 10% increased chance to trigger Vanguard Hunt when dealing damage to targets with a lower percentage of HP than yourself."
+    },
+    "1257": {
+        "TalentName$chinese": "冷酷加速",
+        "TalentDes$chinese": "每消耗100点光明能量，冷酷征伐剩余冷却时间缩减1秒。",
+        "TalentName$english": "Zeal Haste",
+        "TalentDes$english": "For every 100 Light Energy consumed, Zeal Crusade's remaining CD -1s."
+    },
+    "1258": {
+        "TalentName$chinese": "圣印强化",
+        "TalentDes$chinese": "裁决造成伤害时，使目标在接下来5秒内受到神圣印记的效果翻倍。",
+        "TalentName$english": "Holy Sigil Enhancement",
+        "TalentDes$english": "Judgment causes the target to suffer double the effect of Holy Mark for the next 5s when dealing damage."
+    },
+    "1259": {
+        "TalentName$chinese": "圣环守护",
+        "TalentDes$chinese": "自身处于圣环内时，受到所有伤害-10%。",
+        "TalentName$english": "Divine Guard",
+        "TalentDes$english": "When within the Divine Circle, all damage taken -10%."
+    },
+    "1260": {
+        "TalentName$chinese": "裁决精进",
+        "TalentDes$chinese": "每拥有1层光铸屏障，裁决获得5%治疗加成。",
+        "TalentName$english": "Judgment Improvement",
+        "TalentDes$english": "For each stack of Lightforged Barrier, Judgment gains a 5% healing bonus."
+    },
+    "1261": {
+        "TalentName$chinese": "圣印追击",
+        "TalentDes$chinese": "先锋追击对神圣印记目标造成的伤害+10%。",
+        "TalentName$english": "Sigil Pursuit",
+        "TalentDes$english": "Vanguard Hunt deals 10% more damage to targets affected by Holy Mark."
+    },
+    "1262": {
+        "TalentName$chinese": "溢愈光壁",
+        "TalentDes$chinese": "自身施加的溢出治疗累计达到生命上限的10%时，获得1层光铸屏障。",
+        "TalentName$english": "Overflow Healwall",
+        "TalentDes$english": "When overflow healing applied by yourself accumulates to 10% of Max HP, gain 1 stack of Lightforged Barrier."
+    },
+    "1263": {
+        "TalentName$chinese": "光愈",
+        "TalentDes$chinese": "光铸身躯状态下，获得12%治疗加成。",
+        "TalentName$english": "Light Healing",
+        "TalentDes$english": "Gain 12% healing bonus while in Lightforged Body state."
+    },
+    "1264": {
+        "TalentName$chinese": "光元素加护",
+        "TalentDes$chinese": "光铸身躯状态下，获得5%光元素加成。",
+        "TalentName$english": "Light Protection",
+        "TalentDes$english": "Gain 5% Light bonus while in Lightforged Body state."
+    },
+    "1265": {
+        "TalentName$chinese": "决心速回",
+        "TalentDes$chinese": "圣剑伤害+12%。",
+        "TalentName$english": "Resolved to Return",
+        "TalentDes$english": "Sacred Blade damage +12%."
+    },
+    "1266": {
+        "TalentName$chinese": "光晕",
+        "TalentDes$chinese": "圣环附带光晕效果，每次造成伤害时眩晕敌方目标0.5秒。",
+        "TalentName$english": "Halo",
+        "TalentDes$english": "The Divine Circle comes with a halo effect, stunning the enemy target for 0.5s each time it deals damage."
+    },
+    "1300": {
+        "TalentName$chinese": "热情迸发",
+        "TalentDes$chinese": "当鸣奏技能激活时，每秒有15%固定几率获得热情迸发效果。<br>热情迸发：特殊攻击不消耗演奏热情，持续5秒，施放特殊攻击后该效果移除。",
+        "TalentName$english": "Passion Surge",
+        "TalentDes$english": "When Melody is active, there is a 15% fixed chance per second to gain Passion Surge. <br>Passion Surge: Special Attack costs zero Performance Passion for 5s. Removed after Special Attack is cast."
+    },
+    "1301": {
+        "TalentName$chinese": "弦域扩张",
+        "TalentDes$chinese": "演奏热情上限+1。",
+        "TalentName$english": "String Expansion",
+        "TalentDes$english": "Performance Passion max limit +1."
+    },
+    "1302": {
+        "TalentName$chinese": "炽热迸发",
+        "TalentDes$chinese": "当鸣奏技能激活时，每过1秒，热情迸发的触发几率额外+3%，最高额外+30%。",
+        "TalentName$english": "Heat Surge",
+        "TalentDes$english": "When Melody is activated, the trigger chance for Passion Surge +an extra 3% every 1s (up to 30%)."
+    },
+    "1303": {
+        "TalentName$chinese": "智力转换",
+        "TalentDes$chinese": "每<style=\"accent-gn\">10</style>点智力提供<style=\"accent-gn\">1</style>点魔法攻击力。",
+        "TalentName$english": "Intellect Conversion",
+        "TalentDes$english": "Every <style=\"accent-gn\">10</style> points of Intellect provides <style=\"accent-gn\">1</style> point of MATK."
+    },
+    "1304": {
+        "TalentName$chinese": "魔力升华",
+        "TalentDes$chinese": "特殊攻击消耗的演奏热情-1。",
+        "TalentName$english": "Arcane Ascension",
+        "TalentDes$english": "Special Attack costs -1 less Performance Passion."
+    },
+    "1305": {
+        "TalentName$chinese": "鸣奏·热力核心",
+        "TalentDes$chinese": "鸣奏技能对生命值低于50%的友方目标治疗效果+100%。",
+        "TalentName$english": "Melody: Heat Core",
+        "TalentDes$english": "Melody heals ally targets below 50% HP with 100% bonus effect."
+    },
+    "1306": {
+        "TalentName$chinese": "炎爆追击",
+        "TalentDes$chinese": "每施放3次特殊攻击，下一次普通攻击命中目标附带火柱冲击。",
+        "TalentName$english": "Flame Pursuit",
+        "TalentDes$english": "After using 3 Special Attacks, the next Basic Attack hit triggers Flame Pillar Blast."
+    },
+    "1307": {
+        "TalentName$chinese": "炎爆追击二式",
+        "TalentDes$chinese": "火柱冲击变为二连击。",
+        "TalentName$english": "Flame Pursuit II",
+        "TalentDes$english": "Flame Pillar Blast becomes a two-hit combo."
+    },
+    "1308": {
+        "TalentName$chinese": "狂音流",
+        "TalentDes$chinese": "处于烈焰狂想中时，你的幸运几率翻倍。",
+        "TalentName$english": "Dissonance Spec",
+        "TalentDes$english": "While in Rhapsody of Flame, your Luck chance is doubled."
+    },
+    "1309": {
+        "TalentName$chinese": "幸运音浪",
+        "TalentDes$chinese": "专精技能、增幅节拍触发幸运一击时获得1个音浪值。",
+        "TalentName$english": "Lucky Soundwave",
+        "TalentDes$english": "Gains 1 Soundwave Energy whenever Expertise or Amplified Beat trigger a Lucky Strike."
+    },
+    "1310": {
+        "TalentName$chinese": "三重狂想",
+        "TalentDes$chinese": "烈焰狂想始终以最强形态出现。<br>处于烈焰狂想中时，治疗强度+20%。",
+        "TalentName$english": "Trio Rhapsody",
+        "TalentDes$english": "Rhapsody of Flame always appears in its most powerful form. <br>While in Rhapsody of Flame, healing +20%."
+    },
+    "1311": {
+        "TalentName$chinese": "断章",
+        "TalentDes$chinese": "猛烈挥击每造成一次伤害（命中多个目标时只触发一次）都有50%固定几率使得聚合乐章立即冷却结束。",
+        "TalentName$english": "Severed Chapter",
+        "TalentDes$english": "Each time Fierce Strike deals DMG, there's a fixed 50% chance to reset Harmonic Anthem's CD (which can only be triggers once on multiple hits)."
+    },
+    "1312": {
+        "TalentName$chinese": "音浪烈火",
+        "TalentDes$chinese": "每造成一次10倍攻击力的伤害，获得1点音浪值。<br>消耗演奏热情将发射烈火球，同时清除所有音浪值，每1点音浪值提升烈火球20%伤害。",
+        "TalentName$english": "Sound Blaze",
+        "TalentDes$english": "Gains 1 Soundwave Energy each time you deal DMG equal to 10 times ATK. <br>When consuming Performance Passion, launches Fireball that consumes all Soundwave Energy. Each 1 point of Soundwave Energy increases Fireball DMG by 20%."
+    },
+    "1313": {
+        "TalentName$chinese": "愈疗音符",
+        "TalentDes$chinese": "普通攻击变为二连击。<br>每获得5个音浪值给当前队伍中生命最低目标生成一个音符。",
+        "TalentName$english": "Healing Note",
+        "TalentDes$english": "Basic Attacks become a two-hit combo. <br>For every 5 Soundwave Energy obtained, creates a Note for the Ally with the lowest HP."
+    },
+    "1314": {
+        "TalentName$chinese": "炽焰治愈",
+        "TalentDes$chinese": "溢出的治疗量将存储起来(最高不超过自身生命上限的500%)。当开启鸣奏·英勇乐章后，扣除存储起来的治疗量每1秒为队友回复生命值其值的大小等于自生生命上限的15%。",
+        "TalentName$english": "Blazing Heal",
+        "TalentDes$english": "Stores excess Healing (up to 500% of Max HP). After activating Heroic Melody, consumes stored Healing to recover allies' HP every 1s, up to 15% of Max HP per second."
+    },
+    "1315": {
+        "TalentName$chinese": "协奏",
+        "TalentDes$chinese": "处于烈焰狂想中时，增幅节拍攻击次数+1。<br>处于烈焰狂想中时，聚合乐章每造成一次伤害会同时对1个生命值最低的友方目标回复生命。",
+        "TalentName$english": "Concerto",
+        "TalentDes$english": "While in Rhapsody of Flame, your Amplified Beat attack count +1.<br>While in Rhapsody of Flame, each hit of Harmonic Anthem also heals 1 ally with the lowest HP."
+    },
+    "1316": {
+        "TalentName$chinese": "重启",
+        "TalentDes$chinese": "伤害型专精技能触发幸运一击时（命中多个目标时只触发一次），使得烈焰狂想立即冷却结束，同时在接下来10秒内施放烈焰狂想不消耗演奏热情。",
+        "TalentName$english": "Restart",
+        "TalentDes$english": "When DMG Expertise trigger Lucky Strike (triggers only once when hitting multiple targets), immediately resets Rhapsody of Flame's CD and makes it cost no Performance Passion for 10s."
+    },
+    "1317": {
+        "TalentName$chinese": "协奏流",
+        "TalentName$english": "Concerto Spec"
+    },
+    "1318": {
+        "TalentName$chinese": "华彩章节充能",
+        "TalentDes$chinese": "愈合节拍、热情挥洒造成暴击治疗或者暴击伤害时（命中多个目标时只触发一次），获得1个演奏热情。",
+        "TalentName$english": "Brilliant Charge",
+        "TalentDes$english": "When Healing Beat or Passion Burst applies Crit Healing or deals Crit DMG (triggers only once when hitting multiple targets), gains 1 Performance Passion."
+    },
+    "1319": {
+        "TalentName$chinese": "双生治愈音符",
+        "TalentDes$chinese": "愈合节拍对受到鸣奏·愈合乐章影响的目标额外造成一次治疗。",
+        "TalentName$english": "Double Recovery Note",
+        "TalentDes$english": "Healing Beat provides an additional Healing to targets under the influence of Healing Melody."
+    },
+    "1320": {
+        "TalentName$chinese": "暴击治疗",
+        "TalentDes$chinese": "暴击治疗+25%。",
+        "TalentName$english": "Crit Healing",
+        "TalentDes$english": "Crit Healing +25%"
+    },
+    "1321": {
+        "TalentName$chinese": "烈火节拍",
+        "TalentDes$chinese": "愈合节拍暴击几率+10%。<br>愈合节拍治疗强度+10%。",
+        "TalentName$english": "Fiery Beat",
+        "TalentDes$english": "Healing Beat Crit Rate +10%. <br>Healing Beat Healing +10%."
+    },
+    "1322": {
+        "TalentName$chinese": "安可暴击增幅",
+        "TalentDes$chinese": "每1%暴击几率提供1%安可琴弦触发几率。",
+        "TalentName$english": "Critical Encore",
+        "TalentDes$english": "Every 1% Crit Rate grants 1% trigger chance for Encore Strings."
+    },
+    "1323": {
+        "TalentName$chinese": "热情挥洒·激昂",
+        "TalentDes$chinese": "每消耗10个演奏热情，接下来10秒内热情挥洒将强化为激昂·热情挥洒。",
+        "TalentName$english": "Passion Burst: Fervor",
+        "TalentDes$english": "For each 10 Performance Passion consumed, enhances Passion Burst to Passion Burst for 10s."
+    },
+    "1324": {
+        "TalentName$chinese": "属性共鸣",
+        "TalentDes$chinese": "鸣奏·愈合乐章激活时为友方目标提供合适的属性增益效果（力量、智力、敏捷），具体数值等同于你智力的10%。（不同灵魂乐手施加的增益效果无法叠加，生效最高的增益效果）",
+        "TalentName$english": "Stat Resonance",
+        "TalentDes$english": "While Healing Melody is active, grants allies appropriate buffs (Strength, Intellect, Agility) equal to 10% of Intellect. (Buffs from different Beat Performers cannot stack. Only one with the highest value applies.)"
+    },
+    "1325": {
+        "TalentName$chinese": "属性共鸣暴击",
+        "TalentDes$chinese": "鸣奏·愈合乐章每次造成的治疗暴击时，使得其为友方目标提供的属性增益效果翻倍。",
+        "TalentName$english": "Stat Resonance Crit",
+        "TalentDes$english": "When each Passion Burst Healing crits, doubles the buffs that Healing Melody provides to allies."
+    },
+    "1326": {
+        "TalentName$chinese": "火曜",
+        "TalentDes$chinese": "攻击精英及以上目标时火元素加成+8%。",
+        "TalentName$english": "Fire Day",
+        "TalentDes$english": "Fire Bonus +8% when attacking Elite or higher targets."
+    },
+    "1327": {
+        "TalentName$chinese": "临界喝彩",
+        "TalentDes$chinese": "万众瞩目持续期间，自身触发安可琴弦有30%固定几率获得热情迸发。",
+        "TalentName$english": "Critical Acclaim",
+        "TalentDes$english": "During Center Stage, triggering Encore Strings has a 30% fixed chance to grant Passion Surge."
+    },
+    "1328": {
+        "TalentName$chinese": "节奏灵韵",
+        "TalentDes$chinese": "击败敌方目标，有50%固定几率获得1个演奏热情。",
+        "TalentName$english": "Rhythm Spirit",
+        "TalentDes$english": "Defeating an enemy has a fixed 50% chance to grant you 1 Performance Passion."
+    },
+    "1329": {
+        "TalentName$chinese": "升格·无限狂想",
+        "TalentDes$chinese": "<style=\"accent-gn\">终极技能</style><linktext=1579><style=\"ItemQuality_5\">升格·劲爆全场</style></linktext>替换成<linktext=1612><style=\"ItemQuality_5\">升格·无限狂想</style></linktext>。",
+        "TalentName$english": "Infinite Rhapsody",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Ultimate </style><linktext=1579><style=\"ItemQuality_5\">Rock the Stage</style></linktext> with <linktext=1612><style=\"ItemQuality_5\">Infinite Rhapsody</style></linktext>."
+    },
+    "1330": {
+        "TalentName$chinese": "升格·巡演曲",
+        "TalentDes$chinese": "<style=\"accent-gn\">终极技能</style><linktext=1579><style=\"ItemQuality_5\">升格·劲爆全场</style></linktext>替换成<linktext=1613><style=\"ItemQuality_5\">升格·巡演曲</style></linktext>。",
+        "TalentName$english": "Concert Circuit",
+        "TalentDes$english": "Replace <style=\"accent-gn\">Ultimate</style> <linktext=1579><style=\"ItemQuality_5\">Rock the Stage</style></linktext> with <linktext=1613><style=\"ItemQuality_5\">Concert Circuit</style></linktext>."
+    },
+    "1331": {
+        "TalentName$chinese": "安可无限连奏",
+        "TalentDes$chinese": "自身触发安可琴弦时对同一目标再次触发。",
+        "TalentName$english": "Encore Chain",
+        "TalentDes$english": "When Encore Strings triggers, it activates a second time on the same target."
+    },
+    "1332": {
+        "TalentName$chinese": "热力加倍",
+        "TalentDes$chinese": "智力达到500时，演奏能量上限+20%。",
+        "TalentName$english": "Heat Boost",
+        "TalentDes$english": "When Intellect reaches 500, the Performance Energy cap +20%."
+    },
+    "1333": {
+        "TalentName$chinese": "变奏",
+        "TalentDes$chinese": "激活近战流时，生命上限+20%。<br>激活远程流时，普通攻击变为远程攻击。",
+        "TalentName$english": "Variation",
+        "TalentDes$english": "Activating Melee Specialization increases Max HP by 20%. <br>When Ranged Specialization is activated, Basic Attacks become ranged attacks."
+    },
+    "1334": {
+        "TalentName$chinese": "鸣奏和弦",
+        "TalentDes$chinese": "鸣奏技能治疗强度+10%。",
+        "TalentName$english": "Melody Chord",
+        "TalentDes$english": "Melody Healing +10%."
+    },
+    "1335": {
+        "TalentName$chinese": "激昂",
+        "TalentDes$chinese": "演奏能量回复速度+10%。",
+        "TalentName$english": "Exaltation",
+        "TalentDes$english": "Performance Energy REG SPD +10%."
+    },
+    "1336": {
+        "TalentName$chinese": "不屈谐音",
+        "TalentDes$chinese": "鸣奏·英勇乐章激活时，自身霸体同时受到伤害减免+25%，移动速度+10%。",
+        "TalentName$english": "Indomitable Chord",
+        "TalentDes$english": "While Heroic Melody is active, grants Super Armor, increases DMG Reduction by 25%, and boosts movement speed by 10%."
+    },
+    "1337": {
+        "TalentName$chinese": "挥击回涌",
+        "TalentDes$chinese": "猛烈挥击命中目标回复3点演奏能量，每多命中1个目标额外回复1点演奏能量，总计回复最多不超过10点。",
+        "TalentName$english": "Swing Reflux",
+        "TalentDes$english": "Hitting a target with Fierce Strike recovers 3 Performance Energy. Each additional target hit provides 1 extra Performance Energy, up to 10 total."
+    },
+    "1338": {
+        "TalentName$chinese": "幸运倍乘",
+        "TalentDes$chinese": "每1%幸运提供2%幸运一击伤害。",
+        "TalentName$english": "Luck Multiplier",
+        "TalentDes$english": "Every 1% Luck grants 2% Lucky Strike DMG Multiplier."
+    },
+    "1339": {
+        "TalentName$chinese": "回响赋格",
+        "TalentDes$chinese": "音符生成时，有50%固定几率额外为另一目标添加音符。",
+        "TalentName$english": "Resonant Counterpoint",
+        "TalentDes$english": "When a Note forms, there's a 50% fixed chance to create an extra Note for a different target."
+    },
+    "1340": {
+        "TalentName$chinese": "音爆愈疗",
+        "TalentDes$chinese": "专精技能造成伤害时（命中多个目标时只触发一次），为拥有音符的目标造成额外治疗。",
+        "TalentName$english": "Sonic Cure",
+        "TalentDes$english": "When Expertise deal DMG (only triggers once when hitting multiple targets), heal targets with Note."
+    },
+    "1341": {
+        "TalentName$chinese": "音愈",
+        "TalentDes$chinese": "造成伤害转化的治疗量，对受到音符影响的目标其转化效率+20%。",
+        "TalentName$english": "Sonic Therapy",
+        "TalentDes$english": "Converted healing from DMG +20% for targets affected by Note."
+    },
+    "1342": {
+        "TalentName$chinese": "炎律狂踏",
+        "TalentDes$chinese": "鸣奏·英勇乐章激活时，烈焰狂想将变得爆燃，每3秒对其接触到的目标造成伤害（伤害间隔受到急速影响）。",
+        "TalentName$english": "Flame's Rampage",
+        "TalentDes$english": "While Heroic Melody is active, Rhapsody of Flame becomes explosive, dealing DMG every 3s to targets it touches (interval affected by Haste)."
+    },
+    "1343": {
+        "TalentName$chinese": "烈焰音符",
+        "TalentDes$chinese": "施放专精技能时，烈焰狂想跟着律动爆发一次攻击力100%魔法伤害，同时为其接触到的友方目标添加音符。",
+        "TalentName$english": "Flame Note",
+        "TalentDes$english": "When casting an Expertise Skill, Rhapsody of Flame releases Magic Damage equal to 100% ATK and grants a Note to allies it touches."
+    },
+    "1344": {
+        "TalentName$chinese": "终幕指令",
+        "TalentDes$chinese": "施放安可后的10秒内，每次施放烈焰狂想，使得受到安可作用的目标立即触发安可琴弦。",
+        "TalentName$english": "Finale Command",
+        "TalentDes$english": "Within 10s of casting Encore, each use of Rhapsody of Flame causes targets affected by Encore to trigger Encore Strings."
+    },
+    "1345": {
+        "TalentName$chinese": "安可永续",
+        "TalentDes$chinese": "自身永久携带安可效果。<br>自身每触发5次安可琴弦，下一次增幅节拍、聚合乐章伤害+50%。",
+        "TalentName$english": "Encore Persistence",
+        "TalentDes$english": "Permanently benefits from Encore effect. <br>For every 5 triggers of Encore Strings, the next Amplified Beat or Harmonic Anthem deals 50% more DMG."
+    },
+    "1346": {
+        "TalentName$chinese": "安可幸运增幅",
+        "TalentDes$chinese": "每1%幸运几率提供1%安可琴弦触发几率。",
+        "TalentName$english": "Encore Luck Boost",
+        "TalentDes$english": "Every 1% Luck Chance grants 1% more trigger chance for Encore Strings."
+    },
+    "1347": {
+        "TalentName$chinese": "安可锐击",
+        "TalentDes$chinese": "安可琴弦造成的幸运一击伤害和幸运一击治疗+50%。",
+        "TalentName$english": "Encore Sharp Strike",
+        "TalentDes$english": "Encore Strings' Lucky Strike DMG and healing +50%."
+    },
+    "1348": {
+        "TalentName$chinese": "绝顶万众瞩目",
+        "TalentDes$chinese": "使用万众瞩目后强化的技能个数从初始的1个变为2个。",
+        "TalentName$english": "Absolute Center Stage",
+        "TalentDes$english": "The number of enhanced skills granted after using Center Stage increases from 1 to 2."
+    },
+    "1349": {
+        "TalentName$chinese": "极意万众瞩目·狂音",
+        "TalentDes$chinese": "万众瞩目充能次数+1。<br>每消耗50个演奏热情，获得1层万众瞩目充能。",
+        "TalentName$english": "Zenith Center Stage: Mad Tune",
+        "TalentDes$english": "Center Stage charge +1.<br>For every 50 Performance Passion consumed, gain 1 Center Stage charge."
+    },
+    "1350": {
+        "TalentName$chinese": "音塔多重波动",
+        "TalentDes$chinese": "施放万众瞩目后立即延长鸣奏·英勇乐章5秒。",
+        "TalentName$english": "Tower Multiwave",
+        "TalentDes$english": "Casting Center Stage immediately extends Heroic Melody by 5s."
+    },
+    "1351": {
+        "TalentName$chinese": "音浪超频领域",
+        "TalentDes$chinese": "施放万众瞩目可立即获得15点音浪值，且接下来10秒时间内获得的音浪值翻倍。",
+        "TalentName$english": "Soundwave Overclock",
+        "TalentDes$english": "Upon casting Center Stage, grants 15 Soundwave Energy, and doubles all the Soundwave Energy gained for the next 10s."
+    },
+    "1352": {
+        "TalentName$chinese": "会心充能律",
+        "TalentDes$chinese": "激涌五重奏造成暴击伤害或治疗时（命中多个目标时只触发一次），获得2点演奏能量。<br>鸣奏·愈合乐章造成暴击时，获得1点演奏能量（命中多个目标时只触发一次）。",
+        "TalentName$english": "Crit Charge Rhythm",
+        "TalentDes$english": "Fivefold Crescendo deals Crit DMG or healing (only triggers once for multiple targets), and grants 2 Performance Energy. <br>When Healing Melody lands a Crit hit, grants 1 Performance Energy (only triggers once for multiple targets)."
+    },
+    "1353": {
+        "TalentName$chinese": "音塔爆炎冲击",
+        "TalentDes$chinese": "音箱每隔5秒，发出一记火焰震击。",
+        "TalentName$english": "Tower Flame Blast",
+        "TalentDes$english": "The speaker releases a Flame Shock every 5s."
+    },
+    "1354": {
+        "TalentName$chinese": "多目标热力增幅",
+        "TalentDes$chinese": "热情挥洒每多命中1个目标伤害+5%，最高不超过25%。",
+        "TalentName$english": "Multi-Target Heat Amp",
+        "TalentDes$english": "For each additional target hit by Passion Burst, DMG dealt +5%, up to 25%."
+    },
+    "1355": {
+        "TalentName$chinese": "热烈音塔爆炎冲击",
+        "TalentDes$chinese": "热情挥洒命中音箱时，音箱立即发出一记火焰震击。",
+        "TalentName$english": "Heated Tower Flame Blast",
+        "TalentDes$english": "When Passion Burst hits a speaker, it immediately releases a Flame Shock."
+    },
+    "1356": {
+        "TalentName$chinese": "音波裁决",
+        "TalentDes$chinese": "鸣奏·愈合乐章激活时，激涌五重奏附带伤害效果。",
+        "TalentName$english": "Sonic Verdict",
+        "TalentDes$english": "While Healing Melody is active, Fivefold Crescendo gains a DMG effect."
+    },
+    "1357": {
+        "TalentName$chinese": "谐波增幅器",
+        "TalentDes$chinese": "音箱触发的专精技能其伤害和治疗效果+30%。",
+        "TalentName$english": "Harmonic Amplifier",
+        "TalentDes$english": "Expertise triggered by the speaker gain 30% more DMG and healing."
+    },
+    "1358": {
+        "TalentName$chinese": "渐强治愈和弦",
+        "TalentDes$chinese": "鸣奏·愈合乐章每持续1秒，治疗强度+2%，最高叠加5层。",
+        "TalentName$english": "Crescendo Healing Chord",
+        "TalentDes$english": "Per second Healing Melody remains active, its Healing +2%, stacking up to 5 times."
+    },
+    "1359": {
+        "TalentName$chinese": "暴击天秤",
+        "TalentDes$chinese": "对生命值大于50%的敌方目标暴击+10%。<br>对生命值低于50%的友方目标暴击+10%。",
+        "TalentName$english": "Crit Scale",
+        "TalentDes$english": "Crit +10% against enemies above 50% HP. <br>Crit +10% against enemies below 50% HP."
+    },
+    "1360": {
+        "TalentName$chinese": "鸣奏交响式",
+        "TalentDes$chinese": "对受到鸣奏·愈合乐章影响的目标治疗强度+10%。",
+        "TalentName$english": "Symphonic Aria",
+        "TalentDes$english": "Increases Healing by 10% for targets affected by Healing Melody."
+    },
+    "1361": {
+        "TalentName$chinese": "活力解放",
+        "TalentDes$chinese": "造成伤害的7%和造成治疗的15%将存储为律动。施放万众瞩目后的10秒内，施放专精技能、愈合节拍都会消耗律动造成40%额外治疗。",
+        "TalentName$english": "Vitality Unleash",
+        "TalentDes$english": "7% of DMG dealt and 15% of healing done is stored as Rhythm. Within 10s of casting Center Stage, the use of Expertise and Healing Beat consumes Rhythm to grant 40% bonus healing."
+    },
+    "1362": {
+        "TalentName$chinese": "安可连发",
+        "TalentDes$chinese": "施放安可后的10秒内，每次施放专精技能，使得受到安可作用的目标立即触发安可琴弦。",
+        "TalentName$english": "Encore Chain",
+        "TalentDes$english": "Within 10s of casting Encore, each use of Expertise Skill triggers Encore Strings for targets affected by Encore."
+    },
+    "1363": {
+        "TalentName$chinese": "音塔共鸣",
+        "TalentDes$chinese": "自身永久携带安可效果。<br>自身每触发5次安可琴弦，减少所有专精技能剩余冷却时间5秒。",
+        "TalentName$english": "Tower Resonance",
+        "TalentDes$english": "Permanently benefits from Encore effect. <br>Every 5 triggers of Encore Strings reduce the remaining CD of Expertise by 5s."
+    },
+    "1364": {
+        "TalentName$chinese": "属性共鸣超载",
+        "TalentDes$chinese": "开启安可之后，鸣奏·愈合乐章提供的属性增益效果+100%。",
+        "TalentName$english": "Stat Resonance Overload",
+        "TalentDes$english": "While Encore is active, boosts from Healing Melody increase by 100%."
+    },
+    "1365": {
+        "TalentName$chinese": "极意万众瞩目·协奏",
+        "TalentDes$chinese": "万众瞩目充能次数+1。<br>每消耗50个演奏热情，获得1层万众瞩目充能。",
+        "TalentName$english": "Zenith Center Stage: Concerto",
+        "TalentDes$english": "Center Stage charge +1.<br>For every 50 Performance Passion consumed, gain 1 Center Stage charge."
+    },
+    "1366": {
+        "TalentName$chinese": "绝顶万众瞩目",
+        "TalentDes$chinese": "使用万众瞩目后强化的技能个数从初始的1个变为2个。",
+        "TalentName$english": "Absolute Center Stage",
+        "TalentDes$english": "The number of enhanced skills granted after using Center Stage increases from 1 to 2."
+    },
+    "1367": {
+        "TalentName$chinese": "螺旋炎奏",
+        "TalentDes$chinese": "施放万众瞩目后，召唤一股音符热浪。",
+        "TalentName$english": "Spiral Flame",
+        "TalentDes$english": "After casting Center Stage, summons a wave of Sonic Surge."
+    }
+}

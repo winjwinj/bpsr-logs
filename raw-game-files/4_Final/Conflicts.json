@@ -1,0 +1,416 @@
+{
+  "1433": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Azure Sever"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "蒂娜飞鸟投强化",
+      "EnglishShort": "Falcon Strike",
+      "EnglishLong": "Enhanced <linktext=1524><style=\"ItemQuality_5\">Falcon Toss</style></linktext>, leap into the air and gather wind <style=\"accent-gn\">power</style>, launching a fierce wind blade spear. Deals <style=\"accent-gn\">750%</style> ATK as <style=\"physical\">Attack Damage</style> to all enemies in the area and significantly reduces their tenacity, growing with the upgrade/advancement of the <linktext=1524><style=\"ItemQuality_5\">Falcon Toss</style></linktext> skill.<br>Immediately gain <style=\"accent-gn\">3</style> stacks of <linktext=1152><style=\"ItemQuality_5\">Sharp</style></linktext> after Casting .",
+      "AIEnglishShort": "Tina Bird Point Strengthening"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "极·岚切",
+      "AIEnglishShort": "Ji Lanche"
+    },
+    "EnglishShortManualOverride": "Falcon Toss",
+    "Comment": null
+  },
+  "1524": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Fast Growth"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "艾露娜减CD",
+      "EnglishShort": "Growth Arcane",
+      "EnglishLong": "Applies an acceleration effect to the caster. Increases MATK and reduces CD while active.<br><br><size=22><style=\"tipsYellow\">Tips: Cast when other skills are on CD .</style></size>",
+      "AIEnglishShort": "Eluna CD reduction"
+    },
+    "EnglishShortManualOverride": "Growth Arcane",
+    "Comment": null
+  },
+  "1727": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Piercing Slash"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥尔维拉触发弱点攻击",
+      "EnglishShort": "Olvera Triggers Weak Point Strike",
+      "AIEnglishShort": "Orvilla triggers a weak point attack"
+    },
+    "EnglishShortManualOverride": "Olvera Triggers Weak Point Strike",
+    "Comment": null
+  },
+  "1734": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Thunder Cut"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥尔维拉触发爆裂居合斩",
+      "EnglishShort": "Thunder Iaido Slash",
+      "EnglishLong": "Consume all <style=\"accent-gn\">Thunder Sigil</style> to unleash <style=\"accent-gn\">5</style> rapid blade waves, dealing <style=\"magic\">Attack Damage</style> equal to <style=\"accent-gn\">700%</style> ATK. Scales with the Level/Tier of <style=\"accent-gn\">Special Attack</style>.",
+      "AIEnglishShort": "Orvila triggers burst Juhe Slash"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "雷霆居合斩",
+      "AIEnglishShort": "Thunder House Slash"
+    },
+    "EnglishShortManualOverride": "Iaido Slash",
+    "Comment": null
+  },
+  "1735": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Dracoflash"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥尔维拉龙槌闪",
+      "EnglishShort": "Dragonhammer",
+      "EnglishLong": "Enhanced <linktext=1501><style=\"ItemQuality_5\">Flash strike</style></linktext>, Consume all <style=\"accent-gn\">Thunder Sigil</style>s, then charges forward after powering up to slash all enemies in path, dealing <style=\"accent-gn\">510%</style> ATK as <style=\"physical\">Attack Damage</style> (which scales with the Level/Tier of <linktext=1501><style=\"ItemQuality_5\">Flash Strike</style></linktext>). <style=\"accent-gn\">Each</style> <style=\"accent-gn\">Thunder Sigil</style> consumed increases DMG by <style=\"accent-gn\">25%</style>.",
+      "AIEnglishShort": "Orvila Dragon Hammer Flash"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "坠龙闪",
+      "AIEnglishShort": "Flash of dragon"
+    },
+    "EnglishShortManualOverride": "Flash strike",
+    "Comment": null
+  },
+  "1736": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Phantom Slash"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥尔维拉飞雷斩乱",
+      "EnglishShort": "Raijin Dash Slash",
+      "EnglishLong": "Enhanced <linktext=1554><style=\"ItemQuality_5\">Raijin Dash</style></linktext>, Consume all <style=\"accent-gn\">Thunder Sigil</style>s to summon more ferocious lightning, dealing <style=\"accent-gn\">450%</style> ATK as <style=\"physical\">Attack Damage</style> (which scales with the Level/Tier of <linktext=1554><style=\"ItemQuality_5\">Raijin Dash</style></linktext>). <style=\"accent-gn\">Each</style> <style=\"accent-gn\">Thunder Sigil</style> consumed increases DMG by <style=\"accent-gn\">25%</style>.",
+      "AIEnglishShort": "Orvilla Flying Thunder Slashes"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "神影斩",
+      "AIEnglishShort": "Divine Shadow Slash"
+    },
+    "EnglishShortManualOverride": "Raijin Dash",
+    "Comment": null
+  },
+  "1742": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Thundercleave"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "霹雳连斩-最后一刀",
+      "EnglishShort": "Thundercut - Final Slash",
+      "EnglishLong": "A lightning-fast Iai Slash is executed, inflicting <style=\"physical\">Attack Damage</style> on enemies. Each strike costs <style=\"accent-gn\">50</style> <style=\"accent-gn\">Blade Intent</style>. Once Attack Speed reaches <style=\"accent-gn\">25%</style>|<style=\"accent-gn\">50%</style>|<style=\"accent-gn\">90%</style>, deals <style=\"accent-gn\">1</style>|<style=\"accent-gn\">2</style>|<style=\"accent-gn\">3</style> additional attack(s). If <style=\"accent-gn\">Blade Intent</style> remains after the strike, the skill can be immediately recast. <br><br><size=22><style=\"tipsYellow\">Tips: As a core skill to synergize with Moonstrike Spec, this skill primarily consumes Blade Intent to deal DMG. Execute consecutive casts when Blade Intent has reached its maximum capacity.</style></size>",
+      "AIEnglishShort": "Thunderbolt Slash-The Last Sword"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "霹雳升龙斩",
+      "AIEnglishShort": "Thunderbolt Dragon Slash"
+    },
+    "EnglishShortManualOverride": "Thundercut",
+    "Comment": null
+  },
+  "1932": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Shield Combo"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "杰拉德特殊攻击TG-01强",
+      "EnglishShort": "Shield Bash",
+      "AIEnglishShort": "Gerald's special attack on TG-01"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "护盾猛击",
+      "AIEnglishShort": "Shield Strike"
+    },
+    "EnglishShortManualOverride": "Shield Bash",
+    "Comment": null
+  },
+  "1935": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Rageblow"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "杰拉德普攻改-03",
+      "EnglishShort": "Countercrush",
+      "EnglishLong": "Consumes <style=\"accent-gn\">40</style> points of <style=\"accent-gn\">Rage</style>, violently slams down the weapon, dealing <style=\"physical\">Attack Damage</style> to surrounding enemies, and enters the <style=\"accent-gn\">Countercrush</style> state. During this time, Block Chance +<style=\"accent-gn\">100%</style>, <style=\"physical\">Attack Damage</style> taken from blocks -<style=\"accent-gn\">30%</style>. <br><br><size=22><style=\"tipsYellow\">Tips: Very effective in environments with mostly Attack Damage. After casting, the block chance increases, reliably reducing Attack Damage taken.</style></size>",
+      "AIEnglishShort": "Geraldup attack and reform-03"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "格挡冲击-怒击",
+      "AIEnglishShort": "Blocking Shock-Rage Strike"
+    },
+    "EnglishShortManualOverride": "Halberd's Edge",
+    "Comment": null
+  },
+  "2224": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Quadraflare"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "罗特罗亚尼-弓-特殊攻击B-强化",
+      "EnglishShort": "Lethal Shot",
+      "AIEnglishShort": "Rotroyani - Bow - Special Attack B-Enhancement"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "夺命射击-四连矢",
+      "AIEnglishShort": "Deadly Shooting - Four-Second Arrow"
+    },
+    "EnglishShortManualOverride": "Lethal Shot",
+    "Comment": null
+  },
+  "2240": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Lumi Torrent"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "强化怒涛射击",
+      "EnglishShort": "Sky Piercing Star Strike",
+      "EnglishLong": "Fires a giant arrow at the target, dealing <style=\"physical\">Attack Damage</style> equal to <style=\"accent-gn\">1000%</style> ATK.",
+      "AIEnglishShort": "Strengthening raging wave shooting"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "天翔贯星击-强化怒涛射击",
+      "AIEnglishShort": "Tianxiang Guanxing Strike-Strength Rage Shooting"
+    },
+    "EnglishShortManualOverride": "Sky Piercing Star Strike",
+    "Comment": null
+  },
+  "2296": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Phantom Falcon"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "幻影雄鹰",
+      "EnglishShort": "Phantom Eagle",
+      "AIEnglishShort": "Phantom Eagle"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "幻影雄鹰",
+      "AIEnglishShort": "Phantom Eagle"
+    },
+    "EnglishShortManualOverride": "Phantom Eagle",
+    "Comment": null
+  },
+  "2314": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Rock the Stage/Infinite Rhapsody"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "灵魂乐手ULT_01",
+      "EnglishShort": "Rock the Stage",
+      "EnglishLong": "Let the Passion Flow Again! Consumes <style=\"accent-gn\">5</style> <style=\"accent-gn\">Performance Passion</style>, reigniting the spirits of the weary. Performs a sequence of notes that heals <style=\"accent-gn\">10</style> allies. <br><br><style=\"accent-gn\">Performance Passion</style>: Required to perform music. Regenerates <style=\"accent-gn\">1</style> stack every <style=\"accent-gn\">5s</style>. <br><br><size=22><style=\"tipsYellow\">Tips: Highest healing potential. Monitor team health to avoid overhealing.</size></style>",
+      "AIEnglishShort": "Soul Musician ULT_01"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "升格·劲爆全场",
+      "AIEnglishShort": "Upgrade and explode the entire game"
+    },
+    "EnglishShortManualOverride": "Rock the Stage",
+    "Comment": null
+  },
+  "2320": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Flame Shock"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "爆炎冲击",
+      "EnglishShort": "Flame Blast",
+      "AIEnglishShort": "Explosion shock"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "音塔爆炎冲击",
+      "AIEnglishShort": "Sound Tower Blast Flame Impact"
+    },
+    "EnglishShortManualOverride": "Flame Blast",
+    "Comment": null
+  },
+  "2424": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Red light counter"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "剑盾FRACTURE_ATK",
+      "EnglishShort": "AegisFRACTURE_ATK",
+      "EnglishLong": "AegisFRACTURE_ATK",
+      "AIEnglishShort": "Sword and Shield FRACTURE_ATK"
+    },
+    "EnglishShortManualOverride": "Blade of Justice",
+    "Comment": null
+  },
+  "3938": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Arcane! Cocoon Technique"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥义！茧房术",
+      "EnglishShort": "Arcane! Cocoon Tech",
+      "EnglishLong": "<style=\"accent-gn\">Summon Boss</style>: Phantom Arachnocrab and transforms into a cocoon. Following a brief delay, the cocoon bursts, dealing <style=\"physical\">Attack Damage</style> and <linktext=3000><style=\"ItemQuality_5\">disrupting</style></linktext> the actions of the affected target. Your <style=\"accent-gn\">Mastery</style> is increased for a period.",
+      "AIEnglishShort": "Secret! "
+    },
+    "EnglishShortManualOverride": "Arcane! Cocoon Tech",
+    "Comment": null
+  },
+  "3939": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Stunt! Lightning Orb"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "绝技！雷光球",
+      "EnglishShort": "Stunt! Thunder Orb",
+      "EnglishLong": "<style=\"accent-gn\">Summon Elite</style>:  Great Warhog to release a Lightning Orb forward, dealing <style=\"physical\">Attack Damage</style>. <br>Upon the skill cast, your <style=\"accent-gn\">Light Bonus</style> is increased for a period.",
+      "AIEnglishShort": "stunt! "
+    },
+    "EnglishShortManualOverride": "Stunt! Thunder Orb",
+    "Comment": null
+  },
+  "3943": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Arcane! Infernal Thrust"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥义！地狱突刺",
+      "EnglishShort": "Arcane! Hell Thrust",
+      "EnglishLong": "<style=\"accent-gn\">Summon Boss</style>: Iron Fang to deliver AoE <style=\"physical\">Attack Damage</style> to nearby enemies, inflicting a <style=\"accent-gn\">100%</style> <linktext=3004><style=\"ItemQuality_5\">Wound</style></linktext> on all affected targets for <style=\"accent-gn\">15s</style>.",
+      "AIEnglishShort": "Secret! "
+    },
+    "EnglishShortManualOverride": "Arcane! Hell Thrust",
+    "Comment": null
+  },
+  "3944": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Arcane! Azure Tempest"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥义！沧澜风啸",
+      "EnglishShort": "Arcane! Azure Gale",
+      "EnglishLong": "<style=\"accent-gn\">Summon Boss</style>: Celestial Flier to charge forward, dealing Ice <style=\"physical\">Attack Damage</style> and <linktext=3000><style=\"ItemQuality_5\">disrupting</style></linktext> the targets' actions. After casting, your <style=\"accent-gn\">Haste</style> is increased for a period of time.",
+      "AIEnglishShort": "Secret! "
+    },
+    "EnglishShortManualOverride": "Arcane! Azure Gale",
+    "Comment": null
+  },
+  "3946": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Arcane! Goblin Grand March"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "奥义！哥布林大行军",
+      "EnglishShort": "Arcane! Goblin March",
+      "EnglishLong": "Resonate with the power of Boss: Goblin King, summoning <style=\"accent-gn\">1 to 3</style> goblins at random to cast skills. <br><style=\"accent-gn\">Always</style> summons 1 random goblin from Elite: Goblin Sword and Elite: Goblin Crossbow. <br>Has <style=\"accent-gn\">a chance</style> to additionally summon 1 Elite: Jungle Goblin Warrior. <br>Has <style=\"accent-gn\">a chance</style> to additionally summon 1 from Elite: Hurricane Goblin Giant Axe or Boss: Wind Goblin King. Has a <style=\"accent-gn\">30% chance</style> to summon the Boss.",
+      "AIEnglishShort": "Secret! "
+    },
+    "EnglishShortManualOverride": "Arcane! Goblin March",
+    "Comment": null
+  },
+  "3947": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Stunt! Spiral Fracture"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "绝技！螺旋断界",
+      "EnglishShort": "Stunt! Spiral Severance",
+      "EnglishLong": "<style=\"accent-gn\">Summon</style> Elite Muku Vanguard to charge forward, dealing <style=\"physical\">Attack Damage</style>. <br>Upon the skill cast, your <style=\"accent-gn\">Thunder Bonus</style> is increased for a period.",
+      "AIEnglishShort": "stunt! "
+    },
+    "EnglishShortManualOverride": "Stunt! Spiral Severance",
+    "Comment": null
+  },
+  "4501": {
+    "BuffTable_Clean.json": {
+      "ChineseShort": "引燃效果Buff",
+      "EnglishShort": "Burn",
+      "EnglishLong": "Continuously lose 0.05% of Max HP per second",
+      "AIEnglishShort": "Ignition effect Buff"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "小猪冲锋",
+      "EnglishShort": "Pig Charge",
+      "EnglishLong": "After use, dash forward. Go forward bravely!",
+      "AIEnglishShort": "Pig charge"
+    },
+    "EnglishShortManualOverride": "Pig Charge",
+    "Comment": null
+  },
+  "31901": {
+    "BuffTable_Clean.json": {
+      "ChineseShort": "青岚强袭",
+      "EnglishShort": "Gale Assault",
+      "EnglishLong": "Surrounded by a strong wind field, continuously dealing AOE damage.",
+      "AIEnglishShort": "Qinglan attacks"
+    },
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Rock Projectile"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "勇气风环",
+      "AIEnglishShort": "Courage wind ring"
+    },
+    "EnglishShortManualOverride": "Valor Cyclone",
+    "Comment": null
+  },
+  "101112": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Falcon Dive"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "宠物雄鹰快速回旋",
+      "EnglishShort": "Pet Eagle Quick Spin",
+      "AIEnglishShort": "Pet eagle swirls quickly"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "宠物雄鹰快速回旋",
+      "AIEnglishShort": "Pet eagle swirls quickly"
+    },
+    "EnglishShortManualOverride": "Pet Eagle Quick Spin",
+    "Comment": null
+  },
+  "199902": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Terra Sunder"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "怒爆石头",
+      "EnglishShort": "Rage Burst Stone",
+      "EnglishLong": "Rage Burst Stone",
+      "AIEnglishShort": "Furious stone"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "地崩山摧",
+      "AIEnglishShort": "The earth collapses and mountains"
+    },
+    "EnglishShortManualOverride": "Rage Burst Stone",
+    "Comment": null
+  },
+  "1700826": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Wild Wolf Pounce"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "宠物-强力飞扑",
+      "EnglishShort": "Pet - Powerful Pounce",
+      "AIEnglishShort": "Pets - Powerful Flying"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "狂野召唤",
+      "AIEnglishShort": "Wild Summon"
+    },
+    "EnglishShortManualOverride": "Pet - Powerful Pounce",
+    "Comment": null
+  },
+  "1700827": {
+    "RecountTable_Clean.json": {
+      "EnglishShort": "Wild Wolf - Basic Attack"
+    },
+    "SkillTable_Clean.json": {
+      "ChineseShort": "宠物-普攻",
+      "EnglishShort": "Pet - Basic Attack",
+      "AIEnglishShort": "Pets-General attack"
+    },
+    "skill_names_Clean.json": {
+      "ChineseShort": "狼普攻",
+      "AIEnglishShort": "Wolf attack"
+    },
+    "EnglishShortManualOverride": "Pet - Basic Attack",
+    "Comment": null
+  }
+}

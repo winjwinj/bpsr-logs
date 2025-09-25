@@ -1,0 +1,776 @@
+{
+    "1417": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031104": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "1401": {
+        "EnglishShort": "Windborne Grace"
+    },
+    "1418": {
+        "EnglishShort": "Gale Thrust"
+    },
+    "1419": {
+        "EnglishShort": "Skyfall"
+    },
+    "1426": {
+        "EnglishShort": "Typhoon Cleave"
+    },
+    "1420": {
+        "EnglishShort": "Galeform"
+    },
+    "1421": {
+        "EnglishShort": "Spiral Thrust"
+    },
+    "1422": {
+        "EnglishShort": "Breach Pursuit"
+    },
+    "1425": {
+        "EnglishShort": "Falcon Toss"
+    },
+    "1424": {
+        "EnglishShort": "Instant Edge"
+    },
+    "1430": {
+        "EnglishShort": "Valor Cyclone"
+    },
+    "1431": {
+        "EnglishShort": "Sharp Impact"
+    },
+    "1423": {
+        "EnglishShort": "Aegis Gale"
+    },
+    "1435": {
+        "EnglishShort": "Drake Cannon"
+    },
+    "1434": {
+        "EnglishShort": "Vortex Strike"
+    },
+    "1433": {
+        "EnglishShort": "Azure Sever"
+    },
+    "1411": {
+        "EnglishShort": "Swift Blade"
+    },
+    "1428": {
+        "EnglishShort": "Spear Thrust"
+    },
+    "1429": {
+        "EnglishShort": "Tornado"
+    },
+    "149901": {
+        "EnglishShort": "Wind Spiral"
+    },
+    "22205071": {
+        "EnglishShort": "Rend"
+    },
+    "1294": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031102": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "1201": {
+        "EnglishShort": "Raincall Surge"
+    },
+    "1242": {
+        "EnglishShort": "Frost Lance"
+    },
+    "1241": {
+        "EnglishShort": "Frostbeam"
+    },
+    "1248": {
+        "EnglishShort": "Glacier Hymn"
+    },
+    "1239": {
+        "EnglishShort": "Meteor Storm"
+    },
+    "1211": {
+        "EnglishShort": "Crystal Veil"
+    },
+    "1244": {
+        "EnglishShort": "Blizzard"
+    },
+    "1210": {
+        "EnglishShort": "Maelstrom"
+    },
+    "1240": {
+        "EnglishShort": "Frozen Gale"
+    },
+    "1243": {
+        "EnglishShort": "Permafrost"
+    },
+    "1246": {
+        "EnglishShort": "Tidepool"
+    },
+    "1245": {
+        "EnglishShort": "Frost Shelter"
+    },
+    "1258": {
+        "EnglishShort": "Icy Bolt"
+    },
+    "1247": {
+        "EnglishShort": "Frost Comet"
+    },
+    "22204081": {
+        "EnglishShort": "Frost Explosion"
+    },
+    "22204241": {
+        "EnglishShort": "Frost Impact"
+    },
+    "22204320": {
+        "EnglishShort": "Cold Pulse"
+    },
+    "3121301": {
+        "EnglishShort": "Ice Arrow"
+    },
+    "3120901": {
+        "EnglishShort": "Glacial Spear"
+    },
+    "1795": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031101": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "1701": {
+        "EnglishShort": "Judgment Cut"
+    },
+    "1714": {
+        "EnglishShort": "Iaido Slash"
+    },
+    "1715": {
+        "EnglishShort": "Moonstrike"
+    },
+    "1713": {
+        "EnglishShort": "Oblivion Combo"
+    },
+    "1705": {
+        "EnglishShort": "Overdrive"
+    },
+    "1717": {
+        "EnglishShort": "Flash strike"
+    },
+    "1718": {
+        "EnglishShort": "Raijin Dash"
+    },
+    "1719": {
+        "EnglishShort": "Scythe Wheel"
+    },
+    "179903": {
+        "EnglishShort": "Moonblade"
+    },
+    "179906": {
+        "EnglishShort": "Moonstrike Whirl"
+    },
+    "1724": {
+        "EnglishShort": "Thundercut"
+    },
+    "1730": {
+        "EnglishShort": "Volt Surge"
+    },
+    "1731": {
+        "EnglishShort": "Stormflash"
+    },
+    "1720": {
+        "EnglishShort": "True Sight"
+    },
+    "1734": {
+        "EnglishShort": "Thunder Cut"
+    },
+    "1735": {
+        "EnglishShort": "Dracoflash"
+    },
+    "1736": {
+        "EnglishShort": "Phantom Slash"
+    },
+    "1737": {
+        "EnglishShort": "Divine Sickle"
+    },
+    "1733": {
+        "EnglishShort": "Storm Scythe"
+    },
+    "1742": {
+        "EnglishShort": "Thundercleave"
+    },
+    "1738": {
+        "EnglishShort": "Chaos Breaker"
+    },
+    "1727": {
+        "EnglishShort": "Piercing Slash"
+    },
+    "179907": {
+        "EnglishShort": "Bladewind Domain"
+    },
+    "179908": {
+        "EnglishShort": "Thunderstrike"
+    },
+    "179910": {
+        "EnglishShort": "Thunderburst"
+    },
+    "2211": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031109": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "2201": {
+        "EnglishShort": "Bullseye"
+    },
+    "2220": {
+        "EnglishShort": "Storm Arrow"
+    },
+    "2222": {
+        "EnglishShort": "Double Arrow"
+    },
+    "2224": {
+        "EnglishShort": "Quadraflare"
+    },
+    "2209": {
+        "EnglishShort": "Luminary Bolt"
+    },
+    "2291": {
+        "EnglishShort": "Photon Explosion"
+    },
+    "2230": {
+        "EnglishShort": "Torrent Volley"
+    },
+    "2240": {
+        "EnglishShort": "Lumi Torrent"
+    },
+    "2232": {
+        "EnglishShort": "Arrow Rain"
+    },
+    "2233": {
+        "EnglishShort": "Powerdraw"
+    },
+    "2234": {
+        "EnglishShort": "Radiance Barrage"
+    },
+    "2231": {
+        "EnglishShort": "Focus"
+    },
+    "2238": {
+        "EnglishShort": "Blast Shot"
+    },
+    "2235": {
+        "EnglishShort": "Deter Shot"
+    },
+    "1700827": {
+        "EnglishShort": "Wild Wolf - Basic Attack"
+    },
+    "1700820": {
+        "EnglishShort": "Wild Wolf - Assist"
+    },
+    "1700824": {
+        "EnglishShort": "Wild Wolf - Tail Sweep"
+    },
+    "1700826": {
+        "EnglishShort": "Wild Wolf Pounce"
+    },
+    "101112": {
+        "EnglishShort": "Falcon Dive"
+    },
+    "22203291": {
+        "EnglishShort": "Falcon Strike"
+    },
+    "22203181": {
+        "EnglishShort": "Falcon Lightning Strike"
+    },
+    "2296": {
+        "EnglishShort": "Phantom Falcon"
+    },
+    "2241": {
+        "EnglishShort": "Celestial Eagle"
+    },
+    "22203091": {
+        "EnglishShort": "Bleed"
+    },
+    "22203512": {
+        "EnglishShort": "Stomp"
+    },
+    "22203521": {
+        "EnglishShort": "Implosion"
+    },
+    "22203621": {
+        "EnglishShort": "Light Prism"
+    },
+    "3220105": {
+        "EnglishShort": "Lightseeker Arrow"
+    },
+    "3220112": {
+        "EnglishShort": "Photon Arrow"
+    },
+    "3220107": {
+        "EnglishShort": "Magic Arrow"
+    },
+    "3220108": {
+        "EnglishShort": "Explosive Arrow"
+    },
+    "1912": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031107": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "1901": {
+        "EnglishShort": "Halberd's Edge"
+    },
+    "1922": {
+        "EnglishShort": "Shield Bash"
+    },
+    "1932": {
+        "EnglishShort": "Shield Combo"
+    },
+    "1930": {
+        "EnglishShort": "Countercrush"
+    },
+    "1907": {
+        "EnglishShort": "Cracking Echo"
+    },
+    "1924": {
+        "EnglishShort": "Star Shatter"
+    },
+    "1927": {
+        "EnglishShort": "Sandshroud"
+    },
+    "1936": {
+        "EnglishShort": "Stoneform"
+    },
+    "1926": {
+        "EnglishShort": "Sandgrip"
+    },
+    "1937": {
+        "EnglishShort": "Granite Fury"
+    },
+    "1925": {
+        "EnglishShort": "Rage Burst"
+    },
+    "1938": {
+        "EnglishShort": "Brave Bastion"
+    },
+    "1923": {
+        "EnglishShort": "Sandward"
+    },
+    "1935": {
+        "EnglishShort": "Rageblow"
+    },
+    "1941": {
+        "EnglishShort": "Starfall"
+    },
+    "1942": {
+        "EnglishShort": "Rupture"
+    },
+    "199902": {
+        "EnglishShort": "Terra Sunder"
+    },
+    "1943": {
+        "EnglishShort": "Stone Fist"
+    },
+    "250036": {
+        "EnglishShort": "Weakness Strike"
+    },
+    "22201080": {
+        "EnglishShort": "Block Recovery"
+    },
+    "250037": {
+        "EnglishShort": "Countercrush"
+    },
+    "22201240": {
+        "EnglishShort": "Shield Echo"
+    },
+    "22201410": {
+        "EnglishShort": "Sandstone Revival"
+    },
+    "22201491": {
+        "EnglishShort": "Recovery"
+    },
+    "22201641": {
+        "EnglishShort": "Rock Heal"
+    },
+    "22201362": {
+        "EnglishShort": "Sand Crystal Shock"
+    },
+    "31901": {
+        "EnglishShort": "Rock Projectile"
+    },
+    "2424": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031110": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "2401": {
+        "EnglishShort": "Blade of Justice"
+    },
+    "2405": {
+        "EnglishShort": "Valor Bash"
+    },
+    "2406": {
+        "EnglishShort": "Vanguard Strike"
+    },
+    "24060": {
+        "EnglishShort": "Vanguard Hunt"
+    },
+    "2407": {
+        "EnglishShort": "Radiant Infusion"
+    },
+    "2410": {
+        "EnglishShort": "Judgment"
+    },
+    "2411": {
+        "EnglishShort": "Scorching Judgment"
+    },
+    "2451": {
+        "EnglishShort": "Auto Judgment"
+    },
+    "2412": {
+        "EnglishShort": "Reckoning"
+    },
+    "2408": {
+        "EnglishShort": "Shield Toss"
+    },
+    "2421": {
+        "EnglishShort": "Sacred Blade"
+    },
+    "2420": {
+        "EnglishShort": "Radiance"
+    },
+    "2415": {
+        "EnglishShort": "Aegis Ward"
+    },
+    "2419": {
+        "EnglishShort": "Zeal Crusade"
+    },
+    "2409": {
+        "EnglishShort": "Divine Circle"
+    },
+    "2416": {
+        "EnglishShort": "Condemn"
+    },
+    "2417": {
+        "EnglishShort": "Enhanced Condemn"
+    },
+    "2413": {
+        "EnglishShort": "Inferno Reckon"
+    },
+    "2450": {
+        "EnglishShort": "Radiant Impact"
+    },
+    "22206241": {
+        "EnglishShort": "Holy Mark"
+    },
+    "22206401": {
+        "EnglishShort": "Divine Strike"
+    },
+    "22206460": {
+        "EnglishShort": "Shield Guard"
+    },
+    "22206552": {
+        "EnglishShort": "Radiant Core"
+    },
+    "1517": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031105": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "1501": {
+        "EnglishShort": "Vines' Embrace"
+    },
+    "1518": {
+        "EnglishShort": "Wild Bloom"
+    },
+    "1507": {
+        "EnglishShort": "Life Bloom"
+    },
+    "1509": {
+        "EnglishShort": "Divine Circle Bloom"
+    },
+    "1527": {
+        "EnglishShort": "Bloomheal"
+    },
+    "1528": {
+        "EnglishShort": "Vital Surge"
+    },
+    "1519": {
+        "EnglishShort": "Feral Seed"
+    },
+    "1522": {
+        "EnglishShort": "Nourish"
+    },
+    "1523": {
+        "EnglishShort": "Regen Pulse"
+    },
+    "1520": {
+        "EnglishShort": "Infusion"
+    },
+    "1521": {
+        "EnglishShort": "Grove Wish"
+    },
+    "1531": {
+        "EnglishShort": "Nature Ward"
+    },
+    "1529": {
+        "EnglishShort": "Blossom Charge"
+    },
+    "1524": {
+        "EnglishShort": "Fast Growth"
+    },
+    "1525": {
+        "EnglishShort": "Stag Charge"
+    },
+    "1540": {
+        "EnglishShort": "Wild Seed"
+    },
+    "221423": {
+        "EnglishShort": "Symbiotic Mark"
+    },
+    "22202311": {
+        "EnglishShort": "Nourishing Seed"
+    },
+    "22202120": {
+        "EnglishShort": "Nature Shield"
+    },
+    "22202091": {
+        "EnglishShort": "Healing Chain"
+    },
+    "22202262": {
+        "EnglishShort": "Resurrect"
+    },
+    "22202271": {
+        "EnglishShort": "Natural Bloom"
+    },
+    "1553": {
+        "EnglishShort": "Healing Pulse"
+    },
+    "1554": {
+        "EnglishShort": "Healing Orb"
+    },
+    "221424": {
+        "EnglishShort": "Thorn"
+    },
+    "255355": {
+        "EnglishShort": "Healing of Stillness"
+    },
+    "1624": {
+        "EnglishShort": "Red light counter"
+    },
+    "22031111": {
+        "EnglishShort": "Lucky Strike"
+    },
+    "2321": {
+        "EnglishShort": "String Strike"
+    },
+    "2301": {
+        "EnglishShort": "Resonant Strings"
+    },
+    "2306": {
+        "EnglishShort": "Amplified Beat"
+    },
+    "2307": {
+        "EnglishShort": "Healing Beat"
+    },
+    "2314": {
+        "EnglishShort": "Rock the Stage/Infinite Rhapsody"
+    },
+    "2336": {
+        "EnglishShort": "Concert Circuit"
+    },
+    "2308": {
+        "EnglishShort": "Harmonic Anthem"
+    },
+    "2309": {
+        "EnglishShort": "Rhapsody of Flame"
+    },
+    "230105": {
+        "EnglishShort": "Flame's Rampage"
+    },
+    "230106": {
+        "EnglishShort": "Flame Note"
+    },
+    "2310": {
+        "EnglishShort": "Heroic Melody"
+    },
+    "2317": {
+        "EnglishShort": "Fierce Strike"
+    },
+    "2311": {
+        "EnglishShort": "Healing Melody"
+    },
+    "2312": {
+        "EnglishShort": "Fivefold Crescendo"
+    },
+    "2313": {
+        "EnglishShort": "Passion Burst"
+    },
+    "2332": {
+        "EnglishShort": "Passion Burst"
+    },
+    "2315": {
+        "EnglishShort": "Encore"
+    },
+    "2316": {
+        "EnglishShort": "Center Stage"
+    },
+    "255311": {
+        "EnglishShort": "Peaceful Tune"
+    },
+    "2207620": {
+        "EnglishShort": "Rhythm"
+    },
+    "2207151": {
+        "EnglishShort": "Blazing Heal"
+    },
+    "2329": {
+        "EnglishShort": "Pillar of Flame"
+    },
+    "2331": {
+        "EnglishShort": "Scorching Impact"
+    },
+    "22207411": {
+        "EnglishShort": "Note"
+    },
+    "2320": {
+        "EnglishShort": "Flame Shock"
+    },
+    "22207681": {
+        "EnglishShort": "Sonic Surge"
+    },
+    "221427": {
+        "EnglishShort": "Healing of Stillness"
+    },
+    "3927": {
+        "EnglishShort": "Stunt! Commanding Roar"
+    },
+    "3907": {
+        "EnglishShort": "Stunt! Falling Star"
+    },
+    "3934": {
+        "EnglishShort": "Stunt! Blink Ambush"
+    },
+    "3928": {
+        "EnglishShort": "Stunt! Predator Slash"
+    },
+    "3903": {
+        "EnglishShort": "Arcane! Blazing Axe"
+    },
+    "3942": {
+        "EnglishShort": "Arcane! Poison Explosion"
+    },
+    "3904": {
+        "EnglishShort": "Stunt! Super Critical"
+    },
+    "3915": {
+        "EnglishShort": "Stunt! Frenzied Shot"
+    },
+    "3937": {
+        "EnglishShort": "Stunt! Thunder Suppress"
+    },
+    "3923": {
+        "EnglishShort": "Arcane! Furious Hammer"
+    },
+    "3926": {
+        "EnglishShort": "Arcane! Meteor Shower"
+    },
+    "3944": {
+        "EnglishShort": "Arcane! Azure Tempest"
+    },
+    "3938": {
+        "EnglishShort": "Arcane! Cocoon Technique"
+    },
+    "3936": {
+        "EnglishShort": "Stunt! Water of Silence"
+    },
+    "3939": {
+        "EnglishShort": "Stunt! Lightning Orb"
+    },
+    "3940": {
+        "EnglishShort": "Stunt! Whirlwind Strike"
+    },
+    "3947": {
+        "EnglishShort": "Stunt! Spiral Fracture"
+    },
+    "3905": {
+        "EnglishShort": "Stunt! Boarrier Rush"
+    },
+    "3913": {
+        "EnglishShort": "Stunt! Electro Bomb"
+    },
+    "3910": {
+        "EnglishShort": "Stunt! Chaotic Barrage"
+    },
+    "3914": {
+        "EnglishShort": "Stunt! Blade Sweep"
+    },
+    "3929": {
+        "EnglishShort": "Stunt! Shell Defense"
+    },
+    "3930": {
+        "EnglishShort": "Stunt! Earth Shield"
+    },
+    "3935": {
+        "EnglishShort": "Arcane! Thunder Roar"
+    },
+    "3908": {
+        "EnglishShort": "Arcane! Pulse Benediction"
+    },
+    "3902": {
+        "EnglishShort": "Arcane! Thunderfall Grasp"
+    },
+    "3943": {
+        "EnglishShort": "Arcane! Infernal Thrust"
+    },
+    "3901": {
+        "EnglishShort": "Arcane! Flame Roar"
+    },
+    "3917": {
+        "EnglishShort": "Stunt! Heavy Slash"
+    },
+    "3925": {
+        "EnglishShort": "Stunt! Invisible Impact"
+    },
+    "3941": {
+        "EnglishShort": "Stunt! Transform into Bee"
+    },
+    "3945": {
+        "EnglishShort": "Arcane! Silent Tide"
+    },
+    "3906": {
+        "EnglishShort": "Arcane! Frostquake"
+    },
+    "3946": {
+        "EnglishShort": "Arcane! Goblin Grand March"
+    },
+    "3922": {
+        "EnglishShort": "Arcane! Flash Execution"
+    },
+    "3911": {
+        "EnglishShort": "Arcane! Heart of Flame"
+    },
+    "3920": {
+        "EnglishShort": "Arcane! Blessing of Life"
+    },
+    "3921": {
+        "EnglishShort": "Arcane! Time Decree"
+    },
+    "2302320": {
+        "EnglishShort": "First Aid"
+    },
+    "2300080": {
+        "EnglishShort": "Life Steal"
+    },
+    "23001150": {
+        "EnglishShort": "Void Corruption Arcane"
+    },
+    "23001040": {
+        "EnglishShort": "Void Corruption Pulse"
+    },
+    "23001170": {
+        "EnglishShort": "Void Corruption Fluctuation"
+    },
+    "23001031": {
+        "EnglishShort": "Void Aura"
+    }
+}

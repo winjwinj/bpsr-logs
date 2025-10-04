@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Footer from "./Footer.svelte";
-  import Header from "./Header.svelte";
+  import Footer from "./footer.svelte";
+  import Header from "./header.svelte";
 
   let { children } = $props();
   let screenshotDiv: HTMLDivElement | undefined = $state();

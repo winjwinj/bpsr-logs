@@ -75,7 +75,10 @@
       "**/routes/+error.svelte": "/ ❱ error",
       // Server Endpoint
       "**/routes/**/*/+server.[tj]s": "${dirname} ❱ API",
-      "**/routes/+server.[tj]s": "/ ❱ API"
+      "**/routes/+server.[tj]s": "/ ❱ API",
+      // Other Files
+      "**/routes/**/*/*.svelte": "${dirname} ❱ ${filename}.svelte",
+      "**/routes/*.svelte": "/ ❱ ${filename}.svelte",
     },
     "typescript.tsdk": "Configuration\\node_modules\\typescript\\lib"
   },

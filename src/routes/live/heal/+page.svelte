@@ -3,7 +3,7 @@
   import { commands, type DPSWindow } from "$lib/bindings";
   import { copyToClipboard, getClassColor, getClassIcon, tooltip } from "$lib/utils.svelte";
   import { goto } from "$app/navigation";
-  import AbbreviatedNumber from "$lib/components/AbbreviatedNumber.svelte";
+  import AbbreviatedNumber from "$lib/components/abbreviated-number.svelte";
 
   onMount(() => {
     fetchData();

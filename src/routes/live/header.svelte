@@ -1,10 +1,14 @@
 <script lang="ts">
   import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-  import { RefreshCw, Camera, Pause, Play, Minus } from "@lucide/svelte";
+  import RefreshCwIcon from 'virtual:icons/lucide/refresh-cw';
+  import CameraIcon from 'virtual:icons/lucide/camera';
+  import PauseIcon from 'virtual:icons/lucide/pause';
+  import PlayIcon from 'virtual:icons/lucide/play';
+  import MinusIcon from 'virtual:icons/lucide/minus';
   import { onMount } from "svelte";
   import { commands, type HeaderInfo } from "$lib/bindings";
   import { takeScreenshot, tooltip } from "$lib/utils.svelte";
-  import AbbreviatedNumber from "$lib/components/AbbreviatedNumber.svelte";
+  import AbbreviatedNumber from "$lib/components/abbreviated-number.svelte";
 
   onMount(() => {
     fetchData();
@@ -53,7 +57,7 @@
   <!-- Right side -->
   <span class="flex gap-1">
     <!-- TODO: add responsive clicks, toaster -->
-    <button onclick={() => commands.resetEncounter()} {@attach tooltip(() => "Reset Encounter")}><RefreshCw /></button>
+    <button onclick={() => commands.resetEncounter()} {@attach tooltip(() => "Reset Encounter")}><RefreshCwIcon /></button>
     <button
       onclick={() => {
         commands.togglePauseEncounter();
@@ -62,12 +66,12 @@
       
     >
       {#if isEncounterPaused}
-        <Play {@attach tooltip(() => "Resume Encounter")} />
+        <PlayIcon {@attach tooltip(() => "Resume Encounter")} />
       {:else}
-        <Pause {@attach tooltip(() => "Pause Encounter")} />
+        <PauseIcon {@attach tooltip(() => "Pause Encounter")} />
       {/if}
     </button>
-    <button onclick={() => takeScreenshot(screenshotDiv)} {@attach tooltip(() => "Screenshot to Clipboard")}><Camera /></button>
-    <button onclick={() => appWindow.hide()} {@attach tooltip(() => "Minimize")}><Minus /></button>
+    <button onclick={() => takeScreenshot(screenshotDiv)} {@attach tooltip(() => "Screenshot to Clipboard")}><CameraIcon /></button>
+    <button onclick={() => appWindow.hide()} {@attach tooltip(() => "Minimize")}><MinusIcon /></button>
   </span>
 </header>

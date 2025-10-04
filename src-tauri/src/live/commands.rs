@@ -1,7 +1,7 @@
 use crate::live::commands_models::{
     DPSRow, DPSRows, DPSSkillBreakdownWindow, DPSWindow, HeaderInfo, SkillRow,
 };
-use crate::live::opcodes_models::{EncounterMutex, Skill, class, Encounter};
+use crate::live::opcodes_models::{Encounter, EncounterMutex, Skill, class};
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
 
@@ -296,7 +296,7 @@ pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<Header
     let encounter = state.lock().unwrap();
 
     if encounter.total_dmg == 0 {
-        return Err("No damage found".to_string())
+        return Err("No damage found".to_string());
     }
 
     let time_elapsed_ms = encounter
@@ -304,7 +304,7 @@ pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<Header
         .saturating_sub(encounter.time_fight_start_ms);
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
-    
+
     #[allow(clippy::cast_precision_loss)]
     Ok(HeaderInfo {
         total_dps: nan_is_zero(encounter.total_dmg as f64 / time_elapsed_secs),
@@ -346,7 +346,7 @@ pub fn get_damage_window(state: tauri::State<'_, EncounterMutex>) -> Result<DPSW
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
     if encounter.total_dmg == 0 {
-        return Err("No damage found".to_string())
+        return Err("No damage found".to_string());
     }
 
     for (&entity_uid, entity) in &encounter.entity_uid_to_entity {
@@ -497,7 +497,7 @@ pub fn get_heal_window(state: tauri::State<'_, EncounterMutex>) -> Result<DPSWin
     };
 
     if encounter.total_heal == 0 {
-        return Err("No healing found ".to_string())
+        return Err("No healing found ".to_string());
     }
 
     #[allow(clippy::cast_precision_loss)]

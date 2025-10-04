@@ -3,7 +3,7 @@
   import { commands, type DPSSkillBreakdownWindow } from "$lib/bindings";
   import { copyToClipboard, getClassColor, getClassIcon, tooltip } from "$lib/utils.svelte";
   import { page } from "$app/state";
-  import AbbreviatedNumber from "$lib/components/AbbreviatedNumber.svelte";
+  import AbbreviatedNumber from "$lib/components/abbreviated-number.svelte";
 
   const playerUid: string = page.url.searchParams.get("playerUid") ?? "-1";
 

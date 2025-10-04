@@ -1,0 +1,15 @@
+{
+    "$schema": "../gen/schemas/desktop-schema.json",
+    "identifier": "live",
+    "description": "Capability for all windows",
+    "windows": [
+        "live"
+    ],
+    "permissions": [
+        "core:window:allow-hide",
+        "core:window:allow-start-dragging",
+        "updater:default",
+        "clipboard-manager:allow-write-text",
+        "clipboard-manager:allow-write-image"
+    ]
+}

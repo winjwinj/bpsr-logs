@@ -1,10 +1,10 @@
 mod live;
 mod packets;
 
-use std::process::Command;
 use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
 use specta_typescript::{BigIntExportBehavior, Typescript};
+use std::process::Command;
 use window_vibrancy::apply_blur;
 
 use tauri::menu::{Menu, MenuBuilder, MenuItem};
@@ -64,7 +64,6 @@ pub fn run() {
                 });
             }
 
-
             let app_handle = app.handle().clone();
 
             // Setup tray icon
@@ -73,7 +72,7 @@ pub fn run() {
             // Setup blur
             setup_blur(&app_handle);
 
-            app.manage(EncounterMutex::default()); // todo: maybe use https://github.com/ferreira-tb/tauri-store
+            app.manage(EncounterMutex::default());
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
@@ -87,6 +86,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
+        .plugin(tauri_plugin_svelte::init()) // used for settings file
         .plugin(
             tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
                 .clear_targets()
@@ -236,12 +236,10 @@ fn on_window_event(window: &Window, event: &WindowEvent) {
             if window.label() == WINDOW_MAIN_LABEL {
                 window.hide().unwrap();
             }
-        },
+        }
         WindowEvent::Focused(focused) if !focused => {
             window.app_handle().save_window_state(StateFlags::all());
         }
         _ => {}
     }
 }
-
-

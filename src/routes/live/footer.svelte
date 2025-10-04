@@ -7,28 +7,18 @@
 
 <footer class="sticky bottom-0 h-7 flex items-center justify-between bg-neutral-800/70 px-1.5">
   <span class="flex h-full items-center">
-    <!-- TODO: turn this into a loop? -->
     <button
-      class={`rounded-xs px-1.5 ${page.url.pathname.includes("dps") ? "bg-red-500/40" : ""}`}
+      class={`rounded-xs px-1.5 data-[state=active]:bg-background ${page.url.pathname.includes("dps") ? "data-[state=active]:bg-background" : ""}`}
       onclick={() => {
         goto(resolve("/live/dps"));
       }}>DPS</button
     >
     <button
-      class={`rounded-xs px-1.5 ${page.url.pathname.includes("heal") ? "bg-red-500/40" : ""}`}
+      class={`rounded-xs px-1.5 data-[state=active]:bg-background ${page.url.pathname.includes("heal") ? "data-[state=active]:bg-background" : ""}`}
       onclick={() => {
         goto(resolve("/live/heal"));
       }}>HEAL</button
     >
   </span>
-  <span class="px-1.5 tracking-tighter">
-    <span>BPSR Logs</span>
-    <span>
-      {#await getVersion()}
-        vX.Y.Z
-      {:then version}
-        v{version}
-      {/await}
-    </span>
-  </span>
+  <span class="px-1.5 tracking-tighter"><span>BPSR Logs v{#await getVersion()}X.Y.Z{:then version}{version}{/await}</span></span>
 </footer>

@@ -59,6 +59,8 @@
     },
   });
 
+  let maxSkillValue = $derived(dpsSkillBreakdownWindow.skillRows.reduce((max, p) => (p.totalDmg > max ? p.totalDmg : max), 0n));
+
   let SETTINGS_YOUR_NAME = $derived(settings.state["general"]["showYourName"]);
   let SETTINGS_OTHERS_NAME = $derived(settings.state["general"]["showOthersName"]);
 </script>
@@ -98,7 +100,7 @@
             {#each row.getVisibleCells() as cell (cell.id)}
               <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
             {/each}
-            <td class="-z-1 absolute left-0 h-7" style="background-color: {`color-mix(in srgb, ${getClassColor(className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {row.original.dmgPct}vw;"></td>
+            <td class="-z-1 absolute left-0 h-7" style="background-color: {`color-mix(in srgb, ${getClassColor(className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {maxSkillValue > 0n ? (Number(row.original.totalDmg) / Number(maxSkillValue)) * 100 : 0}%;"></td>
           </tr>
         {/if}
       {/each}

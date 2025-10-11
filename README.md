@@ -15,7 +15,7 @@ https://github.com/winjwinj/bpsr-logs/releases
 
 # Is it safe?
 
-<img width="802" height="247" alt="image" src="https://github.com/user-attachments/assets/ee6d0a33-40cc-4ff6-8d4e-8ecb1c323e37" />
+<img width="802" height="247" alt="490572596-ee6d0a33-40cc-4ff6-8d4e-8ecb1c323e37" src="https://github.com/user-attachments/assets/eb24a4e3-41e3-47ae-b314-61c798b4e3d5" />
 
 # Roadmap
 

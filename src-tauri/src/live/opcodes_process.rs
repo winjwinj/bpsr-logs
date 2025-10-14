@@ -232,7 +232,7 @@ fn process_player_attrs(player_entity: &mut Entity, target_uid: i64, attrs: Vec<
         match attr_id {
             attr_type::ATTR_NAME => {
                 // todo: fix these brackets
-                player_entity.name = BinaryReader::from(raw_bytes).read_string().unwrap();
+                player_entity.name = BinaryReader::from(raw_bytes[1..raw_bytes.len()].to_vec()).read_string().unwrap();
                 info! {"Found player {} with UID {}", player_entity.name, target_uid}
             }
             #[allow(clippy::cast_possible_truncation)]

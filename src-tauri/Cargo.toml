@@ -1,6 +1,6 @@
 [package]
 name = "bpsr-logs"
-version = "0.16.0"
+version = "0.16.1"
 description = "Blue Protocol: Star Resonance DPS Meter written in Rust"
 authors = ["winjwinj"]
 edition = "2024"

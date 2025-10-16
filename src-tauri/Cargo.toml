@@ -42,6 +42,7 @@ window-vibrancy = "0.6.0"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-svelte = "3"
 tauri-plugin-os = "2"
+chrono-tz = "0.10.4"
 
 [dependencies.blueprotobuf-lib]
 path = "./src/blueprotobuf-lib"

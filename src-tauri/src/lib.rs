@@ -9,6 +9,7 @@ use specta_typescript::{BigIntExportBehavior, Typescript};
 use std::process::Command;
 use window_vibrancy::apply_blur;
 
+use chrono_tz;
 use tauri::menu::{Menu, MenuBuilder, MenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
@@ -26,13 +27,6 @@ pub fn run() {
     //     info!pub(crate)("App crashed! Info: {:?}", info);
     //     unload_and_remove_windivert();
     // }));
-
-    let time_now = Some(format!(
-        "{:?}",
-        chrono::Utc::now()
-            .timestamp_nanos_opt()
-            .expect("time out of bounds")
-    ));
 
     let builder = Builder::<tauri::Wry>::new()
         // Then register them (separated by a comma)
@@ -81,13 +75,15 @@ pub fn run() {
 
             let app_handle = app.handle().clone();
 
+            // Setup logs
+            setup_logs(&app_handle);
+
             // Setup tray icon
             setup_tray(&app_handle).expect("failed to setup tray");
 
-            app.manage(EncounterMutex::default());
-
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
+            app.manage(EncounterMutex::default()); // setup encounter state
             tauri::async_runtime::spawn(
                 async move { live::live_main::start(app_handle.clone()).await },
             );
@@ -98,19 +94,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
-        .plugin(tauri_plugin_svelte::init()) // used for settings file
-        .plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-            .clear_targets()
-            .with_colors(ColoredLevelConfig::default())
-            .targets([
-                #[cfg(debug_assertions)]
-                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                    file_name: time_now,
-                })
-            ])
-            .build(),
-        );
+        .plugin(tauri_plugin_svelte::init()); // used for settings file
     build_and_run(tauri_builder);
 }
 
@@ -159,6 +143,33 @@ async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
         info!("update installed");
         app.restart();
     }
+    Ok(())
+}
+
+fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()>  {
+    let app_version = &app.package_info().version;
+    let pst_time = chrono::Utc::now()
+        .with_timezone(&chrono_tz::America::Los_Angeles)
+        .format("%m-%d-%Y %H_%M_%S")
+        .to_string();
+    let log_file_name = format!("log v{app_version} {pst_time} PST", );
+
+    let mut tauri_log = tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+        .clear_targets()
+        .with_colors(ColoredLevelConfig::default())
+        .targets([
+            #[cfg(debug_assertions)]
+            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                file_name: Some(log_file_name),
+            })
+        ])
+        .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)); // keep the last 10 logs
+    #[cfg(not(debug_assertions))]
+    {
+        tauri_log = tauri_log.max_file_size(1_073_741_824 /* 1 gb */);
+    }
+    app.plugin(tauri_log.build())?;
     Ok(())
 }
 

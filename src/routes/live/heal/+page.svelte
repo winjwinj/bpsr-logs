@@ -20,7 +20,7 @@
 
   async function fetchData() {
     try {
-      const result = SETTINGS.misc.state.testingMode ? await commands.getTestPlayerWindow() : await commands.getDpsPlayerWindow();
+      const result = SETTINGS.misc.state.testingMode ? await commands.getTestPlayerWindow() : await commands.getHealPlayerWindow();
       if (result.status !== "ok") {
         console.warn("timestamp: ", +Date.now(), " Failed to get heal window: ", +Date.now(), result.error);
         return;

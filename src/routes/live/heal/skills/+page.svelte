@@ -20,7 +20,7 @@
 
   async function fetchData() {
     try {
-      const result = SETTINGS.misc.state.testingMode ? commands.getTestSkillWindow(playerUid) : commands.getHealSkillWindow(playerUid);
+      const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getHealSkillWindow(playerUid);
       if (result.status !== "ok") {
         console.warn("Failed to get skill window: ", result.error);
         return;

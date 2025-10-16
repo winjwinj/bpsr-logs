@@ -1,6 +1,8 @@
 mod live;
 mod packets;
+mod build_app;
 
+use crate::build_app::build_and_run;
 use crate::live::opcodes_models::EncounterMutex;
 use log::{error, info, warn};
 use specta_typescript::{BigIntExportBehavior, Typescript};
@@ -58,7 +60,7 @@ pub fn run() {
         )
         .expect("Failed to export typescript bindings");
 
-    tauri::Builder::default()
+    let tauri_builder = tauri::Builder::default()
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .invoke_handler(builder.invoke_handler())
@@ -97,29 +99,19 @@ pub fn run() {
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()) // used for settings file
-        .plugin(
-            tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-                .clear_targets()
-                .with_colors(ColoredLevelConfig::default())
-                .targets([
-                    #[cfg(debug_assertions)]
-                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
-                        .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                        file_name: time_now,
-                    })
-                    // .filter(|metadata| metadata.level() <= log::LevelFilter::Info), // todo: remove info filter
-                ])
-                .build(),
-        )
-        .build(tauri::generate_context!())
-        .expect("error while running tauri application")
-        .run(|_app_handle, event| {
-            if let tauri::RunEvent::ExitRequested { api, .. } = event {
-                stop_windivert();
-                info!("App is closing! Cleaning up resources...");
-            }
-        });
+        .plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+            .clear_targets()
+            .with_colors(ColoredLevelConfig::default())
+            .targets([
+                #[cfg(debug_assertions)]
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                    file_name: time_now,
+                })
+            ])
+            .build(),
+        );
+    build_and_run(tauri_builder);
 }
 
 fn start_windivert() {

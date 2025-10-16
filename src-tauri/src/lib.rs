@@ -69,9 +69,8 @@ pub fn run() {
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
             #[cfg(not(debug_assertions))] // <- Only check for updates on release builds
             {
-                unload_windivert();
+                stop_windivert();
                 remove_windivert();
-
                 let handle = app.handle().clone();
                 tauri::async_runtime::spawn(async move {
                     crate::update(handle).await.unwrap();
@@ -87,7 +86,6 @@ pub fn run() {
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
-            start_windivert();
             tauri::async_runtime::spawn(
                 async move { live::live_main::start(app_handle.clone()).await },
             );
@@ -118,7 +116,7 @@ pub fn run() {
         .expect("error while running tauri application")
         .run(|_app_handle, event| {
             if let tauri::RunEvent::ExitRequested { api, .. } = event {
-                unload_windivert();
+                stop_windivert();
                 info!("App is closing! Cleaning up resources...");
             }
         });
@@ -133,7 +131,7 @@ fn start_windivert() {
     }
 }
 
-fn unload_windivert() {
+fn stop_windivert() {
     let status = Command::new("sc").args(["stop", "windivert"]).status();
     if status.is_ok_and(|status| status.success()) {
         info!("stopped driver");
@@ -143,9 +141,7 @@ fn unload_windivert() {
 }
 
 fn remove_windivert() {
-    let status = Command::new("sc")
-        .args(["delete", "windivert", "start=", "demand"])
-        .status();
+    let status = Command::new("sc").args(["delete", "windivert", "start=", "demand"]).status();
     if status.is_ok_and(|status| status.success()) {
         info!("deleted driver");
     } else {
@@ -240,7 +236,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 live_meter_window.set_ignore_cursor_events(false).unwrap();
             }
             "quit" => {
-                unload_windivert();
+                stop_windivert();
                 tray_app.exit(0);
             }
             _ => {}

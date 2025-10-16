@@ -73,9 +73,10 @@
 
   async function openSettings() {
     const mainWindow = await WebviewWindow.getByLabel("main");
-    if (mainWindow) {
+    if (mainWindow !== null) {
       await mainWindow?.unminimize();
       await mainWindow?.show();
+      await mainWindow?.setFocus();
       await emitTo("main", "navigate", "/main/settings");
     }
   }

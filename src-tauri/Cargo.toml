@@ -1,6 +1,6 @@
 [package]
 name = "bpsr-logs"
-version = "0.15.0"
+version = "0.16.0"
 description = "Blue Protocol: Star Resonance DPS Meter written in Rust"
 authors = ["winjwinj"]
 edition = "2024"
@@ -19,7 +19,7 @@ tauri-build = { version = "2.4.1", features = [] }
 
 [dependencies]
 # image-png for frontend
-tauri = { version = "2.8.5", features = ["tray-icon", "image-png"] }
+tauri = { version = "2.9.0", features = ["tray-icon", "image-png"] }
 serde = { version = "1.0.219", features = ["derive"] }
 tauri-plugin-single-instance = "2.3.4"
 tauri-plugin-log = { version = "2.7.0", features = ["colored"] }

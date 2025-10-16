@@ -9,7 +9,7 @@ BPSR Logs is a "blazingly fast" open source Blue Protocol: Star Resonance DPS me
 
 # Download
 
-https://github.com/winjwinj/bpsr-logs/releases
+https://github.com/winjwinj2/bpsr-logs/releases/latest
 
 \*currently only Windows 7 and up is supported
 

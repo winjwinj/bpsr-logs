@@ -2,7 +2,7 @@ Join the [Discord](https://discord.gg/Tcc54ST5BU): https://discord.gg/Tcc54ST5BU
 
 # Installation Instructions
 
-1. Download and install [bpsr-logs___VERSION___x64-setup.exe](https://github.com/winjwinj/bpsr-logs/releases/download/app-v__VERSION__/bpsr-logs___VERSION___x64-setup.exe)
+1. Download and install [bpsr-logs___VERSION___x64-setup.exe](https://github.com/winjwinj2/bpsr-logs/releases/download/app-v__VERSION__/bpsr-logs___VERSION___x64-setup.exe)
 
 # Known Issues
 - WinDivert getting stuck: https://github.com/winjwinj/bpsr-logs/issues/10

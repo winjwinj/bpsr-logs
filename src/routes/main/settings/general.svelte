@@ -17,5 +17,6 @@
   <SettingsSwitch bind:checked={SETTINGS.general.state.relativeToTopDPSSkill} label="Relative to Top DPS - Skill" description="Color bars are relative to top DPS skill instead of all skills. Useful for 20 man or World Bosses." />
   <SettingsSwitch bind:checked={SETTINGS.general.state.relativeToTopHealPlayer} label="Relative to Top Heal - Player" description="Color bars are relative to top healing player instead of all players. Useful for 20 man or World Bosses." />
   <SettingsSwitch bind:checked={SETTINGS.general.state.relativeToTopHealSkill} label="Relative to Top - Skill" description="Color bars are relative to top healing skill instead of all skills. Useful for 20 man or World Bosses." />
+  <SettingsSwitch bind:checked={SETTINGS.general.state.shortenAbilityScore} label="Shorten Ability Score" description="Shortens the Ability Score" />
   <SettingsSlider bind:value={SETTINGS.general.state.resetElapsed} label="Reset after Elapsed Time" description="Amount of time to wait before the meter automatically resets the encounter. 0s = Never Resets"></SettingsSlider>
 </Tabs.Content>

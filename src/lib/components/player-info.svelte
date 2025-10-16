@@ -64,10 +64,14 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <span class="ml-1 cursor-pointer truncate" onclick={(error) => copyToClipboard(error, `#${uid}`)} {@attach tooltip(() => `UID: #${uid}`)}>
     {#if abilityScore !== 0}
-      {#if isYou && SETTINGS.general.state.showYourAbilityScore}
-        <AbbreviatedNumber num={abilityScore} />
-      {:else if !isYou && SETTINGS.general.state.showOthersAbilityScore}
-        <AbbreviatedNumber num={abilityScore} />
+      {#if SETTINGS.general.state.shortenAbilityScore}
+        {#if isYou && SETTINGS.general.state.showYourAbilityScore}
+          <AbbreviatedNumber num={abilityScore} />
+        {:else if !isYou && SETTINGS.general.state.showOthersAbilityScore}
+          <AbbreviatedNumber num={abilityScore} />
+        {/if}
+      {:else}
+        <span>{abilityScore}</span>
       {/if}
     {:else}
       ??

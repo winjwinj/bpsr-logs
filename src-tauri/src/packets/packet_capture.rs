@@ -5,7 +5,7 @@ use crate::packets::utils::{BinaryReader, Server, TCPReassembler};
 use etherparse::NetSlice::Ipv4;
 use etherparse::SlicedPacket;
 use etherparse::TransportSlice::Tcp;
-use log::{debug, error, info, trace};
+use log::{debug, error, info, trace, warn};
 use once_cell::sync::OnceCell;
 use std::hash::Hash;
 use tokio::sync::watch;
@@ -87,65 +87,67 @@ async fn read_packets(
 
         // 1. Try to identify game server via small packets
         if known_server != Some(curr_server) {
-            // info!("{}", line!());
             let tcp_payload = tcp_packet.payload();
-            // 1. 5th byte from offset = Scene change?
             let mut tcp_payload_reader = BinaryReader::from(tcp_payload.to_vec());
-            if tcp_payload_reader.remaining() >= 10
-                && tcp_payload_reader.read_bytes(10).unwrap()[4] == 0
-            {
-                // 5th byte has to be 0x00 + start at offset 10 (5+5)
-                const FRAG_LENGTH_SIZE: usize = 4;
-                const SIGNATURE: [u8; 6] = [0x00, 0x63, 0x33, 0x53, 0x42, 0x00];
-
-                // info!("ffffff {:?}", tcp_payload_reader.cursor.get_ref());
-                let mut i = 0;
-                while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE {
-                    i += 1;
-                    if i > 1000 {
-                        info!("Line: {} - Stuck at 1. Try to identify game server via small packets?", line!());
-                    }
-                    // info!("while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE");
-
-                    // Read fragment length
-                    let tcp_frag_payload_len = tcp_payload_reader
-                        .read_u32()
-                        .unwrap()
-                        .saturating_sub(FRAG_LENGTH_SIZE as u32)
-                        as usize;
-
-                    if tcp_payload_reader.remaining() >= tcp_frag_payload_len {
-                        let tcp_frag = tcp_payload_reader.read_bytes(tcp_frag_payload_len).unwrap();
-
-                        if tcp_frag.len() >= 5 + SIGNATURE.len()
-                            && tcp_frag[5..5 + SIGNATURE.len()] == SIGNATURE
-                        {
-                            info!("Got Scene Server Address (by change): {curr_server}");
-                            known_server = Some(curr_server);
-                            tcp_reassembler.clear_reassembler(
-                                tcp_packet.sequence_number() as usize + tcp_payload_reader.len(),
-                            );
-                            if let Err(err) = packet_sender
-                                .send((Pkt::ServerChangeInfo, Vec::new()))
-                                .await
-                            {
-                                debug!("Failed to send packet: {err}");
+            if tcp_payload_reader.remaining() >= 10 {
+                match tcp_payload_reader.read_bytes(10) {
+                    Ok(bytes) => {
+                        if bytes[4] == 0 {
+                            const FRAG_LENGTH_SIZE: usize = 4;
+                            const SIGNATURE: [u8; 6] = [0x00, 0x63, 0x33, 0x53, 0x42, 0x00];
+                            let mut i = 0;
+                            while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE {
+                                i += 1;
+                                if i > 1000 {
+                                    info!("Line: {} - Stuck at 1. Try to identify game server via small packets?", line!());
+                                }
+                                let tcp_frag_payload_len = match tcp_payload_reader.read_u32() {
+                                    Ok(len) => len.saturating_sub(FRAG_LENGTH_SIZE as u32) as usize,
+                                    Err(e) => {
+                                        debug!("Malformed TCP fragment: failed to read_u32: {e}");
+                                        break;
+                                    }
+                                };
+                                if tcp_payload_reader.remaining() >= tcp_frag_payload_len {
+                                    match tcp_payload_reader.read_bytes(tcp_frag_payload_len) {
+                                        Ok(tcp_frag) => {
+                                            if tcp_frag.len() >= 5 + SIGNATURE.len()
+                                                && tcp_frag[5..5 + SIGNATURE.len()] == SIGNATURE
+                                            {
+                                                info!("Got Scene Server Address (by change): {curr_server}");
+                                                known_server = Some(curr_server);
+                                                tcp_reassembler.clear_reassembler(
+                                                    tcp_packet.sequence_number() as usize + tcp_payload_reader.len(),
+                                                );
+                                                if let Err(err) = packet_sender
+                                                    .send((Pkt::ServerChangeInfo, Vec::new()))
+                                                    .await
+                                                {
+                                                    debug!("Failed to send packet: {err}");
+                                                }
+                                            }
+                                        }
+                                        Err(e) => {
+                                            debug!("Malformed TCP fragment: failed to read_bytes: {e}");
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    break;
+                                }
                             }
                         }
-                    } else {
-                        break;
+                    }
+                    Err(e) => {
+                        debug!("Malformed TCP payload: failed to read_bytes(10): {e}");
                     }
                 }
             }
-            // info!("{}", line!());
-
             // 2. Payload length is 98 = Login packets?
             if tcp_payload.len() == 98 {
                 const SIGNATURE_1: [u8; 10] =
                     [0x00, 0x00, 0x00, 0x62, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01];
-
                 const SIGNATURE_2: [u8; 6] = [0x00, 0x00, 0x00, 0x00, 0x0a, 0x4e];
-
                 if tcp_payload.len() >= 20
                     && tcp_payload[0..10] == SIGNATURE_1
                     && tcp_payload[14..20] == SIGNATURE_2
@@ -163,16 +165,12 @@ async fn read_packets(
                     }
                 }
             }
-            // info!("{}", line!());
             continue;
         }
 
-        // info!("{}", line!());
         if tcp_reassembler.next_seq.is_none() {
             tcp_reassembler.next_seq = Some(tcp_packet.sequence_number() as usize);
         }
-
-        // info!("{}", line!());
         if tcp_reassembler
             .next_seq
             .unwrap()
@@ -184,18 +182,15 @@ async fn read_packets(
                 Vec::from(tcp_packet.payload()),
             );
         }
-
-        // info!("{}", line!());
         let mut i = 0;
         while tcp_reassembler
             .cache
             .contains_key(&tcp_reassembler.next_seq.unwrap())
         {
             i += 1;
-            if i > 1000 {
-                info!("Line: {} - Stuck at 1. Try to identify game server via small packets?", line!());
+            if i % 1000 == 0 {
+                warn!("Potential infinite loop in cache processing: iteration={i}, next_seq={:?}, cache_size={}, _data_len={}", tcp_reassembler.next_seq, tcp_reassembler.cache.len(), tcp_reassembler._data.len());
             }
-            // info!("tcp_reassembler.cache.contains_key(&tcp_reassembler.next_seq.unwrap())");
             let seq = &tcp_reassembler.next_seq.unwrap();
             let cached_tcp_data = tcp_reassembler.cache.get(seq).unwrap();
             if tcp_reassembler._data.is_empty() {
@@ -203,52 +198,34 @@ async fn read_packets(
             } else {
                 tcp_reassembler._data.extend_from_slice(cached_tcp_data);
             }
-
             tcp_reassembler.next_seq = Some(seq.wrapping_add(cached_tcp_data.len()));
             tcp_reassembler.cache.remove(seq);
         }
-
-        // info!("{}", line!());
         i = 0;
         while tcp_reassembler._data.len() > 4 {
             i += 1;
-            if i > 1000 {
-                info!("Line: {} - Stuck at while tcp_reassembler._data.len() > 4?", line!());
+            if i % 1000 == 0 {
+                let sample = &tcp_reassembler._data[..tcp_reassembler._data.len().min(32)];
+                warn!("Potential infinite loop in _data processing: iteration={i}, _data_len={}, sample={:?}", tcp_reassembler._data.len(), sample);
             }
-            // info!(" tcp_reassembler._data.len() > 4");
-            // info!("{}", line!());
-            let packet_size = BinaryReader::from(tcp_reassembler._data.clone())
-                .read_u32()
-                .unwrap();
+            let packet_size = match BinaryReader::from(tcp_reassembler._data.clone()).read_u32() {
+                Ok(sz) => sz,
+                Err(e) => {
+                    debug!("Malformed reassembled packet: failed to read_u32: {e}");
+                    break;
+                }
+            };
             if tcp_reassembler._data.len() < packet_size as usize {
                 break;
             }
-
             if tcp_reassembler._data.len() >= packet_size as usize {
                 let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
                 let packet = left.to_vec();
                 tcp_reassembler._data = right.to_vec();
-                // trace!(
-                //     "Reassembled: Seq - {} - {:?}",
-                //     tcp_reassembler.next_seq.unwrap(),
-                //     packet.as_slice()
-                // ); // todo: comment
+                info!("Processing packet at line {}: size={}", line!(), packet_size);
                 process_packet(BinaryReader::from(packet), packet_sender.clone()).await;
-                // info!("{}", line!());
             }
-            // info!("{}", line!());
         }
-        // info!("{}", line!());
-
-        // // // 2. TCP Packet Reconstruction todo: clean up? there's some stuff in the original about _data.length > 4 that i dont think is needed?
-        // // // todo: tbh idk why in original meter this isnt done before finding the server address
-        // if let Some((seq_num, tcp_payload)) = tcp_reassembler.push_segment(tcp_packet.clone()) {
-        //     info!("Reassembled: Seq - {} - {:?}", seq_num, tcp_payload.as_slice()); // todo: comment
-        //     // info!("Reassembled: Seq - {} - {}", seq_num, hex::encode(tcp_payload.clone())); // todo: comment for info
-        //     process_packet(BinaryReader::from(tcp_payload), packet_sender.clone()).await; // todo: optimize: instead of cloning, is it better to just move it to the function and return?
-        // }
-
-        // Periodically check for restart signal
         if *restart_receiver.borrow() {
             break;
         }

@@ -159,11 +159,12 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()>  {
         .with_colors(ColoredLevelConfig::default())
         .targets([
             #[cfg(debug_assertions)]
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Trace),
             tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
                 file_name: Some(log_file_name),
             })
         ])
+        .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
         .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)); // keep the last 10 logs
     #[cfg(not(debug_assertions))]
     {

@@ -108,7 +108,7 @@ pub async fn start(app_handle: AppHandle) {
             }
             packets::opcodes::Pkt::SyncToMeDeltaInfo => {
                 // todo: fix this, attrs dont include name, no idea why
-                trace!("Received {op:?}");
+                // trace!("Received {op:?}");
                 // info!("Received {op:?} and data {data:?}");
                 let sync_to_me_delta_info =
                     match blueprotobuf::SyncToMeDeltaInfo::decode(Bytes::from(data)) {
@@ -127,7 +127,7 @@ pub async fn start(app_handle: AppHandle) {
                 }
             }
             packets::opcodes::Pkt::SyncNearDeltaInfo => {
-                trace!("Received {op:?}");
+                // trace!("Received {op:?}");
                 // info!("Received {op:?} and data {data:?}");
                 let sync_near_delta_info =
                     match blueprotobuf::SyncNearDeltaInfo::decode(Bytes::from(data)) {

@@ -9,43 +9,87 @@ pub async fn process_packet(
 ) {
     let mut debug_ctr = 0;
     while packets_reader.remaining() > 0 {
-        let packet_size = packets_reader.peek_u32().unwrap();
+        let packet_size = match packets_reader.peek_u32() {
+            Ok(sz) => sz,
+            Err(e) => {
+                debug!("Malformed packet: failed to peek_u32: {e}");
+                continue;
+            }
+        };
         if packet_size < 6 {
-            return;
+            debug!("Malformed packet: packet_size < 6");
+            continue;
         }
 
-        let mut reader =
-            BinaryReader::from(packets_reader.read_bytes(packet_size as usize).unwrap());
-        reader.read_u32().expect("TODO: panic message");
-        let packet_type = reader.read_u16().unwrap();
+        let mut reader = match packets_reader.read_bytes(packet_size as usize) {
+            Ok(bytes) => BinaryReader::from(bytes),
+            Err(e) => {
+                debug!("Malformed packet: failed to read_bytes: {e}");
+                continue;
+            }
+        };
+        if reader.read_u32().is_err() {
+            debug!("Malformed packet: failed to skip u32");
+            continue;
+        }
+        let packet_type = match reader.read_u16() {
+            Ok(pt) => pt,
+            Err(e) => {
+                debug!("Malformed packet: failed to read_u16: {e}");
+                continue;
+            }
+        };
         let is_zstd_compressed = packet_type & 0x8000;
         let msg_type_id = packet_type & 0x7fff;
 
         debug_ctr += 1;
         match packets::opcodes::FragmentType::from(msg_type_id) {
             FragmentType::Notify => {
-                // info!("{debug_ctr} Notify {:?}", reader.cursor.get_ref());
-                let service_uuid = reader.read_u64().unwrap();
-                let stub_id = reader.read_u32().unwrap();
-                let method_id = reader.read_u32().unwrap();
+                let service_uuid = match reader.read_u64() {
+                    Ok(su) => su,
+                    Err(e) => {
+                        debug!("Malformed Notify: failed to read_u64 service_uuid: {e}");
+                        continue;
+                    }
+                };
+                let stub_id = match reader.read_u32() {
+                    Ok(sid) => sid,
+                    Err(e) => {
+                        debug!("Malformed Notify: failed to read_u32 stub_id: {e}");
+                        continue;
+                    }
+                };
+                let method_id_raw = match reader.read_u32() {
+                    Ok(mid) => mid,
+                    Err(e) => {
+                        debug!("Malformed Notify: failed to read_u32 method_id: {e}");
+                        continue;
+                    }
+                };
 
                 if service_uuid != 0x0000000063335342 {
-                    return;
+                    debug!("Notify: service_uuid mismatch: {service_uuid:x}");
+                    continue;
                 }
 
                 let msg_payload = reader.read_remaining();
                 let mut tcp_fragment_vec = msg_payload.to_vec();
                 if is_zstd_compressed != 0 {
-                    if let Ok(decoded) = zstd::decode_all(tcp_fragment_vec.as_slice()) {
-                        tcp_fragment_vec = decoded;
-                    } else {
-                        return; // faulty TCP packet
+                    match zstd::decode_all(tcp_fragment_vec.as_slice()) {
+                        Ok(decoded) => tcp_fragment_vec = decoded,
+                        Err(e) => {
+                            debug!("Notify: zstd decompression failed: {e}");
+                            continue;
+                        }
                     }
                 }
 
-                let Ok(method_id) = Pkt::try_from(method_id) else {
-                    debug!("Skipping NotifyMsg with methodId: {method_id}");
-                    continue;
+                let method_id = match Pkt::try_from(method_id_raw) {
+                    Ok(mid) => mid,
+                    Err(_) => {
+                        debug!("Notify: Skipping unknown methodId: {method_id_raw}");
+                        continue;
+                    }
                 };
 
                 if let Err(err) = packet_sender.send((method_id, tcp_fragment_vec)).await {
@@ -53,24 +97,37 @@ pub async fn process_packet(
                 }
             }
             FragmentType::FrameDown => {
-                // println!("{debug_ctr} FrameDown {:?}", reader.cursor.get_ref());
-                let server_sequence_id = reader.read_u32();
+                let server_sequence_id = match reader.read_u32() {
+                    Ok(sid) => sid,
+                    Err(e) => {
+                        debug!("FrameDown: failed to read_u32 server_sequence_id: {e}");
+                        continue;
+                    }
+                };
                 if reader.remaining() == 0 {
-                    debug!("if reader.remaining() == 0");
+                    debug!("FrameDown: reader.remaining() == 0");
                     break;
                 }
 
                 let nested_packet = reader.read_remaining();
                 if is_zstd_compressed != 0 {
-                    let Ok(tcp_fragment_decompressed) = zstd::decode_all(nested_packet) else {
-                        return;
-                    };
-                    packets_reader = BinaryReader::from(tcp_fragment_decompressed);
+                    match zstd::decode_all(nested_packet) {
+                        Ok(tcp_fragment_decompressed) => {
+                            packets_reader = BinaryReader::from(tcp_fragment_decompressed);
+                        }
+                        Err(e) => {
+                            debug!("FrameDown: zstd decompression failed: {e}");
+                            continue;
+                        }
+                    }
                 } else {
                     packets_reader = BinaryReader::from(Vec::from(nested_packet));
                 }
             }
-            _ => return,
+            _ => {
+                debug!("Unknown fragment type: {msg_type_id}");
+                continue;
+            }
         }
     }
 }

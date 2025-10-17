@@ -25,8 +25,13 @@
         console.warn("timestamp: ", +Date.now(), " Failed to get dps window: ", +Date.now(), result.error);
         return;
       } else {
+        // Always assign new references to trigger reactivity
         dpsPlayersWindow = result.data;
-        console.log("timestamp: ", +Date.now(), " dpsPlayersWindow: ", $state.snapshot(dpsPlayersWindow));
+        // dpsPlayersWindow = {
+        //  ...result.data,
+        //   playerRows: [...result.data.playerRows],
+        // };
+        // console.log("timestamp: ", +Date.now(), " dpsPlayersWindow: ", $state.snapshot(dpsPlayersWindow));
       }
     } catch (e) {
       console.error("Error fetching data: ", e);
@@ -50,6 +55,8 @@
 
   let SETTINGS_YOUR_NAME = $derived(SETTINGS.general.state.showYourName);
   let SETTINGS_OTHERS_NAME = $derived(SETTINGS.general.state.showOthersName);
+
+  $inspect("[REACTIVE] dpsPlayersWindow changed:", dpsPlayersWindow);
 </script>
 
 <div class="relative flex flex-col">

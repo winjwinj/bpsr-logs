@@ -101,22 +101,7 @@
   <span class="flex gap-1">
     <!-- TODO: add responsive clicks, toaster -->
     <button
-      onclick={async () => {
-        const prev = SETTINGS.general.state.showOthersName;
-        if (SETTINGS.general.state.showOthersName === "Show Others' Name") {
-          SETTINGS.general.state.showOthersName = "Show Others' Class";
-        }
-
-        // Wait for reactive flush & paint
-        await tick();
-
-        // Take screenshot AFTER change is visible
-        await takeScreenshot(screenshotDiv);
-
-        // Revert & let UI update
-        SETTINGS.general.state.showOthersName = prev;
-        await tick();
-      }}
+      onclick={async () => takeScreenshot(screenshotDiv)}
       {@attach tooltip(() => "Screenshot to Clipboard")}
     >
       <CameraIcon />

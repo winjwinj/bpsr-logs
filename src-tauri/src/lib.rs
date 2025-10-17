@@ -60,16 +60,16 @@ pub fn run() {
         .invoke_handler(builder.invoke_handler())
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
+            stop_windivert();
+            remove_windivert();
 
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
             #[cfg(not(debug_assertions))] // <- Only check for updates on release builds
             {
-                stop_windivert();
-                remove_windivert();
                 let handle = app.handle().clone();
                 tauri::async_runtime::spawn(async move {
-                    crate::update(handle).await.unwrap();
+                    update(handle).await.unwrap();
                 });
             }
 

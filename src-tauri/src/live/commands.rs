@@ -217,11 +217,11 @@ pub fn get_dps_player_window_boss(
             // Damage Stats per player
             #[allow(clippy::cast_precision_loss)]
             let damage_row = PlayerRow {
-                uid: entity_uid as u128,
+                uid: entity_uid as f64,
                 name: prettify_name(entity_uid, encounter.local_player_uid, &entity.name),
                 class_name: class::get_class_name(entity.class_id),
                 class_spec_name: class::get_class_spec(entity.class_spec),
-                ability_score: entity.ability_score as u128,
+                ability_score: entity.ability_score as f64,
                 total_dmg: entity.total_dmg_boss,
                 dps: nan_is_zero(entity.total_dmg_boss as f64 / time_elapsed_secs),
                 dmg_pct: nan_is_zero(entity.total_dmg_boss as f64 / encounter.total_dmg as f64 * 100.0),

@@ -4,13 +4,16 @@ pub fn is_boss(entity_id: i64) -> bool {
     return BOSS_IDS.contains(&entity_id)
 }
 
-const BOSS_IDS:[i64;6] = [
+const BOSS_IDS:[i64;9] = [
     783,    //Goblin
     425,    //Tina
     185,    //Tower
     38,     //Kanima
     103588, //Dark Mist Fortress
-    1985    //Dragon Claw Valley
+    1985,   //Dragon Claw Valley
+    15179,  //Frost Ogre
+    146,    //Arachnocrab
+    15395,  //Tempest Ogre
 ];
 
 // const BOSS_IDS:[i64;211] = [

@@ -207,8 +207,6 @@ pub fn process_aoi_sync_delta(
                 "dmg packet: {attacker_uid} to {target_uid} boss: {boss}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
-                info!("{:#066b}", target_uuid);
-
         }
     }
 

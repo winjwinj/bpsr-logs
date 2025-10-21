@@ -21,11 +21,20 @@ export function getClassColor(className: string): string {
   return `rgb(from ${classColors[className] ?? "#ffc9ed"} r g b / 0.6)`;
 }
 
-export function getClassIcon(class_name: string): string {
-  if (class_name === "") {
-    return "/images/classes/blank.png";
+export function getClassIcon(className: string): string {
+  if (className === "") {
+    return "/images/blank.png";
   }
-  return "/images/classes/" + class_name + ".png";
+  return `/images/classes/${className}.png`;
+}
+
+import SkillIconMap from '$lib/data/json/SkillIcon.json';
+export function getSkillIcon(skillUid: number): string {
+  const skillFileName = SkillIconMap[skillUid] ?? "";
+  if (skillFileName === "") {
+    return "/images/blank.png";
+  }
+  return `/images/skills/${skillFileName}.webp`;
 }
 
 // https://svelte.dev/docs/svelte/@attach#Attachment-factories

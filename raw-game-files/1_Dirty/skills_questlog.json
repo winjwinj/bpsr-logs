@@ -1,0 +1,4937 @@
+[
+  {
+    "id": "1407",
+    "name": "Typhoon",
+    "icon": "/assets/weapon_cq_skill_02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1939",
+    "name": "​Granite Fury​",
+    "icon": "/assets/weapon_wr-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "4019",
+    "name": "Flame Jet",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3909",
+    "name": "Stunt! Fox Assault",
+    "icon": "/assets/skill_aoyi_skill_icon_011",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1601",
+    "name": "Crimson Assault",
+    "icon": "/assets/weapon_sf-01_skill_atk01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1932",
+    "name": "Shield Bash",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1401",
+    "name": "Windborne Grace",
+    "icon": "/assets/weapon_cq_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1010540",
+    "name": "Stunt! Water of Silence",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2411",
+    "name": "Scorching Judgment",
+    "icon": "/assets/weapon_jd-01_kx03_ex",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900101",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2409",
+    "name": "Divine Circle",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3930",
+    "name": "Stunt! Earth Shield",
+    "icon": "/assets/skill_aoyi_skill_icon_033",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2350",
+    "name": "Legendary Boarrier - Howl",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1736",
+    "name": "​Raijin Dash​ Slash",
+    "icon": "/assets/weapon_tdl-01_tf04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3922",
+    "name": "Arcane! Flash Execution",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1530",
+    "name": "-1065018664",
+    "icon": "/assets/weapon_fh-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3908",
+    "name": "Arcane! Pulse Benediction",
+    "icon": "/assets/skill_aoyi_skill_icon_012",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2410",
+    "name": "Judgment",
+    "icon": "/assets/weapon_jd-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2002440",
+    "name": "Arcane! Thunderfall Grasp",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1006940",
+    "name": "Arcane! Cocoon Tech",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2415",
+    "name": "Aegis Ward",
+    "icon": "/assets/weapon_jd-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3907",
+    "name": "绝技！碎星陨落",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1244",
+    "name": "アイスストーム",
+    "icon": "/assets/weapon_mz-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3602",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360102",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2222",
+    "name": "Double Arrow",
+    "icon": "/assets/weapon_gj-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900840",
+    "name": "Spirit Possession",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "420140",
+    "name": "Stunt! Chaotic Barrage",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1718",
+    "name": "Raijin Dash",
+    "icon": "/assets/weapon_tdl-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1721",
+    "name": "​Judgment Cut​ I",
+    "icon": "/assets/weapon_tdl-01_skill_03_a",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3918",
+    "name": "奥义！狐影破袭",
+    "icon": "/assets/skill_aoyi_skill_icon_023",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1924",
+    "name": "Star Shatter",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2401",
+    "name": "Blade of Justice",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3907",
+    "name": "ULTスキル！スターフォール",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900340",
+    "name": "Arcane! Time Decree",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1738",
+    "name": "​Chaos Breaker​",
+    "icon": "/assets/weapon_tdl-01_tf02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1926",
+    "name": "Sandgrip",
+    "icon": "/assets/weapon_wr-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3913",
+    "name": "绝技！电磁爆弹",
+    "icon": "/assets/skill_aoyi_skill_icon_010",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1418",
+    "name": "Gale Thrust",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "102658",
+    "name": "Stunt! Boarrier Rush",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3908",
+    "name": "奥义！脉冲祝祷",
+    "icon": "/assets/skill_aoyi_skill_icon_012",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1501",
+    "name": "Vines' Embrace",
+    "icon": "/assets/weapon_fh_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2316",
+    "name": "Center Stage",
+    "icon": "/assets/weapon_jt-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2421",
+    "name": "Sacred Blade",
+    "icon": "/assets/weapon_jd-01_kx09",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1917",
+    "name": "Titan Charge",
+    "icon": "/assets/weapon_wr-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "5126",
+    "name": "3842956327",
+    "icon": "/assets/skill_icons_toy_snowlight",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1611",
+    "name": "Wasteland's End",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900540",
+    "name": "Arcane! Flash Execution",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2239",
+    "name": "Explosive Arrow II",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1731",
+    "name": "Stormflash",
+    "icon": "/assets/weapon_tdl-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1922",
+    "name": "Shield Bash",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3908",
+    "name": "ULT！パルスの祈り",
+    "icon": "/assets/skill_aoyi_skill_icon_012",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2414",
+    "name": "Holy Barrier",
+    "icon": "/assets/weapon_jd-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3903",
+    "name": "Arcane! Blazing Axe",
+    "icon": "/assets/skill_aoyi_skill_icon_018",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3909",
+    "name": "绝技！灵狐突袭",
+    "icon": "/assets/skill_aoyi_skill_icon_011",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1614",
+    "name": "Fire Demon",
+    "icon": "/assets/weapon_sf-01_skill_104",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1700440",
+    "name": "Arcane! Furious Hammer",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1944",
+    "name": "Rage Burst",
+    "icon": "/assets/weapon_wr-01_kx03_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1106",
+    "name": "Marker 6",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1522",
+    "name": "Nourish",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3923",
+    "name": "Arcane! Furious Hammer",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2238",
+    "name": "Blast Shot",
+    "icon": "/assets/weapon_gj-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1529",
+    "name": "Blossom Charge",
+    "icon": "/assets/weapon_fh-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1518",
+    "name": "Wild Bloom",
+    "icon": "/assets/weapon_fh-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1701",
+    "name": "Judgment Cut",
+    "icon": "/assets/weapon_tdl-01_skill_atk01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1005240",
+    "name": "Stunt! Predator Slash",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1925",
+    "name": "Rage Burst",
+    "icon": "/assets/weapon_wr-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900905",
+    "name": "Fafala's Divine Circle",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2001740",
+    "name": "Stunt! Blink Ambush",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2407",
+    "name": "Radiant Infusion",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1541",
+    "name": "​Wild Bloom​",
+    "icon": "/assets/weapon_fh-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3919",
+    "name": "奥义！强袭炮台",
+    "icon": "/assets/skill_aoyi_skill_icon_024",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3935",
+    "name": "Arcane! Thunder Roar",
+    "icon": "/assets/skill_aoyi_skill_icon_038",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1931",
+    "name": "​​Countercrush​​",
+    "icon": "/assets/weapon_wr-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2335",
+    "name": "Infinite Rhapsody",
+    "icon": "/assets/weapon_jt-01_ult01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900105",
+    "name": "Sandshroud",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2307",
+    "name": "Healing Beat",
+    "icon": "/assets/weapon_jt-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2801002",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900902",
+    "name": "Fafala's Reckoning",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2315",
+    "name": "Encore",
+    "icon": "/assets/weapon_jt-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900313",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1907",
+    "name": "Tectonic Ring",
+    "icon": "/assets/weapon_wr-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1105",
+    "name": "Marker 5",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2201",
+    "name": "Bullseye",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3937",
+    "name": "Stunt! Thunder Suppress",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1717",
+    "name": "Flash strike",
+    "icon": "/assets/weapon_tdl-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3927",
+    "name": "Stunt! Commanding Roar",
+    "icon": "/assets/skill_aoyi_skill_icon_030",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1433",
+    "name": "Falcon Strike",
+    "icon": "/assets/weapon_cq-01_tf01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3939",
+    "name": "Stunt! Lightning Orb",
+    "icon": "/assets/skill_aoyi_skill_icon_043",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2002840",
+    "name": "Arcane! Swift Vortex",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1942",
+    "name": "Rupture",
+    "icon": "/assets/weaponn-wr_sikll_atk_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3919",
+    "name": "Arcane! Assault Turret",
+    "icon": "/assets/skill_aoyi_skill_icon_024",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1528",
+    "name": "​Vital Surge​",
+    "icon": "/assets/weapon_fh-01_ult03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1424",
+    "name": "Instant Edge",
+    "icon": "/assets/weapon_cq-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3920",
+    "name": "奥义！生命祈愿",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3926",
+    "name": "Arcane! Meteor Shower",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1002830",
+    "name": "Arcane! Frostquake",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2425",
+    "name": "Shield Toss",
+    "icon": "/assets/weapon_jd-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1509",
+    "name": "Divine Circle Bloom",
+    "icon": "/assets/weapon_fh-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3301",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330101",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1005240",
+    "name": "绝技！追猎猛斩",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1724",
+    "name": "Thundercut",
+    "icon": "/assets/weapon_tdl-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3946",
+    "name": "Arcane! Goblin March",
+    "icon": "/assets/skill_aoyi_skill_icon_050",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2107",
+    "name": "召唤楔柱",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3939",
+    "name": "ULTスキル！ライトニングボール",
+    "icon": "/assets/skill_aoyi_skill_icon_043",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1737",
+    "name": "Divine Sickle",
+    "icon": "/assets/weapon_tdl-01_tf01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1714",
+    "name": "Iaido Slash",
+    "icon": "/assets/weapon_tdl-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3932",
+    "name": "Stunt! Flamewheel Dance",
+    "icon": "/assets/skill_aoyi_skill_icon_035",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1211",
+    "name": "Crystal Veil",
+    "icon": "/assets/weapon_mz-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1527",
+    "name": "​Bloomheal​",
+    "icon": "/assets/weapon_fh-01_ult02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3603",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360103",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1531",
+    "name": "Nature Ward",
+    "icon": "/assets/weapon_fh-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3931",
+    "name": "Arcane! Shrine Field",
+    "icon": "/assets/skill_aoyi_skill_icon_034",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1507",
+    "name": "Life Bloom",
+    "icon": "/assets/weapon_fh_skill_passive",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1410",
+    "name": "Typhoon Cleave",
+    "icon": "/assets/weapon_cq-01_ult_02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2236",
+    "name": "3842956327",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3904",
+    "name": "Stunt! Super Critical",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2221",
+    "name": "Storm Arrow",
+    "icon": "/assets/weapon_gj-01_tg01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3925",
+    "name": "Stunt! Invisible Impact",
+    "icon": "/assets/skill_aoyi_skill_icon_028",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2108",
+    "name": "神灵凭依",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1937",
+    "name": "Granite Fury",
+    "icon": "/assets/weapon_wr-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3905",
+    "name": "Stunt! Boarrier Rush",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1424",
+    "name": "刹那",
+    "icon": "/assets/weapon_cq-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1430",
+    "name": "Valor Cyclone",
+    "icon": "/assets/weapon_cq-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3924",
+    "name": "Stunt! Gale of Silence",
+    "icon": "/assets/skill_aoyi_skill_icon_027",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1246",
+    "name": "Tidepool",
+    "icon": "/assets/weapon_mz-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2105",
+    "name": "Spirit Break",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900101",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1422",
+    "name": "Breach Pursuit",
+    "icon": "/assets/weapon_cq-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3938",
+    "name": "Arcane! Cocoon Tech",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2314",
+    "name": "Rock the Stage",
+    "icon": "/assets/weapon_jt-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1006940",
+    "name": "奥义！茧房术",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2350",
+    "name": "传奇野猪-嚎叫",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3940",
+    "name": "ULTスキル！スピンストライク",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102655",
+    "name": "Boar Impact!",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2310",
+    "name": "Heroic Melody",
+    "icon": "/assets/weapon_jt-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2233",
+    "name": "Powerdraw",
+    "icon": "/assets/weapon_gj-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1901",
+    "name": "Halberd's Edge",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1524",
+    "name": "Growth Arcane",
+    "icon": "/assets/weapon_fh-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1523",
+    "name": "Regen Pulse",
+    "icon": "/assets/weapon_fh-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2319",
+    "name": "Sound Wave Surge",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1008640",
+    "name": "绝技！碎星陨落",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1427",
+    "name": "Breach Pursuit",
+    "icon": "/assets/weapon_cq-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900901",
+    "name": "Fafala's Basic Attack",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3921",
+    "name": "奥义！时间法令",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1201",
+    "name": "Raincall Surge",
+    "icon": "/assets/weapon_mz-01_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3914",
+    "name": "Stunt! Blade Sweep",
+    "icon": "/assets/skill_aoyi_skill_icon_019",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1719",
+    "name": "Scythe Wheel",
+    "icon": "/assets/weapon_tdl-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1519",
+    "name": "Feral Seed",
+    "icon": "/assets/weapon_fh-01_kx09",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2321",
+    "name": "琴弦叩击",
+    "icon": "/assets/weapon_jt-01_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1425",
+    "name": "Falcon Toss",
+    "icon": "/assets/weapon_cq-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2351",
+    "name": "传奇雄鹰-嚎叫",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1103",
+    "name": "Marker 3",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1431",
+    "name": "Sharp Impact",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3929",
+    "name": "绝技！缩壳防御",
+    "icon": "/assets/skill_aoyi_skill_icon_032",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3930",
+    "name": "绝技！大地之盾",
+    "icon": "/assets/skill_aoyi_skill_icon_033",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1243",
+    "name": "Permafrost",
+    "icon": "/assets/weapon_mz-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3941",
+    "name": "ULTスキル！ミーンに変身",
+    "icon": "/assets/skill_aoyi_skill_icon_045",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3911",
+    "name": "Arcane! Heart of Flame",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1520",
+    "name": "Infusion",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3921",
+    "name": "Arcane! Time Decree",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1923",
+    "name": "Sandward",
+    "icon": "/assets/weapon_wr-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1420",
+    "name": "Galeform",
+    "icon": "/assets/weapon_cq-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1245",
+    "name": "Frost Shelter",
+    "icon": "/assets/weapon_mz-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3906",
+    "name": "Arcane! Frostquake",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2237",
+    "name": "Wildcall",
+    "icon": "/assets/weapon_gj-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2313",
+    "name": "Passion Burst",
+    "icon": "/assets/weapon_jt-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3920",
+    "name": "Arcane! Blessing of Life",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3918",
+    "name": "Arcane! Shadow of the Fox",
+    "icon": "/assets/skill_aoyi_skill_icon_023",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3931",
+    "name": "奥义！护佑领域",
+    "icon": "/assets/skill_aoyi_skill_icon_034",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2230",
+    "name": "Torrent Volley",
+    "icon": "/assets/weapon_gj-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3002",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300201",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3909",
+    "name": "ULTスキル！フォックスレイド",
+    "icon": "/assets/skill_aoyi_skill_icon_011",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1244",
+    "name": "Blizzard",
+    "icon": "/assets/weapon_mz-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "706103",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3932",
+    "name": "绝技！飞轮火舞",
+    "icon": "/assets/skill_aoyi_skill_icon_035",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3910",
+    "name": "ULTスキル！カオスミサイル",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3910",
+    "name": "Stunt! Chaotic Barrage",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2351",
+    "name": "Legendary Eagle - Howl",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1735",
+    "name": "Dragonhammer",
+    "icon": "/assets/weapon_tdl-01_tf03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1421",
+    "name": "Spiral Thrust",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3941",
+    "name": "Stunt! Transform into Bee",
+    "icon": "/assets/skill_aoyi_skill_icon_045",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3911",
+    "name": "ULT！フレイムハート",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900103",
+    "name": "Jerrad Earh Guard",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1241",
+    "name": "Frostbeam",
+    "icon": "/assets/weapon_mz-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2419",
+    "name": "Zeal Crusade",
+    "icon": "/assets/weapon_jd-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1936",
+    "name": "Stoneform",
+    "icon": "/assets/weapon_wr-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1210",
+    "name": "Maelstrom",
+    "icon": "/assets/weapon_mz-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2308",
+    "name": "Harmonic Anthem",
+    "icon": "/assets/weapon_jt-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2231",
+    "name": "Focus",
+    "icon": "/assets/weapon_gj-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2332",
+    "name": "Passion Burst",
+    "icon": "/assets/weapon_jt-01_tf03_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1435",
+    "name": "​Drake Cannon​",
+    "icon": "/assets/weapon_cq-01_tf03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3916",
+    "name": "Stunt! Piercing Arrow",
+    "icon": "/assets/skill_aoyi_skill_icon_021",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2309",
+    "name": "Rhapsody of Flame",
+    "icon": "/assets/weapon_jt-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3303",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330301",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900640",
+    "name": "Arcane! Heart of Flame",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3302",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1716",
+    "name": "Overdrive",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1713",
+    "name": "Oblivion Combo",
+    "icon": "/assets/weapon_tdl-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1609",
+    "name": "Crimson Lotus",
+    "icon": "/assets/weapon_sf-01_skill_102",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3913",
+    "name": "ULTスキル！マグネボム",
+    "icon": "/assets/skill_aoyi_skill_icon_010",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1240",
+    "name": "Frozen Gale",
+    "icon": "/assets/weapon_mz-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900503",
+    "name": "3842956327",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2321",
+    "name": "String Strike",
+    "icon": "/assets/weapon_jt-01_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900240",
+    "name": "Arcane! Blessing of Life",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "102651",
+    "name": "Boar Knight",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3001",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300101",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3901",
+    "name": "Arcane! Flame Roar",
+    "icon": "/assets/skill_aoyi_skill_icon_017",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "4018",
+    "name": "Frostbeam",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3917",
+    "name": "Stunt! Heavy Slash",
+    "icon": "/assets/skill_aoyi_skill_icon_022",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1434",
+    "name": "​Vortex Strike​",
+    "icon": "/assets/weapon_cq-01_tf02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "102659",
+    "name": "Pig Assault",
+    "icon": "/assets/skill_vehicle_pig_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2108",
+    "name": "Spirit Possession",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900703",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2312",
+    "name": "Fivefold Crescendo",
+    "icon": "/assets/weapon_jt-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2408",
+    "name": "Shield Toss",
+    "icon": "/assets/weapon_jd-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1611",
+    "name": "荒川之寂灭",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2412",
+    "name": "Reckoning",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2101",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1941",
+    "name": "Starfall",
+    "icon": "/assets/weapon_wr-01_kx01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1730",
+    "name": "Volt Surge",
+    "icon": "/assets/weapon_tdl-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2232",
+    "name": "Arrow Rain",
+    "icon": "/assets/weapon_gj-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2220",
+    "name": "Storm Arrow",
+    "icon": "/assets/weapon_gj-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900311",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2801601",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3915",
+    "name": "Stunt! Frenzied Shot",
+    "icon": "/assets/skill_aoyi_skill_icon_020",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900204",
+    "name": "3842956327",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1008641",
+    "name": "Stunt! Whirlwind Strike",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3910",
+    "name": "绝技！缭乱飞弹",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3936",
+    "name": "Stunt! Water of Silence",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1715",
+    "name": "Moonstrike",
+    "icon": "/assets/weapon_tdl-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3943",
+    "name": "Arcane! Hell Thrust",
+    "icon": "/assets/skill_aoyi_skill_icon_047",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1419",
+    "name": "Skyfall",
+    "icon": "/assets/weapon_cq-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1720",
+    "name": "True Sight",
+    "icon": "/assets/weapon_tdl-01_kx05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1010440",
+    "name": "Stunt! Thunder Suppress",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3907",
+    "name": "Stunt! Falling Star",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2311",
+    "name": "Healing Melody",
+    "icon": "/assets/weapon_jt-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900104",
+    "name": "碎星冲",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1242",
+    "name": "Frost Lance",
+    "icon": "/assets/weapon_mz-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1101",
+    "name": "Marker 1",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1102",
+    "name": "Marker 2",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3000",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3929",
+    "name": "Stunt! Shell Defense",
+    "icon": "/assets/skill_aoyi_skill_icon_032",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2336",
+    "name": "Concert Circuit",
+    "icon": "/assets/weapon_jt-01_ult02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3928",
+    "name": "Stunt! Predator Slash",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3604",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360104",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2405",
+    "name": "Valor Bash",
+    "icon": "/assets/weapon_jd-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3942",
+    "name": "ULT！ヴェノムバースト",
+    "icon": "/assets/skill_aoyi_skill_icon_046",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3605",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360105",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900104",
+    "name": "Star Shatter",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1940",
+    "name": "Rage Burst",
+    "icon": "/assets/weapon_wr-01_kx03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1245",
+    "name": "アイスシェルター",
+    "icon": "/assets/weapon_mz-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1104",
+    "name": "Marker 4",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2234",
+    "name": "Radiance Barrage",
+    "icon": "/assets/weapon_gj-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1933",
+    "name": "Halberd's Edge",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3947",
+    "name": "Stunt! Spiral Severance",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3913",
+    "name": "Stunt! Electro Bomb",
+    "icon": "/assets/skill_aoyi_skill_icon_010",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1742",
+    "name": "Thundercut - Final Slash",
+    "icon": "/assets/weapon_tdl-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2223",
+    "name": "-1065018664",
+    "icon": "/assets/weapon_gj-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3942",
+    "name": "Arcane! Poison Explosion",
+    "icon": "/assets/skill_aoyi_skill_icon_046",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1927",
+    "name": "Sandshroud",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1239",
+    "name": "Meteor Storm",
+    "icon": "/assets/weapon_mz-01_kx07",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3933",
+    "name": "Stunt! Intimidating Roar",
+    "icon": "/assets/skill_aoyi_skill_icon_036",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2107",
+    "name": "Summon Wedge Pillar",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1733",
+    "name": "​Storm Scythe​",
+    "icon": "/assets/weapon_tdl-01_skill_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3601",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360101",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1248",
+    "name": "Glacier Hymn",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "6004",
+    "name": "Gale Blast",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3944",
+    "name": "Arcane! Azure Gale",
+    "icon": "/assets/skill_aoyi_skill_icon_048",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1729",
+    "name": "-1065018664",
+    "icon": "/assets/weapon_tdl-01_skill_atk01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3940",
+    "name": "Stunt! Whirlwind Strike",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1426",
+    "name": "Typhoon Cleave",
+    "icon": "/assets/weapon_cq-01_ult_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1423",
+    "name": "Aegis Gale",
+    "icon": "/assets/weapon_cq-01_kx04",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3949",
+    "name": "Stunt! Spiral Severance",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "102640",
+    "name": "Stunt! Boarrier Rush",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1002440",
+    "name": "Stunt! Super Critical",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1930",
+    "name": "Countercrush",
+    "icon": "/assets/weapon_wr-01_tg01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2406",
+    "name": "Vanguard Strike",
+    "icon": "/assets/weapon_jd-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3948",
+    "name": "Stunt! Spiral Severance",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1101",
+    "name": "エリアマーカー01",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1102",
+    "name": "エリアマーカー02",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1103",
+    "name": "エリアマーカー03",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2306",
+    "name": "Amplified Beat",
+    "icon": "/assets/weapon_jt-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1734",
+    "name": "Thunder Iaido Slash",
+    "icon": "/assets/weapon_tdl-01_tf05",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1104",
+    "name": "エリアマーカー04",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1105",
+    "name": "エリアマーカー05",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1106",
+    "name": "エリアマーカー06",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900903",
+    "name": "Fafala's Holy Light Infusion",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1201",
+    "name": "レインサージ",
+    "icon": "/assets/weapon_mz-01_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1210",
+    "name": "ウォーターヴォルテクス",
+    "icon": "/assets/weapon_mz-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2415",
+    "name": "圣光守卫",
+    "icon": "/assets/weapon_jd-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1521",
+    "name": "Grove Wish",
+    "icon": "/assets/weapon_fh-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900302",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3933",
+    "name": "绝技！挫志咆哮",
+    "icon": "/assets/skill_aoyi_skill_icon_036",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1211",
+    "name": "ウォータースフィア",
+    "icon": "/assets/weapon_mz-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1938",
+    "name": "Brave Bastion",
+    "icon": "/assets/weapon_wr-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1239",
+    "name": "メテオストーム",
+    "icon": "/assets/weapon_mz-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1705",
+    "name": "Overdrive",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2208",
+    "name": "-1065018664",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1240",
+    "name": "フリーズゲイル",
+    "icon": "/assets/weapon_mz-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1241",
+    "name": "氷霜ビーム",
+    "icon": "/assets/weapon_mz-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1008641",
+    "name": "绝技！旋风打击",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900102",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2235",
+    "name": "Deter Shot",
+    "icon": "/assets/weapon_gj-01_kx06",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1928",
+    "name": "Jerrad Earh Guard",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2207",
+    "name": "-1065018664",
+    "icon": null,
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900312",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "2900603",
+    "name": "3842956327",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1242",
+    "name": "フロストスピア",
+    "icon": "/assets/weapon_mz-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3911",
+    "name": "奥义！烈焰之心",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3902",
+    "name": "Arcane! Thunderfall Grasp",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1719",
+    "name": "スパイラルサイス",
+    "icon": "/assets/weapon_tdl-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2801301",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1418",
+    "name": "スウィフトスタブ",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3303",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330301",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2420",
+    "name": "Radiance",
+    "icon": "/assets/weapon_jd-01_kx08",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3914",
+    "name": "ULTスキル！ブレードスイープ",
+    "icon": "/assets/skill_aoyi_skill_icon_019",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1728",
+    "name": "Oblivion Combo",
+    "icon": "/assets/weapon_tdl-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1010440",
+    "name": "绝技！强压之雷",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3915",
+    "name": "ULTスキル！乱射",
+    "icon": "/assets/skill_aoyi_skill_icon_020",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3943",
+    "name": "ULT！ヘルスラスト",
+    "icon": "/assets/skill_aoyi_skill_icon_047",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2209",
+    "name": "Luminary Bolt",
+    "icon": "/assets/weapon_gj-01_ult",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3945",
+    "name": "Arcane! Silent Tide",
+    "icon": "/assets/skill_aoyi_skill_icon_049",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "3916",
+    "name": "ULTスキル！貫通の矢",
+    "icon": "/assets/skill_aoyi_skill_icon_021",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1901",
+    "name": "ピースブレイド",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3934",
+    "name": "Stunt! Blink Ambush",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1008640",
+    "name": "Stunt! Falling Star",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "en"
+  },
+  {
+    "id": "1243",
+    "name": "アイスギャザリング",
+    "icon": "/assets/weapon_mz-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3917",
+    "name": "ULTスキル！ヘビースラッシュ",
+    "icon": "/assets/skill_aoyi_skill_icon_022",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "6004",
+    "name": "ゲイルブラスト",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102640",
+    "name": "ULTスキル！猪突猛進",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1246",
+    "name": "ラッシュウェーブ",
+    "icon": "/assets/weapon_mz-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900105",
+    "name": "砂石斗篷",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1248",
+    "name": "極寒・スノウキャロル",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1401",
+    "name": "ウィンドダンス",
+    "icon": "/assets/weapon_cq_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1421",
+    "name": "スパイラルスラスト",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1419",
+    "name": "リープアタック",
+    "icon": "/assets/weapon_cq-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3601",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360101",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1420",
+    "name": "ウィンドグレイス",
+    "icon": "/assets/weapon_cq-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3902",
+    "name": "奥义！雷霆天引",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1422",
+    "name": "ブレイクチェイス",
+    "icon": "/assets/weapon_cq-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1423",
+    "name": "ウィンドガード",
+    "icon": "/assets/weapon_cq-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1424",
+    "name": "セツナ",
+    "icon": "/assets/weapon_cq-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1425",
+    "name": "バードスロー",
+    "icon": "/assets/weapon_cq-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900204",
+    "name": "3842956327",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1426",
+    "name": "風神・ブレイクウィンド",
+    "icon": "/assets/weapon_cq-01_ult_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1430",
+    "name": "ウィンドリング",
+    "icon": "/assets/weapon_cq-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900240",
+    "name": "奥义！生命祈愿",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1431",
+    "name": "シャープインパクト",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1501",
+    "name": "ヴァインコントロール",
+    "icon": "/assets/weapon_fh_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1922",
+    "name": "护盾猛击",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1507",
+    "name": "ライフブルーム",
+    "icon": "/assets/weapon_fh_skill_passive",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102651",
+    "name": "ボアナイト",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1509",
+    "name": "繁栄・希望結界",
+    "icon": "/assets/weapon_fh-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1518",
+    "name": "ワイルドブルーム",
+    "icon": "/assets/weapon_fh-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2315",
+    "name": "アンコール",
+    "icon": "/assets/weapon_jt-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1519",
+    "name": "フリーダムシード",
+    "icon": "/assets/weapon_fh-01_kx09",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3903",
+    "name": "奥义！炽炎战斧",
+    "icon": "/assets/skill_aoyi_skill_icon_018",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900311",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1520",
+    "name": "シードバレッジ",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1521",
+    "name": "森の祈り",
+    "icon": "/assets/weapon_fh-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1522",
+    "name": "リジェネレーション",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1523",
+    "name": "リジェネイトパルス",
+    "icon": "/assets/weapon_fh-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1524",
+    "name": "急速生長",
+    "icon": "/assets/weapon_fh-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1529",
+    "name": "ブルームチャージ",
+    "icon": "/assets/weapon_fh-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1531",
+    "name": "自然の庇護",
+    "icon": "/assets/weapon_fh-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1601",
+    "name": "赤焔アサルト",
+    "icon": "/assets/weapon_sf-01_skill_atk01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1609",
+    "name": "紅蓮",
+    "icon": "/assets/weapon_sf-01_skill_102",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1611",
+    "name": "濁流焚滅",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "4018",
+    "name": "冰雪射线",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1614",
+    "name": "炎魔",
+    "icon": "/assets/weapon_sf-01_skill_104",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1701",
+    "name": "我流刀法・断罪",
+    "icon": "/assets/weapon_tdl-01_skill_atk01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "4019",
+    "name": "烈焰喷射",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1705",
+    "name": "超高出力",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1907",
+    "name": "ロックガード・デストロイスピン",
+    "icon": "/assets/weapon_wr-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1713",
+    "name": "破滅連斬・極",
+    "icon": "/assets/weapon_tdl-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1714",
+    "name": "居合斬",
+    "icon": "/assets/weapon_tdl-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1715",
+    "name": "月影",
+    "icon": "/assets/weapon_tdl-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3904",
+    "name": "绝技！超会心",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1716",
+    "name": "超高出力",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1717",
+    "name": "一閃",
+    "icon": "/assets/weapon_tdl-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1718",
+    "name": "ライトニングスラッシュ",
+    "icon": "/assets/weapon_tdl-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3918",
+    "name": "ULT！シャドウストライク",
+    "icon": "/assets/skill_aoyi_skill_icon_023",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1720",
+    "name": "心眼",
+    "icon": "/assets/weapon_tdl-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1724",
+    "name": "トネールスマッシュ",
+    "icon": "/assets/weapon_tdl-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1730",
+    "name": "インフィニティライトニング",
+    "icon": "/assets/weapon_tdl-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1731",
+    "name": "ミレトネールウンブラ",
+    "icon": "/assets/weapon_tdl-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3919",
+    "name": "ULT！アサルトタレット",
+    "icon": "/assets/skill_aoyi_skill_icon_024",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1927",
+    "name": "砂石斗篷",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1922",
+    "name": "シールドバッシュ",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1923",
+    "name": "サンドガード",
+    "icon": "/assets/weapon_wr-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1924",
+    "name": "スタークラッシュ",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3920",
+    "name": "ULT！ライフブレス",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1925",
+    "name": "レイジバースト",
+    "icon": "/assets/weapon_wr-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2105",
+    "name": "破灵",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1926",
+    "name": "グラヴィトーム",
+    "icon": "/assets/weapon_wr-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1927",
+    "name": "サンドクローク",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1930",
+    "name": "ブロックインパクト",
+    "icon": "/assets/weapon_wr-01_tg01_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3930",
+    "name": "ULTスキル！アースシールド",
+    "icon": "/assets/skill_aoyi_skill_icon_033",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1936",
+    "name": "ロックボディ",
+    "icon": "/assets/weapon_wr-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1425",
+    "name": "飞鸟投",
+    "icon": "/assets/weapon_cq-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3603",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360103",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1520",
+    "name": "灌注",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1937",
+    "name": "ロックブラスト",
+    "icon": "/assets/weapon_wr-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1938",
+    "name": "ブレイブウォール",
+    "icon": "/assets/weapon_wr-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2101",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2105",
+    "name": "スピリットブレイク",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2107",
+    "name": "楔柱召喚",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3914",
+    "name": "绝技！剑刃横扫",
+    "icon": "/assets/skill_aoyi_skill_icon_019",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2108",
+    "name": "憑依",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2201",
+    "name": "パーフェクトショット",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2209",
+    "name": "シャープアイ・メガアロー",
+    "icon": "/assets/weapon_gj-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2220",
+    "name": "ストームアロー",
+    "icon": "/assets/weapon_gj-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2222",
+    "name": "ダブルアロー",
+    "icon": "/assets/weapon_gj-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102655",
+    "name": "ボアアサルト！",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2230",
+    "name": "レイジショット",
+    "icon": "/assets/weapon_gj-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2231",
+    "name": "メンタルフォーカス",
+    "icon": "/assets/weapon_gj-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2232",
+    "name": "アローレイン",
+    "icon": "/assets/weapon_gj-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "5126",
+    "name": "3842956327",
+    "icon": "/assets/skill_icons_toy_snowlight",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2233",
+    "name": "チャージショット",
+    "icon": "/assets/weapon_gj-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2234",
+    "name": "エナジーボンバー",
+    "icon": "/assets/weapon_gj-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2235",
+    "name": "インティミショット",
+    "icon": "/assets/weapon_gj-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2236",
+    "name": "3842956327",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2237",
+    "name": "ワイルドコール",
+    "icon": "/assets/weapon_gj-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "6004",
+    "name": "烈风爆破",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2238",
+    "name": "エクスショット",
+    "icon": "/assets/weapon_gj-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2306",
+    "name": "アンプリファイビート",
+    "icon": "/assets/weapon_jt-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2307",
+    "name": "コーラスヒーリング",
+    "icon": "/assets/weapon_jt-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2308",
+    "name": "団結のシンフォニー",
+    "icon": "/assets/weapon_jt-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2309",
+    "name": "炎のラプソディ",
+    "icon": "/assets/weapon_jt-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900302",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2314",
+    "name": "進化・フィールドブラスト",
+    "icon": "/assets/weapon_jt-01_ult",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2310",
+    "name": "セッション・勇気のシンフォニー",
+    "icon": "/assets/weapon_jt-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2311",
+    "name": "セッション・癒しのシンフォニー",
+    "icon": "/assets/weapon_jt-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2312",
+    "name": "サージクインテット",
+    "icon": "/assets/weapon_jt-01_kx05",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2313",
+    "name": "パッショネート",
+    "icon": "/assets/weapon_jt-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2316",
+    "name": "スポットライト",
+    "icon": "/assets/weapon_jt-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2321",
+    "name": "ストロークビート",
+    "icon": "/assets/weapon_jt-01_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2350",
+    "name": "伝説のボア-ハウル",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2351",
+    "name": "伝説の鷹-ハウル",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2401",
+    "name": "ジャスティスソード",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900312",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2419",
+    "name": "コンクエスト",
+    "icon": "/assets/weapon_jd-01_kx07",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2405",
+    "name": "ブレイブシールド",
+    "icon": "/assets/weapon_jd-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2406",
+    "name": "バンガードストライク",
+    "icon": "/assets/weapon_jd-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2407",
+    "name": "威信・ホーリーインフューズ",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2408",
+    "name": "シールドスロー",
+    "icon": "/assets/weapon_jd-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2420",
+    "name": "セイクリッド・オース / 光の決意",
+    "icon": "/assets/weapon_jd-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2409",
+    "name": "ホーリーリング",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2410",
+    "name": "ジャッジメント",
+    "icon": "/assets/weapon_jd-01_kx03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2412",
+    "name": "レコニング",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2415",
+    "name": "ホーリーガード",
+    "icon": "/assets/weapon_jd-01_kx06",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900313",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2421",
+    "name": "聖剣",
+    "icon": "/assets/weapon_jd-01_kx09",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3000",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3001",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300101",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3002",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300201",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3301",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330101",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3906",
+    "name": "ULT！フロストショック",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3302",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900905",
+    "name": "法法菈圣环",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3303",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330301",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3601",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360101",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3602",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360102",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3604",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360104",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3605",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360105",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3901",
+    "name": "ULT！炎の咆哮",
+    "icon": "/assets/skill_aoyi_skill_icon_017",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3902",
+    "name": "ULT！サンダーコール",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3903",
+    "name": "ULT！炎のバトルアクス",
+    "icon": "/assets/skill_aoyi_skill_icon_018",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3904",
+    "name": "ULTスキル！超会心",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3905",
+    "name": "ULTスキル！猪突猛進",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3921",
+    "name": "ULT！タイムエディクト",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3922",
+    "name": "ULT！ゼロスラッシュ",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3923",
+    "name": "ULT！マッドハンマー",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3924",
+    "name": "ULTスキル！シャドウシール",
+    "icon": "/assets/skill_aoyi_skill_icon_027",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3925",
+    "name": "ULTスキル！エアインパクト",
+    "icon": "/assets/skill_aoyi_skill_icon_028",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3926",
+    "name": "ULT！メテオフォール",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3927",
+    "name": "ULTスキル！ロアコマンド",
+    "icon": "/assets/skill_aoyi_skill_icon_030",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3928",
+    "name": "ULTスキル！ハントスラッシュ",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3929",
+    "name": "ULTスキル！シェルプロテクト",
+    "icon": "/assets/skill_aoyi_skill_icon_032",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3931",
+    "name": "ULT！プロテクトフィールド",
+    "icon": "/assets/skill_aoyi_skill_icon_034",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3932",
+    "name": "ULTスキル！ファイアロンド",
+    "icon": "/assets/skill_aoyi_skill_icon_035",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3933",
+    "name": "ULTスキル！ドレッドロア",
+    "icon": "/assets/skill_aoyi_skill_icon_036",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3934",
+    "name": "ULTスキル！フラッシュレイド",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3935",
+    "name": "ULT！サンダーロア",
+    "icon": "/assets/skill_aoyi_skill_icon_038",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3936",
+    "name": "ULTスキル！チルウォーター",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3937",
+    "name": "ULTスキル！サンダープレッシャー",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3938",
+    "name": "ULT！コクーンスペル",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3944",
+    "name": "ULT！ハウリングウェーブ",
+    "icon": "/assets/skill_aoyi_skill_icon_048",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3945",
+    "name": "ULT！サイレントサージ",
+    "icon": "/assets/skill_aoyi_skill_icon_049",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3946",
+    "name": "ULT！ゴブリングランドマーチ",
+    "icon": "/assets/skill_aoyi_skill_icon_050",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3947",
+    "name": "ULTスキル！スパイラルブレイク",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3948",
+    "name": "ULTスキル！スパイラルブレイク",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3949",
+    "name": "ULTスキル！スパイラルブレイク",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "4018",
+    "name": "氷雪ビーム",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "4019",
+    "name": "フレイムジェット",
+    "icon": "/assets/weapon_fh-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "5126",
+    "name": "3842956327",
+    "icon": "/assets/skill_icons_toy_snowlight",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102658",
+    "name": "ULTスキル！猪突猛進",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "102659",
+    "name": "ボアスラスト",
+    "icon": "/assets/skill_vehicle_pig_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "420140",
+    "name": "ULTスキル！カオスミサイル",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "706103",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1002440",
+    "name": "ULTスキル！超会心",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1002830",
+    "name": "ULT！フロストショック",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1005240",
+    "name": "ULTスキル！ハントスラッシュ",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1006940",
+    "name": "ULT！コクーンスペル",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1008640",
+    "name": "ULTスキル！スターフォール",
+    "icon": "/assets/skill_aoyi_skill_icon_008",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1008641",
+    "name": "ULTスキル！スピンストライク",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1010440",
+    "name": "ULTスキル！サンダープレッシャー",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1010540",
+    "name": "ULTスキル！チルウォーター",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1700440",
+    "name": "ULT！マッドハンマー",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2001740",
+    "name": "ULTスキル！フラッシュレイド",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2002440",
+    "name": "ULT！サンダーコール",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2002840",
+    "name": "ULT！スウィフトスワール",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2801002",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2801301",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2801601",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900102",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900103",
+    "name": "ジェラードロックガード",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900104",
+    "name": "スタークラッシュ",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900105",
+    "name": "サンドクローク",
+    "icon": "/assets/weapon_wr-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900204",
+    "name": "3842956327",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900240",
+    "name": "ULT！ライフブレス",
+    "icon": "/assets/skill_aoyi_skill_icon_013",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900302",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900311",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900312",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900313",
+    "name": "3842956327",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900340",
+    "name": "ULT！タイムエディクト",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900503",
+    "name": "3842956327",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900540",
+    "name": "ULT！ゼロスラッシュ",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900603",
+    "name": "3842956327",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900640",
+    "name": "ULT！フレイムハート",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900703",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "3915",
+    "name": "绝技！乱射",
+    "icon": "/assets/skill_aoyi_skill_icon_020",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900840",
+    "name": "憑依",
+    "icon": null,
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900901",
+    "name": "ファルファラ通常攻撃",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900902",
+    "name": "ファルファラレコニング",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900903",
+    "name": "ファルファラ聖光インフュージョン",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "2900905",
+    "name": "ファルファラホーリーリング",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "ja"
+  },
+  {
+    "id": "1101",
+    "name": "场地标记01",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1102",
+    "name": "场地标记02",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1103",
+    "name": "场地标记03",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1104",
+    "name": "场地标记04",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1105",
+    "name": "场地标记05",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1106",
+    "name": "场地标记06",
+    "icon": "/assets/skill_dungeon_chongsu",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1201",
+    "name": "雨打潮生",
+    "icon": "/assets/weapon_mz-01_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1210",
+    "name": "水之涡流",
+    "icon": "/assets/weapon_mz-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1211",
+    "name": "清滝绕珠",
+    "icon": "/assets/weapon_mz-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1239",
+    "name": "陨星风暴",
+    "icon": "/assets/weapon_mz-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1240",
+    "name": "冻结寒风",
+    "icon": "/assets/weapon_mz-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1241",
+    "name": "寒冰射线",
+    "icon": "/assets/weapon_mz-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1242",
+    "name": "冰霜之矛",
+    "icon": "/assets/weapon_mz-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1243",
+    "name": "冰之灌注",
+    "icon": "/assets/weapon_mz-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1244",
+    "name": "寒冰风暴",
+    "icon": "/assets/weapon_mz-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1245",
+    "name": "寒冰庇护",
+    "icon": "/assets/weapon_mz-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3916",
+    "name": "绝技！贯穿矢",
+    "icon": "/assets/skill_aoyi_skill_icon_021",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3927",
+    "name": "绝技！怒吼指令",
+    "icon": "/assets/skill_aoyi_skill_icon_030",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1246",
+    "name": "浪潮汇聚",
+    "icon": "/assets/weapon_mz-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1248",
+    "name": "极寒·冰雪颂歌",
+    "icon": "/assets/weapon_mz-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1401",
+    "name": "风华翔舞",
+    "icon": "/assets/weapon_cq_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3928",
+    "name": "绝技！追猎猛斩",
+    "icon": "/assets/skill_aoyi_skill_icon_031",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1418",
+    "name": "疾风刺",
+    "icon": "/assets/weapon_cq-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1419",
+    "name": "翔返",
+    "icon": "/assets/weapon_cq-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1420",
+    "name": "风姿卓绝",
+    "icon": "/assets/weapon_cq-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2310",
+    "name": "鸣奏·英勇乐章",
+    "icon": "/assets/weapon_jt-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1421",
+    "name": "螺旋击刺",
+    "icon": "/assets/weapon_cq-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1422",
+    "name": "破追",
+    "icon": "/assets/weapon_cq-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1423",
+    "name": "护佑之风",
+    "icon": "/assets/weapon_cq-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1426",
+    "name": "风神·破阵之风",
+    "icon": "/assets/weapon_cq-01_ult_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1430",
+    "name": "勇气风环",
+    "icon": "/assets/weapon_cq-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1431",
+    "name": "锐利冲击",
+    "icon": "/assets/weapon_cq-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1501",
+    "name": "掌控藤蔓",
+    "icon": "/assets/weapon_fh_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1507",
+    "name": "生命绽放",
+    "icon": "/assets/weapon_fh_skill_passive",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1509",
+    "name": "繁盛·希望结界",
+    "icon": "/assets/weapon_fh-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1518",
+    "name": "狂野绽放",
+    "icon": "/assets/weapon_fh-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1519",
+    "name": "不羁之种",
+    "icon": "/assets/weapon_fh-01_kx09",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1521",
+    "name": "森之祈愿",
+    "icon": "/assets/weapon_fh-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1522",
+    "name": "滋养",
+    "icon": "/assets/weapon_fh-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1523",
+    "name": "再生脉冲",
+    "icon": "/assets/weapon_fh-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1524",
+    "name": "加速生长",
+    "icon": "/assets/weapon_fh-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1529",
+    "name": "盛放注能",
+    "icon": "/assets/weapon_fh-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1531",
+    "name": "自然庇护",
+    "icon": "/assets/weapon_fh-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1601",
+    "name": "赤焰突袭",
+    "icon": "/assets/weapon_sf-01_skill_atk01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900640",
+    "name": "奥义！烈焰之心",
+    "icon": "/assets/skill_aoyi_skill_icon_042",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1609",
+    "name": "红莲",
+    "icon": "/assets/weapon_sf-01_skill_102",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3917",
+    "name": "绝技！超重斩",
+    "icon": "/assets/skill_aoyi_skill_icon_022",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1614",
+    "name": "炎魔",
+    "icon": "/assets/weapon_sf-01_skill_104",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1701",
+    "name": "我流刀法·诛恶",
+    "icon": "/assets/weapon_tdl-01_skill_atk01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2311",
+    "name": "鸣奏·愈合乐章",
+    "icon": "/assets/weapon_jt-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1705",
+    "name": "超高出力",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1713",
+    "name": "极诣·大破灭连斩",
+    "icon": "/assets/weapon_tdl-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1714",
+    "name": "居合斩",
+    "icon": "/assets/weapon_tdl-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1715",
+    "name": "月影",
+    "icon": "/assets/weapon_tdl-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1716",
+    "name": "超高出力",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1717",
+    "name": "一闪",
+    "icon": "/assets/weapon_tdl-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1718",
+    "name": "飞雷神",
+    "icon": "/assets/weapon_tdl-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1719",
+    "name": "镰车",
+    "icon": "/assets/weapon_tdl-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1720",
+    "name": "心眼",
+    "icon": "/assets/weapon_tdl-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1724",
+    "name": "霹雳连斩",
+    "icon": "/assets/weapon_tdl-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1730",
+    "name": "无穷雷霆之力",
+    "icon": "/assets/weapon_tdl-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1731",
+    "name": "千雷闪影之意",
+    "icon": "/assets/weapon_tdl-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1901",
+    "name": "止战之锋",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1907",
+    "name": "岩御·崩裂回环",
+    "icon": "/assets/weapon_wr-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1923",
+    "name": "砂岩守护",
+    "icon": "/assets/weapon_wr-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1924",
+    "name": "碎星冲",
+    "icon": "/assets/weapon_wr-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1925",
+    "name": "怒爆",
+    "icon": "/assets/weapon_wr-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1926",
+    "name": "砂岩之握",
+    "icon": "/assets/weapon_wr-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1930",
+    "name": "格挡冲击",
+    "icon": "/assets/weapon_wr-01_tg01_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1936",
+    "name": "巨岩躯体",
+    "icon": "/assets/weapon_wr-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3934",
+    "name": "绝技！瞬步奇袭",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1937",
+    "name": "岩怒之击",
+    "icon": "/assets/weapon_wr-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1938",
+    "name": "勇者壁垒",
+    "icon": "/assets/weapon_wr-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2101",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2201",
+    "name": "弹无虚发",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3925",
+    "name": "绝技！无形冲击",
+    "icon": "/assets/skill_aoyi_skill_icon_028",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2209",
+    "name": "锐眼·光能巨箭",
+    "icon": "/assets/weapon_gj-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2220",
+    "name": "暴风箭矢",
+    "icon": "/assets/weapon_gj-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2222",
+    "name": "二连矢",
+    "icon": "/assets/weapon_gj-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2230",
+    "name": "怒涛射击",
+    "icon": "/assets/weapon_gj-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2231",
+    "name": "精神凝聚",
+    "icon": "/assets/weapon_gj-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2232",
+    "name": "箭雨",
+    "icon": "/assets/weapon_gj-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2233",
+    "name": "聚能射击",
+    "icon": "/assets/weapon_gj-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2234",
+    "name": "光能轰炸",
+    "icon": "/assets/weapon_gj-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2235",
+    "name": "威慑射击",
+    "icon": "/assets/weapon_gj-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2236",
+    "name": "3842956327",
+    "icon": "/assets/weapon_gj-01_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2237",
+    "name": "狂野呼唤",
+    "icon": "/assets/weapon_gj-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3905",
+    "name": "绝技！猪突猛进",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2238",
+    "name": "爆炸射击",
+    "icon": "/assets/weapon_gj-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900703",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2306",
+    "name": "增幅节拍",
+    "icon": "/assets/weapon_jt-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2307",
+    "name": "愈合节拍",
+    "icon": "/assets/weapon_jt-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2308",
+    "name": "聚合乐章",
+    "icon": "/assets/weapon_jt-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2309",
+    "name": "烈焰狂想",
+    "icon": "/assets/weapon_jt-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2312",
+    "name": "激涌五重奏",
+    "icon": "/assets/weapon_jt-01_kx05",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3906",
+    "name": "奥义！冰霜震荡",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2313",
+    "name": "热情挥洒",
+    "icon": "/assets/weapon_jt-01_kx06",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2314",
+    "name": "升格·劲爆全场",
+    "icon": "/assets/weapon_jt-01_ult",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3935",
+    "name": "奥义！雷霆咆哮",
+    "icon": "/assets/skill_aoyi_skill_icon_038",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2315",
+    "name": "安可",
+    "icon": "/assets/weapon_jt-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2316",
+    "name": "万众瞩目",
+    "icon": "/assets/weapon_jt-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2401",
+    "name": "公正之剑",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2405",
+    "name": "英勇盾击",
+    "icon": "/assets/weapon_jd-01_tg01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "102655",
+    "name": "猛猪冲击！",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2406",
+    "name": "先锋打击",
+    "icon": "/assets/weapon_jd-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2407",
+    "name": "凛威·圣光灌注",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2408",
+    "name": "投掷盾牌",
+    "icon": "/assets/weapon_jd-01_kx01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2409",
+    "name": "圣环",
+    "icon": "/assets/weapon_jd-01_kx02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2002440",
+    "name": "奥义！雷霆天引",
+    "icon": "/assets/skill_aoyi_skill_icon_014",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2410",
+    "name": "裁决",
+    "icon": "/assets/weapon_jd-01_kx03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2412",
+    "name": "清算",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2419",
+    "name": "冷酷征伐",
+    "icon": "/assets/weapon_jd-01_kx07",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2420",
+    "name": "光明决心",
+    "icon": "/assets/weapon_jd-01_kx08",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2421",
+    "name": "圣剑",
+    "icon": "/assets/weapon_jd-01_kx09",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3000",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3001",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300101",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3002",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_300201",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3301",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330101",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3302",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3602",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360102",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3603",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360103",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3926",
+    "name": "奥义！流星陨落",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3604",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360104",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3605",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_360105",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3901",
+    "name": "奥义！琉火咆哮",
+    "icon": "/assets/skill_aoyi_skill_icon_017",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3922",
+    "name": "奥义！瞬即斩",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3923",
+    "name": "奥义！重锤狂袭",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3924",
+    "name": "绝技！风影缄默",
+    "icon": "/assets/skill_aoyi_skill_icon_027",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3936",
+    "name": "绝技！静默之水",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3937",
+    "name": "绝技！强压之雷",
+    "icon": "/assets/skill_aoyi_skill_icon_040",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3938",
+    "name": "奥义！茧房术",
+    "icon": "/assets/skill_aoyi_skill_icon_041",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3939",
+    "name": "绝技！雷光球",
+    "icon": "/assets/skill_aoyi_skill_icon_043",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3940",
+    "name": "绝技！旋风打击",
+    "icon": "/assets/skill_aoyi_skill_icon_044",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3941",
+    "name": "绝技！变身蜜蜂",
+    "icon": "/assets/skill_aoyi_skill_icon_045",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3942",
+    "name": "奥义！毒爆",
+    "icon": "/assets/skill_aoyi_skill_icon_046",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3943",
+    "name": "奥义！地狱突刺",
+    "icon": "/assets/skill_aoyi_skill_icon_047",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3944",
+    "name": "奥义！沧澜风啸",
+    "icon": "/assets/skill_aoyi_skill_icon_048",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3945",
+    "name": "奥义！静默潮汐",
+    "icon": "/assets/skill_aoyi_skill_icon_049",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3946",
+    "name": "奥义！哥布林大行军",
+    "icon": "/assets/skill_aoyi_skill_icon_050",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3947",
+    "name": "绝技！螺旋断界",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3948",
+    "name": "绝技！螺旋断界",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "3949",
+    "name": "绝技！螺旋断界",
+    "icon": "/assets/skill_aoyi_skill_icon_051",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "102640",
+    "name": "绝技！猪突猛进",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "102651",
+    "name": "野猪骑士",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "102658",
+    "name": "绝技！猪突猛进",
+    "icon": "/assets/skill_aoyi_skill_icon_001",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "102659",
+    "name": "猛猪突击",
+    "icon": "/assets/skill_vehicle_pig_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "420140",
+    "name": "绝技！缭乱飞弹",
+    "icon": "/assets/skill_aoyi_skill_icon_009",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "706103",
+    "name": "3842956327",
+    "icon": "/assets/talent_skill_330201",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1002440",
+    "name": "绝技！超会心",
+    "icon": "/assets/skill_aoyi_skill_icon_026",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1002830",
+    "name": "奥义！冰霜震荡",
+    "icon": "/assets/skill_aoyi_skill_icon_015",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1010540",
+    "name": "绝技！静默之水",
+    "icon": "/assets/skill_aoyi_skill_icon_039",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "1700440",
+    "name": "奥义！重锤狂袭",
+    "icon": "/assets/skill_aoyi_skill_icon_005",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2001740",
+    "name": "绝技！瞬步奇袭",
+    "icon": "/assets/skill_aoyi_skill_icon_037",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2002840",
+    "name": "奥义！迅捷涡流",
+    "icon": "/assets/skill_aoyi_skill_icon_029",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2801002",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2801301",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2801601",
+    "name": "3842956327",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900101",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr_skill_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900102",
+    "name": "3842956327",
+    "icon": "/assets/weapon_wr-01_tg02",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900103",
+    "name": "杰拉德岩之守护",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900340",
+    "name": "奥义！时间法令",
+    "icon": "/assets/skill_aoyi_skill_icon_016",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900503",
+    "name": "3842956327",
+    "icon": "/assets/weapon_tdl-01_kx01_01",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900540",
+    "name": "奥义！瞬即斩",
+    "icon": "/assets/skill_aoyi_skill_icon_025",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900603",
+    "name": "3842956327",
+    "icon": "/assets/weapon_sf-01_skill_03",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900840",
+    "name": "神灵凭依",
+    "icon": null,
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900901",
+    "name": "法法菈普攻",
+    "icon": "/assets/weapon_jd-01_atk",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900902",
+    "name": "法法菈清算",
+    "icon": "/assets/weapon_jd-01_kx04",
+    "grade": 0,
+    "language": "zh"
+  },
+  {
+    "id": "2900903",
+    "name": "法法菈圣光灌注",
+    "icon": "/assets/weapon_jd-01_ult_01",
+    "grade": 0,
+    "language": "zh"
+  }
+]

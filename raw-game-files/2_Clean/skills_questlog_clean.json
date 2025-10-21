@@ -1,0 +1,1054 @@
+{
+    "1407": {
+        "EnglishShort": "Typhoon",
+        "icon": "/assets/weapon_cq_skill_02"
+    },
+    "1939": {
+        "EnglishShort": "​Granite Fury​",
+        "icon": "/assets/weapon_wr-01_kx07"
+    },
+    "4019": {
+        "EnglishShort": "Flame Jet",
+        "icon": "/assets/weapon_fh-01_kx01"
+    },
+    "3909": {
+        "EnglishShort": "Stunt! Fox Assault",
+        "icon": "/assets/skill_aoyi_skill_icon_011"
+    },
+    "1601": {
+        "EnglishShort": "Crimson Assault",
+        "icon": "/assets/weapon_sf-01_skill_atk01"
+    },
+    "1932": {
+        "EnglishShort": "Shield Bash",
+        "icon": "/assets/weapon_wr-01_tg02"
+    },
+    "1401": {
+        "EnglishShort": "Windborne Grace",
+        "icon": "/assets/weapon_cq_skill_atk"
+    },
+    "1010540": {
+        "EnglishShort": "Stunt! Water of Silence",
+        "icon": "/assets/skill_aoyi_skill_icon_039"
+    },
+    "2411": {
+        "EnglishShort": "Scorching Judgment",
+        "icon": "/assets/weapon_jd-01_kx03_ex"
+    },
+    "2409": {
+        "EnglishShort": "Divine Circle",
+        "icon": "/assets/weapon_jd-01_kx02"
+    },
+    "3930": {
+        "EnglishShort": "Stunt! Earth Shield",
+        "icon": "/assets/skill_aoyi_skill_icon_033"
+    },
+    "2350": {
+        "EnglishShort": "Legendary Boarrier - Howl",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "1736": {
+        "EnglishShort": "​Raijin Dash​ Slash",
+        "icon": "/assets/weapon_tdl-01_tf04"
+    },
+    "3922": {
+        "EnglishShort": "Arcane! Flash Execution",
+        "icon": "/assets/skill_aoyi_skill_icon_025"
+    },
+    "1530": {
+        "EnglishShort": "-1065018664",
+        "icon": "/assets/weapon_fh-01_tg01"
+    },
+    "3908": {
+        "EnglishShort": "Arcane! Pulse Benediction",
+        "icon": "/assets/skill_aoyi_skill_icon_012"
+    },
+    "2410": {
+        "EnglishShort": "Judgment",
+        "icon": "/assets/weapon_jd-01_kx03"
+    },
+    "2002440": {
+        "EnglishShort": "Arcane! Thunderfall Grasp",
+        "icon": "/assets/skill_aoyi_skill_icon_014"
+    },
+    "1006940": {
+        "EnglishShort": "Arcane! Cocoon Tech",
+        "icon": "/assets/skill_aoyi_skill_icon_041"
+    },
+    "2415": {
+        "EnglishShort": "Aegis Ward",
+        "icon": "/assets/weapon_jd-01_kx06"
+    },
+    "3602": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_360102"
+    },
+    "2222": {
+        "EnglishShort": "Double Arrow",
+        "icon": "/assets/weapon_gj-01_tg02"
+    },
+    "2900840": {
+        "EnglishShort": "Spirit Possession",
+        "icon": null
+    },
+    "420140": {
+        "EnglishShort": "Stunt! Chaotic Barrage",
+        "icon": "/assets/skill_aoyi_skill_icon_009"
+    },
+    "1718": {
+        "EnglishShort": "Raijin Dash",
+        "icon": "/assets/weapon_tdl-01_kx03"
+    },
+    "1721": {
+        "EnglishShort": "​Judgment Cut​ I",
+        "icon": "/assets/weapon_tdl-01_skill_03_a"
+    },
+    "1924": {
+        "EnglishShort": "Star Shatter",
+        "icon": "/assets/weapon_wr-01_kx01"
+    },
+    "2401": {
+        "EnglishShort": "Blade of Justice",
+        "icon": "/assets/weapon_jd-01_atk"
+    },
+    "2900340": {
+        "EnglishShort": "Arcane! Time Decree",
+        "icon": "/assets/skill_aoyi_skill_icon_016"
+    },
+    "1738": {
+        "EnglishShort": "​Chaos Breaker​",
+        "icon": "/assets/weapon_tdl-01_tf02"
+    },
+    "1926": {
+        "EnglishShort": "Sandgrip",
+        "icon": "/assets/weapon_wr-01_kx05"
+    },
+    "1418": {
+        "EnglishShort": "Gale Thrust",
+        "icon": "/assets/weapon_cq-01_tg01"
+    },
+    "102658": {
+        "EnglishShort": "Stunt! Boarrier Rush",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "1501": {
+        "EnglishShort": "Vines' Embrace",
+        "icon": "/assets/weapon_fh_skill_atk"
+    },
+    "2316": {
+        "EnglishShort": "Center Stage",
+        "icon": "/assets/weapon_jt-01_kx08"
+    },
+    "2421": {
+        "EnglishShort": "Sacred Blade",
+        "icon": "/assets/weapon_jd-01_kx09"
+    },
+    "1917": {
+        "EnglishShort": "Titan Charge",
+        "icon": "/assets/weapon_wr-01_kx07"
+    },
+    "5126": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/skill_icons_toy_snowlight"
+    },
+    "1611": {
+        "EnglishShort": "Wasteland's End",
+        "icon": "/assets/weapon_sf-01_skill_03"
+    },
+    "2900540": {
+        "EnglishShort": "Arcane! Flash Execution",
+        "icon": "/assets/skill_aoyi_skill_icon_025"
+    },
+    "2239": {
+        "EnglishShort": "Explosive Arrow II",
+        "icon": null
+    },
+    "1731": {
+        "EnglishShort": "Stormflash",
+        "icon": "/assets/weapon_tdl-01_kx08"
+    },
+    "1922": {
+        "EnglishShort": "Shield Bash",
+        "icon": "/assets/weapon_wr-01_tg02"
+    },
+    "2414": {
+        "EnglishShort": "Holy Barrier",
+        "icon": "/assets/weapon_jd-01_kx05"
+    },
+    "3903": {
+        "EnglishShort": "Arcane! Blazing Axe",
+        "icon": "/assets/skill_aoyi_skill_icon_018"
+    },
+    "1614": {
+        "EnglishShort": "Fire Demon",
+        "icon": "/assets/weapon_sf-01_skill_104"
+    },
+    "1700440": {
+        "EnglishShort": "Arcane! Furious Hammer",
+        "icon": "/assets/skill_aoyi_skill_icon_005"
+    },
+    "1944": {
+        "EnglishShort": "Rage Burst",
+        "icon": "/assets/weapon_wr-01_kx03_01"
+    },
+    "1106": {
+        "EnglishShort": "Marker 6",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "1522": {
+        "EnglishShort": "Nourish",
+        "icon": "/assets/weapon_fh-01_kx04"
+    },
+    "3923": {
+        "EnglishShort": "Arcane! Furious Hammer",
+        "icon": "/assets/skill_aoyi_skill_icon_005"
+    },
+    "2238": {
+        "EnglishShort": "Blast Shot",
+        "icon": "/assets/weapon_gj-01_kx08"
+    },
+    "1529": {
+        "EnglishShort": "Blossom Charge",
+        "icon": "/assets/weapon_fh-01_kx07"
+    },
+    "1518": {
+        "EnglishShort": "Wild Bloom",
+        "icon": "/assets/weapon_fh-01_tg01"
+    },
+    "1701": {
+        "EnglishShort": "Judgment Cut",
+        "icon": "/assets/weapon_tdl-01_skill_atk01"
+    },
+    "1005240": {
+        "EnglishShort": "Stunt! Predator Slash",
+        "icon": "/assets/skill_aoyi_skill_icon_031"
+    },
+    "1925": {
+        "EnglishShort": "Rage Burst",
+        "icon": "/assets/weapon_wr-01_kx03"
+    },
+    "2900905": {
+        "EnglishShort": "Fafala's Divine Circle",
+        "icon": "/assets/weapon_jd-01_kx02"
+    },
+    "2001740": {
+        "EnglishShort": "Stunt! Blink Ambush",
+        "icon": "/assets/skill_aoyi_skill_icon_037"
+    },
+    "2407": {
+        "EnglishShort": "Radiant Infusion",
+        "icon": "/assets/weapon_jd-01_ult_01"
+    },
+    "1541": {
+        "EnglishShort": "​Wild Bloom​",
+        "icon": "/assets/weapon_fh-01_tg01"
+    },
+    "3935": {
+        "EnglishShort": "Arcane! Thunder Roar",
+        "icon": "/assets/skill_aoyi_skill_icon_038"
+    },
+    "1931": {
+        "EnglishShort": "​​Countercrush​​",
+        "icon": "/assets/weapon_wr-01_tg01"
+    },
+    "2335": {
+        "EnglishShort": "Infinite Rhapsody",
+        "icon": "/assets/weapon_jt-01_ult01"
+    },
+    "2900105": {
+        "EnglishShort": "Sandshroud",
+        "icon": "/assets/weapon_wr-01_kx02"
+    },
+    "2307": {
+        "EnglishShort": "Healing Beat",
+        "icon": "/assets/weapon_jt-01_tg02"
+    },
+    "2801002": {
+        "EnglishShort": "3842956327",
+        "icon": null
+    },
+    "2900902": {
+        "EnglishShort": "Fafala's Reckoning",
+        "icon": "/assets/weapon_jd-01_kx04"
+    },
+    "2315": {
+        "EnglishShort": "Encore",
+        "icon": "/assets/weapon_jt-01_kx07"
+    },
+    "2900313": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_cq-01_kx02"
+    },
+    "1907": {
+        "EnglishShort": "Tectonic Ring",
+        "icon": "/assets/weapon_wr-01_ult"
+    },
+    "1105": {
+        "EnglishShort": "Marker 5",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "2201": {
+        "EnglishShort": "Bullseye",
+        "icon": "/assets/weapon_gj-01_atk"
+    },
+    "3937": {
+        "EnglishShort": "Stunt! Thunder Suppress",
+        "icon": "/assets/skill_aoyi_skill_icon_040"
+    },
+    "1717": {
+        "EnglishShort": "Flash strike",
+        "icon": "/assets/weapon_tdl-01_kx02"
+    },
+    "3927": {
+        "EnglishShort": "Stunt! Commanding Roar",
+        "icon": "/assets/skill_aoyi_skill_icon_030"
+    },
+    "1433": {
+        "EnglishShort": "Falcon Strike",
+        "icon": "/assets/weapon_cq-01_tf01"
+    },
+    "3939": {
+        "EnglishShort": "Stunt! Lightning Orb",
+        "icon": "/assets/skill_aoyi_skill_icon_043"
+    },
+    "2002840": {
+        "EnglishShort": "Arcane! Swift Vortex",
+        "icon": "/assets/skill_aoyi_skill_icon_029"
+    },
+    "1942": {
+        "EnglishShort": "Rupture",
+        "icon": "/assets/weaponn-wr_sikll_atk_01"
+    },
+    "3919": {
+        "EnglishShort": "Arcane! Assault Turret",
+        "icon": "/assets/skill_aoyi_skill_icon_024"
+    },
+    "1528": {
+        "EnglishShort": "​Vital Surge​",
+        "icon": "/assets/weapon_fh-01_ult03"
+    },
+    "1424": {
+        "EnglishShort": "Instant Edge",
+        "icon": "/assets/weapon_cq-01_kx05"
+    },
+    "3926": {
+        "EnglishShort": "Arcane! Meteor Shower",
+        "icon": "/assets/skill_aoyi_skill_icon_029"
+    },
+    "1002830": {
+        "EnglishShort": "Arcane! Frostquake",
+        "icon": "/assets/skill_aoyi_skill_icon_015"
+    },
+    "2425": {
+        "EnglishShort": "Shield Toss",
+        "icon": "/assets/weapon_jd-01_kx01"
+    },
+    "1509": {
+        "EnglishShort": "Divine Circle Bloom",
+        "icon": "/assets/weapon_fh-01_ult"
+    },
+    "3301": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_330101"
+    },
+    "1724": {
+        "EnglishShort": "Thundercut",
+        "icon": "/assets/weapon_tdl-01_kx06"
+    },
+    "3946": {
+        "EnglishShort": "Arcane! Goblin March",
+        "icon": "/assets/skill_aoyi_skill_icon_050"
+    },
+    "1737": {
+        "EnglishShort": "Divine Sickle",
+        "icon": "/assets/weapon_tdl-01_tf01"
+    },
+    "1714": {
+        "EnglishShort": "Iaido Slash",
+        "icon": "/assets/weapon_tdl-01_tg01"
+    },
+    "3932": {
+        "EnglishShort": "Stunt! Flamewheel Dance",
+        "icon": "/assets/skill_aoyi_skill_icon_035"
+    },
+    "1211": {
+        "EnglishShort": "Crystal Veil",
+        "icon": "/assets/weapon_mz-01_kx05"
+    },
+    "1527": {
+        "EnglishShort": "​Bloomheal​",
+        "icon": "/assets/weapon_fh-01_ult02"
+    },
+    "3603": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_360103"
+    },
+    "1531": {
+        "EnglishShort": "Nature Ward",
+        "icon": "/assets/weapon_fh-01_kx08"
+    },
+    "3931": {
+        "EnglishShort": "Arcane! Shrine Field",
+        "icon": "/assets/skill_aoyi_skill_icon_034"
+    },
+    "1507": {
+        "EnglishShort": "Life Bloom",
+        "icon": "/assets/weapon_fh_skill_passive"
+    },
+    "1410": {
+        "EnglishShort": "Typhoon Cleave",
+        "icon": "/assets/weapon_cq-01_ult_02"
+    },
+    "2236": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_gj-01_atk"
+    },
+    "3904": {
+        "EnglishShort": "Stunt! Super Critical",
+        "icon": "/assets/skill_aoyi_skill_icon_026"
+    },
+    "2221": {
+        "EnglishShort": "Storm Arrow",
+        "icon": "/assets/weapon_gj-01_tg01_01"
+    },
+    "3925": {
+        "EnglishShort": "Stunt! Invisible Impact",
+        "icon": "/assets/skill_aoyi_skill_icon_028"
+    },
+    "1937": {
+        "EnglishShort": "Granite Fury",
+        "icon": "/assets/weapon_wr-01_kx07"
+    },
+    "3905": {
+        "EnglishShort": "Stunt! Boarrier Rush",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "1430": {
+        "EnglishShort": "Valor Cyclone",
+        "icon": "/assets/weapon_cq-01_kx07"
+    },
+    "3924": {
+        "EnglishShort": "Stunt! Gale of Silence",
+        "icon": "/assets/skill_aoyi_skill_icon_027"
+    },
+    "1246": {
+        "EnglishShort": "Tidepool",
+        "icon": "/assets/weapon_mz-01_kx04"
+    },
+    "2105": {
+        "EnglishShort": "Spirit Break",
+        "icon": null
+    },
+    "2900101": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_wr_skill_atk"
+    },
+    "1422": {
+        "EnglishShort": "Breach Pursuit",
+        "icon": "/assets/weapon_cq-01_kx03"
+    },
+    "3938": {
+        "EnglishShort": "Arcane! Cocoon Tech",
+        "icon": "/assets/skill_aoyi_skill_icon_041"
+    },
+    "2314": {
+        "EnglishShort": "Rock the Stage",
+        "icon": "/assets/weapon_jt-01_ult"
+    },
+    "102655": {
+        "EnglishShort": "Boar Impact!",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "2310": {
+        "EnglishShort": "Heroic Melody",
+        "icon": "/assets/weapon_jt-01_kx03"
+    },
+    "2233": {
+        "EnglishShort": "Powerdraw",
+        "icon": "/assets/weapon_gj-01_kx05"
+    },
+    "1901": {
+        "EnglishShort": "Halberd's Edge",
+        "icon": "/assets/weapon_wr_skill_atk"
+    },
+    "1524": {
+        "EnglishShort": "Growth Arcane",
+        "icon": "/assets/weapon_fh-01_kx06"
+    },
+    "1523": {
+        "EnglishShort": "Regen Pulse",
+        "icon": "/assets/weapon_fh-01_kx05"
+    },
+    "2319": {
+        "EnglishShort": "Sound Wave Surge",
+        "icon": null
+    },
+    "1427": {
+        "EnglishShort": "Breach Pursuit",
+        "icon": "/assets/weapon_cq-01_kx03"
+    },
+    "2900901": {
+        "EnglishShort": "Fafala's Basic Attack",
+        "icon": "/assets/weapon_jd-01_atk"
+    },
+    "1201": {
+        "EnglishShort": "Raincall Surge",
+        "icon": "/assets/weapon_mz-01_skill_atk"
+    },
+    "3914": {
+        "EnglishShort": "Stunt! Blade Sweep",
+        "icon": "/assets/skill_aoyi_skill_icon_019"
+    },
+    "1719": {
+        "EnglishShort": "Scythe Wheel",
+        "icon": "/assets/weapon_tdl-01_kx04"
+    },
+    "1519": {
+        "EnglishShort": "Feral Seed",
+        "icon": "/assets/weapon_fh-01_kx09"
+    },
+    "1425": {
+        "EnglishShort": "Falcon Toss",
+        "icon": "/assets/weapon_cq-01_kx06"
+    },
+    "1103": {
+        "EnglishShort": "Marker 3",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "1431": {
+        "EnglishShort": "Sharp Impact",
+        "icon": "/assets/weapon_cq-01_kx08"
+    },
+    "1243": {
+        "EnglishShort": "Permafrost",
+        "icon": "/assets/weapon_mz-01_kx01"
+    },
+    "3911": {
+        "EnglishShort": "Arcane! Heart of Flame",
+        "icon": "/assets/skill_aoyi_skill_icon_042"
+    },
+    "1520": {
+        "EnglishShort": "Infusion",
+        "icon": "/assets/weapon_fh-01_kx01"
+    },
+    "3921": {
+        "EnglishShort": "Arcane! Time Decree",
+        "icon": "/assets/skill_aoyi_skill_icon_016"
+    },
+    "1923": {
+        "EnglishShort": "Sandward",
+        "icon": "/assets/weapon_wr-01_kx06"
+    },
+    "1420": {
+        "EnglishShort": "Galeform",
+        "icon": "/assets/weapon_cq-01_kx01"
+    },
+    "1245": {
+        "EnglishShort": "Frost Shelter",
+        "icon": "/assets/weapon_mz-01_kx02"
+    },
+    "3906": {
+        "EnglishShort": "Arcane! Frostquake",
+        "icon": "/assets/skill_aoyi_skill_icon_015"
+    },
+    "2237": {
+        "EnglishShort": "Wildcall",
+        "icon": "/assets/weapon_gj-01_kx07"
+    },
+    "2313": {
+        "EnglishShort": "Passion Burst",
+        "icon": "/assets/weapon_jt-01_kx06"
+    },
+    "3920": {
+        "EnglishShort": "Arcane! Blessing of Life",
+        "icon": "/assets/skill_aoyi_skill_icon_013"
+    },
+    "3918": {
+        "EnglishShort": "Arcane! Shadow of the Fox",
+        "icon": "/assets/skill_aoyi_skill_icon_023"
+    },
+    "2230": {
+        "EnglishShort": "Torrent Volley",
+        "icon": "/assets/weapon_gj-01_kx01"
+    },
+    "3002": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_300201"
+    },
+    "1244": {
+        "EnglishShort": "Blizzard",
+        "icon": "/assets/weapon_mz-01_kx03"
+    },
+    "706103": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_330201"
+    },
+    "3910": {
+        "EnglishShort": "Stunt! Chaotic Barrage",
+        "icon": "/assets/skill_aoyi_skill_icon_009"
+    },
+    "2351": {
+        "EnglishShort": "Legendary Eagle - Howl",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "1735": {
+        "EnglishShort": "Dragonhammer",
+        "icon": "/assets/weapon_tdl-01_tf03"
+    },
+    "1421": {
+        "EnglishShort": "Spiral Thrust",
+        "icon": "/assets/weapon_cq-01_kx02"
+    },
+    "3941": {
+        "EnglishShort": "Stunt! Transform into Bee",
+        "icon": "/assets/skill_aoyi_skill_icon_045"
+    },
+    "2900103": {
+        "EnglishShort": "Jerrad Earh Guard",
+        "icon": null
+    },
+    "1241": {
+        "EnglishShort": "Frostbeam",
+        "icon": "/assets/weapon_mz-01_tg01"
+    },
+    "2419": {
+        "EnglishShort": "Zeal Crusade",
+        "icon": "/assets/weapon_jd-01_kx07"
+    },
+    "1936": {
+        "EnglishShort": "Stoneform",
+        "icon": "/assets/weapon_wr-01_kx04"
+    },
+    "1210": {
+        "EnglishShort": "Maelstrom",
+        "icon": "/assets/weapon_mz-01_kx06"
+    },
+    "2308": {
+        "EnglishShort": "Harmonic Anthem",
+        "icon": "/assets/weapon_jt-01_kx01"
+    },
+    "2231": {
+        "EnglishShort": "Focus",
+        "icon": "/assets/weapon_gj-01_kx02"
+    },
+    "2332": {
+        "EnglishShort": "Passion Burst",
+        "icon": "/assets/weapon_jt-01_tf03_01"
+    },
+    "1435": {
+        "EnglishShort": "​Drake Cannon​",
+        "icon": "/assets/weapon_cq-01_tf03"
+    },
+    "3916": {
+        "EnglishShort": "Stunt! Piercing Arrow",
+        "icon": "/assets/skill_aoyi_skill_icon_021"
+    },
+    "2309": {
+        "EnglishShort": "Rhapsody of Flame",
+        "icon": "/assets/weapon_jt-01_kx02"
+    },
+    "3303": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_330301"
+    },
+    "2900640": {
+        "EnglishShort": "Arcane! Heart of Flame",
+        "icon": "/assets/skill_aoyi_skill_icon_042"
+    },
+    "3302": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_330201"
+    },
+    "1716": {
+        "EnglishShort": "Overdrive",
+        "icon": "/assets/weapon_tdl-01_kx01_01"
+    },
+    "1713": {
+        "EnglishShort": "Oblivion Combo",
+        "icon": "/assets/weapon_tdl-01_ult"
+    },
+    "1609": {
+        "EnglishShort": "Crimson Lotus",
+        "icon": "/assets/weapon_sf-01_skill_102"
+    },
+    "1240": {
+        "EnglishShort": "Frozen Gale",
+        "icon": "/assets/weapon_mz-01_kx08"
+    },
+    "2900503": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_tdl-01_kx01_01"
+    },
+    "2321": {
+        "EnglishShort": "String Strike",
+        "icon": "/assets/weapon_jt-01_atk"
+    },
+    "2900240": {
+        "EnglishShort": "Arcane! Blessing of Life",
+        "icon": "/assets/skill_aoyi_skill_icon_013"
+    },
+    "102651": {
+        "EnglishShort": "Boar Knight",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "3001": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_300101"
+    },
+    "3901": {
+        "EnglishShort": "Arcane! Flame Roar",
+        "icon": "/assets/skill_aoyi_skill_icon_017"
+    },
+    "4018": {
+        "EnglishShort": "Frostbeam",
+        "icon": "/assets/weapon_fh-01_kx01"
+    },
+    "3917": {
+        "EnglishShort": "Stunt! Heavy Slash",
+        "icon": "/assets/skill_aoyi_skill_icon_022"
+    },
+    "1434": {
+        "EnglishShort": "​Vortex Strike​",
+        "icon": "/assets/weapon_cq-01_tf02"
+    },
+    "102659": {
+        "EnglishShort": "Pig Assault",
+        "icon": "/assets/skill_vehicle_pig_01"
+    },
+    "2108": {
+        "EnglishShort": "Spirit Possession",
+        "icon": null
+    },
+    "2900703": {
+        "EnglishShort": "3842956327",
+        "icon": null
+    },
+    "2312": {
+        "EnglishShort": "Fivefold Crescendo",
+        "icon": "/assets/weapon_jt-01_kx05"
+    },
+    "2408": {
+        "EnglishShort": "Shield Toss",
+        "icon": "/assets/weapon_jd-01_kx01"
+    },
+    "2412": {
+        "EnglishShort": "Reckoning",
+        "icon": "/assets/weapon_jd-01_kx04"
+    },
+    "2101": {
+        "EnglishShort": "3842956327",
+        "icon": null
+    },
+    "1941": {
+        "EnglishShort": "Starfall",
+        "icon": "/assets/weapon_wr-01_kx01_01"
+    },
+    "1730": {
+        "EnglishShort": "Volt Surge",
+        "icon": "/assets/weapon_tdl-01_kx07"
+    },
+    "2232": {
+        "EnglishShort": "Arrow Rain",
+        "icon": "/assets/weapon_gj-01_kx03"
+    },
+    "2220": {
+        "EnglishShort": "Storm Arrow",
+        "icon": "/assets/weapon_gj-01_tg01"
+    },
+    "2900311": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_cq-01_kx08"
+    },
+    "2801601": {
+        "EnglishShort": "3842956327",
+        "icon": null
+    },
+    "3915": {
+        "EnglishShort": "Stunt! Frenzied Shot",
+        "icon": "/assets/skill_aoyi_skill_icon_020"
+    },
+    "2900204": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_fh-01_kx04"
+    },
+    "1008641": {
+        "EnglishShort": "Stunt! Whirlwind Strike",
+        "icon": "/assets/skill_aoyi_skill_icon_044"
+    },
+    "3936": {
+        "EnglishShort": "Stunt! Water of Silence",
+        "icon": "/assets/skill_aoyi_skill_icon_039"
+    },
+    "1715": {
+        "EnglishShort": "Moonstrike",
+        "icon": "/assets/weapon_tdl-01_tg02"
+    },
+    "3943": {
+        "EnglishShort": "Arcane! Hell Thrust",
+        "icon": "/assets/skill_aoyi_skill_icon_047"
+    },
+    "1419": {
+        "EnglishShort": "Skyfall",
+        "icon": "/assets/weapon_cq-01_tg02"
+    },
+    "1720": {
+        "EnglishShort": "True Sight",
+        "icon": "/assets/weapon_tdl-01_kx05"
+    },
+    "1010440": {
+        "EnglishShort": "Stunt! Thunder Suppress",
+        "icon": "/assets/skill_aoyi_skill_icon_040"
+    },
+    "3907": {
+        "EnglishShort": "Stunt! Falling Star",
+        "icon": "/assets/skill_aoyi_skill_icon_008"
+    },
+    "2311": {
+        "EnglishShort": "Healing Melody",
+        "icon": "/assets/weapon_jt-01_kx04"
+    },
+    "1242": {
+        "EnglishShort": "Frost Lance",
+        "icon": "/assets/weapon_mz-01_tg02"
+    },
+    "1101": {
+        "EnglishShort": "Marker 1",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "1102": {
+        "EnglishShort": "Marker 2",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "3000": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_300001"
+    },
+    "3929": {
+        "EnglishShort": "Stunt! Shell Defense",
+        "icon": "/assets/skill_aoyi_skill_icon_032"
+    },
+    "2336": {
+        "EnglishShort": "Concert Circuit",
+        "icon": "/assets/weapon_jt-01_ult02"
+    },
+    "3928": {
+        "EnglishShort": "Stunt! Predator Slash",
+        "icon": "/assets/skill_aoyi_skill_icon_031"
+    },
+    "3604": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_360104"
+    },
+    "2405": {
+        "EnglishShort": "Valor Bash",
+        "icon": "/assets/weapon_jd-01_tg01"
+    },
+    "3605": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_360105"
+    },
+    "2900104": {
+        "EnglishShort": "Star Shatter",
+        "icon": "/assets/weapon_wr-01_kx01"
+    },
+    "1940": {
+        "EnglishShort": "Rage Burst",
+        "icon": "/assets/weapon_wr-01_kx03"
+    },
+    "1104": {
+        "EnglishShort": "Marker 4",
+        "icon": "/assets/skill_dungeon_chongsu"
+    },
+    "2234": {
+        "EnglishShort": "Radiance Barrage",
+        "icon": "/assets/weapon_gj-01_kx04"
+    },
+    "1933": {
+        "EnglishShort": "Halberd's Edge",
+        "icon": "/assets/weapon_wr_skill_atk"
+    },
+    "3947": {
+        "EnglishShort": "Stunt! Spiral Severance",
+        "icon": "/assets/skill_aoyi_skill_icon_051"
+    },
+    "3913": {
+        "EnglishShort": "Stunt! Electro Bomb",
+        "icon": "/assets/skill_aoyi_skill_icon_010"
+    },
+    "1742": {
+        "EnglishShort": "Thundercut - Final Slash",
+        "icon": "/assets/weapon_tdl-01_kx06"
+    },
+    "2223": {
+        "EnglishShort": "-1065018664",
+        "icon": "/assets/weapon_gj-01_tg02"
+    },
+    "3942": {
+        "EnglishShort": "Arcane! Poison Explosion",
+        "icon": "/assets/skill_aoyi_skill_icon_046"
+    },
+    "1927": {
+        "EnglishShort": "Sandshroud",
+        "icon": "/assets/weapon_wr-01_kx02"
+    },
+    "1239": {
+        "EnglishShort": "Meteor Storm",
+        "icon": "/assets/weapon_mz-01_kx07"
+    },
+    "3933": {
+        "EnglishShort": "Stunt! Intimidating Roar",
+        "icon": "/assets/skill_aoyi_skill_icon_036"
+    },
+    "2107": {
+        "EnglishShort": "Summon Wedge Pillar",
+        "icon": null
+    },
+    "1733": {
+        "EnglishShort": "​Storm Scythe​",
+        "icon": "/assets/weapon_tdl-01_skill_01"
+    },
+    "3601": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/talent_skill_360101"
+    },
+    "1248": {
+        "EnglishShort": "Glacier Hymn",
+        "icon": "/assets/weapon_mz-01_ult"
+    },
+    "6004": {
+        "EnglishShort": "Gale Blast",
+        "icon": "/assets/weapon_mz-01_ult"
+    },
+    "3944": {
+        "EnglishShort": "Arcane! Azure Gale",
+        "icon": "/assets/skill_aoyi_skill_icon_048"
+    },
+    "1729": {
+        "EnglishShort": "-1065018664",
+        "icon": "/assets/weapon_tdl-01_skill_atk01"
+    },
+    "3940": {
+        "EnglishShort": "Stunt! Whirlwind Strike",
+        "icon": "/assets/skill_aoyi_skill_icon_044"
+    },
+    "1426": {
+        "EnglishShort": "Typhoon Cleave",
+        "icon": "/assets/weapon_cq-01_ult_01"
+    },
+    "1423": {
+        "EnglishShort": "Aegis Gale",
+        "icon": "/assets/weapon_cq-01_kx04"
+    },
+    "3949": {
+        "EnglishShort": "Stunt! Spiral Severance",
+        "icon": "/assets/skill_aoyi_skill_icon_051"
+    },
+    "102640": {
+        "EnglishShort": "Stunt! Boarrier Rush",
+        "icon": "/assets/skill_aoyi_skill_icon_001"
+    },
+    "1002440": {
+        "EnglishShort": "Stunt! Super Critical",
+        "icon": "/assets/skill_aoyi_skill_icon_026"
+    },
+    "1930": {
+        "EnglishShort": "Countercrush",
+        "icon": "/assets/weapon_wr-01_tg01_01"
+    },
+    "2406": {
+        "EnglishShort": "Vanguard Strike",
+        "icon": "/assets/weapon_jd-01_tg02"
+    },
+    "3948": {
+        "EnglishShort": "Stunt! Spiral Severance",
+        "icon": "/assets/skill_aoyi_skill_icon_051"
+    },
+    "2306": {
+        "EnglishShort": "Amplified Beat",
+        "icon": "/assets/weapon_jt-01_tg01"
+    },
+    "1734": {
+        "EnglishShort": "Thunder Iaido Slash",
+        "icon": "/assets/weapon_tdl-01_tf05"
+    },
+    "2900903": {
+        "EnglishShort": "Fafala's Holy Light Infusion",
+        "icon": "/assets/weapon_jd-01_ult_01"
+    },
+    "1521": {
+        "EnglishShort": "Grove Wish",
+        "icon": "/assets/weapon_fh-01_kx02"
+    },
+    "2900302": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_cq-01_tg01"
+    },
+    "1938": {
+        "EnglishShort": "Brave Bastion",
+        "icon": "/assets/weapon_wr-01_kx08"
+    },
+    "1705": {
+        "EnglishShort": "Overdrive",
+        "icon": "/assets/weapon_tdl-01_kx01_01"
+    },
+    "2208": {
+        "EnglishShort": "-1065018664",
+        "icon": null
+    },
+    "2900102": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_wr-01_tg02"
+    },
+    "2235": {
+        "EnglishShort": "Deter Shot",
+        "icon": "/assets/weapon_gj-01_kx06"
+    },
+    "1928": {
+        "EnglishShort": "Jerrad Earh Guard",
+        "icon": null
+    },
+    "2207": {
+        "EnglishShort": "-1065018664",
+        "icon": null
+    },
+    "2900312": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_cq-01_kx02"
+    },
+    "2900603": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_sf-01_skill_03"
+    },
+    "3902": {
+        "EnglishShort": "Arcane! Thunderfall Grasp",
+        "icon": "/assets/skill_aoyi_skill_icon_014"
+    },
+    "2801301": {
+        "EnglishShort": "3842956327",
+        "icon": "/assets/weapon_wr_skill_atk"
+    },
+    "2420": {
+        "EnglishShort": "Radiance",
+        "icon": "/assets/weapon_jd-01_kx08"
+    },
+    "1728": {
+        "EnglishShort": "Oblivion Combo",
+        "icon": "/assets/weapon_tdl-01_ult"
+    },
+    "2209": {
+        "EnglishShort": "Luminary Bolt",
+        "icon": "/assets/weapon_gj-01_ult"
+    },
+    "3945": {
+        "EnglishShort": "Arcane! Silent Tide",
+        "icon": "/assets/skill_aoyi_skill_icon_049"
+    },
+    "3934": {
+        "EnglishShort": "Stunt! Blink Ambush",
+        "icon": "/assets/skill_aoyi_skill_icon_037"
+    },
+    "1008640": {
+        "EnglishShort": "Stunt! Falling Star",
+        "icon": "/assets/skill_aoyi_skill_icon_008"
+    }
+}

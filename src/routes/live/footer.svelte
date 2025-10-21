@@ -19,6 +19,12 @@
         goto(resolve("/live/heal"));
       }}>HEAL</button
     >
+    <button
+      class={`rounded-xs px-1.5 ${page.url.pathname.includes("boss") ? "bg-primary" : ""}`}
+      onclick={() => {
+        goto(resolve("/live/boss"));
+      }}>BOSS</button
+    >
   </span>
   <span class="px-1.5 tracking-tighter"><span>BPSR Logs v{#await getVersion()}X.Y.Z{:then version}{version}{/await}</span></span>
 </footer>

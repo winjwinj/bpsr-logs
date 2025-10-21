@@ -177,6 +177,78 @@ pub fn get_dps_player_window(
 
 #[tauri::command]
 #[specta::specta]
+pub fn get_dps_player_window_boss(
+    state: tauri::State<'_, EncounterMutex>,
+) -> Result<PlayersWindow, String> {
+    let encounter = state.lock().unwrap();
+
+    let time_elapsed_ms = encounter
+        .time_last_combat_packet_ms
+        .saturating_sub(encounter.time_fight_start_ms);
+
+    let mut dps_window = PlayersWindow {
+        player_rows: PlayerRows::default(),
+        // ..Default::default()
+    };
+
+    #[allow(clippy::cast_precision_loss)]
+    let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
+
+    if encounter.total_dmg == 0 {
+        return Err("No damage found".to_string());
+    }
+
+    for (&entity_uid, entity) in &encounter.entity_uid_to_entity {
+        // calculate things like dps
+        let is_player = entity.entity_type == EEntityType::EntChar;
+        let did_damage = !entity.skill_uid_to_dmg_skill.is_empty();
+        // info!("{}, {is_player}", entity.name);
+        if is_player && did_damage {
+            // Damage Stats per player
+            #[allow(clippy::cast_precision_loss)]
+            let damage_row = PlayerRow {
+                uid: entity_uid as u128,
+                name: prettify_name(entity_uid, encounter.local_player_uid, &entity.name),
+                class_name: class::get_class_name(entity.class_id),
+                class_spec_name: class::get_class_spec(entity.class_spec),
+                ability_score: entity.ability_score as u128,
+                total_dmg: entity.total_dmg_boss,
+                dps: nan_is_zero(entity.total_dmg_boss as f64 / time_elapsed_secs),
+                dmg_pct: nan_is_zero(entity.total_dmg_boss as f64 / encounter.total_dmg as f64 * 100.0),
+                crit_rate: nan_is_zero(
+                    entity.crit_hits_dmg_boss as f64 / entity.hits_dmg as f64 * 100.0,
+                ),
+                crit_dmg_rate: nan_is_zero(
+                    entity.crit_total_dmg_boss as f64 / entity.total_dmg as f64 * 100.0,
+                ),
+                lucky_rate: nan_is_zero(
+                    entity.lucky_hits_dmg_boss as f64 / entity.hits_dmg as f64 * 100.0,
+                ),
+                lucky_dmg_rate: nan_is_zero(
+                    entity.lucky_total_dmg_boss as f64 / entity.total_dmg as f64 * 100.0,
+                ),
+                hits: entity.hits_dmg_boss,
+                hits_per_minute: nan_is_zero(entity.hits_dmg_boss as f64 / time_elapsed_secs * 60.0),
+                // ..Default:default()
+            };
+            dps_window.player_rows.push(damage_row);
+        }
+    }
+    drop(encounter); // todo: is this a good idea? dropping lock before expensive sort
+
+    // Sort skills descending by damage dealt
+    dps_window.player_rows.sort_by(|this_row, other_row| {
+        other_row
+            .total_dmg
+            .partial_cmp(&this_row.total_dmg)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
+
+    Ok(dps_window)
+}
+
+#[tauri::command]
+#[specta::specta]
 pub fn get_dps_skill_window(
     state: tauri::State<'_, EncounterMutex>,
     player_uid_str: &str,

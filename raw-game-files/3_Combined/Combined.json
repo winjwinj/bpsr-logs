@@ -48,36 +48,60 @@
         "BuffTable_Clean.json": {
             "ChineseShort": "水剑BUFF效果"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 1",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记01",
             "EnglishShort": "Marker 1"
         }
     },
     "1102": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 2",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记02",
             "EnglishShort": "Marker 2"
         }
     },
     "1103": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 3",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记03",
             "EnglishShort": "Marker 3"
         }
     },
     "1104": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 4",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记04",
             "EnglishShort": "Marker 4"
         }
     },
     "1105": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 5",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记05",
             "EnglishShort": "Marker 5"
         }
     },
     "1106": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Marker 6",
+            "icon": "/assets/skill_dungeon_chongsu"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "场地标记06",
             "EnglishShort": "Marker 6"
@@ -89,6 +113,10 @@
         },
         "RecountTable_Clean.json": {
             "EnglishShort": "Raincall Surge"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Raincall Surge",
+            "icon": "/assets/weapon_mz-01_skill_atk"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯ATK_01",
@@ -137,6 +165,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Maelstrom"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Maelstrom",
+            "icon": "/assets/weapon_mz-01_kx06"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯SKILL_01",
             "EnglishShort": "Maelstrom",
@@ -149,6 +181,10 @@
     "1211": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Crystal Veil"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Crystal Veil",
+            "icon": "/assets/weapon_mz-01_kx05"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯SKILL_02",
@@ -246,6 +282,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Meteor Storm"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Meteor Storm",
+            "icon": "/assets/weapon_mz-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰陨石",
             "EnglishShort": "Meteor Storm",
@@ -258,6 +298,10 @@
     "1240": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Frozen Gale"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Frozen Gale",
+            "icon": "/assets/weapon_mz-01_kx08"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰风",
@@ -272,6 +316,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Frostbeam"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Frostbeam",
+            "icon": "/assets/weapon_mz-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯SPECIAL_SKILL_A",
             "EnglishShort": "Frostbeam",
@@ -284,6 +332,10 @@
     "1242": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Frost Lance"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Frost Lance",
+            "icon": "/assets/weapon_mz-01_tg02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯SPECIAL_SKILL_B",
@@ -298,6 +350,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Permafrost"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Permafrost",
+            "icon": "/assets/weapon_mz-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰之灌注",
             "EnglishShort": "Permafrost",
@@ -310,6 +366,10 @@
     "1244": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Blizzard"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Blizzard",
+            "icon": "/assets/weapon_mz-01_kx03"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰风暴",
@@ -324,6 +384,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Frost Shelter"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Frost Shelter",
+            "icon": "/assets/weapon_mz-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰箱",
             "EnglishShort": "Frost Shelter",
@@ -336,6 +400,10 @@
     "1246": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Tidepool"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Tidepool",
+            "icon": "/assets/weapon_mz-01_kx04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "水龙卷",
@@ -360,6 +428,10 @@
     "1248": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Glacier Hymn"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Glacier Hymn",
+            "icon": "/assets/weapon_mz-01_ult"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯UTR_SKILL",
@@ -526,6 +598,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Windborne Grace"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Windborne Grace",
+            "icon": "/assets/weapon_cq_skill_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜ATK_01",
             "EnglishShort": "Windborne Grace",
@@ -580,6 +656,10 @@
         }
     },
     "1407": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Typhoon",
+            "icon": "/assets/weapon_cq_skill_02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜SKILL_02",
             "EnglishShort": "Typhoon"
@@ -604,6 +684,10 @@
         }
     },
     "1410": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Typhoon Cleave",
+            "icon": "/assets/weapon_cq-01_ult_02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜SKILL_03_01",
             "EnglishShort": "Typhoon Cleave",
@@ -663,6 +747,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Gale Thrust"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Gale Thrust",
+            "icon": "/assets/weapon_cq-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜特攻SKILL_01",
             "EnglishShort": "Gale Thrust",
@@ -675,6 +763,10 @@
     "1419": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Skyfall"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Skyfall",
+            "icon": "/assets/weapon_cq-01_tg02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜特攻SKILL_02",
@@ -689,6 +781,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Galeform"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Galeform",
+            "icon": "/assets/weapon_cq-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_01",
             "EnglishShort": "Galeform",
@@ -701,6 +797,10 @@
     "1421": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Spiral Thrust"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Spiral Thrust",
+            "icon": "/assets/weapon_cq-01_kx02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_02",
@@ -715,6 +815,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Breach Pursuit"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Breach Pursuit",
+            "icon": "/assets/weapon_cq-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_03",
             "EnglishShort": "Breach Pursuit",
@@ -728,6 +832,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Aegis Gale"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Aegis Gale",
+            "icon": "/assets/weapon_cq-01_kx04"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_04",
             "EnglishShort": "Aegis Gale",
@@ -737,6 +845,10 @@
     "1424": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Instant Edge"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Instant Edge",
+            "icon": "/assets/weapon_cq-01_kx05"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_05",
@@ -751,6 +863,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Falcon Toss"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Falcon Toss",
+            "icon": "/assets/weapon_cq-01_kx06"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_06",
             "EnglishShort": "Falcon Toss",
@@ -764,6 +880,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Typhoon Cleave"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Typhoon Cleave",
+            "icon": "/assets/weapon_cq-01_ult_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜SKILL_Ult",
             "EnglishShort": "Typhoon Cleave",
@@ -774,6 +894,10 @@
         }
     },
     "1427": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Breach Pursuit",
+            "icon": "/assets/weapon_cq-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_03_02",
             "EnglishShort": "Breach Pursuit",
@@ -803,6 +927,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Valor Cyclone"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Valor Cyclone",
+            "icon": "/assets/weapon_cq-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜可选SKILL_07",
             "EnglishShort": "Valor Cyclone",
@@ -812,6 +940,10 @@
     "1431": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Sharp Impact"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sharp Impact",
+            "icon": "/assets/weapon_cq-01_kx08"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜特攻SKILL_08",
@@ -831,6 +963,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Azure Sever"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Falcon Strike",
+            "icon": "/assets/weapon_cq-01_tf01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜飞鸟投强化",
             "EnglishShort": "Falcon Strike",
@@ -844,6 +980,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Vortex Strike"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Vortex Strike​",
+            "icon": "/assets/weapon_cq-01_tf02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜神影螺旋",
             "EnglishShort": "Vortex Strike",
@@ -856,6 +996,10 @@
     "1435": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Drake Cannon"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Drake Cannon​",
+            "icon": "/assets/weapon_cq-01_tf03"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "龙击炮",
@@ -882,6 +1026,10 @@
     "1501": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Vines' Embrace"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Vines' Embrace",
+            "icon": "/assets/weapon_fh_skill_atk"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜ATK_01",
@@ -934,6 +1082,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Life Bloom"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Life Bloom",
+            "icon": "/assets/weapon_fh_skill_passive"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜SKILL_03",
             "EnglishShort": "Life Bloom",
@@ -948,6 +1100,10 @@
     "1509": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Divine Circle Bloom"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Divine Circle Bloom",
+            "icon": "/assets/weapon_fh-01_ult"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜SKILL_05",
@@ -1010,6 +1166,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Wild Bloom"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Wild Bloom",
+            "icon": "/assets/weapon_fh-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜特殊攻击A",
             "EnglishShort": "Wild Bloom",
@@ -1023,6 +1183,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Feral Seed"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Feral Seed",
+            "icon": "/assets/weapon_fh-01_kx09"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜种子陨石",
             "EnglishShort": "Feral Seed",
@@ -1032,6 +1196,10 @@
     "1520": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Infusion"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Infusion",
+            "icon": "/assets/weapon_fh-01_kx01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜灌注",
@@ -1043,6 +1211,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Grove Wish"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Grove Wish",
+            "icon": "/assets/weapon_fh-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜森之祈愿",
             "EnglishShort": "Grove Wish",
@@ -1052,6 +1224,10 @@
     "1522": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Nourish"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Nourish",
+            "icon": "/assets/weapon_fh-01_kx04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜hot",
@@ -1063,6 +1239,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Regen Pulse"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Regen Pulse",
+            "icon": "/assets/weapon_fh-01_kx05"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜奶环",
             "EnglishShort": "Regen Pulse",
@@ -1072,6 +1252,10 @@
     "1524": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Fast Growth"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Growth Arcane",
+            "icon": "/assets/weapon_fh-01_kx06"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜减CD",
@@ -1100,6 +1284,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Bloomheal"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Bloomheal​",
+            "icon": "/assets/weapon_fh-01_ult02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜花语回升",
             "EnglishShort": "Bloomheal",
@@ -1113,6 +1301,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Vital Surge"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Vital Surge​",
+            "icon": "/assets/weapon_fh-01_ult03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜飞升",
             "EnglishShort": "Vital Surge",
@@ -1122,6 +1314,10 @@
     "1529": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Blossom Charge"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Blossom Charge",
+            "icon": "/assets/weapon_fh-01_kx07"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜盛放注能",
@@ -1133,6 +1329,10 @@
         }
     },
     "1530": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "-1065018664",
+            "icon": "/assets/weapon_fh-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜特殊攻击A_替换"
         }
@@ -1140,6 +1340,10 @@
     "1531": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Nature Ward"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Nature Ward",
+            "icon": "/assets/weapon_fh-01_kx08"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜护盾",
@@ -1156,6 +1360,10 @@
         }
     },
     "1541": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Wild Bloom​",
+            "icon": "/assets/weapon_fh-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜特殊攻击A",
             "EnglishShort": "Wild Bloom",
@@ -1281,6 +1489,10 @@
         "BuffTable_Clean.json": {
             "ChineseShort": "水剑粒子显示"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Crimson Assault",
+            "icon": "/assets/weapon_sf-01_skill_atk01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "塔塔ATK_01",
             "EnglishShort": "Crimson Assault",
@@ -1330,6 +1542,10 @@
         }
     },
     "1609": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Crimson Lotus",
+            "icon": "/assets/weapon_sf-01_skill_102"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "塔塔SKILL_01",
             "EnglishShort": "Crimson Lotus",
@@ -1343,6 +1559,10 @@
         }
     },
     "1611": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Wasteland's End",
+            "icon": "/assets/weapon_sf-01_skill_03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "塔塔SKILL_02",
             "EnglishShort": "Wasteland's End",
@@ -1362,6 +1582,10 @@
         }
     },
     "1614": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fire Demon",
+            "icon": "/assets/weapon_sf-01_skill_104"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "塔塔ULT_01",
             "EnglishShort": "Fire Demon",
@@ -1440,6 +1664,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Judgment Cut"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Judgment Cut",
+            "icon": "/assets/weapon_tdl-01_skill_atk01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉ATK_01",
             "EnglishShort": "Judgment Cut",
@@ -1476,6 +1704,10 @@
     "1705": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Overdrive"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Overdrive",
+            "icon": "/assets/weapon_tdl-01_kx01_01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉强化普攻EXATK_01",
@@ -1533,6 +1765,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Oblivion Combo"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Oblivion Combo",
+            "icon": "/assets/weapon_tdl-01_ult"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉大招ULT_01",
             "EnglishShort": "Oblivion Combo",
@@ -1545,6 +1781,10 @@
     "1714": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Iaido Slash"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Iaido Slash",
+            "icon": "/assets/weapon_tdl-01_tg01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉特攻SKILL_01",
@@ -1559,6 +1799,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Moonstrike"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Moonstrike",
+            "icon": "/assets/weapon_tdl-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉特攻SKILL_02",
             "EnglishShort": "Moonstrike",
@@ -1569,6 +1813,10 @@
         }
     },
     "1716": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Overdrive",
+            "icon": "/assets/weapon_tdl-01_kx01_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_01",
             "EnglishShort": "Overdrive",
@@ -1581,6 +1829,10 @@
     "1717": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Flash strike"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Flash strike",
+            "icon": "/assets/weapon_tdl-01_kx02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_02",
@@ -1595,6 +1847,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Raijin Dash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Raijin Dash",
+            "icon": "/assets/weapon_tdl-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_03",
             "EnglishShort": "Raijin Dash",
@@ -1607,6 +1863,10 @@
     "1719": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Scythe Wheel"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Scythe Wheel",
+            "icon": "/assets/weapon_tdl-01_kx04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_04",
@@ -1621,6 +1881,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "True Sight"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "True Sight",
+            "icon": "/assets/weapon_tdl-01_kx05"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_05",
             "EnglishShort": "True Sight",
@@ -1631,6 +1895,10 @@
         }
     },
     "1721": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Judgment Cut​ I",
+            "icon": "/assets/weapon_tdl-01_skill_03_a"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉SKILL_02-替换技A",
             "EnglishShort": "Judgment Cut I",
@@ -1653,6 +1921,10 @@
     "1724": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Thundercut"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Thundercut",
+            "icon": "/assets/weapon_tdl-01_kx06"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_06",
@@ -1693,6 +1965,10 @@
         }
     },
     "1728": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Oblivion Combo",
+            "icon": "/assets/weapon_tdl-01_ult"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉_SKILL_Ult02",
             "EnglishShort": "Oblivion Combo",
@@ -1703,6 +1979,10 @@
         }
     },
     "1729": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "-1065018664",
+            "icon": "/assets/weapon_tdl-01_skill_atk01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉ATK_01（怪物用）"
         }
@@ -1710,6 +1990,10 @@
     "1730": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Volt Surge"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Volt Surge",
+            "icon": "/assets/weapon_tdl-01_kx07"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_07",
@@ -1723,6 +2007,10 @@
     "1731": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stormflash"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stormflash",
+            "icon": "/assets/weapon_tdl-01_kx08"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉可选SKILL_08",
@@ -1746,6 +2034,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Storm Scythe"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Storm Scythe​",
+            "icon": "/assets/weapon_tdl-01_skill_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉触发镰刀",
             "EnglishShort": "Storm Scythe",
@@ -1758,6 +2050,10 @@
     "1734": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Thunder Cut"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Thunder Iaido Slash",
+            "icon": "/assets/weapon_tdl-01_tf05"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉触发爆裂居合斩",
@@ -1772,6 +2068,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Dracoflash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Dragonhammer",
+            "icon": "/assets/weapon_tdl-01_tf03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉龙槌闪",
             "EnglishShort": "Dragonhammer",
@@ -1784,6 +2084,10 @@
     "1736": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Phantom Slash"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Raijin Dash​ Slash",
+            "icon": "/assets/weapon_tdl-01_tf04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉飞雷斩乱",
@@ -1798,6 +2102,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Divine Sickle"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Divine Sickle",
+            "icon": "/assets/weapon_tdl-01_tf01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉神罚之镰",
             "EnglishShort": "Divine Sickle",
@@ -1810,6 +2118,10 @@
     "1738": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Chaos Breaker"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Chaos Breaker​",
+            "icon": "/assets/weapon_tdl-01_tf02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉缭乱兜割",
@@ -1851,6 +2163,10 @@
     "1742": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Thundercleave"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Thundercut - Final Slash",
+            "icon": "/assets/weapon_tdl-01_kx06"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "霹雳连斩-最后一刀",
@@ -2004,6 +2320,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Halberd's Edge"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Halberd's Edge",
+            "icon": "/assets/weapon_wr_skill_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德ATK_01",
             "EnglishShort": "Halberd's Edge",
@@ -2060,6 +2380,10 @@
     "1907": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Tectonic Ring"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Tectonic Ring",
+            "icon": "/assets/weapon_wr-01_ult"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德ULT_01",
@@ -2125,6 +2449,10 @@
         }
     },
     "1917": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Titan Charge",
+            "icon": "/assets/weapon_wr-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德SKILL_02_01替换技-推进斩",
             "EnglishShort": "Titan Charge",
@@ -2148,6 +2476,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Shield Bash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Shield Bash",
+            "icon": "/assets/weapon_wr-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德特殊攻击TG-01",
             "EnglishShort": "Shield Bash",
@@ -2161,6 +2493,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Sandward"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sandward",
+            "icon": "/assets/weapon_wr-01_kx06"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德盾墙无敌KX-08",
             "EnglishShort": "Sandward",
@@ -2170,6 +2506,10 @@
     "1924": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Star Shatter"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Star Shatter",
+            "icon": "/assets/weapon_wr-01_kx01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德冲锋KX-01",
@@ -2184,6 +2524,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Rage Burst"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rage Burst",
+            "icon": "/assets/weapon_wr-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德怒吼KX-06",
             "EnglishShort": "Rage Burst",
@@ -2196,6 +2540,10 @@
     "1926": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Sandgrip"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sandgrip",
+            "icon": "/assets/weapon_wr-01_kx05"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德聚怪KX-04",
@@ -2210,6 +2558,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Sandshroud"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sandshroud",
+            "icon": "/assets/weapon_wr-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德砂石披风KX-02",
             "EnglishShort": "Sandshroud",
@@ -2220,6 +2572,10 @@
         }
     },
     "1928": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Jerrad Earh Guard",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德岩之守护",
             "EnglishShort": "Jerrad Earh Guard"
@@ -2242,6 +2598,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Countercrush"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Countercrush",
+            "icon": "/assets/weapon_wr-01_tg01_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德特殊攻击TG-02",
             "EnglishShort": "Countercrush",
@@ -2252,6 +2612,10 @@
         }
     },
     "1931": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​​Countercrush​​",
+            "icon": "/assets/weapon_wr-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德强袭",
             "EnglishShort": "Countercrush",
@@ -2265,6 +2629,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Shield Combo"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Shield Bash",
+            "icon": "/assets/weapon_wr-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德特殊攻击TG-01强",
             "EnglishShort": "Shield Bash"
@@ -2274,6 +2642,10 @@
         }
     },
     "1933": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Halberd's Edge",
+            "icon": "/assets/weapon_wr_skill_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德ATK_01",
             "EnglishShort": "Halberd's Edge",
@@ -2310,6 +2682,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stoneform"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stoneform",
+            "icon": "/assets/weapon_wr-01_kx04"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德减伤KX-03",
             "EnglishShort": "Stoneform",
@@ -2322,6 +2698,10 @@
     "1937": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Granite Fury"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Granite Fury",
+            "icon": "/assets/weapon_wr-01_kx07"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德复仇KX-05",
@@ -2336,6 +2716,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Brave Bastion"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Brave Bastion",
+            "icon": "/assets/weapon_wr-01_kx08"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德格挡翻倍KX-07",
             "EnglishShort": "Brave Bastion",
@@ -2346,6 +2730,10 @@
         }
     },
     "1939": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "​Granite Fury​",
+            "icon": "/assets/weapon_wr-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德复仇·无消耗KX-05",
             "EnglishShort": "Granite Fury",
@@ -2356,6 +2744,10 @@
         }
     },
     "1940": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rage Burst",
+            "icon": "/assets/weapon_wr-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德怒爆·叠层",
             "EnglishShort": "Rage Burst",
@@ -2369,6 +2761,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Starfall"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Starfall",
+            "icon": "/assets/weapon_wr-01_kx01_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德冲锋ex",
             "EnglishShort": "Starfall",
@@ -2381,6 +2777,10 @@
     "1942": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Rupture"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rupture",
+            "icon": "/assets/weaponn-wr_sikll_atk_01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德ATK_01",
@@ -2405,6 +2805,10 @@
         }
     },
     "1944": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rage Burst",
+            "icon": "/assets/weapon_wr-01_kx03_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德怒吼KX-06",
             "EnglishShort": "Rage Burst",
@@ -2444,6 +2848,10 @@
         "BuffTable_Clean.json": {
             "ChineseShort": "法杖冰盾BUFF"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗罗拉ATK_01"
         }
@@ -2464,6 +2872,10 @@
         }
     },
     "2105": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Spirit Break",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗罗拉SKILL_01",
             "EnglishShort": "Spirit Break"
@@ -2476,12 +2888,20 @@
         }
     },
     "2107": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Summon Wedge Pillar",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗罗拉SKILL_02",
             "EnglishShort": "Summon Wedge Pillar"
         }
     },
     "2108": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Spirit Possession",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗罗拉UTR_SKILL",
             "EnglishShort": "Spirit Possession"
@@ -2590,6 +3010,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Bullseye"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Bullseye",
+            "icon": "/assets/weapon_gj-01_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-ATK_01",
             "EnglishShort": "Bullseye",
@@ -2625,11 +3049,19 @@
         }
     },
     "2207": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "-1065018664",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-SKILL_01"
         }
     },
     "2208": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "-1065018664",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-SKILL_02"
         }
@@ -2637,6 +3069,10 @@
     "2209": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Luminary Bolt"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Luminary Bolt",
+            "icon": "/assets/weapon_gj-01_ult"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-ULT_01",
@@ -2679,6 +3115,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Storm Arrow"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Storm Arrow",
+            "icon": "/assets/weapon_gj-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-特殊攻击A",
             "EnglishShort": "Storm Arrow",
@@ -2689,6 +3129,10 @@
         }
     },
     "2221": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Storm Arrow",
+            "icon": "/assets/weapon_gj-01_tg01_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-特殊攻击A_SP",
             "EnglishShort": "Storm Arrow",
@@ -2702,6 +3146,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Double Arrow"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Double Arrow",
+            "icon": "/assets/weapon_gj-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-特殊攻击B",
             "EnglishShort": "Double Arrow",
@@ -2712,6 +3160,10 @@
         }
     },
     "2223": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "-1065018664",
+            "icon": "/assets/weapon_gj-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-特殊攻击B_下落"
         }
@@ -2732,6 +3184,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Torrent Volley"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Torrent Volley",
+            "icon": "/assets/weapon_gj-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "怒涛射击",
             "EnglishShort": "Torrent Volley",
@@ -2744,6 +3200,10 @@
     "2231": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Focus"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Focus",
+            "icon": "/assets/weapon_gj-01_kx02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "集中",
@@ -2758,6 +3218,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arrow Rain"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arrow Rain",
+            "icon": "/assets/weapon_gj-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "箭雨",
             "EnglishShort": "Arrow Rain",
@@ -2770,6 +3234,10 @@
     "2233": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Powerdraw"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Powerdraw",
+            "icon": "/assets/weapon_gj-01_kx05"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "贯穿箭",
@@ -2784,6 +3252,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Radiance Barrage"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Radiance Barrage",
+            "icon": "/assets/weapon_gj-01_kx04"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "聚能射击",
             "EnglishShort": "Radiance Barrage",
@@ -2797,6 +3269,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Deter Shot"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Deter Shot",
+            "icon": "/assets/weapon_gj-01_kx06"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "位移射击",
             "EnglishShort": "Deter Shot",
@@ -2807,11 +3283,19 @@
         }
     },
     "2236": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_gj-01_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "罗特罗亚尼-弓-替换普攻1"
         }
     },
     "2237": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Wildcall",
+            "icon": "/assets/weapon_gj-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "驯兽",
             "EnglishShort": "Wildcall",
@@ -2825,6 +3309,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Blast Shot"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Blast Shot",
+            "icon": "/assets/weapon_gj-01_kx08"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "爆炸箭一段",
             "EnglishShort": "Blast Shot",
@@ -2835,6 +3323,10 @@
         }
     },
     "2239": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Explosive Arrow II",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "爆炸箭二段",
             "EnglishShort": "Explosive Arrow II"
@@ -3017,6 +3509,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Amplified Beat"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Amplified Beat",
+            "icon": "/assets/weapon_jt-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手特攻SKILL_01",
             "EnglishShort": "Amplified Beat",
@@ -3029,6 +3525,10 @@
     "2307": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Healing Beat"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Healing Beat",
+            "icon": "/assets/weapon_jt-01_tg02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手特攻SKILL_02",
@@ -3043,6 +3543,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Harmonic Anthem"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Harmonic Anthem",
+            "icon": "/assets/weapon_jt-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_01",
             "EnglishShort": "Harmonic Anthem",
@@ -3055,6 +3559,10 @@
     "2309": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Rhapsody of Flame"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rhapsody of Flame",
+            "icon": "/assets/weapon_jt-01_kx02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_02",
@@ -3069,6 +3577,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Heroic Melody"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Heroic Melody",
+            "icon": "/assets/weapon_jt-01_kx03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_03",
             "EnglishShort": "Heroic Melody",
@@ -3081,6 +3593,10 @@
     "2311": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Healing Melody"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Healing Melody",
+            "icon": "/assets/weapon_jt-01_kx04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_04",
@@ -3095,6 +3611,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Fivefold Crescendo"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fivefold Crescendo",
+            "icon": "/assets/weapon_jt-01_kx05"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_05",
             "EnglishShort": "Fivefold Crescendo",
@@ -3107,6 +3627,10 @@
     "2313": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Passion Burst"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Passion Burst",
+            "icon": "/assets/weapon_jt-01_kx06"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_06",
@@ -3121,6 +3645,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Rock the Stage/Infinite Rhapsody"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Rock the Stage",
+            "icon": "/assets/weapon_jt-01_ult"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手ULT_01",
             "EnglishShort": "Rock the Stage",
@@ -3134,6 +3662,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Encore"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Encore",
+            "icon": "/assets/weapon_jt-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_07",
             "EnglishShort": "Encore",
@@ -3146,6 +3678,10 @@
     "2316": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Center Stage"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Center Stage",
+            "icon": "/assets/weapon_jt-01_kx08"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手可选SKILL_08",
@@ -3179,6 +3715,10 @@
         }
     },
     "2319": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sound Wave Surge",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "音浪潮涌",
             "EnglishShort": "Sound Wave Surge"
@@ -3202,6 +3742,10 @@
     "2321": {
         "RecountTable_Clean.json": {
             "EnglishShort": "String Strike"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "String Strike",
+            "icon": "/assets/weapon_jt-01_atk"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手ATK_01a",
@@ -3293,6 +3837,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Passion Fury"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Passion Burst",
+            "icon": "/assets/weapon_jt-01_tf03_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手绚烂焰火",
             "EnglishShort": "Passion Fury",
@@ -3313,6 +3861,10 @@
         }
     },
     "2335": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Infinite Rhapsody",
+            "icon": "/assets/weapon_jt-01_ult01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手ULT_01a",
             "EnglishShort": "Infinite Rhapsody",
@@ -3325,6 +3877,10 @@
     "2336": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Concert Circuit"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Concert Circuit",
+            "icon": "/assets/weapon_jt-01_ult02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "灵魂乐手ULT_01b",
@@ -3341,12 +3897,20 @@
         }
     },
     "2350": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Legendary Boarrier - Howl",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "传奇野猪-嚎叫",
             "EnglishShort": "Legendary Boarrier - Howl"
         }
     },
     "2351": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Legendary Eagle - Howl",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "传奇雄鹰-嚎叫",
             "EnglishShort": "Legendary Eagle - Howl"
@@ -3437,6 +4001,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Blade of Justice"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Blade of Justice",
+            "icon": "/assets/weapon_jd-01_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾普攻01",
             "EnglishShort": "Blade of Justice",
@@ -3474,6 +4042,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Valor Bash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Valor Bash",
+            "icon": "/assets/weapon_jd-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾特攻A",
             "EnglishShort": "Valor Bash",
@@ -3486,6 +4058,10 @@
     "2406": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Vanguard Strike"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Vanguard Strike",
+            "icon": "/assets/weapon_jd-01_tg02"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾特攻B",
@@ -3500,6 +4076,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Radiant Infusion"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Radiant Infusion",
+            "icon": "/assets/weapon_jd-01_ult_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾大招",
             "EnglishShort": "Radiant Infusion",
@@ -3512,6 +4092,10 @@
     "2408": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Shield Toss"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Shield Toss",
+            "icon": "/assets/weapon_jd-01_kx01"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "盾牌投掷",
@@ -3526,6 +4110,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Divine Circle"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Divine Circle",
+            "icon": "/assets/weapon_jd-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾圣环",
             "EnglishShort": "Divine Circle",
@@ -3538,6 +4126,10 @@
     "2410": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Judgment"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Judgment",
+            "icon": "/assets/weapon_jd-01_kx03"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾裁决",
@@ -3552,6 +4144,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Scorching Judgment"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Scorching Judgment",
+            "icon": "/assets/weapon_jd-01_kx03_ex"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "灼热裁决",
             "EnglishShort": "Scorching Judgment"
@@ -3563,6 +4159,10 @@
     "2412": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Reckoning"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Reckoning",
+            "icon": "/assets/weapon_jd-01_kx04"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾清算",
@@ -3587,6 +4187,10 @@
         }
     },
     "2414": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Holy Barrier",
+            "icon": "/assets/weapon_jd-01_kx05"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "剑盾神圣壁垒",
             "EnglishShort": "Holy Barrier",
@@ -3599,6 +4203,10 @@
     "2415": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Aegis Ward"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Aegis Ward",
+            "icon": "/assets/weapon_jd-01_kx06"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "圣光守卫",
@@ -3644,6 +4252,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Zeal Crusade"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Zeal Crusade",
+            "icon": "/assets/weapon_jd-01_kx07"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冷酷征伐",
             "EnglishShort": "Zeal Crusade",
@@ -3657,6 +4269,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Radiance"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Radiance",
+            "icon": "/assets/weapon_jd-01_kx08"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "光明决心",
             "EnglishShort": "Radiance",
@@ -3669,6 +4285,10 @@
     "2421": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Sacred Blade"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sacred Blade",
+            "icon": "/assets/weapon_jd-01_kx09"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "圣剑",
@@ -3704,6 +4324,10 @@
         }
     },
     "2425": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Shield Toss",
+            "icon": "/assets/weapon_jd-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "盾牌投掷",
             "EnglishShort": "Shield Toss",
@@ -3776,6 +4400,10 @@
         }
     },
     "3000": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_300001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！破釜沉舟",
             "EnglishLong": "Leaps forward and smash into the ground, dealing DMG to all <style=\"accent-gn\">enemies</style> in an area based on your max HP.<br>Then gains <linktext=1090><style=\"ItemQuality_5\">Fervor</style></linktext>, granting yourself and <style=\"accent-gn\">allies</style> <linktext=1091><style=\"ItemQuality_5\">Super Armor</style></linktext> and <style=\"accent-gn\">Defense</style>."
@@ -3785,12 +4413,20 @@
         "BuffTable_Clean.json": {
             "ChineseShort": "冰法杖3技能BD替换技能"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_300101"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！超能冲击",
             "EnglishLong": "Unleashes a powerful energy pulse, dealing massive DMG upon surrounding <style=\"accent-gn\">enemies</style> and <linktext=3005><style=\"ItemQuality_5\">stunning</style></linktext> them. <br>If the enemy possesses <linktext=1091><style=\"ItemQuality_5\">Super Armor</style></linktext>, it will instead deal high Super Armor DMG."
         }
     },
     "3002": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_300201"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！强力之握",
             "EnglishLong": "Gathers surrounding energy to pull all <style=\"accent-gn\">enemies</style> within <style=\"accent-gn\">30</style> meters to you, inflicting <linktext=1092><style=\"ItemQuality_5\">taunt</style></linktext>.<br>Gain <style=\"accent-gn\">Defense</style> for a period of time.<br>Passive Effect:<linktext=1093><style=\"ItemQuality_5\">Thorn</style></linktext>."
@@ -3861,18 +4497,30 @@
         }
     },
     "3301": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_330101"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！强疗脉冲",
             "EnglishLong": "Calls down divine energy to heal yourself and all <style=\"accent-gn\">allies</style>, and reduces the <style=\"accent-gn\">CD </style> of all your Weapon skills."
         }
     },
     "3302": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_330201"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！引力奇点",
             "EnglishLong": "Summon a gravitational singularity, continuously drawing in nearby <style=\"accent-gn\">enemies</style>. Units affected by the singularity are subjected to periodic DMG and become <linktext=3005><style=\"ItemQuality_5\">stunned</style></linktext>. <br>If the enemy possesses <linktext=1091><style=\"ItemQuality_5\">Super Armor</style></linktext>, it will instead deal high Super Armor DMG."
         }
     },
     "3303": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_330301"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！鏖战光环",
             "EnglishLong": "Activates and amplifies the <i><style=\"accent-gn\">Battlelust</style></i> aura, drastically reducing the <style=\"accent-gn\">movement speed</style> and <style=\"accent-gn\">Armor</style> of all <style=\"accent-gn\">enemies</style> in the area. All <style=\"accent-gn\">allies</style> within the range gain greatly increased <style=\"accent-gn\">Armor</style> and are healed every <style=\"accent-gn\">3s</style>."
@@ -3936,29 +4584,49 @@
         "BuffTable_Clean.json": {
             "ChineseShort": "鬼人QTE特效"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_360101"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！碎星陨落",
             "EnglishLong": "Channels the power of the stars, entering Star Calling state. While active, greatly increases your <style=\"accent-gn\">Sigil chance</style> and grants <i><style=\"accent-gn\">Sigil: Falling Star</style></i>.<br><linktext=1061><style=\"ItemQuality_5\">Sigil</style></linktext>: When DMG is dealt, there is chance to summon <style=\"accent-gn\">1</style> meteor to bombard the target area, dealing area damage. More meteors are summoned based on your <style=\"accent-gn\">Sigil chance</style>. This effect has a CD, which - your <style=\"accent-gn\">Sigil chance</style>."
         }
     },
     "3602": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_360102"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！心眼",
             "EnglishLong": "Sees through enemies' all weaknesses, entering True Sight state. While active, gains increased <style=\"accent-gn\">critical rate</style>."
         }
     },
     "3603": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_360103"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！蓄势解放",
             "EnglishLong": "Focuses on your Energy and enter Charge state. While active, <style=\"accent-gn\">Consecutive Hits</style> and <style=\"accent-gn\">Defeats</style> generate <style=\"accent-gn\">up to 5</style> Engram Orbs. When the duration ends or the skill is cast again, deals DMG based on the number of orbs stored.<br>For every <style=\"accent-gn\">8</style> hits, 1 Engram Orb is generated.<br>For <style=\"accent-gn\">every</style> Defeat, 1 Engram Orb is generated.<br><i><style=\"ItemQuality_0\">Area damage that hits multiple targets is still counted as a single hit.</style></i>"
         }
     },
     "3604": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_360104"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！蓄势解放"
         }
     },
     "3605": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_360105"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！战斗狂热",
             "EnglishLong": "Burns yourself to gain power, entering Invigorated state. When active, gains a <style=\"accent-gn\">DMG Boost</style>, but also takes more DMG."
@@ -4023,6 +4691,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Flame Roar"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Flame Roar",
+            "icon": "/assets/skill_aoyi_skill_icon_017"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！琉火咆哮",
             "EnglishShort": "Arcane! Flame Roar",
@@ -4036,6 +4708,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Thunderfall Grasp"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Thunderfall Grasp",
+            "icon": "/assets/skill_aoyi_skill_icon_014"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！雷霆天引",
             "EnglishShort": "Arcane! Thunderfall Grasp",
@@ -4045,6 +4721,10 @@
     "3903": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Blazing Axe"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Blazing Axe",
+            "icon": "/assets/skill_aoyi_skill_icon_018"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！炽炎战斧",
@@ -4056,6 +4736,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Super Critical"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Super Critical",
+            "icon": "/assets/skill_aoyi_skill_icon_026"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！超会心",
             "EnglishShort": "Stunt! Super Critical",
@@ -4065,6 +4749,10 @@
     "3905": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Boarrier Rush"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Boarrier Rush",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！猪突猛进",
@@ -4076,6 +4764,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Frostquake"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Frostquake",
+            "icon": "/assets/skill_aoyi_skill_icon_015"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！冰霜震荡",
             "EnglishShort": "Arcane! Frostquake",
@@ -4085,6 +4777,10 @@
     "3907": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Falling Star"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Falling Star",
+            "icon": "/assets/skill_aoyi_skill_icon_008"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！碎星陨落",
@@ -4096,6 +4792,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Pulse Benediction"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Pulse Benediction",
+            "icon": "/assets/skill_aoyi_skill_icon_012"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！脉冲祝祷",
             "EnglishShort": "Arcane! Pulse Benediction",
@@ -4103,6 +4803,10 @@
         }
     },
     "3909": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Fox Assault",
+            "icon": "/assets/skill_aoyi_skill_icon_011"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！灵狐突袭",
             "EnglishShort": "Stunt! Fox Assault",
@@ -4112,6 +4816,10 @@
     "3910": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Chaotic Barrage"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Chaotic Barrage",
+            "icon": "/assets/skill_aoyi_skill_icon_009"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！缭乱飞弹",
@@ -4123,6 +4831,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Heart of Flame"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Heart of Flame",
+            "icon": "/assets/skill_aoyi_skill_icon_042"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！烈焰之心",
             "EnglishShort": "Arcane! Heart of Flame",
@@ -4132,6 +4844,10 @@
     "3913": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Electro Bomb"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Electro Bomb",
+            "icon": "/assets/skill_aoyi_skill_icon_010"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！电磁爆弹",
@@ -4143,6 +4859,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Blade Sweep"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Blade Sweep",
+            "icon": "/assets/skill_aoyi_skill_icon_019"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！剑刃横扫",
             "EnglishShort": "Stunt! Blade Sweep",
@@ -4153,6 +4873,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Frenzied Shot"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Frenzied Shot",
+            "icon": "/assets/skill_aoyi_skill_icon_020"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！乱射",
             "EnglishShort": "Stunt! Frenzied Shot",
@@ -4160,6 +4884,10 @@
         }
     },
     "3916": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Piercing Arrow",
+            "icon": "/assets/skill_aoyi_skill_icon_021"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！贯穿矢",
             "EnglishShort": "Stunt! Piercing Arrow",
@@ -4170,6 +4898,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Heavy Slash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Heavy Slash",
+            "icon": "/assets/skill_aoyi_skill_icon_022"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！超重斩",
             "EnglishShort": "Stunt! Heavy Slash",
@@ -4177,6 +4909,10 @@
         }
     },
     "3918": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Shadow of the Fox",
+            "icon": "/assets/skill_aoyi_skill_icon_023"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！狐影破袭",
             "EnglishShort": "Arcane! Shadow of the Fox",
@@ -4184,6 +4920,10 @@
         }
     },
     "3919": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Assault Turret",
+            "icon": "/assets/skill_aoyi_skill_icon_024"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！强袭炮台",
             "EnglishShort": "Arcane! Assault Turret",
@@ -4193,6 +4933,10 @@
     "3920": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Blessing of Life"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Blessing of Life",
+            "icon": "/assets/skill_aoyi_skill_icon_013"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！生命祈愿",
@@ -4204,6 +4948,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Time Decree"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Time Decree",
+            "icon": "/assets/skill_aoyi_skill_icon_016"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！时间法令",
             "EnglishShort": "Arcane! Time Decree",
@@ -4213,6 +4961,10 @@
     "3922": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Flash Execution"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Flash Execution",
+            "icon": "/assets/skill_aoyi_skill_icon_025"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！瞬即斩",
@@ -4224,6 +4976,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Furious Hammer"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Furious Hammer",
+            "icon": "/assets/skill_aoyi_skill_icon_005"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！重锤狂袭",
             "EnglishShort": "Arcane! Furious Hammer",
@@ -4231,6 +4987,10 @@
         }
     },
     "3924": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Gale of Silence",
+            "icon": "/assets/skill_aoyi_skill_icon_027"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！风影缄默",
             "EnglishShort": "Stunt! Gale of Silence",
@@ -4240,6 +5000,10 @@
     "3925": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Invisible Impact"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Invisible Impact",
+            "icon": "/assets/skill_aoyi_skill_icon_028"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！无形冲击",
@@ -4254,6 +5018,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Meteor Shower"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Meteor Shower",
+            "icon": "/assets/skill_aoyi_skill_icon_029"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！流星陨落",
             "EnglishShort": "Arcane! Meteor Shower",
@@ -4263,6 +5031,10 @@
     "3927": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Commanding Roar"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Commanding Roar",
+            "icon": "/assets/skill_aoyi_skill_icon_030"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！怒吼指令",
@@ -4274,6 +5046,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Predator Slash"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Predator Slash",
+            "icon": "/assets/skill_aoyi_skill_icon_031"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！追猎猛斩",
             "EnglishShort": "Stunt! Predator Slash",
@@ -4283,6 +5059,10 @@
     "3929": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Shell Defense"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Shell Defense",
+            "icon": "/assets/skill_aoyi_skill_icon_032"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！缩壳防御",
@@ -4294,6 +5074,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Earth Shield"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Earth Shield",
+            "icon": "/assets/skill_aoyi_skill_icon_033"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！大地之盾",
             "EnglishShort": "Stunt! Earth Shield",
@@ -4301,6 +5085,10 @@
         }
     },
     "3931": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Shrine Field",
+            "icon": "/assets/skill_aoyi_skill_icon_034"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！护佑领域",
             "EnglishShort": "Arcane! Shrine Field",
@@ -4308,6 +5096,10 @@
         }
     },
     "3932": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Flamewheel Dance",
+            "icon": "/assets/skill_aoyi_skill_icon_035"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！飞轮火舞",
             "EnglishShort": "Stunt! Flamewheel Dance",
@@ -4315,6 +5107,10 @@
         }
     },
     "3933": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Intimidating Roar",
+            "icon": "/assets/skill_aoyi_skill_icon_036"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！挫志咆哮",
             "EnglishShort": "Stunt! Intimidating Roar",
@@ -4324,6 +5120,10 @@
     "3934": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Blink Ambush"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Blink Ambush",
+            "icon": "/assets/skill_aoyi_skill_icon_037"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！瞬步奇袭",
@@ -4335,6 +5135,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Thunder Roar"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Thunder Roar",
+            "icon": "/assets/skill_aoyi_skill_icon_038"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！雷霆咆哮",
             "EnglishShort": "Arcane! Thunder Roar",
@@ -4344,6 +5148,10 @@
     "3936": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Water of Silence"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Water of Silence",
+            "icon": "/assets/skill_aoyi_skill_icon_039"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！静默之水",
@@ -4355,6 +5163,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Thunder Suppress"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Thunder Suppress",
+            "icon": "/assets/skill_aoyi_skill_icon_040"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！强压之雷",
             "EnglishShort": "Stunt! Thunder Suppress",
@@ -4364,6 +5176,10 @@
     "3938": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Cocoon Technique"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Cocoon Tech",
+            "icon": "/assets/skill_aoyi_skill_icon_041"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！茧房术",
@@ -4375,6 +5191,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Lightning Orb"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Lightning Orb",
+            "icon": "/assets/skill_aoyi_skill_icon_043"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！雷光球",
             "EnglishShort": "Stunt! Lightning Orb",
@@ -4384,6 +5204,10 @@
     "3940": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Whirlwind Strike"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Whirlwind Strike",
+            "icon": "/assets/skill_aoyi_skill_icon_044"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！旋风打击",
@@ -4395,6 +5219,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Transform into Bee"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Transform into Bee",
+            "icon": "/assets/skill_aoyi_skill_icon_045"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！变身蜜蜂",
             "EnglishShort": "Stunt! Transform into Bee",
@@ -4404,6 +5232,10 @@
     "3942": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Poison Explosion"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Poison Explosion",
+            "icon": "/assets/skill_aoyi_skill_icon_046"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！毒爆",
@@ -4415,6 +5247,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Infernal Thrust"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Hell Thrust",
+            "icon": "/assets/skill_aoyi_skill_icon_047"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！地狱突刺",
             "EnglishShort": "Arcane! Hell Thrust",
@@ -4424,6 +5260,10 @@
     "3944": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Azure Tempest"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Azure Gale",
+            "icon": "/assets/skill_aoyi_skill_icon_048"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！沧澜风啸",
@@ -4435,6 +5275,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Silent Tide"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Silent Tide",
+            "icon": "/assets/skill_aoyi_skill_icon_049"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！静默潮汐",
             "EnglishShort": "Arcane! Silent Tide",
@@ -4444,6 +5288,10 @@
     "3946": {
         "RecountTable_Clean.json": {
             "EnglishShort": "Arcane! Goblin Grand March"
+        },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Goblin March",
+            "icon": "/assets/skill_aoyi_skill_icon_050"
         },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！哥布林大行军",
@@ -4455,6 +5303,10 @@
         "RecountTable_Clean.json": {
             "EnglishShort": "Stunt! Spiral Fracture"
         },
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Spiral Severance",
+            "icon": "/assets/skill_aoyi_skill_icon_051"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！螺旋断界",
             "EnglishShort": "Stunt! Spiral Severance",
@@ -4462,6 +5314,10 @@
         }
     },
     "3948": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Spiral Severance",
+            "icon": "/assets/skill_aoyi_skill_icon_051"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！罗罗拉",
             "EnglishShort": "Stunt! Spiral Severance",
@@ -4469,6 +5325,10 @@
         }
     },
     "3949": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Spiral Severance",
+            "icon": "/assets/skill_aoyi_skill_icon_051"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！陶洛斯",
             "EnglishShort": "Stunt! Spiral Severance",
@@ -4592,6 +5452,10 @@
         }
     },
     "4018": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Frostbeam",
+            "icon": "/assets/weapon_fh-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰雪射线-关卡用",
             "EnglishShort": "Frostbeam",
@@ -4599,6 +5463,10 @@
         }
     },
     "4019": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Flame Jet",
+            "icon": "/assets/weapon_fh-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "火焰喷射器射线-哥布林英雄本",
             "EnglishShort": "Flame Jet",
@@ -5075,6 +5943,10 @@
         }
     },
     "5126": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/skill_icons_toy_snowlight"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "冰雪射线"
         }
@@ -5342,6 +6214,10 @@
         }
     },
     "6004": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Gale Blast",
+            "icon": "/assets/weapon_mz-01_ult"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "烈风爆破-哥布林英雄本",
             "EnglishShort": "Gale Blast"
@@ -10008,6 +10884,10 @@
         }
     },
     "102640": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Boarrier Rush",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！猪突猛进",
             "EnglishShort": "Stunt! Boarrier Rush",
@@ -10018,6 +10898,10 @@
         }
     },
     "102651": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Boar Knight",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "野猪骑士",
             "EnglishShort": "Boar Knight",
@@ -10035,6 +10919,10 @@
         }
     },
     "102655": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Boar Impact!",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "猛猪冲击",
             "EnglishShort": "Boar Impact!",
@@ -10042,6 +10930,10 @@
         }
     },
     "102658": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Boarrier Rush",
+            "icon": "/assets/skill_aoyi_skill_icon_001"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！猪突猛进",
             "EnglishShort": "Stunt! Boarrier Rush",
@@ -10049,6 +10941,10 @@
         }
     },
     "102659": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Pig Assault",
+            "icon": "/assets/skill_vehicle_pig_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "猛猪突击",
             "EnglishShort": "Pig Assault",
@@ -14595,6 +15491,10 @@
         }
     },
     "420140": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Chaotic Barrage",
+            "icon": "/assets/skill_aoyi_skill_icon_009"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！缭乱飞弹",
             "EnglishShort": "Stunt! Chaotic Barrage",
@@ -18203,6 +19103,10 @@
         }
     },
     "706103": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/talent_skill_330201"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "机甲A变身二技能-嘲讽"
         }
@@ -33943,6 +34847,10 @@
         }
     },
     "1002440": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Super Critical",
+            "icon": "/assets/skill_aoyi_skill_icon_026"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！超会心",
             "EnglishShort": "Stunt! Super Critical",
@@ -34025,6 +34933,10 @@
         }
     },
     "1002830": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Frostquake",
+            "icon": "/assets/skill_aoyi_skill_icon_015"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！冰霜震荡",
             "EnglishShort": "Arcane! Frostquake",
@@ -34121,6 +35033,10 @@
         }
     },
     "1005240": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Predator Slash",
+            "icon": "/assets/skill_aoyi_skill_icon_031"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！追猎猛斩",
             "EnglishShort": "Stunt! Predator Slash",
@@ -34605,6 +35521,10 @@
         }
     },
     "1006940": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Cocoon Tech",
+            "icon": "/assets/skill_aoyi_skill_icon_041"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！茧房术",
             "EnglishShort": "Arcane! Cocoon Tech",
@@ -34979,6 +35899,10 @@
         }
     },
     "1008640": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Falling Star",
+            "icon": "/assets/skill_aoyi_skill_icon_008"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！碎星陨落",
             "EnglishShort": "Stunt! Falling Star",
@@ -34986,6 +35910,10 @@
         }
     },
     "1008641": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Whirlwind Strike",
+            "icon": "/assets/skill_aoyi_skill_icon_044"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！旋风打击",
             "EnglishShort": "Stunt! Whirlwind Strike",
@@ -35144,6 +36072,10 @@
         }
     },
     "1010440": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Thunder Suppress",
+            "icon": "/assets/skill_aoyi_skill_icon_040"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！强压之雷",
             "EnglishShort": "Stunt! Thunder Suppress",
@@ -35208,6 +36140,10 @@
         }
     },
     "1010540": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Water of Silence",
+            "icon": "/assets/skill_aoyi_skill_icon_039"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！静默之水",
             "EnglishShort": "Stunt! Water of Silence",
@@ -35888,6 +36824,10 @@
         }
     },
     "1700440": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Furious Hammer",
+            "icon": "/assets/skill_aoyi_skill_icon_005"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！重锤狂袭",
             "EnglishShort": "Arcane! Furious Hammer",
@@ -36517,6 +37457,10 @@
         }
     },
     "2001740": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Stunt! Blink Ambush",
+            "icon": "/assets/skill_aoyi_skill_icon_037"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "绝技！瞬步奇袭",
             "EnglishShort": "Stunt! Blink Ambush",
@@ -36929,6 +37873,10 @@
         }
     },
     "2002440": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Thunderfall Grasp",
+            "icon": "/assets/skill_aoyi_skill_icon_014"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！雷霆天引",
             "EnglishShort": "Arcane! Thunderfall Grasp",
@@ -37216,6 +38164,10 @@
         }
     },
     "2002840": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Swift Vortex",
+            "icon": "/assets/skill_aoyi_skill_icon_029"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！迅捷涡流",
             "EnglishShort": "Arcane! Swift Vortex",
@@ -45418,6 +46370,10 @@
         }
     },
     "2801002": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "助战箭雨"
         }
@@ -45434,11 +46390,19 @@
         }
     },
     "2801301": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_wr_skill_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "卫刃NPC普攻1"
         }
     },
     "2801601": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "助战水龙卷"
         }
@@ -45449,28 +46413,48 @@
         }
     },
     "2900101": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_wr_skill_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德普攻1"
         }
     },
     "2900102": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_wr-01_tg02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德特殊攻击"
         }
     },
     "2900103": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Jerrad Earh Guard",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德岩之守护",
             "EnglishShort": "Jerrad Earh Guard"
         }
     },
     "2900104": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Star Shatter",
+            "icon": "/assets/weapon_wr-01_kx01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德冲锋",
             "EnglishShort": "Star Shatter"
         }
     },
     "2900105": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Sandshroud",
+            "icon": "/assets/weapon_wr-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "杰拉德砂石披风",
             "EnglishShort": "Sandshroud"
@@ -45492,11 +46476,19 @@
         }
     },
     "2900204": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_fh-01_kx04"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "艾露娜hot"
         }
     },
     "2900240": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Blessing of Life",
+            "icon": "/assets/skill_aoyi_skill_icon_013"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！生命祈愿",
             "EnglishShort": "Arcane! Blessing of Life",
@@ -45509,6 +46501,10 @@
         }
     },
     "2900302": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_cq-01_tg01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜戳戳戳"
         }
@@ -45519,16 +46515,28 @@
         }
     },
     "2900311": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_cq-01_kx08"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜破韧技"
         }
     },
     "2900312": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_cq-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜破韧_02"
         }
     },
     "2900313": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_cq-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "蒂娜破韧_三段式"
         }
@@ -45539,6 +46547,10 @@
         }
     },
     "2900340": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Time Decree",
+            "icon": "/assets/skill_aoyi_skill_icon_016"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！时间法令",
             "EnglishShort": "Arcane! Time Decree",
@@ -45583,11 +46595,19 @@
         }
     },
     "2900503": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_tdl-01_kx01_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥尔维拉镰刀普攻"
         }
     },
     "2900540": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Flash Execution",
+            "icon": "/assets/skill_aoyi_skill_icon_025"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！瞬即斩",
             "EnglishShort": "Arcane! Flash Execution",
@@ -45608,11 +46628,19 @@
         }
     },
     "2900603": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": "/assets/weapon_sf-01_skill_03"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "塔塔砸地板"
         }
     },
     "2900640": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Arcane! Heart of Flame",
+            "icon": "/assets/skill_aoyi_skill_icon_042"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "奥义！烈焰之心",
             "EnglishShort": "Arcane! Heart of Flame",
@@ -45630,6 +46658,10 @@
         }
     },
     "2900703": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "3842956327",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "博伊斯水龙卷"
         }
@@ -45640,24 +46672,40 @@
         }
     },
     "2900840": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Spirit Possession",
+            "icon": null
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "共鸣-神灵凭依",
             "EnglishShort": "Spirit Possession"
         }
     },
     "2900901": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fafala's Basic Attack",
+            "icon": "/assets/weapon_jd-01_atk"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "法法菈普攻",
             "EnglishShort": "Fafala's Basic Attack"
         }
     },
     "2900902": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fafala's Reckoning",
+            "icon": "/assets/weapon_jd-01_kx04"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "法法菈清算",
             "EnglishShort": "Fafala's Reckoning"
         }
     },
     "2900903": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fafala's Holy Light Infusion",
+            "icon": "/assets/weapon_jd-01_ult_01"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "法法菈圣光灌注",
             "EnglishShort": "Fafala's Holy Light Infusion"
@@ -45670,6 +46718,10 @@
         }
     },
     "2900905": {
+        "skills_questlog_clean.json": {
+            "EnglishShort": "Fafala's Divine Circle",
+            "icon": "/assets/weapon_jd-01_kx02"
+        },
         "SkillTable_Clean.json": {
             "ChineseShort": "法法菈圣环",
             "EnglishShort": "Fafala's Divine Circle"

@@ -57,7 +57,7 @@ jobs:
           tagName: ${{ github.ref_name == 'release' && 'app-v__VERSION__' || '' }} # the action automatically replaces \_\_VERSION\_\_ with the app version.
           includeDebug: ${{ github.ref_name != 'release' }}
           includeUpdaterJson: true
-          updaterJsonPreferNsis: true
+          updaterJsonPreferNsis: false
           releaseName: ${{ github.ref_name == 'release' && 'v__VERSION__' || '' }}
           releaseBody: ${{ env.RELEASE_BODY }}
           releaseDraft: false

@@ -117,7 +117,7 @@ pub fn process_aoi_sync_delta(
 
         #[allow(clippy::cast_sign_loss)]
         let actual_value = if let Some(actual_dmg) = non_lucky_dmg.or(lucky_value) {
-            actual_dmg as u128
+            actual_dmg
         } else {
             continue; // skip this iteration
         };

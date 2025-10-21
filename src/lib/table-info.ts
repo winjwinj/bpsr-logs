@@ -136,6 +136,7 @@ export const dpsSkillsColumnDefs = [
     id: 'skillName',
     cell: ({ row }) =>
       renderComponent(SkillInfo, {
+        skillUid: row.original.uid,
         skillName: row.original.name
       }),
     meta: {
@@ -352,6 +353,7 @@ export const healSkillsColumnDefs = [
     id: 'skillName',
     cell: ({ row }) =>
       renderComponent(SkillInfo, {
+        skillUid: row.original.uid,
         skillName: row.original.name
       }),
     meta: {

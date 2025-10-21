@@ -1,82 +1,104 @@
 ﻿import json
 
-# Input and output paths
-input_file = "../4_Final/CombinedtranslatedWithManualOverrides.json"
-output_file = "../../src-tauri/meter-data/SkillName.json"
-conflict_file = "../4_Final/Conflicts.json"
+def cleanup():
+    # Input and output paths
+    input_file = "../4_Final/CombinedtranslatedWithManualOverrides.json"
+    output_file = "../../static/json/SkillName.json"
+    conflict_file = "../4_Final/Conflicts.json"
 
-# Priority order for flattening
-priority = [
-    ("EnglishShortManualOverride", None),
+    # Priority order for flattening
+    priority = [
+        ("EnglishShortManualOverride", None),
 
-    ("RecountTable_Clean.json", "EnglishShort"),
-    ("SkillTable_Clean.json", "EnglishShort"),
+        ("skills_questlog_clean.json", "EnglishShort"),
 
-    ("skill_names_Clean.json", "AIEnglishShort"),
-    ("RecountTable_Clean.json", "AIEnglishShort"),
-    ("SkillTable_Clean.json", "AIEnglishShort"),
+        ("SkillTable_Clean.json", "EnglishShort"),
+        ("RecountTable_Clean.json", "EnglishShort"),
 
-    ("skill_names_Clean.json", "ChineseShort"),
-    ("RecountTable_Clean.json", "ChineseShort"),
-    ("SkillTable_Clean.json", "ChineseShort"),
+        ("skill_names_Clean.json", "AIEnglishShort"),
+        ("SkillTable_Clean.json", "AIEnglishShort"),
+        ("RecountTable_Clean.json", "AIEnglishShort"),
 
-    ("BuffTable_Clean.json", "EnglishShort"),
-    ("BuffTable_Clean.json", "AIEnglishShort")
-]
+        ("skill_names_Clean.json", "ChineseShort"),
+        ("SkillTable_Clean.json", "ChineseShort"),
+        ("RecountTable_Clean.json", "ChineseShort"),
 
-# Fields to check for conflicts
-english_fields_to_check = [
-    ("RecountTable_Clean.json", "EnglishShort"),
-    ("SkillTable_Clean.json", "EnglishShort"),
-    ("skill_names_Clean.json", "EnglishShort"),
-    ("BuffTable_Clean.json", "EnglishShort")
-]
+        ("BuffTable_Clean.json", "EnglishShort"),
+        ("BuffTable_Clean.json", "AIEnglishShort")
+    ]
 
-# Load the input JSON
-with open(input_file, "r", encoding="utf-8") as f:
-    data = json.load(f)
+    # Fields to check for conflicts
+    english_fields_to_check = [
+        ("RecountTable_Clean.json", "EnglishShort"),
+        ("SkillTable_Clean.json", "EnglishShort"),
+        ("skill_names_Clean.json", "EnglishShort"),
+        ("BuffTable_Clean.json", "EnglishShort")
+    ]
 
-cleaned = {}
-conflicts = {}
+    # Load the input JSON
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-for key, value in data.items():
-    # 1. Check for conflicts in EnglishShort fields
-    english_values = set()
-    for field, subfield in english_fields_to_check:
-        val = value.get(field, {}).get(subfield)
-        if val:
-            english_values.add(val)
+    cleaned = {}
+    conflicts = {}
 
-    if len(english_values) > 1:
-        conflicts[key] = value
-
-    # 2. Flatten according to priority
-    selected = None
-    for field, subfield in priority:
-        try:
-            if subfield is None:
-                val = value.get(field)
-            else:
-                val = value.get(field, {}).get(subfield)
-
+    for key, value in data.items():
+        # 1. Check for conflicts in EnglishShort fields
+        english_values = set()
+        for field, subfield in english_fields_to_check:
+            val = value.get(field, {}).get(subfield)
             if val:
-                # If this field is an AIEnglishShort, add suffix
-                if subfield == "AIEnglishShort":
-                    val = f"AI: {val}"
-                selected = val
-                break
-        except AttributeError:
-            continue
-    if selected:
-        cleaned[key] = selected
+                english_values.add(val)
 
-# Write cleaned JSON
-with open(output_file, "w", encoding="utf-8") as f:
-    json.dump(cleaned, f, ensure_ascii=False, indent=2)
+        if len(english_values) > 1:
+            conflicts[key] = value
 
-# Write conflicts JSON
-with open(conflict_file, "w", encoding="utf-8") as f:
-    json.dump(conflicts, f, ensure_ascii=False, indent=2)
+        # 2. Flatten according to priority
+        selected = None
+        for field, subfield in priority:
+            try:
+                if subfield is None:
+                    val = value.get(field)
+                else:
+                    val = value.get(field, {}).get(subfield)
 
-print(f"Saved cleaned JSON to {output_file}")
-print(f"Saved conflicts JSON to {conflict_file} (total {len(conflicts)} conflicts)")
+                if val:
+                    # If this field is an AIEnglishShort, add suffix
+                    if subfield == "AIEnglishShort":
+                        val = f"AI: {val}"
+                    selected = val
+                    break
+            except AttributeError:
+                continue
+        if selected:
+            cleaned[key] = selected
+
+    # Write cleaned JSON
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(cleaned, f, ensure_ascii=False, indent=2)
+
+    # Write conflicts JSON
+    with open(conflict_file, "w", encoding="utf-8") as f:
+        json.dump(conflicts, f, ensure_ascii=False, indent=2)
+
+    print(f"Saved cleaned JSON to {output_file}")
+    print(f"Saved conflicts JSON to {conflict_file} (total {len(conflicts)} conflicts)")
+
+"""
+Reads skills_questlog_clean.json, extracts skill_uid:icon mapping, and writes it to output_path as JSON.
+"""
+def generate_skill_icon_json(
+        input_file="../2_Clean/skills_questlog_clean.json",
+        output_file="../../static/json/SkillIcon.json"
+):
+
+    with open(input_file, "r", encoding="utf-8") as f:
+        skills = json.load(f)
+    icon_map = {uid: entry.get("icon").split("/")[-1] if entry.get("icon") else None for uid, entry in skills.items() if "icon" in entry}
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(icon_map, f, ensure_ascii=False, indent=2)
+    print(f"Saved skill_uid to icon mapping to {output_file}")
+
+if __name__ == "__main__":
+    cleanup()
+    generate_skill_icon_json()

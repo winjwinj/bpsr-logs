@@ -1,9 +1,18 @@
 <script lang="ts">
+  import { copyToClipboard, getSkillIcon } from "$lib/utils.svelte";
+
   let {
-    skillName = "Unknown name",
+    skillUid = 999999,
+    skillName = "Unknown Skill",
   }: {
+    skillUid: number;
     skillName: string;
   } = $props();
 </script>
 
-<span class="ml-2 flex"><span class="truncate">{skillName}</span></span>
+<div class="ml-2 flex">
+  <img class="size-5 object-contain" src={getSkillIcon(skillUid)} />
+  <span class="ml-1 cursor-pointer truncate" onclick={(error) => copyToClipboard(error, skillName)}>
+    {skillName} ({skillUid})
+  </span>
+</div>

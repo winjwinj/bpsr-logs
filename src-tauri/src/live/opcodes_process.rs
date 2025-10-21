@@ -203,6 +203,7 @@ pub fn process_aoi_sync_delta(
                 skill.lucky_total_value += actual_value;
             }
             encounter.total_dmg += actual_value;
+            encounter.total_dmg_boss += actual_value;
             attacker_entity.hits_dmg_boss += 1;
             attacker_entity.total_dmg_boss += actual_value;
             attacker_entity.hits_dmg += 1;
@@ -253,7 +254,11 @@ pub fn process_aoi_sync_delta(
         .expect("Time went backwards")
         .as_millis();
     if encounter.time_fight_start_ms == Default::default() {
-        encounter.time_fight_start_ms = timestamp_ms;
+        if boss {
+            encounter.time_fight_start_ms_boss = timestamp_ms
+        } else {
+            encounter.time_fight_start_ms = timestamp_ms
+        } 
     }
     encounter.time_last_combat_packet_ms = timestamp_ms;
     Some(())

@@ -9,6 +9,9 @@ pub struct HeaderInfo {
     pub total_dmg: u128,
     pub elapsed_ms: u128,
     pub time_last_combat_packet_ms: u128,
+    pub total_dps_boss: f64,
+    pub total_dmg_boss: u128,
+    pub elapsed_ms_boss: u128,
 }
 
 #[derive(specta::Type, serde::Serialize, serde::Deserialize, Debug, Default, Clone)]

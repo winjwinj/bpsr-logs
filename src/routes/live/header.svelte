@@ -63,6 +63,9 @@
     totalDps: 0,
     totalDmg: 0,
     elapsedMs: 0,
+    elapsedMsBoss: 0,
+    totalDmgBoss: 0,
+    totalDpsBoss: 0
   });
   let isEncounterPaused = $state(false);
   const {
@@ -103,9 +106,15 @@
       }}
       {@attach tooltip(() => "Temp Fix: Hard Reset")}><RefreshCwIcon /></button
     >
+    {#if appWindow.label == "live"}
     <span {@attach tooltip(() => "Time Elapsed")}>{formatElapsed(headerInfo.elapsedMs)}</span>
     <span><span {@attach tooltip(() => "Total Damage Dealt")}>T.DMG</span> <span {@attach tooltip(() => headerInfo.totalDmg.toLocaleString())}><AbbreviatedNumber num={Number(headerInfo.totalDmg)} /></span></span>
     <span><span {@attach tooltip(() => "Total Damage per Second")}>T.DPS</span> <span {@attach tooltip(() => headerInfo.totalDps.toLocaleString())}><AbbreviatedNumber num={headerInfo.totalDps} /></span></span>
+    {:else}
+    <span {@attach tooltip(() => "Time Elapsed")}>{formatElapsed(headerInfo.elapsedMsBoss)}</span>
+    <span><span {@attach tooltip(() => "Total Damage Dealt")}>T.DMG</span> <span {@attach tooltip(() => headerInfo.totalDmgBoss.toLocaleString())}><AbbreviatedNumber num={Number(headerInfo.totalDmgBoss)} /></span></span>
+    <span><span {@attach tooltip(() => "Total Damage per Second")}>T.DPS</span> <span {@attach tooltip(() => headerInfo.totalDpsBoss.toLocaleString())}><AbbreviatedNumber num={headerInfo.totalDpsBoss} /></span></span>
+    {/if}
   </span>
   <!-- Right side -->
   <span class="flex gap-1">

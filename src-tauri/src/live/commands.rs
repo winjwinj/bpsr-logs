@@ -69,12 +69,21 @@ pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<Header
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
+    let time_elapsed_ms_boss = encounter
+        .time_last_combat_packet_ms
+        .saturating_sub(encounter.time_fight_start_ms_boss);
+    #[allow(clippy::cast_precision_loss)]
+    let time_elapsed_secs_boss = time_elapsed_ms_boss as f64 / 1000.0;
+
     #[allow(clippy::cast_precision_loss)]
     Ok(HeaderInfo {
         total_dps: nan_is_zero(encounter.total_dmg as f64 / time_elapsed_secs),
         total_dmg: encounter.total_dmg,
         elapsed_ms: time_elapsed_ms,
         time_last_combat_packet_ms: encounter.time_last_combat_packet_ms,
+        total_dmg_boss: encounter.total_dmg_boss,
+        total_dps_boss: nan_is_zero(encounter.total_dmg_boss as f64 / time_elapsed_secs_boss),
+        elapsed_ms_boss: time_elapsed_ms_boss,
     })
 }
 
@@ -184,7 +193,7 @@ pub fn get_dps_player_window_boss(
 
     let time_elapsed_ms = encounter
         .time_last_combat_packet_ms
-        .saturating_sub(encounter.time_fight_start_ms);
+        .saturating_sub(encounter.time_fight_start_ms_boss);
 
     let mut dps_window = PlayersWindow {
         player_rows: PlayerRows::default(),

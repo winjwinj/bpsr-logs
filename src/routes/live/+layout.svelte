@@ -2,11 +2,22 @@
   import { commands } from "$lib/bindings";
   import { SETTINGS } from "$lib/settings-store";
   import { cn } from "$lib/utils";
+  import { onMount } from "svelte";
   import Footer from "./footer.svelte";
   import Header from "./header.svelte";
 
   let { children } = $props();
   let screenshotDiv: HTMLDivElement | undefined = $state();
+
+  // TODO: workaround, need to wait for svelte tanstack devs to respond
+  onMount(() => {
+    const interval = setInterval(refreshWindow, 5 * 60 * 1000); // refresh every 5m
+
+    return () => clearInterval(interval);
+  });
+  function refreshWindow() {
+    window.location.reload();
+  }
 
   $effect(() => {
     if (SETTINGS.accessibility.state.blur) {

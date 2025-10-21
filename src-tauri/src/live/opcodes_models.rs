@@ -16,7 +16,7 @@ pub struct Encounter {
     pub local_player_uid: i64,
     pub entity_uid_to_entity: HashMap<i64, Entity>, // key: entity uid
     pub local_player: SyncContainerData,
-    pub total_dmg_boss: u128,
+    pub total_dmg_boss: i64,
     pub time_fight_start_ms_boss: u128,        // in ms
 }
 

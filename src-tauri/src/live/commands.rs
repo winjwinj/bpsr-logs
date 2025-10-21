@@ -222,7 +222,7 @@ pub fn get_dps_player_window_boss(
                 class_name: class::get_class_name(entity.class_id),
                 class_spec_name: class::get_class_spec(entity.class_spec),
                 ability_score: entity.ability_score as f64,
-                total_dmg: entity.total_dmg_boss,
+                total_dmg: entity.total_dmg_boss as f64,
                 dps: nan_is_zero(entity.total_dmg_boss as f64 / time_elapsed_secs),
                 dmg_pct: nan_is_zero(entity.total_dmg_boss as f64 / encounter.total_dmg as f64 * 100.0),
                 crit_rate: nan_is_zero(
@@ -237,7 +237,7 @@ pub fn get_dps_player_window_boss(
                 lucky_dmg_rate: nan_is_zero(
                     entity.lucky_total_dmg_boss as f64 / entity.total_dmg as f64 * 100.0,
                 ),
-                hits: entity.hits_dmg_boss,
+                hits: entity.hits_dmg_boss as f64,
                 hits_per_minute: nan_is_zero(entity.hits_dmg_boss as f64 / time_elapsed_secs * 60.0),
                 // ..Default:default()
             };

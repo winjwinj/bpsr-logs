@@ -129,7 +129,29 @@ def clean_and_combine_talent_table():
         json.dump(talent_data, f, ensure_ascii=False, indent=4)
     print(f"✅ Cleaned TalentTable saved to {OUTPUT_FOLDER}")
 
+def clean_skills_questlog(input_path, input_file):
+    full_input_path = os.path.join(input_path, input_file)
+    with open(full_input_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
+    cleaned_data = {}
+    for entry in data:
+        if entry.get("language") == "en":
+            skill_id = entry.get("id")
+            skill_name = entry.get("name")
+            skill_icon = entry.get("icon")
+            if skill_id and skill_name:
+                cleaned_data[skill_id] = {
+                    "EnglishShort": skill_name,
+                    "icon": skill_icon
+                }
+
+    output_path = os.path.join(input_path, "../2_Clean/skills_questlog_clean.json")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(cleaned_data, f, ensure_ascii=False, indent=4)
+
+    print(f"✅ Cleaned {full_input_path} saved to {output_path}")
 
 def combine_clean_tables():
     INPUT_FOLDER = "../2_Clean"
@@ -162,6 +184,5 @@ if __name__ == "__main__":
     clean_skill_names("../1_Dirty/", "skill_names.json")
     clean_buff_table("../1_Dirty/", "SkillTable.json")
     clean_and_combine_talent_table()
+    clean_skills_questlog("../1_Dirty/", "skills_questlog.json")
     combine_clean_tables()
-
-

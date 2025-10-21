@@ -176,7 +176,7 @@ pub fn process_aoi_sync_delta(
                 "heal packet: {attacker_uid} to {target_uid}: {actual_value} heal {} total heal",
                 skill.total_value
             );
-        } if boss {
+        } else if boss {
             let skill = attacker_entity
                 .skill_uid_to_dmg_skill
                 .entry(skill_uid)

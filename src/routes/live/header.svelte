@@ -9,6 +9,7 @@
   import PointerIcon from "virtual:icons/lucide/pointer";
   import SettingsIcon from "virtual:icons/lucide/settings";
   import RefreshCwIcon from "virtual:icons/lucide/refresh-cw";
+  import PlusIcon from "virtual:icons/lucide/plus";
 
   import { onMount, tick } from "svelte";
   import { commands, type HeaderInfo } from "$lib/bindings";
@@ -80,6 +81,15 @@
       await emitTo("main", "navigate", "/main/settings");
     }
   }
+
+  async function openAdditionalWindow() {
+    const mainWindow = await WebviewWindow.getByLabel("additional");
+    if (mainWindow) {
+      await mainWindow?.unminimize();
+      await mainWindow?.show();
+      await emitTo("additional", "navigate", "/live/heal");
+    }
+  }
 </script>
 
 <!-- justify-between to create left/right sides -->
@@ -100,6 +110,9 @@
   <!-- Right side -->
   <span class="flex gap-1">
     <!-- TODO: add responsive clicks, toaster -->
+    {#if appWindow.label == "live"}
+      <button onclick={() => openAdditionalWindow()} {@attach tooltip(() => "Open Additional Window")}><PlusIcon /></button>
+    {/if}
     <button
       onclick={async () => {
         const prev = SETTINGS.general.state.showOthersName;

@@ -2,6 +2,7 @@ use crate::live::opcodes_models;
 use crate::live::opcodes_models::class::{
     ClassSpec, get_class_id_from_spec, get_class_spec_from_skill_id,
 };
+use crate::live::utils::{is_boss};
 use crate::live::opcodes_models::{Encounter, Entity, Skill, attr_type};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
@@ -85,7 +86,7 @@ pub fn process_aoi_sync_delta(
 ) -> Option<()> {
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
-
+    let boss = is_boss(target_uid);
     // Process attributes
     let target_entity_type = EEntityType::from(target_uuid);
     let mut target_entity = encounter
@@ -203,9 +204,11 @@ pub fn process_aoi_sync_delta(
             skill.hits += 1;
             skill.total_value += actual_value;
             info!(
-                "dmg packet: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
+                "dmg packet: {attacker_uid} to {target_uid} boss: {boss}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
+                info!("{:#066b}", target_uuid);
+
         }
     }
 

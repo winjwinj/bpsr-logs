@@ -31,6 +31,7 @@ const DEFAULT_SETTINGS = {
   // if true, when "current" is selected and live data is empty/stale, display the newest
   // history snapshot's data while still keeping selection on "current" (transient overlay)
   useNewestHistoryOverlayWhenCurrent: false,
+    shortenAbilityScore: false, 
   },
   accessibility: {
     blur: !IS_WIN_11,

@@ -28,6 +28,7 @@ const DEFAULT_SETTINGS = {
     relativeToTopHealSkill: false,
     shortenAbilityScore: true, 
     resetElapsed: 60,
+    shortenAbilityScore: false, 
   },
   accessibility: {
     blur: !IS_WIN_11,

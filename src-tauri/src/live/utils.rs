@@ -4,7 +4,7 @@ pub fn is_boss(entity_id: i64) -> bool {
     return BOSS_IDS.contains(&entity_id)
 }
 
-const BOSS_IDS:[i64;12] = [
+const BOSS_IDS:[i64;14] = [
     783,    //Goblin
     425,    //Tina
     185,    //Tower
@@ -17,6 +17,8 @@ const BOSS_IDS:[i64;12] = [
     15323,  //Muku Chief
     15269,  //Brigand Leader
     15159,  //Golden Juggernaut
+    15202,  //Inferno Ogre
+    87,     //Lizardman King
 ];
 
 // const BOSS_IDS:[i64;211] = [

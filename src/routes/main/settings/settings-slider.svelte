@@ -5,11 +5,20 @@
     label = "",
     description = "",
     value = $bindable(60),
+    suffix = 's',
+    min = 0,
+    max = 120,
+    step = 5,
     ...restProps
   }: {
     label: string;
     description?: string | undefined;
     value: number;
+    min?: number;
+    max?: number;
+    step?: number;
+    suffix?: string;
+    class?: string;
   } = $props();
 </script>
 
@@ -21,9 +30,9 @@
     {/if}
   </div>
   <div class="flex flex-row">
-    <Slider type="single" bind:value {...restProps} min={0} max={120} step={5} class="max-w-[70%]" />
+    <Slider type="single" bind:value min={min} max={max} step={step} {...restProps} class="max-w-[70%]" />
     <div class="ml-4">
-      <span>{value}s</span>
+        <span>{value}{suffix ?? 's'}</span>
     </div>
   </div>
 </label>

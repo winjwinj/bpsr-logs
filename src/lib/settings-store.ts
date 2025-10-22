@@ -1,7 +1,5 @@
 import { version } from '@tauri-apps/plugin-os';
 import { RuneStore } from '@tauri-store/svelte';
-import Accessibility from '../routes/main/settings/accessibility.svelte';
-
 const IS_WIN_11 = parseInt(version().split(".")[2] || "0", 10) >= 22000;
 
 export const DEFAULT_STATS = {
@@ -28,6 +26,11 @@ const DEFAULT_SETTINGS = {
     relativeToTopHealSkill: false,
     shortenAbilityScore: true, 
     resetElapsed: 60,
+    // if true, keep showing the last encounter snapshot after combat ends when viewing "current"
+    keepCurrentAfterEnd: false,
+  // if true, when "current" is selected and live data is empty/stale, display the newest
+  // history snapshot's data while still keeping selection on "current" (transient overlay)
+  useNewestHistoryOverlayWhenCurrent: false,
   },
   accessibility: {
     blur: !IS_WIN_11,
@@ -51,6 +54,9 @@ const DEFAULT_SETTINGS = {
   },
   misc: {
     testingMode: false,
+  },
+  history: {
+    maxEncounters: 10,
   },
 };
 
@@ -101,6 +107,11 @@ export const SETTINGS = {
   misc: new RuneStore(
     'misc',
     DEFAULT_SETTINGS.misc,
+    RUNE_STORE_OPTIONS
+  ),
+  history: new RuneStore(
+    'history',
+    DEFAULT_SETTINGS.history,
     RUNE_STORE_OPTIONS
   ),
 };

@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { commands, type PlayersWindow } from "$lib/bindings";
+  import { selectedEncounter, selectedEncounterId, encounters } from "$lib/encounter-history-store";
+  import { selectEncounter } from '$lib/encounter-history-store';
+  import { page } from '$app/state';
   import { getClassColor } from "$lib/utils.svelte";
   import { goto } from "$app/navigation";
   import { getCoreRowModel } from "@tanstack/table-core";
@@ -10,6 +13,10 @@
   import { SETTINGS } from "$lib/settings-store";
 
   onMount(() => {
+    const params = new URLSearchParams(page.url.search);
+    const enc = params.get('enc');
+    if (enc) selectEncounter(enc);
+
     fetchData();
     const interval = setInterval(fetchData, 200);
 
@@ -35,6 +42,15 @@
 
   const healTable = createSvelteTable({
     get data() {
+      if ($selectedEncounter?.mode === 'history' && $selectedEncounter?.data?.healPlayersWindow) {
+        return $selectedEncounter.data.healPlayersWindow.playerRows;
+      }
+      if ($selectedEncounterId === 'current' && SETTINGS.general.state.useNewestHistoryOverlayWhenCurrent) {
+        const newest = ($encounters || [])[0];
+        if (newest?.data?.healPlayersWindow && (!healPlayersWindow.playerRows || healPlayersWindow.playerRows.length === 0)) {
+          return newest.data.healPlayersWindow.playerRows;
+        }
+      }
       return healPlayersWindow.playerRows;
     },
     columns: healPlayersColumnDefs,
@@ -66,7 +82,12 @@
     <tbody>
       {#each healTable.getRowModel().rows as row (row.id)}
         {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? row.original.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? row.original.className : ""}
-        <tr class="h-7 px-2 py-1 text-center" onclick={() => goto(`/live/heal/skills?playerUid=${row.original.uid}`)}>
+        <tr class="h-7 px-2 py-1 text-center" onclick={() => {
+            const enc = $selectedEncounter?.mode === 'history' ? $selectedEncounter.id : null;
+            const base = `/live/heal/skills?playerUid=${row.original.uid}`;
+            const url = enc ? `${base}&enc=${encodeURIComponent(enc)}` : base;
+            goto(url);
+          }}>
           {#each row.getVisibleCells() as cell (cell.id)}
             <td class="text-right"><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
           {/each}

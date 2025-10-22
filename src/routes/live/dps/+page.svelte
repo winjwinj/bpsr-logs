@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { commands, type PlayersWindow } from "$lib/bindings";
+  import { selectedEncounter, selectedEncounterId, encounters } from "$lib/encounter-history-store";
+  import { selectEncounter } from '$lib/encounter-history-store';
+  import { page } from '$app/state';
   import { getClassColor } from "$lib/utils.svelte";
   import { goto } from "$app/navigation";
   import { getCoreRowModel } from "@tanstack/table-core";
@@ -10,6 +13,11 @@
   import { SETTINGS } from "$lib/settings-store";
 
   onMount(() => {
+    // Restore selected encounter from query param if provided
+    const params = new URLSearchParams(page.url.search);
+    const enc = params.get('enc');
+    if (enc) selectEncounter(enc);
+
     fetchData();
     const interval = setInterval(fetchData, 200);
 
@@ -40,6 +48,18 @@
 
   const dpsTable = createSvelteTable({
     get data() {
+      // if a history encounter is selected and has dpsPlayersWindow, show its rows; otherwise show live
+      if ($selectedEncounter?.mode === 'history' && $selectedEncounter?.data?.dpsPlayersWindow) {
+        return $selectedEncounter.data.dpsPlayersWindow.playerRows;
+      }
+      // If the user has 'current' selected but enabled the overlay setting, and live data is empty,
+      // display the newest history snapshot (transient) while keeping selection on 'current'.
+      if ($selectedEncounterId === 'current' && SETTINGS.general.state.useNewestHistoryOverlayWhenCurrent) {
+        const newest = ($encounters || [])[0];
+        if (newest?.data?.dpsPlayersWindow && (!dpsPlayersWindow.playerRows || dpsPlayersWindow.playerRows.length === 0)) {
+          return newest.data.dpsPlayersWindow.playerRows;
+        }
+      }
       return dpsPlayersWindow.playerRows;
     },
     columns: dpsPlayersColumnDefs,
@@ -73,7 +93,12 @@
     <tbody>
       {#each dpsTable.getRowModel().rows as row (row.id)}
         {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? row.original.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? row.original.className : ""}
-        <tr class="h-7 px-2 py-1 text-center" onclick={() => goto(`/live/dps/skills?playerUid=${row.original.uid}`)}>
+        <tr class="h-7 px-2 py-1 text-center" onclick={() => {
+            const enc = $selectedEncounter?.mode === 'history' ? $selectedEncounter.id : null;
+            const base = `/live/dps/skills?playerUid=${row.original.uid}`;
+            const url = enc ? `${base}&enc=${encodeURIComponent(enc)}` : base;
+            goto(url);
+          }}>
           {#each row.getVisibleCells() as cell (cell.id)}
             <td class="text-right"><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
           {/each}

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { commands, type SkillsWindow } from "$lib/bindings";
+  import { selectedEncounter, selectedEncounterId, encounters } from "$lib/encounter-history-store";
+  import { selectEncounter } from "$lib/encounter-history-store";
   import { getClassColor } from "$lib/utils.svelte";
   import { page } from "$app/state";
   import { createSvelteTable, FlexRender } from "$lib/svelte-table";
@@ -9,24 +11,68 @@
   import { SETTINGS } from "$lib/settings-store";
 
   const playerUid: string = page.url.searchParams.get("playerUid") ?? "-1";
+  const encParam: string | null = page.url.searchParams.get("enc");
 
   onMount(() => {
+    if (encParam) selectEncounter(encParam);
     fetchData();
-    const interval = setInterval(fetchData, 200);
+    const interval = setInterval(() => {
+      // only poll live when current is selected
+      if ($selectedEncounter?.mode !== 'history') fetchData();
+    }, 200);
     return () => clearInterval(interval);
+  });
+
+  $effect(() => {
+    if ($selectedEncounter) {
+      fetchData();
+    }
   });
 
   let dpsSkillBreakdownWindow: SkillsWindow = $state({ currPlayer: [], skillRows: [] });
 
   async function fetchData() {
     try {
+      // If a historical encounter is selected, try to populate from snapshot if available
+      if ($selectedEncounter?.mode === 'history') {
+        const snap = $selectedEncounter.data;
+        // stored snapshot may not include skill breakdowns; try to find matching data
+        // if we have per-player skill windows stored, use that for this playerUid
+        if (snap?.dpsSkillWindows && snap.dpsSkillWindows[playerUid]) {
+          const src = snap.dpsSkillWindows[playerUid];
+          // clone arrays to ensure reactivity picks up changes
+          dpsSkillBreakdownWindow = {
+            currPlayer: Array.isArray(src.currPlayer) ? [...src.currPlayer] : [],
+            skillRows: Array.isArray(src.skillRows) ? [...src.skillRows] : [],
+          };
+          return;
+        }
+          // otherwise if snapshot has only players but no skills, return empty
+          if (snap?.dpsPlayersWindow) {
+            dpsSkillBreakdownWindow = { currPlayer: [], skillRows: [] };
+            return;
+          }
+      }
+
+      // If overlay is enabled and user is on 'current' and we don't have live skills, try newest history
+      if ($selectedEncounterId === 'current' && SETTINGS.general.state.useNewestHistoryOverlayWhenCurrent) {
+        const newest = ($encounters || [])[0];
+        if (newest?.data?.dpsSkillWindows && newest.data.dpsSkillWindows[playerUid]) {
+          const src = newest.data.dpsSkillWindows[playerUid];
+          dpsSkillBreakdownWindow = {
+            currPlayer: Array.isArray(src.currPlayer) ? [...src.currPlayer] : [],
+            skillRows: Array.isArray(src.skillRows) ? [...src.skillRows] : [],
+          };
+          return;
+        }
+      }
+
       const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getDpsSkillWindow(playerUid);
       if (result.status !== "ok") {
         console.warn("Failed to get skill window: ", result.error);
         return;
       } else {
         dpsSkillBreakdownWindow = result.data;
-        // console.log("dpsSkillBreakdown: ", +Date.now(), $state.snapshot(dpsSkillBreakdownWindow));
       }
     } catch (e) {
       console.error("Error fetching data: ", e);

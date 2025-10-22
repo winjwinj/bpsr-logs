@@ -19,4 +19,6 @@
   <SettingsSwitch bind:checked={SETTINGS.general.state.relativeToTopHealSkill} label="Relative to Top - Skill" description="Color bars are relative to top healing skill instead of all skills. Useful for 20 man or World Bosses." />
   <SettingsSwitch bind:checked={SETTINGS.general.state.shortenAbilityScore} label="Shorten Ability Score" description="Shortens the Ability Score" />
   <SettingsSlider bind:value={SETTINGS.general.state.resetElapsed} label="Reset after Elapsed Time" description="Amount of time to wait before the meter automatically resets the encounter. 0s = Never Resets"></SettingsSlider>
+  <SettingsSlider bind:value={SETTINGS.history.state.maxEncounters} label="Max Encounter History" description="Maximum number of past encounters to keep in history." min={1} max={50} step={1} suffix=" encounters"></SettingsSlider>
+  <SettingsSwitch bind:checked={SETTINGS.general.state.useNewestHistoryOverlayWhenCurrent} label="Show newest history while on Current" description="When enabled and 'Current' is selected, display the newest history snapshot's data if live data is empty or stale, but keep the selection on Current." />
 </Tabs.Content>

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { commands, type SkillsWindow } from "$lib/bindings";
+  import { selectedEncounter, selectedEncounterId, encounters } from "$lib/encounter-history-store";
+  import { selectEncounter } from "$lib/encounter-history-store";
   import { getClassColor } from "$lib/utils.svelte";
   import { page } from "$app/state";
   import { createSvelteTable, FlexRender } from "$lib/svelte-table";
@@ -9,24 +11,63 @@
   import { SETTINGS } from "$lib/settings-store";
 
   const playerUid: string = page.url.searchParams.get("playerUid") ?? "-1";
+  const encParam: string | null = page.url.searchParams.get("enc");
 
   onMount(() => {
+    if (encParam) selectEncounter(encParam);
     fetchData();
     const interval = setInterval(fetchData, 200);
     return () => clearInterval(interval);
+  });
+  
+  $effect(() => {
+    if ($selectedEncounter) fetchData();
   });
 
   let healSkillBreakdownWindow: SkillsWindow = $state({ currPlayer: [], skillRows: [] });
 
   async function fetchData() {
     try {
+      // If a historical encounter is selected, try to populate from snapshot if available
+      if ($selectedEncounter?.mode === 'history') {
+        const snap = $selectedEncounter.data;
+        if (snap?.healSkillWindows && snap.healSkillWindows[playerUid]) {
+          const src = snap.healSkillWindows[playerUid];
+          healSkillBreakdownWindow = {
+            currPlayer: Array.isArray(src.currPlayer) ? [...src.currPlayer] : [],
+            skillRows: Array.isArray(src.skillRows) ? [...src.skillRows] : [],
+          };
+          return;
+        }
+        if (snap?.healPlayersWindow) {
+          healSkillBreakdownWindow = { currPlayer: [], skillRows: [] };
+          return;
+        }
+      }
+
+      if ($selectedEncounterId === 'current' && SETTINGS.general.state.useNewestHistoryOverlayWhenCurrent) {
+        const newest = ($encounters || [])[0];
+        if (newest?.data?.healSkillWindows && newest.data.healSkillWindows[playerUid]) {
+          const src = newest.data.healSkillWindows[playerUid];
+          healSkillBreakdownWindow = {
+            currPlayer: Array.isArray(src.currPlayer) ? [...src.currPlayer] : [],
+            skillRows: Array.isArray(src.skillRows) ? [...src.skillRows] : [],
+          };
+          return;
+        }
+      }
+
       const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getHealSkillWindow(playerUid);
       if (result.status !== "ok") {
         console.warn("Failed to get skill window: ", result.error);
         return;
       } else {
-        healSkillBreakdownWindow = result.data;
-        // console.log("healSkillBreakdown: ", +Date.now(), $state.snapshot(healSkillBreakdownWindow));
+        // clone arrays to ensure reactivity
+        const src = result.data;
+        healSkillBreakdownWindow = {
+          currPlayer: Array.isArray(src.currPlayer) ? [...src.currPlayer] : [],
+          skillRows: Array.isArray(src.skillRows) ? [...src.skillRows] : [],
+        };
       }
     } catch (e) {
       console.error("Error fetching data: ", e);

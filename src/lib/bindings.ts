@@ -99,10 +99,7 @@ export type SkillsWindow = { currPlayer: PlayerRow[]; skillRows: SkillRow[] }
 
 /** tauri-specta globals **/
 
-import {
-	invoke as TAURI_INVOKE,
-	Channel as TAURI_CHANNEL,
-} from "@tauri-apps/api/core";
+import { invoke as TAURI_INVOKE } from "@tauri-apps/api/core";
 import * as TAURI_API_EVENT from "@tauri-apps/api/event";
 import { type WebviewWindow as __WebviewWindow__ } from "@tauri-apps/api/webviewWindow";
 
@@ -122,7 +119,7 @@ export type Result<T, E> =
 	| { status: "ok"; data: T }
 	| { status: "error"; error: E };
 
-function __makeEvents__<T extends Record<string, any>>(
+export function __makeEvents__<T extends Record<string, any>>(
 	mappings: Record<keyof T, string>,
 ) {
 	return new Proxy(

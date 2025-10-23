@@ -176,44 +176,6 @@ pub fn process_aoi_sync_delta(
                 "heal packet: {attacker_uid} to {target_uid}: {actual_value} heal {} total heal",
                 skill.total_value
             );
-        } else if boss {
-            let skill = attacker_entity
-                .skill_uid_to_dmg_skill
-                .entry(skill_uid)
-                .or_insert_with(|| Skill::default());
-            // TODO: from testing, first bit is set when there's crit, 3rd bit for if it causes lucky (no idea what that means), require more testing here
-            const CRIT_BIT: i32 = 0b00_00_00_01; // 1st bit
-            let is_lucky = lucky_value.is_some();
-            let flag = sync_damage_info.type_flag.unwrap_or_default();
-            let is_crit = (flag & CRIT_BIT) != 0; // No idea why, but SyncDamageInfo.is_crit isn't correct
-            if is_crit {
-                attacker_entity.crit_hits_dmg_boss += 1;
-                attacker_entity.crit_total_dmg_boss += actual_value;
-                attacker_entity.crit_hits_dmg += 1;
-                attacker_entity.crit_total_dmg += actual_value;
-                skill.crit_hits += 1;
-                skill.crit_total_value += actual_value;
-            }
-            if is_lucky {
-                attacker_entity.lucky_hits_dmg_boss += 1;
-                attacker_entity.lucky_total_dmg_boss += actual_value;
-                attacker_entity.lucky_hits_dmg += 1;
-                attacker_entity.lucky_total_dmg += actual_value;
-                skill.lucky_hits += 1;
-                skill.lucky_total_value += actual_value;
-            }
-            encounter.total_dmg += actual_value;
-            encounter.total_dmg_boss += actual_value;
-            attacker_entity.hits_dmg_boss += 1;
-            attacker_entity.total_dmg_boss += actual_value;
-            attacker_entity.hits_dmg += 1;
-            attacker_entity.total_dmg += actual_value;
-            skill.hits += 1;
-            skill.total_value += actual_value;
-            info!(
-                "dmg packet to boss: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
-                skill.total_value
-            );
         } else {
             let skill = attacker_entity
                 .skill_uid_to_dmg_skill
@@ -225,16 +187,35 @@ pub fn process_aoi_sync_delta(
             let flag = sync_damage_info.type_flag.unwrap_or_default();
             let is_crit = (flag & CRIT_BIT) != 0; // No idea why, but SyncDamageInfo.is_crit isn't correct
             if is_crit {
+                if boss {
+                    attacker_entity.crit_hits_dmg_boss += 1;
+                    attacker_entity.crit_total_dmg_boss += actual_value;
+                    skill.crit_hits_boss += 1;
+                    skill.crit_total_value_boss += actual_value;
+                }
                 attacker_entity.crit_hits_dmg += 1;
                 attacker_entity.crit_total_dmg += actual_value;
                 skill.crit_hits += 1;
                 skill.crit_total_value += actual_value;
             }
             if is_lucky {
+                if boss {
+                    attacker_entity.lucky_hits_dmg_boss += 1;
+                    attacker_entity.lucky_total_dmg_boss += actual_value;
+                    skill.lucky_hits_boss += 1;
+                    skill.lucky_total_value_boss += actual_value;
+                }
                 attacker_entity.lucky_hits_dmg += 1;
                 attacker_entity.lucky_total_dmg += actual_value;
                 skill.lucky_hits += 1;
                 skill.lucky_total_value += actual_value;
+            }
+            if boss {
+                encounter.total_dmg_boss += actual_value;
+                attacker_entity.hits_dmg_boss += 1;
+                attacker_entity.total_dmg_boss += actual_value;
+                skill.hits_boss += 1;
+                skill.total_value_boss += actual_value;
             }
             encounter.total_dmg += actual_value;
             attacker_entity.hits_dmg += 1;
@@ -242,10 +223,10 @@ pub fn process_aoi_sync_delta(
             skill.hits += 1;
             skill.total_value += actual_value;
             info!(
-                "dmg packet: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
+                "dmg packet to boss: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
-        }
+        } 
     }
 
     // Figure out timestamps

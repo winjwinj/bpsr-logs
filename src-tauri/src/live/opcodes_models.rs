@@ -64,6 +64,12 @@ pub struct Skill {
     pub lucky_total_value: i64,
     pub lucky_hits: i64,
     pub hits: i64,
+    pub total_value_boss: i64,
+    pub crit_total_value_boss: i64,
+    pub crit_hits_boss: i64,
+    pub lucky_total_value_boss: i64,
+    pub lucky_hits_boss: i64,
+    pub hits_boss: i64,
 }
 
 static SKILL_NAMES: LazyLock<HashMap<String, String>> = LazyLock::new(|| {

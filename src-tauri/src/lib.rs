@@ -44,8 +44,8 @@ pub fn run() {
             live::commands::hard_reset,
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
-            live::commands::get_dps_player_window_boss
-            live::commands::get_dps_skill_window_boss
+            live::commands::get_dps_player_window_boss,
+            live::commands::get_dps_skill_window_boss,
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds

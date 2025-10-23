@@ -20,7 +20,7 @@
 
   async function fetchData() {
     try {
-      const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getDpsSkillWindow(playerUid);
+      const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getDpsSkillWindowBoss(playerUid);
       if (result.status !== "ok") {
         console.warn("Failed to get skill window: ", result.error);
         return;

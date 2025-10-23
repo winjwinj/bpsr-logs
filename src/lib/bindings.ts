@@ -86,6 +86,14 @@ async getDpsPlayerWindowBoss() : Promise<Result<PlayersWindow, string>> {
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async getDpsSkillWindowBoss(playerUidStr: string) : Promise<Result<SkillsWindow, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_dps_skill_window_boss", { playerUidStr }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
 }
 }
 

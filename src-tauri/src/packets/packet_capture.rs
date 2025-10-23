@@ -5,9 +5,8 @@ use crate::packets::utils::{BinaryReader, Server, TCPReassembler};
 use etherparse::NetSlice::Ipv4;
 use etherparse::SlicedPacket;
 use etherparse::TransportSlice::Tcp;
-use log::{debug, error, info, trace, warn};
+use log::{debug, error, info, warn};
 use once_cell::sync::OnceCell;
-use std::hash::Hash;
 use tokio::sync::watch;
 use windivert::WinDivert;
 use windivert::prelude::WinDivertFlags;
@@ -222,7 +221,7 @@ async fn read_packets(
                 let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
                 let packet = left.to_vec();
                 tcp_reassembler._data = right.to_vec();
-                info!("Processing packet at line {}: size={}", line!(), packet_size);
+                debug!("Processing packet at line {}: size={}", line!(), packet_size);
                 process_packet(BinaryReader::from(packet), packet_sender.clone()).await;
             }
         }

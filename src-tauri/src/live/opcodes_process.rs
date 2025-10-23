@@ -223,7 +223,7 @@ pub fn process_aoi_sync_delta(
             skill.hits += 1;
             skill.total_value += actual_value;
             info!(
-                "dmg packet to boss: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
+                "dmg packet: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
         } 

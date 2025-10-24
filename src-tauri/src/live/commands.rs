@@ -90,7 +90,9 @@ pub fn hard_reset(state: tauri::State<'_, EncounterMutex>) {
 #[specta::specta]
 pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
     let mut encounter = state.lock().unwrap();
-    encounter.clone_from(&Encounter::default());
+
+	encounter.resetStats();
+    // encounter.clone_from(&Encounter::default());
 
     info!("encounter reset");
 }

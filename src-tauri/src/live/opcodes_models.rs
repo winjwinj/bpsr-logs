@@ -16,6 +16,34 @@ pub struct Encounter {
     pub local_player: SyncContainerData,
 }
 
+impl Encounter {
+	pub fn resetStats(&mut self) {
+		self.total_dmg = 0;
+		self.total_heal = 0;
+
+		self.entity_uid_to_entity.iter_mut().for_each(|(_, entity)| {
+			// Damage
+			entity.total_dmg = 0;
+			entity.crit_total_dmg = 0;
+			entity.crit_hits_dmg = 0;
+			entity.lucky_total_dmg = 0;
+			entity.lucky_hits_dmg = 0;
+			entity.hits_dmg = 0;
+			// Healing
+			entity.total_heal = 0;
+			entity.crit_total_heal = 0;
+			entity.crit_hits_heal = 0;
+			entity.lucky_total_heal = 0;
+			entity.lucky_hits_heal = 0;
+			entity.hits_heal = 0;
+			// For Monsters
+			entity.curr_hp = 0;
+			entity.max_hp = 0;
+			entity.monster_id = 0;
+		})
+	}
+}
+
 pub type EncounterMutex = Mutex<Encounter>;
 
 #[derive(Debug, Default, Clone)]

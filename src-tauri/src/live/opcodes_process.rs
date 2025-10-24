@@ -2,10 +2,10 @@ use crate::live::opcodes_models;
 use crate::live::opcodes_models::class::{
     ClassSpec, get_class_id_from_spec, get_class_spec_from_skill_id,
 };
-use crate::live::opcodes_models::{Encounter, Entity, Skill, attr_type};
+use crate::live::opcodes_models::{Encounter, Entity, Skill, attr_type, MONSTER_NAMES, MONSTER_NAMES_CROWDSOURCE};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
-use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType};
+use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType, SyncContainerData};
 use log::info;
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -31,10 +31,8 @@ pub fn process_sync_near_entities(
         target_entity.entity_type = target_entity_type;
 
         match target_entity_type {
-            EEntityType::EntChar => {
-                process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs);
-            }
-            // EEntityType::EntMonster => {process_monster_attrs();} // todo
+            EEntityType::EntChar => process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs),
+            EEntityType::EntMonster => process_monster_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs, &encounter.local_player),
             _ => {}
         }
     }
@@ -98,10 +96,8 @@ pub fn process_aoi_sync_delta(
 
     if let Some(attrs_collection) = aoi_sync_delta.attrs {
         match target_entity_type {
-            EEntityType::EntChar => {
-                process_player_attrs(&mut target_entity, target_uid, attrs_collection.attrs);
-            }
-            // EEntityType::EntMonster => { process_monster_attrs(attrs); } // todo
+            EEntityType::EntChar => process_player_attrs(&mut target_entity, target_uid, attrs_collection.attrs),
+            EEntityType::EntMonster => process_monster_attrs(&mut target_entity, target_uid, attrs_collection.attrs, &encounter.local_player),
             _ => {}
         }
     }
@@ -221,7 +217,7 @@ pub fn process_aoi_sync_delta(
     Some(())
 }
 
-fn process_player_attrs(player_entity: &mut Entity, target_uid: i64, attrs: Vec<Attr>) {
+fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<Attr>) {
     for attr in attrs {
         let Some(mut raw_bytes) = attr.raw_data else {
             continue;
@@ -231,27 +227,56 @@ fn process_player_attrs(player_entity: &mut Entity, target_uid: i64, attrs: Vec<
         // info!("{} {}", attr_type::(attr_id),hex::encode(raw_bytes.read_remaining()));
         match attr_id {
             attr_type::ATTR_NAME => {
-                // todo: fix these brackets
                 raw_bytes.remove(0); // not sure why, there's some weird character as the first e.g. "\u{6}Sketal"
                 let player_name = BinaryReader::from(raw_bytes).read_string().unwrap();
                 player_entity.name = player_name;
-                info! {"Found player {} with UID {}", player_entity.name, target_uid}
+                info! {"Found player {} with UID {}", player_entity.name, player_uid}
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_PROFESSION_ID => {
-                player_entity.class_id =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+            attr_type::ATTR_PROFESSION_ID => player_entity.class_id = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
+            #[allow(clippy::cast_possible_truncation)]
+            attr_type::ATTR_FIGHT_POINT => player_entity.ability_score = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
+            #[allow(clippy::cast_possible_truncation)]
+            attr_type::ATTR_LEVEL => player_entity.level = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
+            _ => (),
+        }
+    }
+}
+
+fn process_monster_attrs(monster_entity: &mut Entity, monster_uid: i64, attrs: Vec<Attr>, local_player: &SyncContainerData) {
+    for attr in attrs {
+        let Some(mut raw_bytes) = attr.raw_data else {
+            continue;
+        };
+        let Some(attr_id) = attr.id else { continue };
+
+        // info!("{} {}", attr_type::(attr_id),hex::encode(raw_bytes.read_remaining()));
+        match attr_id {
+            attr_type::ATTR_ID => monster_entity.monster_id = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
+            #[allow(clippy::cast_possible_truncation)]
+            attr_type::ATTR_HP => {
+                let curr_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                if monster_entity.curr_hp != curr_hp { // only record if hp changed
+                    let monster_id = monster_entity.monster_id;
+                    if MONSTER_NAMES_CROWDSOURCE.get(&monster_id).is_some() { // only record if it's a world boss, magical creature, etc.
+                        let monster_name = MONSTER_NAMES.get(&monster_id);
+                        let hp_pct = if monster_entity.max_hp != 0 {
+                            Some(monster_entity.curr_hp as f64 / monster_entity.max_hp as f64)
+                        } else {
+                            None
+                        };
+                        let line = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|s| s.line_id));
+                        let pos_x = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.x)));
+                        let pos_y = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.y)));
+                        if let (Some(monster_name), Some(hp_pct), Some(line), Some(pos_x), Some(pos_y)) = (monster_name, hp_pct, line, pos_x, pos_y) {
+                            info!("Found crowdsourced monster with name {monster_name} - ID {monster_id} - HP {hp_pct} on line {line} and pos ({pos_x},{pos_y})");
+                        }
+                    }
+                }
+                monster_entity.curr_hp = curr_hp;
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_FIGHT_POINT => {
-                player_entity.ability_score =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-            }
-            #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_LEVEL => {
-                player_entity.level =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-            }
+            attr_type::ATTR_MAX_HP => monster_entity.max_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
             _ => (),
         }
     }

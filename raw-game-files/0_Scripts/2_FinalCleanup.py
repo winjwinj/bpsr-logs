@@ -1,9 +1,9 @@
 ﻿import json
 
-def cleanup():
+def cleanup_skill_names():
     # Input and output paths
     input_file = "../4_Final/CombinedtranslatedWithManualOverrides.json"
-    output_file = "../../static/json/SkillName.json"
+    output_file = "../../src/lib/data/json/SkillName.json"
     conflict_file = "../4_Final/Conflicts.json"
 
     # Priority order for flattening
@@ -89,7 +89,7 @@ Reads skills_questlog_clean.json, extracts skill_uid:icon mapping, and writes it
 """
 def generate_skill_icon_json(
         input_file="../2_Clean/skills_questlog_clean.json",
-        output_file="../../static/json/SkillIcon.json"
+        output_file="../../src/lib/data/json/SkillIcon.json"
 ):
 
     with open(input_file, "r", encoding="utf-8") as f:
@@ -99,6 +99,35 @@ def generate_skill_icon_json(
         json.dump(icon_map, f, ensure_ascii=False, indent=2)
     print(f"Saved skill_uid to icon mapping to {output_file}")
 
+def cleanup_monster_names(
+        input_file="../1_Dirty/monsters_questlog.json",
+        output_file="../../src/lib/data/json/MonsterName.json",
+        language="en"
+):
+    """
+    Reads monsters_questlog.json, extracts id:name mapping, and writes it to output_file as JSON.
+    Only includes entries where language is 'en' (English).
+    """
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # Try to handle both list and dict formats
+    mapping = {}
+    if isinstance(data, dict):
+        for k, v in data.items():
+            if v.get("language") == language and "name" in v:
+                mapping[str(k)] = v["name"]
+    elif isinstance(data, list):
+        for entry in data:
+            if entry.get("language") == language and "id" in entry and "name" in entry:
+                mapping[str(entry["id"])] = entry["name"]
+    else:
+        raise ValueError("Unexpected format in monsters_questlog.json")
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(mapping, f, ensure_ascii=False, indent=2)
+    print(f"Saved monster id to name mapping to {output_file} (language={language})")
+
 if __name__ == "__main__":
-    cleanup()
+    cleanup_skill_names()
     generate_skill_icon_json()
+
+    cleanup_monster_names()

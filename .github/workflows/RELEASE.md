@@ -5,12 +5,12 @@ Join the [Discord](https://discord.gg/Tcc54ST5BU): https://discord.gg/Tcc54ST5BU
 1. Download and install [bpsr-logs___VERSION___x64_en-US.msi](https://github.com/winjwinj/bpsr-logs/releases/download/app-v__VERSION__/bpsr-logs___VERSION___x64_en-US.msi)
 
 # Known Issues
-- WinDivert getting stuck: https://github.com/winjwinj/bpsr-logs/issues/10
 - WinDivert flagged by antivirus as bitcoin mining (the irony here is that people are using spyware, closed source antivirus)
-  - See: https://github.com/ValdikSS/GoodbyeDPI/issues/159
-- DPS Meter stops working/receiving packets/freezing after instances/some time (temporarily mitigated with a hard reset button)
+  - See: [README.md](../../README.md#is-it-bannable)
 - ExitLag doesn't work properly 
   - Other VPNs not working is normal (no way around it)
+  - Update: Mullvad VPN is working apparently
+- Shortcuts
 - Can't run with LOA Logs
 
 # Instructions

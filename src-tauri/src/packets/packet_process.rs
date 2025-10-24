@@ -7,7 +7,6 @@ pub async fn process_packet(
     mut packets_reader: BinaryReader,
     packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>,
 ) {
-    let mut debug_ctr = 0;
     while packets_reader.remaining() > 0 {
         let packet_size = match packets_reader.peek_u32() {
             Ok(sz) => sz,
@@ -42,7 +41,6 @@ pub async fn process_packet(
         let is_zstd_compressed = packet_type & 0x8000;
         let msg_type_id = packet_type & 0x7fff;
 
-        debug_ctr += 1;
         match packets::opcodes::FragmentType::from(msg_type_id) {
             FragmentType::Notify => {
                 let service_uuid = match reader.read_u64() {
@@ -52,7 +50,7 @@ pub async fn process_packet(
                         continue;
                     }
                 };
-                let stub_id = match reader.read_u32() {
+                let _stub_id = match reader.read_u32() {
                     Ok(sid) => sid,
                     Err(e) => {
                         debug!("Malformed Notify: failed to read_u32 stub_id: {e}");
@@ -97,7 +95,7 @@ pub async fn process_packet(
                 }
             }
             FragmentType::FrameDown => {
-                let server_sequence_id = match reader.read_u32() {
+                let _server_sequence_id = match reader.read_u32() {
                     Ok(sid) => sid,
                     Err(e) => {
                         debug!("FrameDown: failed to read_u32 server_sequence_id: {e}");
@@ -216,10 +214,7 @@ mod tests {
         use std::fs;
         let (packet_sender, _) = tokio::sync::mpsc::channel::<(Pkt, Vec<u8>)>(1);
         let filename = "src/packets/test_add_packet.json";
-        let v: Vec<u8> = serde_json::from_str(
-            &fs::read_to_string(filename).expect(&format!("Failed to open {filename}")),
-        )
-        .expect("Invalid JSON in test_packet.json");
+        let v: Vec<u8> = serde_json::from_str(&fs::read_to_string(filename).expect(&format!("Failed to open {filename}"))).expect("Invalid JSON in test_packet.json");
         process_packet(BinaryReader::from(v), packet_sender).await;
     }
 }

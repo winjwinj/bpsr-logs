@@ -2,33 +2,34 @@ mod build_app;
 mod live;
 mod packets;
 
-use crate::build_app::build_and_run;
+use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
-use log::{error, info, warn};
-use specta_typescript::{BigIntExportBehavior, Typescript};
+use log::{info, warn};
 use std::process::Command;
-use window_vibrancy::apply_blur;
 
-use chrono_tz;
-use tauri::menu::{Menu, MenuBuilder, MenuItem};
+use crate::live::commands::{disable_blur, enable_blur};
+use tauri::menu::MenuBuilder;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
+use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
 use tauri_plugin_updater::UpdaterExt;
-use tauri_plugin_window_state::{AppHandleExt, StateFlags};
-use tauri_specta::{Builder, collect_commands};
 use crate::live::commands::{disable_blur, enable_blur};
+use tauri_plugin_window_state::{AppHandleExt, StateFlags};
+use tauri_specta::{collect_commands, Builder};
 
 pub const WINDOW_LIVE_LABEL: &str = "live";
 pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // std::panic::set_hook(Box::new(|info| {
-    //     info!pub(crate)("App crashed! Info: {:?}", info);
-    //     unload_and_remove_windivert();
-    // }));
+    std::panic::set_hook(Box::new(|info| {
+        info!("App crashed! Info: {info:?}");
+        info!("Unloading and removing windivert...");
+        stop_windivert();
+        remove_windivert();
+    }));
 
     let builder = Builder::<tauri::Wry>::new()
         // Then register them (separated by a comma)
@@ -51,12 +52,12 @@ pub fn run() {
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
-    builder
-        .export(
-            Typescript::new().bigint(BigIntExportBehavior::Number),
-            "../src/lib/bindings.ts",
-        )
-        .expect("Failed to export typescript bindings");
+    {
+        use specta_typescript::{BigIntExportBehavior, Typescript};
+        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number),
+                       "../src/lib/bindings.ts")
+               .expect("Failed to export typescript bindings");
+    }
 
     let tauri_builder = tauri::Builder::default()
         .plugin(tauri_plugin_autostart::Builder::new().build())
@@ -81,10 +82,10 @@ pub fn run() {
             let app_handle = app.handle().clone();
 
             // Setup stuff
-            setup_logs(&app_handle);
+            setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
-            setup_autostart(&app_handle).expect("failed to setup blur");
-            setup_blur(&app_handle).expect("failed to setup blur");
+            setup_autostart(&app_handle);
+            setup_blur(&app_handle);
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
@@ -95,26 +96,26 @@ pub fn run() {
             Ok(())
         })
         .on_window_event(on_window_event_fn)
+        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![])))
         .plugin(tauri_plugin_clipboard_manager::init()) // used to read/write to the clipboard
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()); // used for settings file
-    build_and_run(tauri_builder);
+
+    build(tauri_builder).expect("error while running tauri application")
+                        .run(|_app_handle, event| { // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
+                            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
+                                stop_windivert();
+                                info!("App is closing! Cleaning up resources...");
+                            }
+                        });
 }
 
+#[allow(unused)]
 fn start_windivert() {
     let status = Command::new("sc")
-        .args([
-            "create",
-            "windivert",
-            "type=",
-            "kernel",
-            "binPath=",
-            "WinDivert64.sys",
-            "start=",
-            "demand",
-        ])
+        .args(["create", "windivert", "type=", "kernel", "binPath=", "WinDivert64.sys", "start=", "demand"])
         .status();
     if status.is_ok_and(|status| status.success()) {
         info!("started driver");
@@ -143,7 +144,10 @@ fn remove_windivert() {
     }
 }
 
+#[cfg(not(debug_assertions))]
 async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
+    use tauri_plugin_updater::UpdaterExt;
+
     if let Some(update) = app.updater()?.check().await? {
         let mut downloaded = 0;
         update
@@ -172,24 +176,21 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
         .to_string();
     let log_file_name = format!("log v{app_version} {pst_time} PST",);
 
-    let mut tauri_log = tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-        .clear_targets()
-        .with_colors(ColoredLevelConfig::default())
-        .targets([
-            #[cfg(debug_assertions)]
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
-                .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                file_name: Some(log_file_name),
-            }),
-        ])
-        .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-        .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)); // keep the last 10 logs
-    #[cfg(not(debug_assertions))]
-    {
-        tauri_log = tauri_log.max_file_size(1_073_741_824 /* 1 gb */);
-    }
-    app.plugin(tauri_log.build())?;
+    app.plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+                   .clear_targets()
+                   .with_colors(ColoredLevelConfig::default())
+                   .targets([
+                       #[cfg(debug_assertions)]
+                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
+                           .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                           file_name: Some(log_file_name),
+                       }),
+                   ])
+                   .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+                   .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)) // keep the last 10 logs
+                   .max_file_size(1_073_741_824 /* 1 gb */)
+                   .build())?;
     Ok(())
 }
 
@@ -209,7 +210,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
         .separator()
         .text("show-live", "Show Live Meter")
         .text("reset", "Reset Window")
-        .text("clickthrough", "Disable Clickthrough")
+        .text("disable-clickthrough", "Disable Clickthrough")
         .separator()
         .text("quit", "Quit")
         .build()?;
@@ -225,7 +226,9 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 else {
                     return;
                 };
-                show_window(&main_meter_window).expect("failed to show main meter window");
+                if let Err(e) = show_window(&main_meter_window) {
+                    warn!("failed to show main meter window: {e}");
+                }
             }
             "show-live" => {
                 let tray_app_handle = tray_app.app_handle();
@@ -233,7 +236,9 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 else {
                     return;
                 };
-                show_window(&live_meter_window).expect("failed to show live meter window");
+                if let Err(e) = show_window(&live_meter_window) {
+                    warn!("failed to show live meter window: {e}");
+                }
             }
             "reset" => {
                 let Some(live_meter_window) = tray_app.get_webview_window(WINDOW_LIVE_LABEL) else {
@@ -245,16 +250,20 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                         height: 350.0,
                     }))
                     .unwrap();
-                live_meter_window
-                    .set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 }))
-                    .unwrap();
-                show_window(&live_meter_window).expect("failed to show live meter window");
+                if let Err(e) = live_meter_window.set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 })) {
+                    warn!("failed to set default window position: {e}");
+                }
+                if let Err(e) = show_window(&live_meter_window) {
+                    warn!("failed to show live meter window: {e}");
+                }
             }
-            "clickthrough" => {
+            "disable-clickthrough" => {
                 let Some(live_meter_window) = tray_app.get_webview_window(WINDOW_LIVE_LABEL) else {
                     return;
                 };
-                live_meter_window.set_ignore_cursor_events(false).unwrap();
+                if let Err(e) = live_meter_window.set_ignore_cursor_events(false) {
+                    warn!("failed to disable clickthrough: {e}");
+                }
             }
             "quit" => {
                 stop_windivert();
@@ -274,60 +283,55 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 let Some(live_meter_window) = app.get_webview_window(WINDOW_LIVE_LABEL) else {
                     return;
                 };
-                show_window(&live_meter_window).expect("failed to show live meter window");
+                if let Err(e) = show_window(&live_meter_window) {
+                    warn!("failed to show main meter window: {e}");
+                }
             }
         })
         .build(app)?;
     Ok(())
 }
 
-fn setup_autostart(app: &tauri::AppHandle) -> anyhow::Result<()> {
-    #[cfg(desktop)]
-    {
-        use tauri_plugin_autostart::MacosLauncher;
-        use tauri_plugin_autostart::ManagerExt;
+fn setup_autostart(app: &tauri::AppHandle) {
+    use tauri_plugin_autostart::ManagerExt;
 
-        app.plugin(tauri_plugin_autostart::init(
-            MacosLauncher::LaunchAgent,
-            Some(vec![]),
-        )).expect("failed to setup autostart plugin");
-
-        // Get the autostart manager
-        let autostart_manager = app.autolaunch();
-        // Enable autostart
-        if app.svelte().get::<bool>("general", "autostart")? {
-            let _ = autostart_manager.enable();
-        } else {
-            let _ = autostart_manager.disable();
-        }
-        println!("registered for autostart? {}", autostart_manager.is_enabled()?);
+    let autostart_manager = app.autolaunch();
+    if let Err(e) = if app.svelte().get_or::<bool>("general", "autostart", true) {
+        autostart_manager.enable() }
+    else {
+        autostart_manager.disable()
+    } {
+        warn!("failed to set autostart: {e}");
     }
-    Ok(())
+    match autostart_manager.is_enabled() {
+        Ok(enabled) => info!("registered for autostart? {enabled}"),
+        Err(e) => warn!("failed to check autostart status: {e}"),
+    }
 }
 
-fn setup_blur(app: &tauri::AppHandle) -> anyhow::Result<()> {
-    if app.svelte().get::<bool>("accessibility", "blur")? {
+fn setup_blur(app: &tauri::AppHandle) {
+    if app.svelte().get_or::<bool>("accessibility", "blur", true) {
         enable_blur(app.clone());
     } else {
         disable_blur(app.clone());
     }
-    Ok(())
 }
 
 fn on_window_event_fn(window: &Window, event: &WindowEvent) {
     match event {
-        // when you click the X button to close a window
+        // when you click the X button to close a window, don't close it - hide it!
         WindowEvent::CloseRequested { api, .. } => {
-            api.prevent_close(); // don't close it, just hide it
+            api.prevent_close();
             if window.label() == WINDOW_MAIN_LABEL {
-                window.hide().unwrap();
+                if let Err(e) = window.hide() {
+                    warn!("failed to hide main meter window: {e}");
+                }
             }
         }
         WindowEvent::Focused(focused) if !focused => {
-            window
-                .app_handle()
-                .save_window_state(StateFlags::all())
-                .unwrap();
+            if let Err(e) = window.app_handle().save_window_state(StateFlags::all()) {
+                warn!("failed to save window state to disk: {e}");
+            }
         }
         _ => {}
     }

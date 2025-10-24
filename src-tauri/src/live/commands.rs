@@ -1,12 +1,11 @@
-use crate::WINDOW_LIVE_LABEL;
 use crate::live::commands_models::{
     HeaderInfo, PlayerRow, PlayerRows, PlayersWindow, SkillRow, SkillsWindow,
 };
-use crate::live::opcodes_models::{Encounter, EncounterMutex, Skill, class};
+use crate::live::opcodes_models::{class, Encounter, EncounterMutex, Skill};
 use crate::packets::packet_capture::request_restart;
+use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
-use std::sync::MutexGuard;
 use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
@@ -592,13 +591,11 @@ pub fn get_heal_skill_window(
 #[specta::specta]
 #[allow(clippy::cast_precision_loss)]
 #[allow(clippy::too_many_lines)]
-pub fn get_test_player_window(
-    state: tauri::State<'_, EncounterMutex>,
-) -> Result<PlayersWindow, String> {
+pub fn get_test_player_window() -> Result<PlayersWindow, String> {
     Ok(PlayersWindow {
         player_rows: vec![
             PlayerRow {
-                uid: 10000001.0,
+                uid: 10_000_001.0,
                 name: "Name Stormblade (You)".to_string(),
                 class_name: "Stormblade".to_string(),
                 class_spec_name: "".to_string(),
@@ -614,7 +611,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000002.0,
+                uid: 10_000_002.0,
                 name: "Name Frost Mage".to_string(),
                 class_name: "Frost Mage".to_string(),
                 class_spec_name: "".to_string(),
@@ -630,7 +627,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000003.0,
+                uid: 10_000_003.0,
                 name: "Name Wind Knight".to_string(),
                 class_name: "Wind Knight".to_string(),
                 class_spec_name: "".to_string(),
@@ -646,7 +643,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000004.0,
+                uid: 10_000_004.0,
                 name: "Name Verdant Oracle".to_string(),
                 class_name: "Verdant Oracle".to_string(),
                 class_spec_name: "".to_string(),
@@ -662,7 +659,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000005.0,
+                uid: 10_000_005.0,
                 name: "Name Heavy Guardian".to_string(),
                 class_name: "Heavy Guardian".to_string(),
                 class_spec_name: "".to_string(),
@@ -678,7 +675,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000006.0,
+                uid: 10_000_006.0,
                 name: "Name Marksman".to_string(),
                 class_name: "Marksman".to_string(),
                 class_spec_name: "".to_string(),
@@ -694,7 +691,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000007.0,
+                uid: 10_000_007.0,
                 name: "Name Shield Knight".to_string(),
                 class_name: "Shield Knight".to_string(),
                 class_spec_name: "".to_string(),
@@ -710,7 +707,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000008.0,
+                uid: 10_000_008.0,
                 name: "Name Beat Performer".to_string(),
                 class_name: "Beat Performer".to_string(),
                 class_spec_name: "".to_string(),
@@ -726,7 +723,7 @@ pub fn get_test_player_window(
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10000009.0,
+                uid: 10_000_009.0,
                 name: "Blank Class".to_string(),
                 class_name: "blank".to_string(),
                 class_spec_name: "".to_string(),
@@ -748,10 +745,7 @@ pub fn get_test_player_window(
 #[tauri::command]
 #[specta::specta]
 #[allow(clippy::too_many_lines)]
-pub fn get_test_skill_window(
-    state: tauri::State<'_, EncounterMutex>,
-    player_uid: String,
-) -> Result<SkillsWindow, String> {
+pub fn get_test_skill_window(_player_uid: String,) -> Result<SkillsWindow, String> {
     Ok(SkillsWindow {
         curr_player: vec![PlayerRow {
             uid: 10_000_001.0,

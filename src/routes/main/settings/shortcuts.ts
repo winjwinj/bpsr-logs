@@ -52,8 +52,7 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "enableClickthrough":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
-            setClickthrough(true);
+            await setClickthrough(true);
           }
         });
         break;
@@ -61,8 +60,7 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "disableClickthrough":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
-            setClickthrough(false);
+            await setClickthrough(false);
           }
         });
         break;
@@ -70,8 +68,7 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "toggleClickthrough":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
-            toggleClickthrough();
+            await toggleClickthrough();
           }
         });
         break;
@@ -79,7 +76,7 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "resetEncounter":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            commands.resetEncounter();
+            await commands.resetEncounter();
           }
         });
         break;

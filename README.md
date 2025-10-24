@@ -13,18 +13,26 @@ https://github.com/winjwinj/bpsr-logs/releases/latest
 
 \*currently only Windows 7 and up is supported
 
-# Is it safe?
+# Is it bannable?
 
-<img width="802" height="247" alt="490572596-ee6d0a33-40cc-4ff6-8d4e-8ecb1c323e37" src="https://github.com/user-attachments/assets/eb24a4e3-41e3-47ae-b314-61c798b4e3d5" />
+![validation.png](readme/validation.png)
+![validation_remove_name.png](readme/validation_remove_name.png)
+*name blocked by their request. You can ping me on the Discord and I can give you the full screenshot.
+
+# Does it mine Bitcoin?
+No, it doesn’t mine Bitcoin. If it did, I'd be answering this from my private island.
+
+Serious Answer:
+1. Code is open source, you can read it yourself
+1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njcducb/
+1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njn0xr3/
+1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njf92bs/
+1. https://tauri.by.simon.hyll.nu/concepts/security/false_positives/
+    ![false_positive.png](readme/false_positive.png)
 
 # Roadmap
 
 https://discord.com/channels/1417447600608510015/1417450802561290280
-
-# Supporting the Project
-1. Join the [Discord](https://discord.gg/Tcc54ST5BU)
-    1. Suggest feedback: [feedback](https://discord.com/channels/1417447600608510015/1417450920861765632)
-    1. Report bugs: reporting [bugs](https://discord.com/channels/1417447600608510015/1417450966747451422)
 
 # Contributing to the Project
 1. Framework: [Tauri 2.0](https://v2.tauri.app/start/)
@@ -32,6 +40,7 @@ https://discord.com/channels/1417447600608510015/1417450802561290280
     1. Backend: [Rust](https://www.rust-lang.org/learn)
 1. Join the [Discord](https://discord.gg/Tcc54ST5BU)
     1. Get the Developers role and talk in the [chat](https://discord.com/channels/1417447600608510015/1417458452661407754)
+    1. Ping me on Discord to make sure I'm not already working on the feature
 
 ## Prerequisites
 1. Some version of [Node.js](https://nodejs.org/en/download/)
@@ -101,7 +110,7 @@ A: TBD: You can change whatever column you want to show in the settings. TIP: yo
 
 ### Q: Help, my issue isn't listed here. Or you've tried all these solutions, and it still doesn't work.
 
-A: Search the message history in the [#troubleshooting](https://discord.com/channels/1417447600608510015/1417453093078962216) channel on [Discord](https://discord.gg/Tcc54ST5BU). If you can't find a solution there, please describe your issue.
+A: Search the message history in the [#i-need-help](https://discord.com/channels/1417447600608510015/1427022345482014900) channel on [Discord](https://discord.gg/Tcc54ST5BU). If you can't find a solution there, please describe your issue.
 
 ### Q: Is it really "blazingly fast"?
 
@@ -111,11 +120,11 @@ A: [Yes.](https://i.imgur.com/QsLAntt.png)
 
 ## In-game Overlay
 
-<img width="984" height="510" alt="image" src="https://github.com/user-attachments/assets/f53667ae-19b2-408f-b98e-2325b04466ec" />
+![in_game_overlay.png](readme/in_game_overlay.png)
 
 ## Streamer Mode
 
-<img width="984" height="510" alt="image" src="https://github.com/user-attachments/assets/02d2eb42-cb33-42e2-9a60-5886261af2d8" />
+![streamer_mode.png](readme/streamer_mode.png)
 
 ## Damage Breakdown with DPS Charts
 
@@ -123,7 +132,7 @@ TBD
 
 ## Skill Breakdown
 
-<img width="984" height="510" alt="image" src="https://github.com/user-attachments/assets/feb1d04c-90c7-4eb9-9f37-0070e238097c" />
+![skill_breakdown.png](readme/skill_breakdown.png)
 
 ## Buff Uptime Tracking
 

@@ -5,7 +5,6 @@ mod packets;
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
-use specta_typescript::{BigIntExportBehavior, Typescript};
 use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
@@ -15,7 +14,6 @@ use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, Windo
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
-use tauri_plugin_updater::UpdaterExt;
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
 use tauri_specta::{collect_commands, Builder};
 
@@ -50,9 +48,12 @@ pub fn run() {
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
-    builder.export(Typescript::new().bigint(BigIntExportBehavior::Number),
-                   "../src/lib/bindings.ts")
-           .expect("Failed to export typescript bindings");
+    {
+        use specta_typescript::{BigIntExportBehavior, Typescript};
+        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number),
+                       "../src/lib/bindings.ts")
+               .expect("Failed to export typescript bindings");
+    }
 
     let tauri_builder = tauri::Builder::default()
         .plugin(tauri_plugin_autostart::Builder::new().build())
@@ -99,14 +100,15 @@ pub fn run() {
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
     build(tauri_builder).expect("error while running tauri application")
-                        .run(|_app_handle, event| {
-                            if let tauri::RunEvent::ExitRequested { api, .. } = event {
+                        .run(|_app_handle, event| { // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
+                            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
                                 stop_windivert();
                                 info!("App is closing! Cleaning up resources...");
                             }
                         });
 }
 
+#[allow(unused)]
 fn start_windivert() {
     let status = Command::new("sc")
         .args(["create", "windivert", "type=", "kernel", "binPath=", "WinDivert64.sys", "start=", "demand"])
@@ -138,7 +140,10 @@ fn remove_windivert() {
     }
 }
 
+#[cfg(not(debug_assertions))]
 async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
+    use tauri_plugin_updater::UpdaterExt;
+
     if let Some(update) = app.updater()?.check().await? {
         let mut downloaded = 0;
         update
@@ -167,24 +172,21 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
         .to_string();
     let log_file_name = format!("log v{app_version} {pst_time} PST", );
 
-    let mut tauri_log = tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-        .clear_targets()
-        .with_colors(ColoredLevelConfig::default())
-        .targets([
-            #[cfg(debug_assertions)]
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
-                .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                file_name: Some(log_file_name),
-            }),
-        ])
-        .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-        .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)); // keep the last 10 logs
-    #[cfg(not(debug_assertions))]
-    {
-        tauri_log = tauri_log.max_file_size(1_073_741_824 /* 1 gb */);
-    }
-    app.plugin(tauri_log.build())?;
+    app.plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+                   .clear_targets()
+                   .with_colors(ColoredLevelConfig::default())
+                   .targets([
+                       #[cfg(debug_assertions)]
+                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
+                           .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                           file_name: Some(log_file_name),
+                       }),
+                   ])
+                   .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+                   .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)) // keep the last 10 logs
+                   .max_file_size(1_073_741_824 /* 1 gb */)
+                   .build())?;
     Ok(())
 }
 

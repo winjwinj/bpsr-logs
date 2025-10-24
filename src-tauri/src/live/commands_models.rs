@@ -1,7 +1,3 @@
-use crate::WINDOW_LIVE_LABEL;
-use tauri::Manager;
-use window_vibrancy::apply_blur;
-
 // f64 is used here even when it doesn't make sense due to limitations with serde serializing u128 as a JSON number instead of a string
 
 #[derive(specta::Type, serde::Serialize, serde::Deserialize, Debug, Default, Clone)]

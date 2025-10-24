@@ -1,12 +1,12 @@
 use crate::live::opcodes_models::EncounterMutex;
 use crate::live::opcodes_process::{
     on_server_change, process_aoi_sync_delta, process_sync_container_data,
-    process_sync_container_dirty_data, process_sync_near_entities, process_sync_to_me_delta_info,
+    process_sync_near_entities, process_sync_to_me_delta_info,
 };
 use crate::packets;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
-use log::{error, info, trace, warn};
+use log::{info, warn};
 use prost::Message;
 use tauri::{AppHandle, Manager};
 
@@ -70,23 +70,23 @@ pub async fn start(app_handle: AppHandle) {
                     warn!("Error processing SyncContainerData.. ignoring.");
                 }
             }
-            packets::opcodes::Pkt::SyncContainerDirtyData => {
-                // info!("Received {op:?}");
-                // trace!("Received {op:?} and data {data:?}");
-                let sync_container_dirty_data =
-                    match blueprotobuf::SyncContainerDirtyData::decode(Bytes::from(data)) {
-                        Ok(v) => v,
-                        Err(e) => {
-                            warn!("Error decoding SyncContainerDirtyData.. ignoring: {e}");
-                            continue;
-                        }
-                    };
-                let encounter_state = app_handle.state::<EncounterMutex>();
-                let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_container_dirty_data(&mut encounter_state, sync_container_dirty_data).is_none() {
-                    warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
-                }
-            }
+            // packets::opcodes::Pkt::SyncContainerDirtyData => {
+            //     // info!("Received {op:?}");
+            //     // trace!("Received {op:?} and data {data:?}");
+            //     let sync_container_dirty_data =
+            //         match blueprotobuf::SyncContainerDirtyData::decode(Bytes::from(data)) {
+            //             Ok(v) => v,
+            //             Err(e) => {
+            //                 warn!("Error decoding SyncContainerDirtyData.. ignoring: {e}");
+            //                 continue;
+            //             }
+            //         };
+            //     let encounter_state = app_handle.state::<EncounterMutex>();
+            //     let mut encounter_state = encounter_state.lock().unwrap();
+            //     if process_sync_container_dirty_data(&mut encounter_state, sync_container_dirty_data).is_none() {
+            //         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
+            //     }
+            // }
             packets::opcodes::Pkt::SyncServerTime => {
                 // info!("Received {op:?}");
                 // trace!("Received {op:?} and data {data:?}");

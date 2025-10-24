@@ -1,4 +1,3 @@
-use crate::live::opcodes_models;
 use crate::live::opcodes_models::class::{
     get_class_id_from_spec, get_class_spec_from_skill_id, ClassSpec,
 };
@@ -9,7 +8,6 @@ use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType, SyncContainerData};
 use log::info;
-use serde::Serialize;
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -37,12 +35,7 @@ pub fn process_sync_near_entities(
             EEntityType::EntChar => {
                 process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs)
             }
-            EEntityType::EntMonster => process_monster_attrs(
-                target_entity,
-                target_uid,
-                pkt_entity.attrs?.attrs,
-                &encounter.local_player,
-            ),
+            EEntityType::EntMonster => process_monster_attrs(target_entity, pkt_entity.attrs?.attrs, &encounter.local_player),
             _ => {}
         }
     }
@@ -70,12 +63,12 @@ pub fn process_sync_container_data(
     Some(())
 }
 
-pub fn process_sync_container_dirty_data(
-    encounter: &mut Encounter,
-    sync_container_dirty_data: blueprotobuf::SyncContainerDirtyData,
-) -> Option<()> {
-    Some(())
-}
+// pub fn process_sync_container_dirty_data(
+//     encounter: &mut Encounter,
+//     sync_container_dirty_data: blueprotobuf::SyncContainerDirtyData,
+// ) -> Option<()> {
+//     Some(())
+// }
 
 pub fn process_sync_to_me_delta_info(
     encounter: &mut Encounter,
@@ -106,15 +99,8 @@ pub fn process_aoi_sync_delta(
 
     if let Some(attrs_collection) = aoi_sync_delta.attrs {
         match target_entity_type {
-            EEntityType::EntChar => {
-                process_player_attrs(&mut target_entity, target_uid, attrs_collection.attrs)
-            }
-            EEntityType::EntMonster => process_monster_attrs(
-                &mut target_entity,
-                target_uid,
-                attrs_collection.attrs,
-                &encounter.local_player,
-            ),
+            EEntityType::EntChar => process_player_attrs(&mut target_entity, target_uid, attrs_collection.attrs),
+            EEntityType::EntMonster => process_monster_attrs(&mut target_entity, attrs_collection.attrs, &encounter.local_player),
             _ => {}
         }
     }
@@ -271,12 +257,11 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
 
 fn process_monster_attrs(
     monster_entity: &mut Entity,
-    monster_uid: i64,
     attrs: Vec<Attr>,
     local_player: &SyncContainerData,
 ) {
     for attr in attrs {
-        let Some(mut raw_bytes) = attr.raw_data else {
+        let Some(raw_bytes) = attr.raw_data else {
             continue;
         };
         let Some(attr_id) = attr.id else { continue };

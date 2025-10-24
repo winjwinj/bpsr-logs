@@ -17,5 +17,3 @@ pbjson-types = "0.8.0"
 serde = "1.0.219"
 specta = "2.0.0-rc.21"
 tauri-specta = "2.0.0-rc.21"
-
-

@@ -16,9 +16,9 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2.4.1", features = [] }
+tauri = "2.9.0"
 
 [dependencies]
-# image-png for frontend
 tauri = { version = "2.9.0", features = ["tray-icon", "image-png"] }
 serde = { version = "1.0.219", features = ["derive"] }
 tauri-plugin-single-instance = "2.3.4"
@@ -44,7 +44,7 @@ tauri-plugin-svelte = "3"
 tauri-plugin-os = "2"
 chrono-tz = "0.10.4"
 reqwest = { version = "0.12", features = ["json"] }
-anyhow = "1.0.100"
+
 [dependencies.blueprotobuf-lib]
 path = "./src/blueprotobuf-lib"
 

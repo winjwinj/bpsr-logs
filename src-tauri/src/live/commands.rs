@@ -1,15 +1,15 @@
-use std::sync::MutexGuard;
 use crate::WINDOW_LIVE_LABEL;
 use crate::live::commands_models::{
     HeaderInfo, PlayerRow, PlayerRows, PlayersWindow, SkillRow, SkillsWindow,
 };
 use crate::live::opcodes_models::{Encounter, EncounterMutex, Skill, class};
+use crate::packets::packet_capture::request_restart;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
+use std::sync::MutexGuard;
 use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
-use crate::packets::packet_capture::request_restart;
 
 fn prettify_name(player_uid: i64, local_player_uid: i64, player_name: &String) -> String {
     if player_uid == local_player_uid && player_name.is_empty() {
@@ -425,7 +425,9 @@ pub fn get_heal_skill_window(
 #[specta::specta]
 #[allow(clippy::cast_precision_loss)]
 #[allow(clippy::too_many_lines)]
-pub fn get_test_player_window(state: tauri::State<'_, EncounterMutex>) -> Result<PlayersWindow, String> {
+pub fn get_test_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+) -> Result<PlayersWindow, String> {
     Ok(PlayersWindow {
         player_rows: vec![
             PlayerRow {
@@ -584,24 +586,22 @@ pub fn get_test_skill_window(
     player_uid: String,
 ) -> Result<SkillsWindow, String> {
     Ok(SkillsWindow {
-        curr_player: vec![
-            PlayerRow {
-                uid: 10_000_001.0,
-                name: "Name Stormblade".to_string(),
-                class_name: "Stormblade".to_string(),
-                class_spec_name: "Iaido".to_string(),
-                ability_score: 1500.0,
-                total_dmg: 100_000.0,
-                dps: 10_000.6,
-                dmg_pct: 90.0,
-                crit_rate: 0.25,
-                crit_dmg_rate: 2.0,
-                lucky_rate: 0.10,
-                lucky_dmg_rate: 1.5,
-                hits: 200.0,
-                hits_per_minute: 3.3,
-            }
-        ],
+        curr_player: vec![PlayerRow {
+            uid: 10_000_001.0,
+            name: "Name Stormblade".to_string(),
+            class_name: "Stormblade".to_string(),
+            class_spec_name: "Iaido".to_string(),
+            ability_score: 1500.0,
+            total_dmg: 100_000.0,
+            dps: 10_000.6,
+            dmg_pct: 90.0,
+            crit_rate: 0.25,
+            crit_dmg_rate: 2.0,
+            lucky_rate: 0.10,
+            lucky_dmg_rate: 1.5,
+            hits: 200.0,
+            hits_per_minute: 3.3,
+        }],
         skill_rows: vec![
             SkillRow {
                 uid: 3602.0,

@@ -1,7 +1,7 @@
-use tauri::generate_context;
-use tauri::Builder as TauriBuilder;
-use log::info;
 use crate::stop_windivert;
+use log::info;
+use tauri::Builder as TauriBuilder;
+use tauri::generate_context;
 
 // https://discord.com/channels/616186924390023171/1400593249063927960/1400593249063927960
 // RustRover + Tauri does not play nicely if this is not extracted into its own file.

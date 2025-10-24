@@ -62,6 +62,7 @@
     totalDps: 0,
     totalDmg: 0,
     elapsedMs: 0,
+    timeLastCombatPacketMs: 0,
   });
   let isEncounterPaused = $state(false);
   const {

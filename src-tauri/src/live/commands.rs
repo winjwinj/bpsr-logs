@@ -1,12 +1,11 @@
-use crate::WINDOW_LIVE_LABEL;
 use crate::live::commands_models::{
     HeaderInfo, PlayerRow, PlayerRows, PlayersWindow, SkillRow, SkillsWindow,
 };
-use crate::live::opcodes_models::{Encounter, EncounterMutex, Skill, class};
+use crate::live::opcodes_models::{class, Encounter, EncounterMutex, Skill};
 use crate::packets::packet_capture::request_restart;
+use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
-use std::sync::MutexGuard;
 use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};

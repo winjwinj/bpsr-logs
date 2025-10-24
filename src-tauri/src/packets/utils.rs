@@ -1,4 +1,4 @@
-use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
+use byteorder::{BigEndian, ReadBytesExt};
 use etherparse::TcpSlice;
 use std::collections::BTreeMap;
 use std::io::{Cursor, Read};

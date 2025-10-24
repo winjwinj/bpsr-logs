@@ -66,8 +66,7 @@ pub async fn start(app_handle: AppHandle) {
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 encounter_state.local_player = sync_container_data.clone();
-                if process_sync_container_data(&mut encounter_state, sync_container_data).is_none()
-                {
+                if process_sync_container_data(&mut encounter_state, sync_container_data).is_none() {
                     warn!("Error processing SyncContainerData.. ignoring.");
                 }
             }
@@ -84,12 +83,7 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_container_dirty_data(
-                    &mut encounter_state,
-                    sync_container_dirty_data,
-                )
-                .is_none()
-                {
+                if process_sync_container_dirty_data(&mut encounter_state, sync_container_dirty_data).is_none() {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                 }
             }
@@ -120,9 +114,7 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info)
-                    .is_none()
-                {
+                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info).is_none() {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                 }
             }

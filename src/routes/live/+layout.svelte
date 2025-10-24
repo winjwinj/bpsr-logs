@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { commands } from "$lib/bindings";
   import { SETTINGS } from "$lib/settings-store";
   import { cn } from "$lib/utils";
   import { onMount } from "svelte";
@@ -19,13 +18,6 @@
     window.location.reload();
   }
 
-  $effect(() => {
-    if (SETTINGS.accessibility.state.blur) {
-      commands.enableBlur();
-    } else {
-      commands.disableBlur();
-    }
-  });
 </script>
 
 <!-- flex flex-col min-h-screen → makes the page stretch full height and stack header, body, and footer. -->

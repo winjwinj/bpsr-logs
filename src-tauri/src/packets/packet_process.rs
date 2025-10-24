@@ -216,10 +216,7 @@ mod tests {
         use std::fs;
         let (packet_sender, _) = tokio::sync::mpsc::channel::<(Pkt, Vec<u8>)>(1);
         let filename = "src/packets/test_add_packet.json";
-        let v: Vec<u8> = serde_json::from_str(
-            &fs::read_to_string(filename).expect(&format!("Failed to open {filename}")),
-        )
-        .expect("Invalid JSON in test_packet.json");
+        let v: Vec<u8> = serde_json::from_str(&fs::read_to_string(filename).expect(&format!("Failed to open {filename}"))).expect("Invalid JSON in test_packet.json");
         process_packet(BinaryReader::from(v), packet_sender).await;
     }
 }

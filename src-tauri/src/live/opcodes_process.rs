@@ -1,9 +1,9 @@
 use crate::live::opcodes_models;
 use crate::live::opcodes_models::class::{
-    ClassSpec, get_class_id_from_spec, get_class_spec_from_skill_id,
+    get_class_id_from_spec, get_class_spec_from_skill_id, ClassSpec,
 };
 use crate::live::opcodes_models::{
-    Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_CROWDSOURCE, Skill, attr_type,
+    attr_type, Encounter, Entity, Skill, MONSTER_NAMES, MONSTER_NAMES_CROWDSOURCE,
 };
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
@@ -318,13 +318,13 @@ fn process_monster_attrs(
                         // TODO: this position is snapshot based on when SyncContainerData is detected (e.g. line change), figure out if there's a way to get the monster's position instead
                         let pos_x = local_player.v_data.as_ref().and_then(|v| {
                             v.scene_data
-                                .as_ref()
-                                .and_then(|v| v.pos.as_ref().and_then(|s| s.x))
+                             .as_ref()
+                             .and_then(|v| v.pos.as_ref().and_then(|s| s.x))
                         });
                         let pos_y = local_player.v_data.as_ref().and_then(|v| {
                             v.scene_data
-                                .as_ref()
-                                .and_then(|v| v.pos.as_ref().and_then(|s| s.y))
+                             .as_ref()
+                             .and_then(|v| v.pos.as_ref().and_then(|s| s.y))
                         });
                         if let (Some(hp_pct), Some(line), Some(pos_x), Some(pos_y)) =
                             (hp_pct, line, pos_x, pos_y)

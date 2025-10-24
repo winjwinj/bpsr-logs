@@ -17,6 +17,7 @@
   "dependencies": {
     "@tanstack/table-core": "^8.21.3",
     "@tauri-apps/api": "^2.9.0",
+    "@tauri-apps/plugin-autostart": "^2.5.0",
     "@tauri-apps/plugin-clipboard-manager": "^2.3.0",
     "@tauri-apps/plugin-global-shortcut": "^2.3.0",
     "@tauri-apps/plugin-opener": "^2",

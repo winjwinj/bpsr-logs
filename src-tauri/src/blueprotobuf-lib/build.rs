@@ -1,6 +1,4 @@
-﻿use protox::prost::Message;
-
-// todo: any way to hide .proto file but keep the generated file?
+﻿// todo: any way to hide .proto file but keep the generated file?
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // let proto_files = &[
     //     "src/BlueProtobuf.proto",

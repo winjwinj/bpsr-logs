@@ -1,6 +1,5 @@
 import { version } from '@tauri-apps/plugin-os';
 import { RuneStore } from '@tauri-store/svelte';
-import Accessibility from '../routes/main/settings/accessibility.svelte';
 
 const IS_WIN_11 = parseInt(version().split(".")[2] || "0", 10) >= 22000;
 
@@ -27,7 +26,8 @@ const DEFAULT_SETTINGS = {
     relativeToTopHealPlayer: false,
     relativeToTopHealSkill: false,
     resetElapsed: 60,
-    shortenAbilityScore: false, 
+    shortenAbilityScore: false,
+    autostart: true,
   },
   accessibility: {
     blur: !IS_WIN_11,

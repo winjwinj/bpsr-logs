@@ -1,5 +1,7 @@
+use tauri_build::is_dev;
+
 fn main() {
-    if tauri::is_dev() {
+    if is_dev() {
         tauri_build::build();
     } else {
         // Run app as admin by default

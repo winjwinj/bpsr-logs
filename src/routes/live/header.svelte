@@ -65,7 +65,7 @@
     elapsedMs: 0,
     elapsedMsBoss: 0,
     totalDmgBoss: 0,
-    totalDpsBoss: 0
+    totalDpsBoss: 0,
     timeLastCombatPacketMs: 0,
   });
   let isEncounterPaused = $state(false);

@@ -7,6 +7,7 @@ use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType, SyncContainerData};
 use log::info;
+use serde::Serialize;
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -250,26 +251,55 @@ fn process_monster_attrs(monster_entity: &mut Entity, monster_uid: i64, attrs: V
         };
         let Some(attr_id) = attr.id else { continue };
 
-        // info!("{} {}", attr_type::(attr_id),hex::encode(raw_bytes.read_remaining()));
         match attr_id {
             attr_type::ATTR_ID => monster_entity.monster_id = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
             #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_HP => {
                 let curr_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                // Crowdsource Data: if people abuse this, we will change the security
+                // const ENDPOINT: &str = "http://localhost:3000";
+                const ENDPOINT: &str = "https://overinhibited-hoplitic-eugena.ngrok-free.dev/api/create-hp-report";
+                const API_KEY: &str = "2xn9pyigyjbdn1lzbiqijuzvbcauqgmfxej0j2ggqpp3yysj7t";
                 if monster_entity.curr_hp != curr_hp { // only record if hp changed
                     let monster_id = monster_entity.monster_id;
                     if MONSTER_NAMES_CROWDSOURCE.get(&monster_id).is_some() { // only record if it's a world boss, magical creature, etc.
-                        let monster_name = MONSTER_NAMES.get(&monster_id);
-                        let hp_pct = if monster_entity.max_hp != 0 {
-                            Some(monster_entity.curr_hp as f64 / monster_entity.max_hp as f64)
+                        let monster_name = MONSTER_NAMES.get(&monster_id).map(|s| s.as_str()).unwrap_or("Unknown Monster Name");
+                        let hp_pct = if monster_entity.curr_hp > 0 && monster_entity.max_hp > 0 {
+                            Some((monster_entity.curr_hp * 100 / monster_entity.max_hp).clamp(0, 100))
                         } else {
                             None
                         };
                         let line = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|s| s.line_id));
+                        // TODO: this position is snapshot based on when SyncContainerData is detected (e.g. line change), figure out if there's a way to get the monster's position instead
                         let pos_x = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.x)));
                         let pos_y = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.y)));
-                        if let (Some(monster_name), Some(hp_pct), Some(line), Some(pos_x), Some(pos_y)) = (monster_name, hp_pct, line, pos_x, pos_y) {
-                            info!("Found crowdsourced monster with name {monster_name} - ID {monster_id} - HP {hp_pct} on line {line} and pos ({pos_x},{pos_y})");
+                        if let (Some(hp_pct), Some(line), Some(pos_x), Some(pos_y)) = (hp_pct, line, pos_x, pos_y) {
+                            info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {hp_pct}% on line {line} and pos ({pos_x},{pos_y})");
+                            let body = serde_json::json!({
+                                "monster_id": monster_id,
+                                "hp_pct": hp_pct,
+                                "line": line,
+                                "pos_x": pos_x,
+                                "pos_y": pos_y,
+                            });
+                            let _ = tokio::spawn(async move {
+                                let client = reqwest::Client::new();
+                                let res = client.post(ENDPOINT)
+                                    .header("X-API-Key", API_KEY)
+                                    .json(&body)
+                                    .send()
+                                    .await;
+                                match res {
+                                    Ok(resp) => {
+                                        if resp.status() != reqwest::StatusCode::OK {
+                                            log::error!("POST monster info failed: status {}", resp.status());
+                                        }
+                                    },
+                                    Err(e) => {
+                                        log::error!("Failed to POST monster info: {}", e);
+                                    }
+                                }
+                            });
                         }
                     }
                 }

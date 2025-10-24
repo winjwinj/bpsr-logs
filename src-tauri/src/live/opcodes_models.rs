@@ -51,7 +51,6 @@ pub struct Entity {
     pub lucky_total_dmg_boss: i64,
     pub lucky_hits_dmg_boss: i64,
     pub hits_dmg_boss: i64,
-    pub skill_uid_to_dmg_skill_boss: HashMap<i32, Skill>,
     // For Monsters
     pub curr_hp: i32,
     pub max_hp: i32,

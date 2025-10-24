@@ -1,7 +1,7 @@
 use crate::packets;
 use crate::packets::opcodes::{FragmentType, Pkt};
 use crate::packets::utils::BinaryReader;
-use log::{debug, info, trace};
+use log::{debug};
 
 pub async fn process_packet(
     mut packets_reader: BinaryReader,

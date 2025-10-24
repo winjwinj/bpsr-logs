@@ -8,7 +8,6 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-/.idea
 /.vscode
 /.tauri
 /src-tauri/2

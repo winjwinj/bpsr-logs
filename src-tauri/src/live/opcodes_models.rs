@@ -2,9 +2,7 @@ use crate::live::opcodes_models::class::ClassSpec;
 use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
-use std::sync::{LazyLock, Mutex};
-use windivert::WinDivert;
-use windivert::layer::NetworkLayer;
+use std::sync::Mutex;
 
 #[derive(Debug, Default, Clone)]
 pub struct Encounter {
@@ -54,6 +52,10 @@ pub struct Entity {
     pub lucky_hits_dmg_boss: i64,
     pub hits_dmg_boss: i64,
     pub skill_uid_to_dmg_skill_boss: HashMap<i32, Skill>,
+    // For Monsters
+    pub curr_hp: i32,
+    pub max_hp: i32,
+    pub monster_id: i32,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -72,31 +74,41 @@ pub struct Skill {
     pub hits_boss: i64,
 }
 
-static SKILL_NAMES: LazyLock<HashMap<String, String>> = LazyLock::new(|| {
+static SKILL_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
     let data = include_str!("../../../src/lib/data/json/SkillName.json");
-    serde_json::from_str(data).expect("invalid skills.json")
+    serde_json::from_str(data).expect("invalid SkillName.json")
 });
 
 impl Skill {
     pub fn get_skill_name(skill_uid: i32) -> String {
         SKILL_NAMES
-            .get(&skill_uid.to_string())
+            .get(&skill_uid)
             .cloned()
             .unwrap_or_else(|| format!("UNKNOWN SKILL ({skill_uid})"))
     }
 }
 
+pub static MONSTER_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+    let data = include_str!("../../../src/lib/data/json/MonsterName.json");
+    serde_json::from_str(data).expect("invalid MonsterName.json")
+});
+
+pub static MONSTER_NAMES_CROWDSOURCE: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+    let data = include_str!("../../../src/lib/data/json/MonsterNameCrowdsource.json");
+    serde_json::from_str(data).expect("invalid MonsterName.json")
+});
+
 pub mod attr_type {
     pub const ATTR_NAME: i32 = 0x01;
-    // pub const ATTR_ID: i32 = 0x0a;
+    pub const ATTR_ID: i32 = 0x0a;
     pub const ATTR_PROFESSION_ID: i32 = 0xdc;
     pub const ATTR_FIGHT_POINT: i32 = 0x272e;
     pub const ATTR_LEVEL: i32 = 0x2710;
     // pub const ATTR_RANK_LEVEL: i32 = 0x274c;
     // pub const ATTR_CRI: i32 = 0x2b66;
     // pub const ATTR_LUCKY: i32 = 0x2b7a;
-    // pub const ATTR_HP: i32 = 0x2c2e;
-    // pub const ATTR_MAX_HP: i32 = 0x2c38;
+    pub const ATTR_HP: i32 = 0x2c2e;
+    pub const ATTR_MAX_HP: i32 = 0x2c38;
     // pub const ATTR_ELEMENT_FLAG: i32 = 0x646d6c;
     // pub const ATTR_REDUCTION_LEVEL: i32 = 0x64696d;
     // pub const ATTR_REDUCTION_ID: i32 = 0x6f6c65;

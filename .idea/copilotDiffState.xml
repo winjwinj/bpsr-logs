@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/INSTALLATION.md">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/INSTALLATION.md" />
+              <option name="updatedContent" value="# Installation Instructions&#10;&#10;1. Download and install [bpsr-logs___VERSION___x64-setup.exe](https://github.com/winjwinj/bpsr-logs/releases/download/app-v__VERSION__/bpsr-logs___VERSION___x64-setup.exe)&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

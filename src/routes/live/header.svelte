@@ -26,6 +26,7 @@
   let hasReset = false;
 
   async function fetchData() {
+    // TODO: there's a bug here where if headerInfo.timeLastCombatPacketMs is 0 at initial load it just resets instantly
     if (SETTINGS.general.state.resetElapsed && !hasReset && Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000) {
       hasReset = true;
       console.log(`Resetting as ${SETTINGS.general.state.resetElapsed}s has passed.`);
@@ -62,7 +63,7 @@
     totalDps: 0,
     totalDmg: 0,
     elapsedMs: 0,
-    timeLastCombatPacketMs: 0,
+    timeLastCombatPacketMs: Date.now(), // TODO: tempfix
   });
   let isEncounterPaused = $state(false);
   const {

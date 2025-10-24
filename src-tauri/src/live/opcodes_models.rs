@@ -157,29 +157,29 @@ pub mod class {
 
     pub fn get_class_spec_from_skill_id(skill_id: i32) -> ClassSpec {
         match skill_id {
-            1714 | 1734 => ClassSpec::Iaido,
-            44701 | 179906 => ClassSpec::Moonstrike,
+            1714 | 1734 => ClassSpec::Iaido, // Iaido Slash, Thunder Iaido Slash
+            44701 | 179906 => ClassSpec::Moonstrike, // AI: Moon Blade, Moonstrike Whirl
 
-            120901 | 120902 => ClassSpec::Icicle,
-            1241 => ClassSpec::Frostbeam,
+            120901 | 120902 => ClassSpec::Icicle, // AI: Through the ice spear, AI: Ice spear
+            1241 => ClassSpec::Frostbeam, // Frostbeam
 
-            1405 | 1418 => ClassSpec::Vanguard,
-            1419 => ClassSpec::Skyward,
+            1405 | 1418 => ClassSpec::Vanguard, // Gale Thrust, Gale Thrust
+            1419 => ClassSpec::Skyward, // Skyfall
 
-            1518 | 1541 | 21402 => ClassSpec::Smite,
-            20301 => ClassSpec::Lifebind,
+            1518 | 1541 | 21402 => ClassSpec::Smite, // Wild Bloom, Wild Bloom, AI: Blooming wildly
+            20301 => ClassSpec::Lifebind, // AI: Life blooms
 
-            199902 => ClassSpec::Earthfort,
-            1930 | 1931 | 1934 | 1935 => ClassSpec::Block,
+            199902 => ClassSpec::Earthfort, // Rage Burst Stone
+            1930 | 1931 | 1934 | 1935 => ClassSpec::Block, // Countercrush, Countercrush, Countercrush, Countercrush
 
-            220112 | 2203622 => ClassSpec::Falconry,
-            2292 | 1700820 | 1700825 | 1700827 => ClassSpec::Wildpack,
+            220112 | 2203622 => ClassSpec::Falconry, // AI: Photoelectric cracks, AI: Light lip sputtering
+            2292 | 1700820 | 1700825 | 1700827 => ClassSpec::Wildpack, // Phantom Direwolves, Wild Wolf - Assist, Pet - Foxen Pounce, Pet - Basic Attack
 
-            2406 => ClassSpec::Recovery,
-            2405 => ClassSpec::Shield,
+            2405 => ClassSpec::Recovery, // Valor Bash
+            2406 => ClassSpec::Shield, // Vanguard Strike
 
-            2306 => ClassSpec::Dissonance,
-            2307 | 2361 | 55302 => ClassSpec::Concerto,
+            2306 => ClassSpec::Dissonance, // Amplified Beat
+            2307 | 2361 | 55302 => ClassSpec::Concerto, // Healing Beat, Healing Beat copy, AI: Healing beat
             _ => ClassSpec::Unknown,
         }
     }

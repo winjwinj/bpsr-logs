@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { commands } from "$lib/bindings";
   import { SETTINGS } from "$lib/settings-store";
   import { cn } from "$lib/utils";
   import { onMount } from "svelte";
@@ -20,14 +19,6 @@
   function refreshWindow() {
     window.location.reload();
   }
-
-  $effect(() => {
-    if (SETTINGS.accessibility.state.blur) {
-      commands.enableBlur();
-    } else {
-      commands.disableBlur();
-    }
-  });
 
   const appWebview = getCurrentWebviewWindow();
   appWebview.listen<string>("navigate", (event) => {

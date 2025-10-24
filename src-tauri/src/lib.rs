@@ -1,6 +1,6 @@
+mod build_app;
 mod live;
 mod packets;
-mod build_app;
 
 use crate::build_app::build_and_run;
 use crate::live::opcodes_models::EncounterMutex;
@@ -14,9 +14,11 @@ use tauri::menu::{Menu, MenuBuilder, MenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
+use tauri_plugin_svelte::ManagerExt;
 use tauri_plugin_updater::UpdaterExt;
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
 use tauri_specta::{Builder, collect_commands};
+use crate::live::commands::{disable_blur, enable_blur};
 
 pub const WINDOW_LIVE_LABEL: &str = "live";
 pub const WINDOW_MAIN_LABEL: &str = "main";
@@ -57,6 +59,7 @@ pub fn run() {
         .expect("Failed to export typescript bindings");
 
     let tauri_builder = tauri::Builder::default()
+        .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .invoke_handler(builder.invoke_handler())
@@ -77,11 +80,11 @@ pub fn run() {
 
             let app_handle = app.handle().clone();
 
-            // Setup logs
+            // Setup stuff
             setup_logs(&app_handle);
-
-            // Setup tray icon
             setup_tray(&app_handle).expect("failed to setup tray");
+            setup_autostart(&app_handle).expect("failed to setup blur");
+            setup_blur(&app_handle).expect("failed to setup blur");
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
@@ -101,7 +104,18 @@ pub fn run() {
 }
 
 fn start_windivert() {
-    let status = Command::new("sc").args(["create", "windivert", "type=", "kernel", "binPath=", "WinDivert64.sys", "start=", "demand"]).status();
+    let status = Command::new("sc")
+        .args([
+            "create",
+            "windivert",
+            "type=",
+            "kernel",
+            "binPath=",
+            "WinDivert64.sys",
+            "start=",
+            "demand",
+        ])
+        .status();
     if status.is_ok_and(|status| status.success()) {
         info!("started driver");
     } else {
@@ -119,7 +133,9 @@ fn stop_windivert() {
 }
 
 fn remove_windivert() {
-    let status = Command::new("sc").args(["delete", "windivert", "start=", "demand"]).status();
+    let status = Command::new("sc")
+        .args(["delete", "windivert", "start=", "demand"])
+        .status();
     if status.is_ok_and(|status| status.success()) {
         info!("deleted driver");
     } else {
@@ -148,23 +164,24 @@ async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     Ok(())
 }
 
-fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()>  {
+fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
     let app_version = &app.package_info().version;
     let pst_time = chrono::Utc::now()
         .with_timezone(&chrono_tz::America::Los_Angeles)
         .format("%m-%d-%Y %H_%M_%S")
         .to_string();
-    let log_file_name = format!("log v{app_version} {pst_time} PST", );
+    let log_file_name = format!("log v{app_version} {pst_time} PST",);
 
     let mut tauri_log = tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
         .clear_targets()
         .with_colors(ColoredLevelConfig::default())
         .targets([
             #[cfg(debug_assertions)]
-            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout).filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+            tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
+                .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
             tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
                 file_name: Some(log_file_name),
-            })
+            }),
         ])
         .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
         .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)); // keep the last 10 logs
@@ -177,13 +194,14 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()>  {
 }
 
 fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
-    fn show_window(window: &tauri::WebviewWindow) {
-        window.show().unwrap();
-        window.unminimize().unwrap();
-        window.set_focus().unwrap();
+    fn show_window(window: &tauri::WebviewWindow) -> tauri::Result<()> {
+        window.show()?;
+        window.unminimize()?;
+        window.set_focus()?;
         if window.label() == WINDOW_LIVE_LABEL {
-            window.set_ignore_cursor_events(false).unwrap();
+            window.set_ignore_cursor_events(false)?;
         }
+        Ok(())
     }
 
     let menu = MenuBuilder::new(app)
@@ -207,7 +225,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 else {
                     return;
                 };
-                show_window(&main_meter_window);
+                show_window(&main_meter_window).expect("failed to show main meter window");
             }
             "show-live" => {
                 let tray_app_handle = tray_app.app_handle();
@@ -215,7 +233,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 else {
                     return;
                 };
-                show_window(&live_meter_window);
+                show_window(&live_meter_window).expect("failed to show live meter window");
             }
             "reset" => {
                 let Some(live_meter_window) = tray_app.get_webview_window(WINDOW_LIVE_LABEL) else {
@@ -230,10 +248,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 live_meter_window
                     .set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 }))
                     .unwrap();
-                live_meter_window.show().unwrap();
-                live_meter_window.unminimize().unwrap();
-                live_meter_window.set_focus().unwrap();
-                live_meter_window.set_ignore_cursor_events(false).unwrap();
+                show_window(&live_meter_window).expect("failed to show live meter window");
             }
             "clickthrough" => {
                 let Some(live_meter_window) = tray_app.get_webview_window(WINDOW_LIVE_LABEL) else {
@@ -259,10 +274,43 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 let Some(live_meter_window) = app.get_webview_window(WINDOW_LIVE_LABEL) else {
                     return;
                 };
-                show_window(&live_meter_window);
+                show_window(&live_meter_window).expect("failed to show live meter window");
             }
         })
         .build(app)?;
+    Ok(())
+}
+
+fn setup_autostart(app: &tauri::AppHandle) -> anyhow::Result<()> {
+    #[cfg(desktop)]
+    {
+        use tauri_plugin_autostart::MacosLauncher;
+        use tauri_plugin_autostart::ManagerExt;
+
+        app.plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec![]),
+        )).expect("failed to setup autostart plugin");
+
+        // Get the autostart manager
+        let autostart_manager = app.autolaunch();
+        // Enable autostart
+        if app.svelte().get::<bool>("general", "autostart")? {
+            let _ = autostart_manager.enable();
+        } else {
+            let _ = autostart_manager.disable();
+        }
+        println!("registered for autostart? {}", autostart_manager.is_enabled()?);
+    }
+    Ok(())
+}
+
+fn setup_blur(app: &tauri::AppHandle) -> anyhow::Result<()> {
+    if app.svelte().get::<bool>("accessibility", "blur")? {
+        enable_blur(app.clone());
+    } else {
+        disable_blur(app.clone());
+    }
     Ok(())
 }
 

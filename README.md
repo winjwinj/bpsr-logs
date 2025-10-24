@@ -22,7 +22,7 @@ https://github.com/winjwinj/bpsr-logs/releases/latest
 # Does it mine Bitcoin?
 No, it doesn’t mine Bitcoin. If it did, I'd be answering this from my private island.
 
-Serious Answer:
+## Serious Answer:
 1. Code is open source, you can read it yourself
 1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njcducb/
 1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njn0xr3/
@@ -30,6 +30,11 @@ Serious Answer:
 1. https://tauri.by.simon.hyll.nu/concepts/security/false_positives/
     ![false_positive.png](readme/false_positive.png)
 
+## How to fix:
+1. Temporarily Disable Windows Defender
+   1. [windowsdefender://threatsettings/](windowsdefender://threatsettings/)
+   1. [https://support.microsoft.com/en-us/windows/virus-and-threat-protection-in-the-windows-security-app-1362f4cd-d71a-b52a-0b66-c2820032b65e#ID0EFH](https://support.microsoft.com/en-us/windows/virus-and-threat-protection-in-the-windows-security-app-1362f4cd-d71a-b52a-0b66-c2820032b65e#ID0EFH)
+1. Don't use Brave 
 # Roadmap
 
 https://discord.com/channels/1417447600608510015/1417450802561290280

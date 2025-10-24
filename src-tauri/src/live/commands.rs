@@ -59,8 +59,8 @@ pub fn copy_sync_container_data(app: tauri::AppHandle) {
 pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<HeaderInfo, String> {
     let encounter = state.lock().unwrap();
 
-    if encounter.total_dmg == 0 {
-        return Err("No damage found".to_string());
+    if encounter.time_fight_start_ms == 0 {
+        return Err("Fight not started nothing to update".to_string());
     }
 
     let time_elapsed_ms = encounter
@@ -70,7 +70,7 @@ pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<Header
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
     let time_elapsed_ms_boss = encounter
-        .time_last_combat_packet_ms
+        .time_last_combat_packet_ms_boss
         .saturating_sub(encounter.time_fight_start_ms_boss);
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs_boss = time_elapsed_ms_boss as f64 / 1000.0;
@@ -81,6 +81,7 @@ pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<Header
         total_dmg: encounter.total_dmg as f64,
         elapsed_ms: time_elapsed_ms as f64,
         time_last_combat_packet_ms: encounter.time_last_combat_packet_ms as f64,
+        time_last_combat_packet_ms_boss: encounter.time_last_combat_packet_ms_boss as f64,
         total_dmg_boss: encounter.total_dmg_boss as f64,
         total_dps_boss: nan_is_zero(encounter.total_dmg_boss as f64 / time_elapsed_secs_boss),
         elapsed_ms_boss: time_elapsed_ms_boss as f64,
@@ -192,7 +193,7 @@ pub fn get_dps_player_window_boss(
     let encounter = state.lock().unwrap();
 
     let time_elapsed_ms = encounter
-        .time_last_combat_packet_ms
+        .time_last_combat_packet_ms_boss
         .saturating_sub(encounter.time_fight_start_ms_boss);
 
     let mut dps_window = PlayersWindow {
@@ -356,7 +357,7 @@ pub fn get_dps_skill_window_boss(
         .ok_or_else(|| format!("Entity not found for player_uid {player_uid}"))?;
 
     let time_elapsed_ms = encounter
-        .time_last_combat_packet_ms
+        .time_last_combat_packet_ms_boss
         .saturating_sub(encounter.time_fight_start_ms_boss);
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;

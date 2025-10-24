@@ -247,14 +247,17 @@ pub fn process_aoi_sync_delta(
         .duration_since(UNIX_EPOCH)
         .expect("Time went backwards")
         .as_millis();
-    if encounter.time_fight_start_ms == Default::default() {
-        if boss {
+    if encounter.time_fight_start_ms == Default::default() { 
+        encounter.time_fight_start_ms = timestamp_ms
+    }
+    if encounter.time_fight_start_ms_boss == Default::default() && boss {
             encounter.time_fight_start_ms_boss = timestamp_ms
-        } else {
-            encounter.time_fight_start_ms = timestamp_ms
-        } 
+    }
+    if boss {
+        encounter.time_last_combat_packet_ms_boss = timestamp_ms;
     }
     encounter.time_last_combat_packet_ms = timestamp_ms;
+    
     Some(())
 }
 

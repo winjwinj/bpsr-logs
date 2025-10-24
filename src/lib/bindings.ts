@@ -107,7 +107,7 @@ async getDpsSkillWindowBoss(playerUidStr: string) : Promise<Result<SkillsWindow,
 
 /** user-defined types **/
 
-export type HeaderInfo = { totalDps: number; totalDmg: number; elapsedMs: number; timeLastCombatPacketMs: number; totalDpsBoss: number; totalDmgBoss: number; elapsedMsBoss: number }
+export type HeaderInfo = { totalDps: number; totalDmg: number; elapsedMs: number; timeLastCombatPacketMs: number; timeLastCombatPacketMsBoss: number; totalDpsBoss: number; totalDmgBoss: number; elapsedMsBoss: number }
 export type PlayerRow = { uid: number; name: string; className: string; classSpecName: string; abilityScore: number; totalDmg: number; dps: number; dmgPct: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: number; hitsPerMinute: number }
 export type PlayersWindow = { playerRows: PlayerRow[] }
 export type SkillRow = { uid: number; name: string; totalDmg: number; dps: number; dmgPct: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: number; hitsPerMinute: number }

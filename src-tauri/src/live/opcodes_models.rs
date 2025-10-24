@@ -16,6 +16,7 @@ pub struct Encounter {
     pub local_player: SyncContainerData,
     pub total_dmg_boss: i64,
     pub time_fight_start_ms_boss: u128,        // in ms
+    pub time_last_combat_packet_ms_boss: u128, // in ms
 }
 
 pub type EncounterMutex = Mutex<Encounter>;

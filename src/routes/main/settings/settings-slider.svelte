@@ -21,7 +21,7 @@
     {/if}
   </div>
   <div class="flex flex-row">
-    <Slider type="single" bind:value {...restProps} min={0} max={120} step={5} class="max-w-[70%]" />
+    <Slider type="single" bind:value min={0} max={120} step={5} {...restProps} class="max-w-[70%]" />
     <div class="ml-4">
       <span>{value}s</span>
     </div>

@@ -44,9 +44,11 @@ tauri-plugin-svelte = "3"
 tauri-plugin-os = "2"
 chrono-tz = "0.10.4"
 reqwest = { version = "0.12", features = ["json"] }
+anyhow = "1.0.100"
 [dependencies.blueprotobuf-lib]
 path = "./src/blueprotobuf-lib"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-autostart = "2"
 tauri-plugin-global-shortcut = "2"
 tauri-plugin-updater = "2"

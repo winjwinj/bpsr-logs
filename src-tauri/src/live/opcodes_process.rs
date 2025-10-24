@@ -171,7 +171,7 @@ pub fn process_aoi_sync_delta(
             attacker_entity.total_heal += actual_value;
             skill.hits += 1;
             skill.total_value += actual_value;
-            info!(
+            trace!(
                 "heal packet: {attacker_uid} to {target_uid}: {actual_value} heal {} total heal",
                 skill.total_value
             );
@@ -202,7 +202,7 @@ pub fn process_aoi_sync_delta(
             attacker_entity.total_dmg += actual_value;
             skill.hits += 1;
             skill.total_value += actual_value;
-            info!(
+	        trace!(
                 "dmg packet: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
@@ -332,14 +332,14 @@ fn process_monster_attrs(
                         }
                     }
                 }
-                monster_entity.curr_hp = curr_hp;
+	            monster_entity.curr_hp = curr_hp;
             }
-            #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_MAX_HP => {
-                monster_entity.max_hp =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32
-            }
-            _ => (),
+	        #[allow(clippy::cast_possible_truncation)]
+	        attr_type::ATTR_MAX_HP => {
+		        monster_entity.max_hp =
+			        prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32
+	        }
+	        _ => (),
         }
     }
 }

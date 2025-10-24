@@ -3,6 +3,8 @@ use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use std::default::Default;
+use log::{info, trace};
 
 #[derive(Debug, Default, Clone)]
 pub struct Encounter {
@@ -17,9 +19,10 @@ pub struct Encounter {
 }
 
 impl Encounter {
-	pub fn resetStats(&mut self) {
+	pub fn reset_stats(&mut self) {
 		self.total_dmg = 0;
 		self.total_heal = 0;
+		self.time_fight_start_ms = Default::default();
 
 		self.entity_uid_to_entity.iter_mut().for_each(|(_, entity)| {
 			// Damage
@@ -39,7 +42,7 @@ impl Encounter {
 			// For Monsters
 			entity.curr_hp = 0;
 			entity.max_hp = 0;
-			entity.monster_id = 0;
+			entity.last_notified_hp = None;
 		})
 	}
 }
@@ -74,6 +77,60 @@ pub struct Entity {
     pub curr_hp: i32,
     pub max_hp: i32,
     pub monster_id: i32,
+	pub last_notified_hp: Option<i32>,
+}
+
+impl Entity {
+	fn hp_percent(max_hp: i32, new_hp: i32) -> Option<i32> {
+		if max_hp == 0 || new_hp == 0 {
+			None
+		} else {
+			let percent = (new_hp as f32 * 100f32 / max_hp as f32) as i32;
+			Some(percent.clamp(0, 100))
+		}
+	}
+
+	pub fn can_notify(&mut self, new_hp: i32) -> Option<i32> {
+		trace!(
+            "Found crowdsourced monster with Name {} - new {} - old {} - max {} - last {:?}",
+            self.name,
+			new_hp,
+			self.curr_hp,
+			self.max_hp,
+			self.last_notified_hp,
+        );
+
+		const HP_PERCENT_MOD: i32 = 10;
+		const HP_PERCENT_COUNTED_AS_DEAD: i32 = 1;
+
+		let hp_percent = Self::hp_percent(self.max_hp, new_hp).unwrap_or(0);
+
+		if self.last_notified_hp.is_none() {
+			self.last_notified_hp = Some(new_hp);
+			return Some(hp_percent / HP_PERCENT_MOD * HP_PERCENT_MOD);
+		}
+		if self.last_notified_hp.unwrap() == 0 {
+			return None;
+		}
+
+		let hp_diff = self.last_notified_hp.unwrap() - new_hp;
+		let hp_diff_percent = Self::hp_percent(self.max_hp, hp_diff).unwrap_or(0);
+		if hp_diff_percent < HP_PERCENT_MOD {
+			return None;
+		}
+
+		if hp_percent % HP_PERCENT_MOD != 0 && hp_percent > HP_PERCENT_COUNTED_AS_DEAD {
+			return None;
+		}
+
+		if hp_percent <= HP_PERCENT_COUNTED_AS_DEAD {
+			self.last_notified_hp = Some(0);
+			return Some(0);
+		}
+
+		self.last_notified_hp = Some(new_hp);
+		Some(hp_percent)
+	}
 }
 
 #[derive(Debug, Default, Clone)]

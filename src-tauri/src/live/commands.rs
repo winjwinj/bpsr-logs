@@ -91,7 +91,7 @@ pub fn hard_reset(state: tauri::State<'_, EncounterMutex>) {
 pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
     let mut encounter = state.lock().unwrap();
 
-	encounter.resetStats();
+	encounter.reset_stats();
     // encounter.clone_from(&Encounter::default());
 
     info!("encounter reset");

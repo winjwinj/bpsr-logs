@@ -7,7 +7,6 @@ use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
 use std::process::Command;
 
-use crate::live::commands::{disable_blur, enable_blur};
 use tauri::menu::MenuBuilder;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};

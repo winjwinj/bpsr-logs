@@ -9,12 +9,15 @@ use bytes::Bytes;
 use log::{info, warn};
 use prost::Message;
 use tauri::{AppHandle, Manager};
+use tauri_plugin_svelte::ManagerExt;
 
 pub async fn start(app_handle: AppHandle) {
     // todo: add app_handle?
     // https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
     // 1. Start capturing packets and send to rx
     let mut rx = packets::packet_capture::start_capture(); // Since live meter is not critical, it's ok to just log it // TODO: maybe bubble an error up to the frontend instead?
+
+    let is_bptimer_enabled = app_handle.svelte().get_or::<bool>("integration", "bptimer", true);
 
     // 2. Use the channel to receive packets back and process them
     while let Some((op, data)) = rx.recv().await {
@@ -47,7 +50,7 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_near_entities(&mut encounter_state, sync_near_entities).is_none() {
+                if process_sync_near_entities(&mut encounter_state, sync_near_entities, is_bptimer_enabled).is_none() {
                     warn!("Error processing SyncNearEntities.. ignoring.");
                 }
             }
@@ -114,7 +117,7 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info).is_none() {
+                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info, is_bptimer_enabled).is_none() {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                 }
             }
@@ -132,7 +135,7 @@ pub async fn start(app_handle: AppHandle) {
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 for aoi_sync_delta in sync_near_delta_info.delta_infos {
-                    if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta).is_none() {
+                    if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta, is_bptimer_enabled).is_none() {
                         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                     }
                 }

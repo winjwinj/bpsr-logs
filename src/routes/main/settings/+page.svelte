@@ -2,6 +2,7 @@
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import Accessibility from "./accessibility.svelte";
   import General from "./general.svelte";
+  import Integration from "./integration.svelte";
   import Live from "./live.svelte";
   import Misc from "./misc.svelte";
   import Shortcuts from "./shortcuts.svelte";
@@ -12,6 +13,7 @@
     { id: "shortcuts", label: "Shortcuts" },
     { id: "live", label: "Live" },
     { id: "misc", label: "Misc" },
+    { id: "integration", label: "Integration" },
   ];
 </script>
 
@@ -26,4 +28,5 @@
   <Shortcuts />
   <Live />
   <Misc />
+  <Integration />
 </Tabs.Root>

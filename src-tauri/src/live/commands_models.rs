@@ -7,6 +7,10 @@ pub struct HeaderInfo {
     pub total_dmg: f64,
     pub elapsed_ms: f64,
     pub time_last_combat_packet_ms: f64,
+    pub time_last_combat_packet_ms_boss: f64,
+    pub total_dps_boss: f64,
+    pub total_dmg_boss: f64,
+    pub elapsed_ms_boss: f64,
 }
 
 #[derive(specta::Type, serde::Serialize, serde::Deserialize, Debug, Default, Clone)]

@@ -1,6 +1,7 @@
 use crate::live::opcodes_models::class::{
     get_class_id_from_spec, get_class_spec_from_skill_id, ClassSpec,
 };
+use crate::live::utils::{is_boss};
 use crate::live::opcodes_models::{
     attr_type, Encounter, Entity, Skill, MONSTER_NAMES, MONSTER_NAMES_CROWDSOURCE,
 };
@@ -87,7 +88,7 @@ pub fn process_aoi_sync_delta(
 ) -> Option<()> {
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
-
+    let boss = is_boss(target_uid);
     // Process attributes
     let target_entity_type = EEntityType::from(target_uuid);
     let mut target_entity = encounter
@@ -186,16 +187,35 @@ pub fn process_aoi_sync_delta(
             let flag = sync_damage_info.type_flag.unwrap_or_default();
             let is_crit = (flag & CRIT_BIT) != 0; // No idea why, but SyncDamageInfo.is_crit isn't correct
             if is_crit {
+                if boss {
+                    attacker_entity.crit_hits_dmg_boss += 1;
+                    attacker_entity.crit_total_dmg_boss += actual_value;
+                    skill.crit_hits_boss += 1;
+                    skill.crit_total_value_boss += actual_value;
+                }
                 attacker_entity.crit_hits_dmg += 1;
                 attacker_entity.crit_total_dmg += actual_value;
                 skill.crit_hits += 1;
                 skill.crit_total_value += actual_value;
             }
             if is_lucky {
+                if boss {
+                    attacker_entity.lucky_hits_dmg_boss += 1;
+                    attacker_entity.lucky_total_dmg_boss += actual_value;
+                    skill.lucky_hits_boss += 1;
+                    skill.lucky_total_value_boss += actual_value;
+                }
                 attacker_entity.lucky_hits_dmg += 1;
                 attacker_entity.lucky_total_dmg += actual_value;
                 skill.lucky_hits += 1;
                 skill.lucky_total_value += actual_value;
+            }
+            if boss {
+                encounter.total_dmg_boss += actual_value;
+                attacker_entity.hits_dmg_boss += 1;
+                attacker_entity.total_dmg_boss += actual_value;
+                skill.hits_boss += 1;
+                skill.total_value_boss += actual_value;
             }
             encounter.total_dmg += actual_value;
             attacker_entity.hits_dmg += 1;
@@ -206,7 +226,7 @@ pub fn process_aoi_sync_delta(
                 "dmg packet: {attacker_uid} to {target_uid}: {actual_value} dmg {} total dmg",
                 skill.total_value
             );
-        }
+        } 
     }
 
     // Figure out timestamps
@@ -214,10 +234,17 @@ pub fn process_aoi_sync_delta(
         .duration_since(UNIX_EPOCH)
         .expect("Time went backwards")
         .as_millis();
-    if encounter.time_fight_start_ms == Default::default() {
-        encounter.time_fight_start_ms = timestamp_ms;
+    if encounter.time_fight_start_ms == Default::default() { 
+        encounter.time_fight_start_ms = timestamp_ms
+    }
+    if encounter.time_fight_start_ms_boss == Default::default() && boss {
+            encounter.time_fight_start_ms_boss = timestamp_ms
+    }
+    if boss {
+        encounter.time_last_combat_packet_ms_boss = timestamp_ms;
     }
     encounter.time_last_combat_packet_ms = timestamp_ms;
+    
     Some(())
 }
 

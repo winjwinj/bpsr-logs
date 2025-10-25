@@ -30,7 +30,20 @@
                 "minWidth": 650,
                 "minHeight": 300,
                 "visible": false
-            }
+            },
+            {
+                "title": "BPSR Logs - Live2",
+                "label": "additional",
+                "url": "live",
+                "shadow": false,
+                "decorations": false,
+                "transparent": true,
+                "minWidth": 400,
+                "minHeight": 120,
+                "alwaysOnTop": true,
+                "skipTaskbar": true,
+                "visible": false 
+             }
         ],
         "security": {
             "csp": null

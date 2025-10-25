@@ -14,6 +14,9 @@ pub struct Encounter {
     pub local_player_uid: i64,
     pub entity_uid_to_entity: HashMap<i64, Entity>, // key: entity uid
     pub local_player: SyncContainerData,
+    pub total_dmg_boss: i64,
+    pub time_fight_start_ms_boss: u128,        // in ms
+    pub time_last_combat_packet_ms_boss: u128, // in ms
 }
 
 pub type EncounterMutex = Mutex<Encounter>;
@@ -42,6 +45,13 @@ pub struct Entity {
     pub lucky_hits_heal: i64,
     pub hits_heal: i64,
     pub skill_uid_to_heal_skill: HashMap<i32, Skill>,
+    // Boss Damage
+    pub total_dmg_boss: i64,
+    pub crit_total_dmg_boss: i64,
+    pub crit_hits_dmg_boss: i64,
+    pub lucky_total_dmg_boss: i64,
+    pub lucky_hits_dmg_boss: i64,
+    pub hits_dmg_boss: i64,
     // For Monsters
     pub curr_hp: i32,
     pub max_hp: i32,
@@ -56,6 +66,12 @@ pub struct Skill {
     pub lucky_total_value: i64,
     pub lucky_hits: i64,
     pub hits: i64,
+    pub total_value_boss: i64,
+    pub crit_total_value_boss: i64,
+    pub crit_hits_boss: i64,
+    pub lucky_total_value_boss: i64,
+    pub lucky_hits_boss: i64,
+    pub hits_boss: i64,
 }
 
 static SKILL_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {

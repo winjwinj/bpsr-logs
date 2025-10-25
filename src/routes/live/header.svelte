@@ -9,6 +9,7 @@
   import PointerIcon from "virtual:icons/lucide/pointer";
   import SettingsIcon from "virtual:icons/lucide/settings";
   import RefreshCwIcon from "virtual:icons/lucide/refresh-cw";
+  import PlusIcon from "virtual:icons/lucide/plus";
 
   import { onMount, tick } from "svelte";
   import { commands, type HeaderInfo } from "$lib/bindings";
@@ -16,6 +17,7 @@
   import AbbreviatedNumber from "$lib/components/abbreviated-number.svelte";
   import { emitTo } from "@tauri-apps/api/event";
   import { SETTINGS } from "$lib/settings-store";
+  import {page} from '$app/state';
 
   onMount(() => {
     fetchData();
@@ -26,8 +28,7 @@
   let hasReset = false;
 
   async function fetchData() {
-    // TODO: there's a bug here where if headerInfo.timeLastCombatPacketMs is 0 at initial load it just resets instantly
-    if (SETTINGS.general.state.resetElapsed && !hasReset && Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000) {
+    if (headerInfo.timeLastCombatPacketMs != 0 && SETTINGS.general.state.resetElapsed && !hasReset && Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000) {
       hasReset = true;
       console.log(`Resetting as ${SETTINGS.general.state.resetElapsed}s has passed.`);
       commands.hardReset(); // TODO: this is temporary, switch to resetEncounter once bug is fixed.
@@ -63,7 +64,11 @@
     totalDps: 0,
     totalDmg: 0,
     elapsedMs: 0,
-    timeLastCombatPacketMs: Date.now(), // TODO: tempfix
+    elapsedMsBoss: 0,
+    totalDmgBoss: 0,
+    totalDpsBoss: 0,
+    timeLastCombatPacketMs: 0,
+    timeLastCombatPacketMsBoss: 0,
   });
   let isEncounterPaused = $state(false);
   const {
@@ -79,7 +84,16 @@
       await mainWindow?.unminimize();
       await mainWindow?.show();
       await mainWindow?.setFocus();
-      await emitTo("main", "navigate", "/main/settings"); // main/+layout.svelte
+      await emitTo("main", "navigate", "/main/settings");
+    }
+  }
+
+  async function openAdditionalWindow() {
+    const mainWindow = await WebviewWindow.getByLabel("additional");
+    if (mainWindow) {
+      await mainWindow?.unminimize();
+      await mainWindow?.show();
+      await emitTo("additional", "navigate", "/live/boss");
     }
   }
 </script>
@@ -95,13 +109,22 @@
       }}
       {@attach tooltip(() => "Temp Fix: Hard Reset")}><RefreshCwIcon /></button
     >
+    {#if page.route.id =="/live/boss" || page.route.id =="/live/boss/skills"}
+    <span {@attach tooltip(() => "Time Elapsed")}>{formatElapsed(headerInfo.elapsedMsBoss)}</span>
+    <span><span {@attach tooltip(() => "Total Damage Dealt")}>T.DMG</span> <span {@attach tooltip(() => headerInfo.totalDmgBoss.toLocaleString())}><AbbreviatedNumber num={Number(headerInfo.totalDmgBoss)} /></span></span>
+    <span><span {@attach tooltip(() => "Total Damage per Second")}>T.DPS</span> <span {@attach tooltip(() => headerInfo.totalDpsBoss.toLocaleString())}><AbbreviatedNumber num={headerInfo.totalDpsBoss} /></span></span>
+    {:else}
     <span {@attach tooltip(() => "Time Elapsed")}>{formatElapsed(headerInfo.elapsedMs)}</span>
     <span><span {@attach tooltip(() => "Total Damage Dealt")}>T.DMG</span> <span {@attach tooltip(() => headerInfo.totalDmg.toLocaleString())}><AbbreviatedNumber num={Number(headerInfo.totalDmg)} /></span></span>
     <span><span {@attach tooltip(() => "Total Damage per Second")}>T.DPS</span> <span {@attach tooltip(() => headerInfo.totalDps.toLocaleString())}><AbbreviatedNumber num={headerInfo.totalDps} /></span></span>
+    {/if}
   </span>
   <!-- Right side -->
   <span class="flex gap-1">
     <!-- TODO: add responsive clicks, toaster -->
+    {#if appWindow.label == "live"}
+      <button onclick={() => openAdditionalWindow()} {@attach tooltip(() => "Open Additional Window")}><PlusIcon /></button>
+    {/if}
     <button
       onclick={async () => {
         const prev = SETTINGS.general.state.showOthersName;

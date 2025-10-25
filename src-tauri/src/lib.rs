@@ -7,13 +7,14 @@ use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
 use std::process::Command;
 
-use crate::live::commands::{disable_blur, enable_blur};
 use tauri::menu::MenuBuilder;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
+use tauri_plugin_updater::UpdaterExt;
+use crate::live::commands::{disable_blur, enable_blur};
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
 use tauri_specta::{collect_commands, Builder};
 
@@ -45,6 +46,8 @@ pub fn run() {
             live::commands::hard_reset,
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
+            live::commands::get_dps_player_window_boss,
+            live::commands::get_dps_skill_window_boss,
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
@@ -180,7 +183,7 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
         .with_timezone(&chrono_tz::America::Los_Angeles)
         .format("%m-%d-%Y %H_%M_%S")
         .to_string();
-    let log_file_name = format!("log v{app_version} {pst_time} PST", );
+    let log_file_name = format!("log v{app_version} {pst_time} PST",);
 
     app.plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
                    .clear_targets()

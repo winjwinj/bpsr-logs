@@ -79,7 +79,7 @@
       await mainWindow?.unminimize();
       await mainWindow?.show();
       await mainWindow?.setFocus();
-      await emitTo("main", "navigate", "/main/settings");
+      await emitTo("main", "navigate", "/main/settings"); // main/+layout.svelte
     }
   }
 </script>

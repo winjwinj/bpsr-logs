@@ -37,6 +37,8 @@ const DEFAULT_SETTINGS = {
     showLiveMeter: "",
     hideLiveMeter: "",
     toggleLiveMeter: "",
+    showDpsTab: "",
+    showHealTab: "",
     enableClickthrough: "",
     disableClickthrough: "",
     toggleClickthrough: "",

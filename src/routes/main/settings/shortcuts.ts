@@ -1,6 +1,7 @@
 import { commands } from "$lib/bindings";
 import { SETTINGS } from "$lib/settings-store";
 import { setClickthrough, toggleClickthrough } from "$lib/utils.svelte";
+import { emitTo } from "@tauri-apps/api/event";
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { register, unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 
@@ -17,7 +18,6 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "showLiveMeter":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
             const liveWindow = await WebviewWindow.getByLabel("live");
             await liveWindow?.show();
           }
@@ -27,7 +27,6 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "hideLiveMeter":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
             const liveWindow = await WebviewWindow.getByLabel("live");
             await liveWindow?.hide();
           }
@@ -37,7 +36,6 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
       case "toggleLiveMeter":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {
-            console.log(`Triggered ${cmdId}`);
             const liveWindow = await WebviewWindow.getByLabel("live");
             const isVisible = await liveWindow?.isVisible();
             if (isVisible) {
@@ -45,6 +43,22 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
             } else {
               await liveWindow?.show();
             }
+          }
+        });
+        break;
+      
+      case "showDpsTab":
+        await register(shortcutKey, async (event) => {
+          if (event.state === "Pressed") {
+            await emitTo("live", "navigate", "/live/dps/");
+          }
+        });
+        break;
+
+      case "showHealTab":
+        await register(shortcutKey, async (event) => {
+          if (event.state === "Pressed") {
+            await emitTo("live", "navigate", "/live/heal/");
           }
         });
         break;

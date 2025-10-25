@@ -4,6 +4,8 @@
   import { onMount } from "svelte";
   import Footer from "./footer.svelte";
   import Header from "./header.svelte";
+  import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+  import { goto } from "$app/navigation";
 
   let { children } = $props();
   let screenshotDiv: HTMLDivElement | undefined = $state();
@@ -11,13 +13,17 @@
   // TODO: workaround, need to wait for svelte tanstack devs to respond
   onMount(() => {
     const interval = setInterval(refreshWindow, 5 * 60 * 1000); // refresh every 5m
-
     return () => clearInterval(interval);
   });
   function refreshWindow() {
     window.location.reload();
   }
 
+  const appWebview = getCurrentWebviewWindow();
+  appWebview.listen<string>("navigate", (event) => {
+    const route = event.payload;
+    goto(route);
+  });
 </script>
 
 <!-- flex flex-col min-h-screen → makes the page stretch full height and stack header, body, and footer. -->

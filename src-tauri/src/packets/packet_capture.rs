@@ -8,8 +8,8 @@ use etherparse::TransportSlice::Tcp;
 use log::{debug, error, info, warn};
 use once_cell::sync::OnceCell;
 use tokio::sync::watch;
-use windivert::prelude::WinDivertFlags;
 use windivert::WinDivert;
+use windivert::prelude::WinDivertFlags;
 
 // Global sender for restart signal
 static RESTART_SENDER: OnceCell<watch::Sender<bool>> = OnceCell::new();
@@ -53,7 +53,7 @@ async fn read_packets(
             return;
         }
     }
-        .expect("Failed to initialize WinDivert"); // if windivert doesn't work just exit early - todo: maybe we want to log this with a match so its clearer?
+    .expect("Failed to initialize WinDivert"); // if windivert doesn't work just exit early - todo: maybe we want to log this with a match so its clearer?
     let mut windivert_buffer = vec![0u8; 10 * 1024 * 1024];
     let mut known_server: Option<Server> = None; // nothing at start
     let mut tcp_reassembler: TCPReassembler = TCPReassembler::new();

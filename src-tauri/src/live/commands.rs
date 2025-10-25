@@ -1,9 +1,9 @@
+use crate::WINDOW_LIVE_LABEL;
 use crate::live::commands_models::{
     HeaderInfo, PlayerRow, PlayerRows, PlayersWindow, SkillRow, SkillsWindow,
 };
-use crate::live::opcodes_models::{class, Encounter, EncounterMutex, Skill};
+use crate::live::opcodes_models::{Encounter, EncounterMutex, Skill, class};
 use crate::packets::packet_capture::request_restart;
-use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
 use tauri::Manager;
@@ -578,7 +578,7 @@ pub fn get_test_player_window() -> Result<PlayersWindow, String> {
 #[tauri::command]
 #[specta::specta]
 #[allow(clippy::too_many_lines)]
-pub fn get_test_skill_window(_player_uid: String,) -> Result<SkillsWindow, String> {
+pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String> {
     Ok(SkillsWindow {
         curr_player: vec![PlayerRow {
             uid: 10_000_001.0,

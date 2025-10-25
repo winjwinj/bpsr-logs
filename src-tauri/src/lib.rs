@@ -53,12 +53,12 @@ pub fn run() {
     #[cfg(debug_assertions)] // <- Only export on non-release builds
     {
         use specta_typescript::{BigIntExportBehavior, Typescript};
-        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number),
-                       "../src/lib/bindings.ts")
+        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number), "../src/lib/bindings.ts")
                .expect("Failed to export typescript bindings");
     }
 
     let tauri_builder = tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
@@ -103,7 +103,8 @@ pub fn run() {
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
     build(tauri_builder).expect("error while running tauri application")
-                        .run(|_app_handle, event| { // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
+                        .run(|_app_handle, event| {
+                            // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
                             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
                                 stop_windivert();
                                 info!("App is closing! Cleaning up resources...");
@@ -114,7 +115,16 @@ pub fn run() {
 #[allow(unused)]
 fn start_windivert() {
     let status = Command::new("sc")
-        .args(["create", "windivert", "type=", "kernel", "binPath=", "WinDivert64.sys", "start=", "demand"])
+        .args([
+            "create",
+            "windivert",
+            "type=",
+            "kernel",
+            "binPath=",
+            "WinDivert64.sys",
+            "start=",
+            "demand",
+        ])
         .status();
     if status.is_ok_and(|status| status.success()) {
         info!("started driver");
@@ -296,8 +306,8 @@ fn setup_autostart(app: &tauri::AppHandle) {
 
     let autostart_manager = app.autolaunch();
     if let Err(e) = if app.svelte().get_or::<bool>("general", "autostart", true) {
-        autostart_manager.enable() }
-    else {
+        autostart_manager.enable()
+    } else {
         autostart_manager.disable()
     } {
         warn!("failed to set autostart: {e}");

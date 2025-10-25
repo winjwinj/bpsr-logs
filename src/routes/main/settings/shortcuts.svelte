@@ -125,6 +125,14 @@
       label: "Toggle Live Meter",
     },
     {
+      id: "showDpsTab",
+      label: "Show DPS Tab",
+    },
+    {
+      id: "showHealTab",
+      label: "Show Heal Tab",
+    },
+    {
       id: "enableClickthrough",
       label: "Enable Clickthrough",
     },

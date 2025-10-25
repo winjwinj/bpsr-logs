@@ -5143,7 +5143,7 @@
             "ChineseShort": "冷酷征伐",
             "AIEnglishShort": "Furious battle"
         },
-        "EnglishShortManualOverride": null,
+        "EnglishShortManualOverride": "",
         "Comment": null
     },
     "2420": {
@@ -11538,7 +11538,7 @@
             "ChineseShort": "冷酷征伐",
             "AIEnglishShort": "Furious battle"
         },
-        "EnglishShortManualOverride": null,
+        "EnglishShortManualOverride": "",
         "Comment": null
     },
     "55413": {
@@ -11592,8 +11592,8 @@
             "ChineseShort": "冷酷征伐",
             "AIEnglishShort": "Furious battle"
         },
-        "EnglishShortManualOverride": null,
-        "Comment": null
+        "EnglishShortManualOverride": "Zeal Crusade - Ruthless Rewind",
+        "Comment": "https://discord.com/channels/1417447600608510015/1431222920356823111/1431442519224483903"
     },
     "55418": {
         "BuffTable_Clean.json": {
@@ -11746,8 +11746,8 @@
         "BuffTable_Clean.json": {
             "AIEnglishShort": "Ruthless Crusade damage buff"
         },
-        "EnglishShortManualOverride": null,
-        "Comment": null
+        "EnglishShortManualOverride": "Zeal Crusade",
+        "Comment": "https://discord.com/channels/1417447600608510015/1431222920356823111/1431442519224483903"
     },
     "100101": {
         "SkillTable_Clean.json": {

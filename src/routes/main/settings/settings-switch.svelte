@@ -3,16 +3,18 @@
   import type { WithoutChildrenOrChild } from "$lib/utils";
   import { Switch as SwitchPrimitive } from "bits-ui";
 
+  export type SettingsSwitchProps = {
+    label: string;
+    description?: string | undefined;
+    checked: boolean;
+  } & WithoutChildrenOrChild<SwitchPrimitive.RootProps>;
+
   let {
     label = "",
     description = "",
     checked = $bindable(false),
     ...restProps
-  }: {
-    label: string;
-    description?: string | undefined;
-    checked: boolean;
-  } & WithoutChildrenOrChild<SwitchPrimitive.RootProps> = $props();
+  }: SettingsSwitchProps = $props();
 </script>
 
 <label class="flex flex-row items-center">

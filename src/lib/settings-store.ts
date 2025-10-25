@@ -37,6 +37,8 @@ const DEFAULT_SETTINGS = {
     showLiveMeter: "",
     hideLiveMeter: "",
     toggleLiveMeter: "",
+    showDpsTab: "",
+    showHealTab: "",
     enableClickthrough: "",
     disableClickthrough: "",
     toggleClickthrough: "",
@@ -52,6 +54,9 @@ const DEFAULT_SETTINGS = {
   misc: {
     testingMode: false,
   },
+  integration: {
+    bptimer: true,
+  }
 };
 
 // We need flattened settings for every update to be able to auto-detect new changes
@@ -101,6 +106,11 @@ export const SETTINGS = {
   misc: new RuneStore(
     'misc',
     DEFAULT_SETTINGS.misc,
+    RUNE_STORE_OPTIONS
+  ),
+  integration: new RuneStore(
+    'integration',
+    DEFAULT_SETTINGS.integration,
     RUNE_STORE_OPTIONS
   ),
 };

@@ -3,6 +3,8 @@ use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use std::default::Default;
+use log::{info, trace};
 
 #[derive(Debug, Default, Clone)]
 pub struct Encounter {
@@ -14,6 +16,35 @@ pub struct Encounter {
     pub local_player_uid: i64,
     pub entity_uid_to_entity: HashMap<i64, Entity>, // key: entity uid
     pub local_player: SyncContainerData,
+}
+
+impl Encounter {
+	pub fn reset_stats(&mut self) {
+		self.total_dmg = 0;
+		self.total_heal = 0;
+		self.time_fight_start_ms = Default::default();
+
+		self.entity_uid_to_entity.iter_mut().for_each(|(_, entity)| {
+			// Damage
+			entity.total_dmg = 0;
+			entity.crit_total_dmg = 0;
+			entity.crit_hits_dmg = 0;
+			entity.lucky_total_dmg = 0;
+			entity.lucky_hits_dmg = 0;
+			entity.hits_dmg = 0;
+			// Healing
+			entity.total_heal = 0;
+			entity.crit_total_heal = 0;
+			entity.crit_hits_heal = 0;
+			entity.lucky_total_heal = 0;
+			entity.lucky_hits_heal = 0;
+			entity.hits_heal = 0;
+			// For Monsters
+			entity.curr_hp = 0;
+			entity.max_hp = 0;
+			entity.monster_id = 0;
+		})
+	}
 }
 
 pub type EncounterMutex = Mutex<Encounter>;

@@ -7,7 +7,7 @@ use crate::live::opcodes_models::{
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType, SyncContainerData};
-use log::{error, info, warn};
+use log::{error, trace, info, warn};
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
 

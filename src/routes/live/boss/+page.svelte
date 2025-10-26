@@ -66,7 +66,7 @@
     <tbody>
       {#each dpsTable.getRowModel().rows as row (row.id)}
         {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? row.original.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? row.original.className : ""}
-        <tr class="h-7 px-2 py-1 text-center" onclick={() => goto(`/live/dps/skills?playerUid=${row.original.uid}`)}>
+        <tr class="h-7 px-2 py-1 text-center" onclick={() => goto(`/live/boss/skills?playerUid=${row.original.uid}`)}>
           {#each row.getVisibleCells() as cell (cell.id)}
             <td class="text-right"><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
           {/each}

@@ -223,18 +223,18 @@ pub fn get_dps_player_window_boss(
                 ability_score: entity.ability_score as f64,
                 total_dmg: entity.total_dmg_boss as f64,
                 dps: nan_is_zero(entity.total_dmg_boss as f64 / time_elapsed_secs),
-                dmg_pct: nan_is_zero(entity.total_dmg_boss as f64 / encounter.total_dmg as f64 * 100.0),
+                dmg_pct: nan_is_zero(entity.total_dmg_boss as f64 / encounter.total_dmg_boss as f64 * 100.0),
                 crit_rate: nan_is_zero(
-                    entity.crit_hits_dmg_boss as f64 / entity.hits_dmg as f64 * 100.0,
+                    entity.crit_hits_dmg_boss as f64 / entity.hits_dmg_boss as f64 * 100.0,
                 ),
                 crit_dmg_rate: nan_is_zero(
-                    entity.crit_total_dmg_boss as f64 / entity.total_dmg as f64 * 100.0,
+                    entity.crit_total_dmg_boss as f64 / entity.total_dmg_boss as f64 * 100.0,
                 ),
                 lucky_rate: nan_is_zero(
-                    entity.lucky_hits_dmg_boss as f64 / entity.hits_dmg as f64 * 100.0,
+                    entity.lucky_hits_dmg_boss as f64 / entity.hits_dmg_boss as f64 * 100.0,
                 ),
                 lucky_dmg_rate: nan_is_zero(
-                    entity.lucky_total_dmg_boss as f64 / entity.total_dmg as f64 * 100.0,
+                    entity.lucky_total_dmg_boss as f64 / entity.total_dmg_boss as f64 * 100.0,
                 ),
                 hits: entity.hits_dmg_boss as f64,
                 hits_per_minute: nan_is_zero(entity.hits_dmg_boss as f64 / time_elapsed_secs * 60.0),

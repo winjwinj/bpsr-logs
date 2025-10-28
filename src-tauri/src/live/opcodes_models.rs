@@ -1,61 +1,58 @@
-use crate::live::opcodes_models::class::ClassSpec;
+use crate::live::opcodes_models::class::{Class, ClassSpec};
 use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-#[derive(Debug, Default, Clone)]
-pub struct Encounter {
-    pub is_encounter_paused: bool,
-    pub time_last_combat_packet_ms: u128, // in ms
-    pub time_fight_start_ms: u128,        // in ms
-    pub total_dmg: i64,
-    pub total_heal: i64,
-    pub local_player_uid: i64,
-    pub entity_uid_to_entity: HashMap<i64, Entity>, // key: entity uid
-    pub local_player: SyncContainerData,
-}
-
 pub type EncounterMutex = Mutex<Encounter>;
 
 #[derive(Debug, Default, Clone)]
-pub struct Entity {
-    pub name: String,
-    pub entity_type: EEntityType,
-    pub class_id: i32,
-    pub class_spec: ClassSpec,
-    pub ability_score: i32,
-    pub level: i32,
-    // Damage
-    pub total_dmg: i64,
-    pub crit_total_dmg: i64,
-    pub crit_hits_dmg: i64,
-    pub lucky_total_dmg: i64,
-    pub lucky_hits_dmg: i64,
-    pub hits_dmg: i64,
-    pub skill_uid_to_dmg_skill: HashMap<i32, Skill>,
-    // Healing
-    pub total_heal: i64,
-    pub crit_total_heal: i64,
-    pub crit_hits_heal: i64,
-    pub lucky_total_heal: i64,
-    pub lucky_hits_heal: i64,
-    pub hits_heal: i64,
-    pub skill_uid_to_heal_skill: HashMap<i32, Skill>,
-    // For Monsters
-    pub curr_hp: i32,
-    pub max_hp: i32,
-    pub monster_id: i32,
+pub struct Encounter {
+    pub is_encounter_paused: bool,
+    pub time_last_combat_packet_ms: u128,
+    pub time_fight_start_ms: u128,
+    pub local_player_uid: Option<i64>,
+    pub entity_uid_to_entity: HashMap<i64, Entity>,
+    pub dmg_stats: CombatStats,
+    pub dmg_stats_boss_only: CombatStats,
+    pub heal_stats: CombatStats,
+    pub local_player: Option<SyncContainerData>,
 }
 
 #[derive(Debug, Default, Clone)]
-pub struct Skill {
-    pub total_value: i64,
-    pub crit_total_value: i64,
-    pub crit_hits: i64,
-    pub lucky_total_value: i64,
-    pub lucky_hits: i64,
+pub struct Entity {
+    pub entity_type: EEntityType,
+
+    pub dmg_stats: CombatStats,
+    pub skill_uid_to_dps_stats: HashMap<i32, CombatStats>,
+
+    pub dmg_stats_boss_only: CombatStats,
+    pub skill_uid_to_dps_stats_boss_only: HashMap<i32, CombatStats>,
+
+    pub heal_stats: CombatStats,
+    pub skill_uid_to_heal_stats: HashMap<i32, CombatStats>,
+
+
+    // Players
+    pub name: Option<String>, // also available for monsters in packets
+    pub class: Option<Class>,
+    pub class_spec: Option<ClassSpec>,
+    pub ability_score: Option<i32>,
+
+    // Monsters
+    pub monster_id: Option<i32>,
+    pub curr_hp: Option<i32>, // also available for players in packets
+    pub max_hp: Option<i32>, // also available for players in packets
+}
+
+#[derive(Debug, Default, Clone)]
+pub struct CombatStats {
+    pub value: i64,
     pub hits: i64,
+    pub crit_value: i64,
+    pub crit_hits: i64,
+    pub lucky_value: i64,
+    pub lucky_hits: i64,
 }
 
 static SKILL_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
@@ -63,7 +60,7 @@ static SKILL_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
     serde_json::from_str(data).expect("invalid SkillName.json")
 });
 
-impl Skill {
+impl CombatStats {
     pub fn get_skill_name(skill_uid: i32) -> String {
         SKILL_NAMES
             .get(&skill_uid)
@@ -77,6 +74,11 @@ pub static MONSTER_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
     serde_json::from_str(data).expect("invalid MonsterName.json")
 });
 
+pub static MONSTER_NAMES_BOSS: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+    let data = include_str!("../../../src/lib/data/json/MonsterNameBoss.json");
+    serde_json::from_str(data).expect("invalid MonsterName.json")
+});
+
 pub static MONSTER_NAMES_CROWDSOURCE: Lazy<HashMap<i32, String>> = Lazy::new(|| {
     let data = include_str!("../../../src/lib/data/json/MonsterNameCrowdsource.json");
     serde_json::from_str(data).expect("invalid MonsterName.json")
@@ -87,7 +89,7 @@ pub mod attr_type {
     pub const ATTR_ID: i32 = 0x0a;
     pub const ATTR_PROFESSION_ID: i32 = 0xdc;
     pub const ATTR_FIGHT_POINT: i32 = 0x272e;
-    pub const ATTR_LEVEL: i32 = 0x2710;
+    // pub const ATTR_LEVEL: i32 = 0x2710;
     // pub const ATTR_RANK_LEVEL: i32 = 0x274c;
     // pub const ATTR_CRI: i32 = 0x2b66;
     // pub const ATTR_LUCKY: i32 = 0x2b7a;
@@ -101,34 +103,56 @@ pub mod attr_type {
 
 // TODO: this logic needs to be severely cleaned up
 pub mod class {
-    pub const UNKNOWN: i32 = 0;
-    pub const STORMBLADE: i32 = 1;
-    pub const FROST_MAGE: i32 = 2;
-    pub const WIND_KNIGHT: i32 = 4;
-    pub const VERDANT_ORACLE: i32 = 5;
-    pub const HEAVY_GUARDIAN: i32 = 9;
-    pub const MARKSMAN: i32 = 11;
-    pub const SHIELD_KNIGHT: i32 = 12;
-    pub const BEAT_PERFORMER: i32 = 13;
 
-    pub fn get_class_name(id: i32) -> String {
-        String::from(match id {
-            STORMBLADE => "Stormblade",
-            FROST_MAGE => "Frost Mage",
-            WIND_KNIGHT => "Wind Knight",
-            VERDANT_ORACLE => "Verdant Oracle",
-            HEAVY_GUARDIAN => "Heavy Guardian",
-            MARKSMAN => "Marksman",
-            SHIELD_KNIGHT => "Shield Knight",
-            BEAT_PERFORMER => "Beat Performer",
-            _ => "", // empty string for unknown
+    #[derive(Debug, Default, Clone, Copy)]
+    #[repr(i32)]
+    pub enum Class {
+        Stormblade,
+        FrostMage,
+        WindKnight,
+        VerdantOracle,
+        HeavyGuardian,
+        Marksman,
+        ShieldKnight,
+        BeatPerformer,
+        Unimplemented,
+        #[default]
+        Unknown,
+    }
+
+    impl From<i32> for Class {
+        fn from(class_id: i32) -> Self {
+            match class_id {
+                1 => Class::Stormblade,
+                2 => Class::FrostMage,
+                4 => Class::WindKnight,
+                5 => Class::VerdantOracle,
+                9 => Class::HeavyGuardian,
+                11 => Class::Marksman,
+                12 => Class::ShieldKnight,
+                13 => Class::BeatPerformer,
+                _ => Class::Unimplemented,
+            }
+        }
+    }
+
+    pub fn get_class_name(class: Class) -> String {
+        String::from(match class {
+            Class::Stormblade => "Stormblade",
+            Class::FrostMage => "Frost Mage",
+            Class::WindKnight => "Wind Knight",
+            Class::VerdantOracle => "Verdant Oracle",
+            Class::HeavyGuardian => "Heavy Guardian",
+            Class::Marksman => "Marksman",
+            Class::ShieldKnight => "Shield Knight",
+            Class::BeatPerformer => "Beat Performer",
+            Class::Unknown => "Unknown Class",
+            Class::Unimplemented => "Unimplemented Class",
         })
     }
 
     #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
     pub enum ClassSpec {
-        #[default]
-        Unknown,
         // Stormblade
         Iaido,
         Moonstrike,
@@ -153,14 +177,16 @@ pub mod class {
         // Beat Performer
         Dissonance,
         Concerto,
+        #[default]
+        Unknown,
     }
 
     pub fn get_class_spec_from_skill_id(skill_id: i32) -> ClassSpec {
         match skill_id {
             1714 | 1734 => ClassSpec::Iaido, // Iaido Slash, Thunder Iaido Slash
-            44701 | 179906 => ClassSpec::Moonstrike, // AI: Moon Blade, Moonstrike Whirl
+            44701 | 179_906 => ClassSpec::Moonstrike, // AI: Moon Blade, Moonstrike Whirl
 
-            120901 | 120902 => ClassSpec::Icicle, // AI: Through the ice spear, AI: Ice spear
+            120_901 | 120_902 => ClassSpec::Icicle, // AI: Through the ice spear, AI: Ice spear
             1241 => ClassSpec::Frostbeam, // Frostbeam
 
             1405 | 1418 => ClassSpec::Vanguard, // Gale Thrust, Gale Thrust
@@ -169,11 +195,11 @@ pub mod class {
             1518 | 1541 | 21402 => ClassSpec::Smite, // Wild Bloom, Wild Bloom, AI: Blooming wildly
             20301 => ClassSpec::Lifebind, // AI: Life blooms
 
-            199902 => ClassSpec::Earthfort, // Rage Burst Stone
+            199_902 => ClassSpec::Earthfort, // Rage Burst Stone
             1930 | 1931 | 1934 | 1935 => ClassSpec::Block, // Countercrush, Countercrush, Countercrush, Countercrush
 
-            220112 | 2203622 => ClassSpec::Falconry, // AI: Photoelectric cracks, AI: Light lip sputtering
-            2292 | 1700820 | 1700825 | 1700827 => ClassSpec::Wildpack, // Phantom Direwolves, Wild Wolf - Assist, Pet - Foxen Pounce, Pet - Basic Attack
+            220_112 | 2_203_622 => ClassSpec::Falconry, // AI: Photoelectric cracks, AI: Light lip sputtering
+            2292 | 1_700_820 | 1_700_825 | 1_700_827 => ClassSpec::Wildpack, // Phantom Direwolves, Wild Wolf - Assist, Pet - Foxen Pounce, Pet - Basic Attack
 
             2405 => ClassSpec::Recovery, // Valor Bash
             2406 => ClassSpec::Shield, // Vanguard Strike
@@ -184,23 +210,23 @@ pub mod class {
         }
     }
 
-    pub fn get_class_id_from_spec(class_spec: ClassSpec) -> i32 {
+    pub fn get_class_from_spec(class_spec: ClassSpec) -> Class {
         match class_spec {
-            ClassSpec::Iaido | ClassSpec::Moonstrike => STORMBLADE,
-            ClassSpec::Icicle | ClassSpec::Frostbeam => FROST_MAGE,
-            ClassSpec::Vanguard | ClassSpec::Skyward => WIND_KNIGHT,
-            ClassSpec::Smite | ClassSpec::Lifebind => VERDANT_ORACLE,
-            ClassSpec::Earthfort | ClassSpec::Block => HEAVY_GUARDIAN,
-            ClassSpec::Wildpack | ClassSpec::Falconry => MARKSMAN,
-            ClassSpec::Recovery | ClassSpec::Shield => SHIELD_KNIGHT,
-            ClassSpec::Dissonance | ClassSpec::Concerto => BEAT_PERFORMER,
-            ClassSpec::Unknown => UNKNOWN,
+            ClassSpec::Iaido | ClassSpec::Moonstrike => Class::Stormblade,
+            ClassSpec::Icicle | ClassSpec::Frostbeam => Class::FrostMage,
+            ClassSpec::Vanguard | ClassSpec::Skyward => Class::WindKnight,
+            ClassSpec::Smite | ClassSpec::Lifebind => Class::VerdantOracle,
+            ClassSpec::Earthfort | ClassSpec::Block => Class::HeavyGuardian,
+            ClassSpec::Wildpack | ClassSpec::Falconry => Class::Marksman,
+            ClassSpec::Recovery | ClassSpec::Shield => Class::ShieldKnight,
+            ClassSpec::Dissonance | ClassSpec::Concerto => Class::BeatPerformer,
+            ClassSpec::Unknown => Class::Unknown,
         }
     }
 
+    // TODO: is there a way to just do this automatically based on the name of the enum?
     pub fn get_class_spec(class_spec: ClassSpec) -> String {
         String::from(match class_spec {
-            ClassSpec::Unknown => "",
             ClassSpec::Iaido => "Iaido",
             ClassSpec::Moonstrike => "Moonstrike",
             ClassSpec::Icicle => "Icicle",
@@ -217,6 +243,7 @@ pub mod class {
             ClassSpec::Shield => "Shield",
             ClassSpec::Dissonance => "Dissonance",
             ClassSpec::Concerto => "Concerto",
+            ClassSpec::Unknown => "Unknown Spec",
         })
     }
 }

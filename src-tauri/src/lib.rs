@@ -38,6 +38,8 @@ pub fn run() {
             live::commands::get_header_info,
             live::commands::get_dps_player_window,
             live::commands::get_dps_skill_window,
+            live::commands::get_dps_boss_only_player_window,
+            live::commands::get_dps_boss_only_skill_window,
             live::commands::get_heal_player_window,
             live::commands::get_heal_skill_window,
             live::commands::reset_encounter,

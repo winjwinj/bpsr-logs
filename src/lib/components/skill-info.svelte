@@ -2,7 +2,7 @@
   import { copyToClipboard, getSkillIcon } from "$lib/utils.svelte";
 
   let {
-    skillUid = 999999,
+    skillUid = -1,
     skillName = "Unknown Skill",
   }: {
     skillUid: number;

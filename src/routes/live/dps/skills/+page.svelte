@@ -16,7 +16,7 @@
     return () => clearInterval(interval);
   });
 
-  let dpsSkillBreakdownWindow: SkillsWindow = $state({ currPlayer: [], skillRows: [] });
+  let dpsSkillBreakdownWindow: SkillsWindow | undefined = $state(undefined);
 
   async function fetchData() {
     try {
@@ -33,9 +33,13 @@
     }
   }
 
-  const currPlayerTable = createSvelteTable({
+  const inspectedPlayerTable = createSvelteTable({
     get data() {
-      return dpsSkillBreakdownWindow.currPlayer;
+      if (dpsSkillBreakdownWindow !== undefined) {
+        return [dpsSkillBreakdownWindow.inspectedPlayer];
+      } else {
+        return [];
+      }
     },
     columns: dpsPlayersColumnDefs,
     getCoreRowModel: getCoreRowModel(),
@@ -48,7 +52,11 @@
 
   const dpsSkillBreakdownTable = createSvelteTable({
     get data() {
-      return dpsSkillBreakdownWindow.skillRows;
+      if (dpsSkillBreakdownWindow !== undefined) {
+        return dpsSkillBreakdownWindow.skillRows;
+      } else {
+        return [];
+      }
     },
     columns: dpsSkillsColumnDefs,
     getCoreRowModel: getCoreRowModel(),
@@ -59,51 +67,40 @@
     },
   });
 
-  let maxSkillValue = $derived(dpsSkillBreakdownWindow.skillRows.reduce((max, p) => (p.totalDmg > max ? p.totalDmg : max), 0));
-
-  let SETTINGS_YOUR_NAME = $derived(SETTINGS.general.state.showYourName);
-  let SETTINGS_OTHERS_NAME = $derived(SETTINGS.general.state.showOthersName);
 </script>
 
 <svelte:window oncontextmenu={() => window.history.back()} />
 
-<!-- TODO: looks ugly when split, need to figure out logic to combine together https://imgur.com/COalJFe -->
-<div class="relative flex flex-col">
-  <table class="w-screen table-fixed">
-    <thead class="z-1 sticky top-0 h-6">
-      <tr class="bg-neutral-900">
-        {#each dpsSkillBreakdownTable.getHeaderGroups() as headerGroup (headerGroup.id)}
-          {#each headerGroup.headers as header (header.id)}
-            <th class={header.column.columnDef.meta?.class}><FlexRender content={header.column.columnDef.header ?? "UNKNOWN HEADER"} context={header.getContext()} /></th>
+{#if dpsSkillBreakdownWindow !== undefined}
+  <div class="relative flex flex-col">
+    <table class="w-screen table-fixed">
+      <thead class="z-1 sticky top-0 h-6">
+        <tr class="bg-neutral-900">
+          {#each dpsSkillBreakdownTable.getHeaderGroups() as headerGroup (headerGroup.id)}
+            {#each headerGroup.headers as header (header.id)}
+              <th class={header.column.columnDef.meta?.class}><FlexRender content={header.column.columnDef.header ?? "UNKNOWN HEADER"} context={header.getContext()} /></th>
+            {/each}
           {/each}
+        </tr>
+      </thead>
+      <tbody>
+        {#each inspectedPlayerTable.getRowModel().rows as row (row.id)}
+          <tr class="h-7 px-2 py-1 text-center">
+            {#each row.getVisibleCells() as cell (cell.id)}
+              <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
+            {/each}
+            <td class="-z-1 absolute left-0 h-7" style="background-color: {getClassColor(dpsSkillBreakdownWindow.inspectedPlayer.className)}; width: 100vw;"></td>
+          </tr>
         {/each}
-      </tr>
-    </thead>
-    <tbody>
-      {#each currPlayerTable.getRowModel().rows as row (row.id)}
-        {@const currPlayer = dpsSkillBreakdownWindow.currPlayer[0]}
-        {#if currPlayer}
-          {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? currPlayer.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? currPlayer.className : ""}
+        {#each dpsSkillBreakdownTable.getRowModel().rows as row, i (row.id)}
           <tr class="h-7 px-2 py-1 text-center">
             {#each row.getVisibleCells() as cell (cell.id)}
               <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
             {/each}
-            <td class="-z-1 absolute left-0 h-7" style="background-color: {getClassColor(className)}; width: 100vw;"></td>
+            <td class="-z-1 absolute left-0 h-7" style="background-color: {`color-mix(in srgb, ${getClassColor(dpsSkillBreakdownWindow.inspectedPlayer.className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {(row.original.totalValue / dpsSkillBreakdownWindow.topValue) * 100}%;"></td>
           </tr>
-        {/if}
-      {/each}
-      {#each dpsSkillBreakdownTable.getRowModel().rows as row, i (row.id)}
-        {@const currPlayer = dpsSkillBreakdownWindow.currPlayer[0]}
-        {#if currPlayer}
-          {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? currPlayer.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? currPlayer.className : ""}
-          <tr class="h-7 px-2 py-1 text-center">
-            {#each row.getVisibleCells() as cell (cell.id)}
-              <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
-            {/each}
-            <td class="-z-1 absolute left-0 h-7" style="background-color: {`color-mix(in srgb, ${getClassColor(className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {SETTINGS.general.state.relativeToTopDPSSkill ? (maxSkillValue > 0 ? (row.original.totalDmg / maxSkillValue) * 100 : 0) : row.original.dmgPct}%;"></td>
-          </tr>
-        {/if}
-      {/each}
-    </tbody>
-  </table>
-</div>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{/if}

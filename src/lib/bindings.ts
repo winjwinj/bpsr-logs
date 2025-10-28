@@ -22,13 +22,8 @@ async getHeaderInfo() : Promise<Result<HeaderInfo, string>> {
     else return { status: "error", error: e  as any };
 }
 },
-async getDpsPlayerWindow() : Promise<Result<PlayersWindow, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("get_dps_player_window") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
+async getDpsPlayerWindow() : Promise<PlayersWindow> {
+    return await TAURI_INVOKE("get_dps_player_window");
 },
 async getDpsSkillWindow(playerUidStr: string) : Promise<Result<SkillsWindow, string>> {
     try {
@@ -38,13 +33,19 @@ async getDpsSkillWindow(playerUidStr: string) : Promise<Result<SkillsWindow, str
     else return { status: "error", error: e  as any };
 }
 },
-async getHealPlayerWindow() : Promise<Result<PlayersWindow, string>> {
+async getDpsBossOnlyPlayerWindow() : Promise<PlayersWindow> {
+    return await TAURI_INVOKE("get_dps_boss_only_player_window");
+},
+async getDpsBossOnlySkillWindow(playerUidStr: string) : Promise<Result<SkillsWindow, string>> {
     try {
-    return { status: "ok", data: await TAURI_INVOKE("get_heal_player_window") };
+    return { status: "ok", data: await TAURI_INVOKE("get_dps_boss_only_skill_window", { playerUidStr }) };
 } catch (e) {
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async getHealPlayerWindow() : Promise<PlayersWindow> {
+    return await TAURI_INVOKE("get_heal_player_window");
 },
 async getHealSkillWindow(playerUidStr: string) : Promise<Result<SkillsWindow, string>> {
     try {
@@ -63,13 +64,8 @@ async togglePauseEncounter() : Promise<void> {
 async hardReset() : Promise<void> {
     await TAURI_INVOKE("hard_reset");
 },
-async getTestPlayerWindow() : Promise<Result<PlayersWindow, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("get_test_player_window") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
+async getTestPlayerWindow() : Promise<PlayersWindow> {
+    return await TAURI_INVOKE("get_test_player_window");
 },
 async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, string>> {
     try {
@@ -92,10 +88,10 @@ async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, strin
 /** user-defined types **/
 
 export type HeaderInfo = { totalDps: number; totalDmg: number; elapsedMs: number; timeLastCombatPacketMs: number }
-export type PlayerRow = { uid: number; name: string; className: string; classSpecName: string; abilityScore: number; totalDmg: number; dps: number; dmgPct: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: number; hitsPerMinute: number }
-export type PlayersWindow = { playerRows: PlayerRow[] }
-export type SkillRow = { uid: number; name: string; totalDmg: number; dps: number; dmgPct: number; critRate: number; critDmgRate: number; luckyRate: number; luckyDmgRate: number; hits: number; hitsPerMinute: number }
-export type SkillsWindow = { currPlayer: PlayerRow[]; skillRows: SkillRow[] }
+export type PlayerRow = { uid: number; abilityScore: number; className: string; classSpecName: string; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }
+export type PlayersWindow = { playerRows: PlayerRow[]; localPlayerUid: number; topValue: number }
+export type SkillRow = { uid: number; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }
+export type SkillsWindow = { inspectedPlayer: PlayerRow; skillRows: SkillRow[]; localPlayerUid: number; topValue: number }
 
 /** tauri-specta globals **/
 

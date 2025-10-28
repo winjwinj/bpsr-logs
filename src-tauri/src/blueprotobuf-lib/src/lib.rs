@@ -17,3 +17,17 @@ impl From<i64> for EEntityType {
         }
     }
 }
+
+// impl From<i32> for EDamageType {
+//     fn from(entity_type: i32) -> Self {
+//         match entity_type {
+//             0 => EDamageType::Normal,
+//             1 => EDamageType::Miss,
+//             2 => EDamageType::Heal,
+//             3 => EDamageType::Immune,
+//             4 => EDamageType::Fall,
+//             5 => EDamageType::Absorbed,
+//             _ => EDamageType::Normal,
+//         }
+//     }
+// }

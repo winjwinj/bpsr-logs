@@ -8,8 +8,11 @@ import AbbreviatedNumber from "$lib/components/abbreviated-number.svelte";
 import PercentFormat from "$lib/components/percent-format.svelte";
 import SkillInfo from "$lib/components/skill-info.svelte";
 
-
 declare module '@tanstack/table-core' {
+  interface TableMeta<TData> {
+    localPlayerUid: number;
+  }
+
   interface ColumnMeta<TData, TValue> {
     class: string;         // CSS class (for Tailwind) for column
     label: string;         // Label text for SETTINGS
@@ -24,13 +27,14 @@ const dpsPlayersColumnHelper = createColumnHelper<PlayerRow>();
 export const dpsPlayersColumnDefs = [
   dpsPlayersColumnHelper.display({
     id: 'playerInfo',
-    cell: ({ row }) =>
+    cell: ({ row, table }) =>
       renderComponent(PlayerInfo, {
         className: row.original.className,
         classSpecName: row.original.classSpecName,
         abilityScore: row.original.abilityScore,
         name: row.original.name,
-        uid: row.original.uid
+        uid: row.original.uid,
+        localPlayerUid: table.options.meta?.localPlayerUid ?? -1,
       }),
     meta: {
       class: "w-full",
@@ -39,7 +43,7 @@ export const dpsPlayersColumnDefs = [
     }
   }),
 
-  dpsPlayersColumnHelper.accessor('totalDmg', {
+  dpsPlayersColumnHelper.accessor('totalValue', {
     header: 'DMG',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -49,7 +53,7 @@ export const dpsPlayersColumnDefs = [
     }
   }),
 
-  dpsPlayersColumnHelper.accessor('dps', {
+  dpsPlayersColumnHelper.accessor('valuePerSec', {
     header: 'DPS',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -59,7 +63,7 @@ export const dpsPlayersColumnDefs = [
     }
   }),
 
-  dpsPlayersColumnHelper.accessor('dmgPct', {
+  dpsPlayersColumnHelper.accessor('valuePct', {
     header: () => renderComponent(PercentFormat, { val: "D" }),
     cell: ({ cell }) =>
       renderComponent(PercentFormat, { val: cell.getValue(), fractionDigits: 0 }),
@@ -80,7 +84,7 @@ export const dpsPlayersColumnDefs = [
     }
   }),
 
-  dpsPlayersColumnHelper.accessor('critDmgRate', {
+  dpsPlayersColumnHelper.accessor('critValueRate', {
     header: () => renderComponent(PercentFormat, { val: "CDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -100,7 +104,7 @@ export const dpsPlayersColumnDefs = [
     }
   }),
 
-  dpsPlayersColumnHelper.accessor('luckyDmgRate', {
+  dpsPlayersColumnHelper.accessor('luckyValueRate', {
     header: () => renderComponent(PercentFormat, { val: "LDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -146,7 +150,7 @@ export const dpsSkillsColumnDefs = [
     }
   }),
 
-  dpsSkillsColumnHelper.accessor('totalDmg', {
+  dpsSkillsColumnHelper.accessor('totalValue', {
     header: 'DMG',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -156,7 +160,7 @@ export const dpsSkillsColumnDefs = [
     }
   }),
 
-  dpsSkillsColumnHelper.accessor('dps', {
+  dpsSkillsColumnHelper.accessor('valuePerSec', {
     header: 'DPS',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -166,7 +170,7 @@ export const dpsSkillsColumnDefs = [
     }
   }),
 
-  dpsSkillsColumnHelper.accessor('dmgPct', {
+  dpsSkillsColumnHelper.accessor('valuePct', {
     header: () => renderComponent(PercentFormat, { val: "D" }),
     cell: ({ cell }) =>
       renderComponent(PercentFormat, { val: cell.getValue(), fractionDigits: 0 }),
@@ -187,7 +191,7 @@ export const dpsSkillsColumnDefs = [
     }
   }),
 
-  dpsSkillsColumnHelper.accessor('critDmgRate', {
+  dpsSkillsColumnHelper.accessor('critValueRate', {
     header: () => renderComponent(PercentFormat, { val: "CDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -207,7 +211,7 @@ export const dpsSkillsColumnDefs = [
     }
   }),
 
-  dpsSkillsColumnHelper.accessor('luckyDmgRate', {
+  dpsSkillsColumnHelper.accessor('luckyValueRate', {
     header: () => renderComponent(PercentFormat, { val: "LDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -241,13 +245,14 @@ const healPlayersColumnHelper = createColumnHelper<PlayerRow>();
 export const healPlayersColumnDefs = [
   healPlayersColumnHelper.display({
     id: 'playerInfo',
-    cell: ({ row }) =>
+    cell: ({ row, table }) =>
       renderComponent(PlayerInfo, {
         className: row.original.className,
         classSpecName: row.original.classSpecName,
         abilityScore: row.original.abilityScore,
         name: row.original.name,
-        uid: row.original.uid
+        uid: row.original.uid,
+        localPlayerUid: table.options.meta?.localPlayerUid ?? -1,
       }),
     meta: {
       class: "w-full",
@@ -256,7 +261,7 @@ export const healPlayersColumnDefs = [
     }
   }),
 
-  healPlayersColumnHelper.accessor('totalDmg', {
+  healPlayersColumnHelper.accessor('totalValue', {
     header: 'Heal',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -266,7 +271,7 @@ export const healPlayersColumnDefs = [
     }
   }),
 
-  healPlayersColumnHelper.accessor('dps', {
+  healPlayersColumnHelper.accessor('valuePerSec', {
     header: 'HPS',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -276,7 +281,7 @@ export const healPlayersColumnDefs = [
     }
   }),
 
-  healPlayersColumnHelper.accessor('dmgPct', {
+  healPlayersColumnHelper.accessor('valuePct', {
     header: () => renderComponent(PercentFormat, { val: "H" }),
     cell: ({ cell }) =>
       renderComponent(PercentFormat, { val: cell.getValue(), fractionDigits: 0 }),
@@ -297,7 +302,7 @@ export const healPlayersColumnDefs = [
     }
   }),
 
-  healPlayersColumnHelper.accessor('critDmgRate', {
+  healPlayersColumnHelper.accessor('critValueRate', {
     header: () => renderComponent(PercentFormat, { val: "CDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -317,7 +322,7 @@ export const healPlayersColumnDefs = [
     }
   }),
 
-  healPlayersColumnHelper.accessor('luckyDmgRate', {
+  healPlayersColumnHelper.accessor('luckyValueRate', {
     header: () => renderComponent(PercentFormat, { val: "LDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -363,7 +368,7 @@ export const healSkillsColumnDefs = [
     }
   }),
 
-  healSkillsColumnHelper.accessor('totalDmg', {
+  healSkillsColumnHelper.accessor('totalValue', {
     header: 'Heal',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -373,7 +378,7 @@ export const healSkillsColumnDefs = [
     }
   }),
 
-  healSkillsColumnHelper.accessor('dps', {
+  healSkillsColumnHelper.accessor('valuePerSec', {
     header: 'HPS',
     cell: ({ cell }) => renderComponent(AbbreviatedNumber, { num: cell.getValue() }),
     meta: {
@@ -383,7 +388,7 @@ export const healSkillsColumnDefs = [
     }
   }),
 
-  healSkillsColumnHelper.accessor('dmgPct', {
+  healSkillsColumnHelper.accessor('valuePct', {
     header: () => renderComponent(PercentFormat, { val: "H" }),
     cell: ({ cell }) =>
       renderComponent(PercentFormat, { val: cell.getValue(), fractionDigits: 0 }),
@@ -404,7 +409,7 @@ export const healSkillsColumnDefs = [
     }
   }),
 
-  healSkillsColumnHelper.accessor('critDmgRate', {
+  healSkillsColumnHelper.accessor('critValueRate', {
     header: () => renderComponent(PercentFormat, { val: "CDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {
@@ -424,7 +429,7 @@ export const healSkillsColumnDefs = [
     }
   }),
 
-  healSkillsColumnHelper.accessor('luckyDmgRate', {
+  healSkillsColumnHelper.accessor('luckyValueRate', {
     header: () => renderComponent(PercentFormat, { val: "LDMG" }),
     cell: ({ cell }) => renderComponent(PercentFormat, { val: cell.getValue() }),
     meta: {

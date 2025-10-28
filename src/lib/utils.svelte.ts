@@ -22,19 +22,23 @@ export function getClassColor(className: string): string {
 }
 
 export function getClassIcon(className: string): string {
-  if (className === "") {
+  // TODO: probably make constants for these
+  if (className === "Hidden Class" || className === "Unknown Class" || className === "Undefined Class") {
     return "/images/blank.png";
-  }
-  return `/images/classes/${className}.png`;
+  } else {
+    return `/images/classes/${className}.png`;
+  } 
 }
 
-import SkillIconMap from '$lib/data/json/SkillIcon.json';
+import SkillIconJson from '$lib/data/json/SkillIcon.json';
+export const SkillIconMap: Record<string, string> = SkillIconJson;
 export function getSkillIcon(skillUid: number): string {
-  const skillFileName = SkillIconMap[skillUid] ?? "";
-  if (skillFileName === "") {
+  const key = skillUid.toString();
+  if (key in SkillIconMap) {
+    return `/images/skills/${SkillIconMap[key]}.webp`;
+  } else {
     return "/images/blank.png";
   }
-  return `/images/skills/${skillFileName}.webp`;
 }
 
 // https://svelte.dev/docs/svelte/@attach#Attachment-factories

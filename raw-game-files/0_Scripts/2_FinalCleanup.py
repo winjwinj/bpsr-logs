@@ -94,7 +94,7 @@ def generate_skill_icon_json(
 
     with open(input_file, "r", encoding="utf-8") as f:
         skills = json.load(f)
-    icon_map = {uid: entry.get("icon").split("/")[-1] if entry.get("icon") else None for uid, entry in skills.items() if "icon" in entry}
+    icon_map = {uid: entry.get("icon").split("/")[-1] for uid, entry in skills.items() if entry.get("icon")}
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(icon_map, f, ensure_ascii=False, indent=2)
     print(f"Saved skill_uid to icon mapping to {output_file}")
@@ -102,29 +102,39 @@ def generate_skill_icon_json(
 def cleanup_monster_names(
         input_file="../1_Dirty/monsters_questlog.json",
         output_file="../../src/lib/data/json/MonsterName.json",
+        boss_output_file="../../src/lib/data/json/MonsterNameBoss.json",
         language="en"
 ):
     """
     Reads monsters_questlog.json, extracts id:name mapping, and writes it to output_file as JSON.
     Only includes entries where language is 'en' (English).
+    If category is 'boss', also adds to boss_output_file.
     """
     with open(input_file, "r", encoding="utf-8") as f:
         data = json.load(f)
     # Try to handle both list and dict formats
     mapping = {}
+    boss_mapping = {}
     if isinstance(data, dict):
         for k, v in data.items():
             if v.get("language") == language and "name" in v:
                 mapping[str(k)] = v["name"]
+                if v.get("main_category") == "boss":
+                    boss_mapping[str(k)] = v["name"]
     elif isinstance(data, list):
         for entry in data:
             if entry.get("language") == language and "id" in entry and "name" in entry:
                 mapping[str(entry["id"])] = entry["name"]
+                if entry.get("main_category") == "boss":
+                    boss_mapping[str(entry["id"])] = entry["name"]
     else:
         raise ValueError("Unexpected format in monsters_questlog.json")
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(mapping, f, ensure_ascii=False, indent=2)
+    with open(boss_output_file, "w", encoding="utf-8") as f:
+        json.dump(boss_mapping, f, ensure_ascii=False, indent=2)
     print(f"Saved monster id to name mapping to {output_file} (language={language})")
+    print(f"Saved boss monster id to name mapping to {boss_output_file} (language={language})")
 
 if __name__ == "__main__":
     cleanup_skill_names()

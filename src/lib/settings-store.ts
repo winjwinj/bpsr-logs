@@ -4,29 +4,26 @@ import { RuneStore } from '@tauri-store/svelte';
 const IS_WIN_11 = parseInt(version().split(".")[2] || "0", 10) >= 22000;
 
 export const DEFAULT_STATS = {
-  totalDmg: true,
-  dps: true,
-  dmgPct: true,
+  totalValue: true,
+  valuePerSec: true,
+  valuePct: true,
   critRate: true,
-  critDmgRate: true,
+  critValueRate: true,
   luckyRate: false,
-  luckyDmgRate: false,
+  luckyValueRate: false,
   hits: false,
   hitsPerMinute: false,
 };
 
 const DEFAULT_SETTINGS = {
   general: {
-    showYourName: "Show Your Name",
-    showOthersName: "Show Others' Name",
+    showYourName: "Show Your Name", // ["Show Your Name", "Show Your Class", "Hide Your Name"]
+    showOthersName: "Show Others' Name", // ["Show Others' Name", "Show Others' Class", "Hide Others' Name"]
     showYourAbilityScore: true,
     showOthersAbilityScore: true,
-    relativeToTopDPSPlayer: false,
-    relativeToTopDPSSkill: false,
-    relativeToTopHealPlayer: false,
-    relativeToTopHealSkill: false,
     resetElapsed: 60,
     shortenAbilityScore: false,
+    bossOnly: false,
     autostart: true,
   },
   accessibility: {

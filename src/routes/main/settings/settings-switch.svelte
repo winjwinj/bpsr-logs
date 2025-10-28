@@ -17,7 +17,7 @@
   }: SettingsSwitchProps = $props();
 </script>
 
-<label class="flex flex-row items-center">
+<div class="flex flex-row items-center">
   <Switch bind:checked {...restProps} />
   <div class="ml-4">
     <div>{label}</div>
@@ -25,4 +25,4 @@
       <div class="text-muted-foreground text-sm">{description}</div>
     {/if}
   </div>
-</label>
+</div>

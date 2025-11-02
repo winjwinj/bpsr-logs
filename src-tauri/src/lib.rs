@@ -1,6 +1,7 @@
 mod build_app;
 mod live;
 mod packets;
+pub mod db;
 
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
@@ -47,6 +48,12 @@ pub fn run() {
             live::commands::hard_reset,
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
+            live::history_commands::get_all_encounter_history,
+            live::history_commands::get_encounter_detail,
+            live::history_commands::delete_encounter_history,
+            live::history_commands::clear_all_data,
+            live::history_commands::get_historical_players_window,
+            live::history_commands::get_historical_skills_window,
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
@@ -84,6 +91,13 @@ pub fn run() {
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
             setup_blur(&app_handle);
+
+            // Setup database
+            let app_data_dir = app.path().app_data_dir().expect("failed to get app data dir");
+            std::fs::create_dir_all(&app_data_dir).expect("failed to create app data dir");
+            let db_path = app_data_dir.join("encounters.db");
+            let db_connection = db::init_db(db_path).expect("failed to initialize database");
+            app.manage(db_connection);
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks

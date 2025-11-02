@@ -5,16 +5,62 @@ use blueprotobuf_lib::blueprotobuf;
 use log::{error, info, warn};
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
+use crate::db::DbConnection;
+
+/// Helper function to load historical class_spec from database for a player
+fn load_historical_class_spec_for_player(
+    entity: &mut Entity,
+    player_uid: i64,
+    db: &DbConnection,
+) {
+    // Skip if already has a valid class_spec
+    if entity.class_spec.is_some() && entity.class_spec != Some(ClassSpec::Unknown) {
+        return;
+    }
+
+    // Try to look up from database
+    if let Ok(Some(metadata)) = crate::db::lookup_player_metadata(db, player_uid) {
+        if let Some(class_spec_str) = metadata.class_spec {
+            // Convert string back to enum
+            let class_spec = match class_spec_str.as_str() {
+                "Iaido" => ClassSpec::Iaido,
+                "Moonstrike" => ClassSpec::Moonstrike,
+                "Icicle" => ClassSpec::Icicle,
+                "Frostbeam" => ClassSpec::Frostbeam,
+                "Vanguard" => ClassSpec::Vanguard,
+                "Skyward" => ClassSpec::Skyward,
+                "Smite" => ClassSpec::Smite,
+                "Lifebind" => ClassSpec::Lifebind,
+                "Earthfort" => ClassSpec::Earthfort,
+                "Block" => ClassSpec::Block,
+                "Wildpack" => ClassSpec::Wildpack,
+                "Falconry" => ClassSpec::Falconry,
+                "Recovery" => ClassSpec::Recovery,
+                "Shield" => ClassSpec::Shield,
+                "Dissonance" => ClassSpec::Dissonance,
+                "Concerto" => ClassSpec::Concerto,
+                _ => ClassSpec::Unknown,
+            };
+            if class_spec != ClassSpec::Unknown {
+                entity.class_spec = Some(class_spec);
+                info!("Loaded historical class_spec '{}' for player {}", class_spec_str, player_uid);
+            }
+        }
+    }
+}
 
 pub fn on_server_change(encounter: &mut Encounter) {
-    info!("on server change");
+    info!("on server change - preserving local_player data");
+    let local_player = encounter.local_player.clone(); // Preserve local player data across zone changes
     encounter.clone_from(&Encounter::default());
+    encounter.local_player = local_player; // Restore it after reset
 }
 
 pub fn process_sync_near_entities(
     encounter: &mut Encounter,
     sync_near_entities: blueprotobuf::SyncNearEntities,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
     for pkt_entity in sync_near_entities.appear {
         let target_uuid = pkt_entity.uuid?;
@@ -28,7 +74,10 @@ pub fn process_sync_near_entities(
         target_entity.entity_type = target_entity_type;
 
         match target_entity_type {
-            blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs),
+            blueprotobuf::EEntityType::EntChar => {
+                process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs);
+                load_historical_class_spec_for_player(target_entity, target_uid as i64, db);
+            },
             blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, pkt_entity.attrs?.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
             _ => {}
         }
@@ -67,10 +116,11 @@ pub fn process_sync_to_me_delta_info(
     encounter: &mut Encounter,
     sync_to_me_delta_info: blueprotobuf::SyncToMeDeltaInfo,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
     let delta_info = sync_to_me_delta_info.delta_info?;
     encounter.local_player_uid = Some(delta_info.uuid? >> 16); // UUID =/= uid (have to >> 16)
-    process_aoi_sync_delta(encounter, delta_info.base_delta?, is_bptimer_enabled);
+    process_aoi_sync_delta(encounter, delta_info.base_delta?, is_bptimer_enabled, db);
     Some(())
 }
 
@@ -78,6 +128,7 @@ pub fn process_aoi_sync_delta(
     encounter: &mut Encounter,
     aoi_sync_delta: blueprotobuf::AoiSyncDelta,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
@@ -125,22 +176,29 @@ pub fn process_aoi_sync_delta(
 
         let skill_uid = sync_damage_info.owner_id?;
         if attacker_entity.class_spec.is_none_or(|class_spec| class_spec == ClassSpec::Unknown) {
-            let class_spec = get_class_spec_from_skill_id(skill_uid);
-            attacker_entity.class = Some(get_class_from_spec(class_spec));
-            attacker_entity.class_spec = Some(class_spec);
+            // First try to load from database
+            load_historical_class_spec_for_player(attacker_entity, attacker_uid as i64, db);
+            
+            // If still no class_spec, try to infer from the skill being used
+            if attacker_entity.class_spec.is_none_or(|class_spec| class_spec == ClassSpec::Unknown) {
+                let class_spec = get_class_spec_from_skill_id(skill_uid);
+                attacker_entity.class = Some(get_class_from_spec(class_spec));
+                attacker_entity.class_spec = Some(class_spec);
+            }
         }
 
         // Skills
         let is_heal = sync_damage_info.r#type.unwrap_or(0) == blueprotobuf::EDamageType::Heal as i32;
         if is_heal {
+            // Record heal stats in the heal-specific map (was incorrectly using the dps map)
             let heal_skill = attacker_entity
-                .skill_uid_to_dps_stats
+                .skill_uid_to_heal_stats
                 .entry(skill_uid)
                 .or_default();
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
+            info!("heal packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats

@@ -2,6 +2,7 @@ use crate::live::commands_models::{HeaderInfo, PlayerRow, PlayersWindow, SkillRo
 use crate::live::opcodes_models::class::{Class, ClassSpec};
 use crate::live::opcodes_models::{class, CombatStats, Encounter, EncounterMutex};
 use crate::packets::packet_capture::request_restart;
+use crate::db::DbConnection;
 use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
@@ -81,7 +82,27 @@ pub fn hard_reset(state: tauri::State<'_, EncounterMutex>) {
 
 #[tauri::command]
 #[specta::specta]
-pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
+pub fn reset_encounter(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, DbConnection>,
+) {
+    let encounter = state.lock().unwrap();
+
+    info!("reset_encounter called - dmg: {}, heal: {}", encounter.dmg_stats.value, encounter.heal_stats.value);
+
+    // Only save if there's actual combat data
+    if encounter.dmg_stats.value > 0 || encounter.heal_stats.value > 0 {
+        info!("Saving encounter...");
+        if let Ok(encounter_id) = crate::db::save_encounter(&db, &encounter) {
+            info!("Encounter saved with ID: {}", encounter_id);
+        } else {
+            info!("Failed to save encounter");
+        }
+    } else {
+        info!("No combat data to save");
+    }
+
+    drop(encounter);
     let mut encounter = state.lock().unwrap();
     encounter.clone_from(&Encounter::default());
     info!("encounter reset");
@@ -103,26 +124,79 @@ pub enum StatType {
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_dps_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Dmg)
+    get_player_window(encounter, StatType::Dmg, &db)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_heal_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Heal)
+    get_player_window(encounter, StatType::Heal, &db)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_dps_boss_only_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::DmgBossOnly)
+    get_player_window(encounter, StatType::DmgBossOnly, &db)
 }
 
-pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) -> PlayersWindow {
+/// Look up a player's name from the database by their UID
+fn lookup_player_name_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
+    let conn = db.lock().ok()?;
+    conn.query_row(
+        "SELECT name FROM players WHERE player_uid = ?1 ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        [player_uid],
+        |row| row.get(0),
+    ).ok()
+}
+
+/// Look up a player's class from the database by their UID
+fn lookup_player_class_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
+    let conn = db.lock().ok()?;
+    conn.query_row(
+        "SELECT class FROM players WHERE player_uid = ?1 AND class IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        [player_uid],
+        |row| row.get(0),
+    ).ok()
+}
+
+/// Look up a player's class spec from the database by their UID
+fn lookup_player_class_spec_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
+    let conn = db.lock().ok()?;
+    conn.query_row(
+        "SELECT class_spec FROM players WHERE player_uid = ?1 AND class_spec IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        [player_uid],
+        |row| row.get(0),
+    ).ok()
+}
+
+/// Look up a player's ability score from the database by their UID
+fn lookup_player_ability_score_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<i32> {
+    let conn = db.lock().ok()?;
+    conn.query_row(
+        "SELECT ability_score FROM players WHERE player_uid = ?1 AND ability_score IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        [player_uid],
+        |row| row.get(0),
+    ).ok()
+}
+
+pub fn get_player_window(
+    encounter: MutexGuard<Encounter>,
+    stat_type: StatType,
+    db: &tauri::State<'_, crate::db::DbConnection>,
+) -> PlayersWindow {
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
@@ -146,13 +220,50 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
             continue;
         }
         player_window.top_value = player_window.top_value.max(entity_stats.value as f64);
+        
+        // Try to get name from current entity first, then fall back to database
+        let player_name = if let Some(name) = &entity.name {
+            if !name.is_empty() && name != "Unknown" {
+                name.clone()
+            } else {
+                // Fall back to database
+                lookup_player_name_from_db(db, entity_uid as i64)
+                    .unwrap_or_else(|| String::from("Unknown Name"))
+            }
+        } else {
+            // Fall back to database
+            lookup_player_name_from_db(db, entity_uid as i64)
+                .unwrap_or_else(|| String::from("Unknown Name"))
+        };
+        
+        // Try to get class from current entity first, then fall back to database
+        let class_name = if let Some(player_class) = entity.class {
+            class::get_class_name(player_class)
+        } else {
+            lookup_player_class_from_db(db, entity_uid as i64)
+                .unwrap_or_else(|| class::get_class_name(Class::Unknown))
+        };
+        
+        // Try to get class spec from current entity first, then fall back to database
+        let class_spec_name = if let Some(player_class_spec) = entity.class_spec {
+            class::get_class_spec(player_class_spec)
+        } else {
+            lookup_player_class_spec_from_db(db, entity_uid as i64)
+                .unwrap_or_else(|| class::get_class_spec(ClassSpec::Unknown))
+        };
+        
+        // Try to get ability score from current entity first, then fall back to database
+        let ability_score = entity.ability_score.unwrap_or_else(|| {
+            lookup_player_ability_score_from_db(db, entity_uid as i64).unwrap_or(-1)
+        });
+        
         #[allow(clippy::cast_precision_loss)]
         let damage_row = PlayerRow {
             uid: entity_uid as f64,
-            name: entity.name.clone().unwrap_or(String::from("Unknown Name")),
-            class_name: class::get_class_name(entity.class.unwrap_or(Class::Unknown)),
-            class_spec_name: class::get_class_spec(entity.class_spec.unwrap_or(ClassSpec::Unknown)),
-            ability_score: entity.ability_score.unwrap_or(-1) as f64,
+            name: player_name,
+            class_name,
+            class_spec_name,
+            ability_score: ability_score as f64,
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(entity_stats.value as f64 / encounter_stats.value as f64 * 100.0),

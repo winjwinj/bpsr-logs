@@ -74,6 +74,54 @@ async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, strin
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async getAllEncounterHistory() : Promise<Result<EncounterRecord[], string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_all_encounter_history") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async getEncounterDetail(encounterId: number) : Promise<Result<EncounterDetail, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_encounter_detail", { encounterId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async deleteEncounterHistory(encounterId: number) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("delete_encounter_history", { encounterId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async clearAllData() : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("clear_all_data") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async getHistoricalPlayersWindow(encounterId: number) : Promise<Result<PlayersWindow, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_historical_players_window", { encounterId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async getHistoricalSkillsWindow(encounterId: number, playerId: number) : Promise<Result<SkillsWindow, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_historical_skills_window", { encounterId, playerId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
 }
 }
 
@@ -87,7 +135,12 @@ async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, strin
 
 /** user-defined types **/
 
+export type AbilityRecord = { id: number; player_id: number; skill_id: number; skill_name: string; total_damage: number; damage_hits: number; crit_value: number; crit_hits: number; lucky_value: number; lucky_hits: number }
+export type EncounterDetail = { encounter: EncounterRecord; players: PlayerDetail[] }
+export type EncounterRecord = { id: number; start_time: string; end_time: string; duration_ms: number; total_damage: number; total_healing: number }
 export type HeaderInfo = { totalDps: number; totalDmg: number; elapsedMs: number; timeLastCombatPacketMs: number }
+export type PlayerDetail = { player: PlayerRecord; abilities: AbilityRecord[] }
+export type PlayerRecord = { id: number; encounter_id: number; name: string; class: string | null; class_spec: string | null; ability_score: number | null; total_damage: number; damage_hits: number; crit_value: number; crit_hits: number; lucky_value: number; lucky_hits: number; total_healing: number; healing_hits: number }
 export type PlayerRow = { uid: number; abilityScore: number; className: string; classSpecName: string; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }
 export type PlayersWindow = { playerRows: PlayerRow[]; localPlayerUid: number; topValue: number }
 export type SkillRow = { uid: number; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }

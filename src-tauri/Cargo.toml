@@ -23,6 +23,7 @@ serde = { version = "1.0.219", features = ["derive"] }
 tauri-plugin-single-instance = "2.3.4"
 tauri-plugin-log = { version = "2.7.0", features = ["colored"] }
 chrono = "0.4.41"
+rusqlite = { version = "0.32", features = ["bundled", "chrono"] }
 windivert = { version = "0.6.0", features = ["vendored"] }
 etherparse = "0.19.0"
 tokio = { version = "1.47.1", features = ["macros"] }

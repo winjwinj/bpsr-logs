@@ -32,7 +32,21 @@ pub async fn start(app_handle: AppHandle) {
         // error!("Received Pkt {op:?}");
         match op {
             packets::opcodes::Pkt::ServerChangeInfo => {
+                info!("Server change detected, saving encounter before reset");
                 let encounter_state = app_handle.state::<EncounterMutex>();
+                let encounter = encounter_state.lock().unwrap();
+                
+                // Save encounter if there's combat data
+                if encounter.dmg_stats.value > 0 || encounter.heal_stats.value > 0 {
+                    let db = app_handle.state::<crate::db::DbConnection>();
+                    if let Ok(encounter_id) = crate::db::save_encounter(&db, &encounter) {
+                        info!("Encounter saved due to server change with ID: {}", encounter_id);
+                    } else {
+                        info!("Failed to save encounter on server change");
+                    }
+                }
+                
+                drop(encounter);
                 let mut encounter_state = encounter_state.lock().unwrap();
                 on_server_change(&mut encounter_state);
             }
@@ -49,8 +63,9 @@ pub async fn start(app_handle: AppHandle) {
                         }
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
+                let db = app_handle.state::<crate::db::DbConnection>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_near_entities(&mut encounter_state, sync_near_entities, is_bptimer_enabled).is_none() {
+                if process_sync_near_entities(&mut encounter_state, sync_near_entities, is_bptimer_enabled, &db).is_none() {
                     warn!("Error processing SyncNearEntities.. ignoring.");
                 }
             }
@@ -116,8 +131,9 @@ pub async fn start(app_handle: AppHandle) {
                         }
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
+                let db = app_handle.state::<crate::db::DbConnection>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info, is_bptimer_enabled).is_none() {
+                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info, is_bptimer_enabled, &db).is_none() {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                 }
             }
@@ -133,9 +149,10 @@ pub async fn start(app_handle: AppHandle) {
                         }
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
+                let db = app_handle.state::<crate::db::DbConnection>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 for aoi_sync_delta in sync_near_delta_info.delta_infos {
-                    if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta, is_bptimer_enabled).is_none() {
+                    if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta, is_bptimer_enabled, &db).is_none() {
                         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                     }
                 }

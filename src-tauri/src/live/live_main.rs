@@ -82,9 +82,10 @@ pub async fn start(app_handle: AppHandle) {
                         }
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
+                let db = app_handle.state::<crate::db::DbConnection>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 encounter_state.local_player = Some(sync_container_data.clone());
-                if process_sync_container_data(&mut encounter_state, sync_container_data).is_none() {
+                if process_sync_container_data(&mut encounter_state, sync_container_data, &db).is_none() {
                     warn!("Error processing SyncContainerData.. ignoring.");
                 }
             }

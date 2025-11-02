@@ -56,6 +56,31 @@ pub fn on_server_change(encounter: &mut Encounter) {
     encounter.local_player = local_player; // Restore it after reset
 }
 
+/// Set an entity's name conservatively: only apply the incoming name when it is
+/// non-empty and not a placeholder ("Unknown"). Do not overwrite an existing
+/// useful name. Log prior and new values for visibility when changes occur.
+fn set_entity_name(entity: &mut Entity, uid: i64, incoming_name: &str, db: &crate::db::DbConnection) {
+    if incoming_name.is_empty() || incoming_name == "Unknown" {
+        info!("Skipping empty/Unknown incoming name for UID {uid}");
+        return;
+    }
+
+    match &entity.name {
+        Some(existing) if !existing.is_empty() && existing != "Unknown" => {
+            if existing != incoming_name {
+                info!("Keeping existing name for UID {uid}: '{existing}' (incoming: '{incoming_name}')");
+            }
+        }
+        _ => {
+            let prev = entity.name.clone().unwrap_or_else(|| String::from("<none>"));
+            entity.name = Some(incoming_name.to_string());
+            info!("Set name for UID {uid}: '{prev}' -> '{incoming_name}'");
+            // Persist latest-known name to players_metadata so future sessions can use it
+            let _ = crate::db::upsert_player_metadata(db, uid as i64, Some(incoming_name), None, None, None);
+        }
+    }
+}
+
 pub fn process_sync_near_entities(
     encounter: &mut Encounter,
     sync_near_entities: blueprotobuf::SyncNearEntities,
@@ -75,7 +100,7 @@ pub fn process_sync_near_entities(
 
         match target_entity_type {
             blueprotobuf::EEntityType::EntChar => {
-                process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs);
+                process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs, db);
                 load_historical_class_spec_for_player(target_entity, target_uid as i64, db);
             },
             blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, pkt_entity.attrs?.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
@@ -88,6 +113,7 @@ pub fn process_sync_near_entities(
 pub fn process_sync_container_data(
     encounter: &mut Encounter,
     sync_container_data: blueprotobuf::SyncContainerData,
+    db: &DbConnection,
 ) -> Option<()> {
     let v_data = sync_container_data.v_data?;
     let player_uid = v_data.char_id?;
@@ -97,10 +123,44 @@ pub fn process_sync_container_data(
         .entry(player_uid)
         .or_default();
     let char_base = v_data.char_base?;
-    target_entity.name = Some(char_base.name?);
+    // Only set name if it's meaningful
+    if let Ok(name) = std::panic::catch_unwind(|| char_base.name.clone()) {
+        if let Some(name_str) = name {
+            set_entity_name(target_entity, player_uid, &name_str, db);
+        }
+    }
     target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
-    target_entity.class = Some(Class::from(v_data.profession_list?.cur_profession_id?));
-    target_entity.ability_score = Some(char_base.fight_point?);
+
+    // Profession id may be absent; only set class if it's meaningful and doesn't overwrite a better one
+    if let Some(prof_list) = &v_data.profession_list {
+        if let Some(prof_id) = prof_list.cur_profession_id {
+            let new_class = Class::from(prof_id);
+            if !matches!(new_class, Class::Unimplemented | Class::Unknown) {
+                let should_set = match target_entity.class {
+                    None => true,
+                    Some(existing) => matches!(existing, Class::Unimplemented | Class::Unknown),
+                };
+                if should_set {
+                    target_entity.class = Some(new_class);
+                }
+            }
+        }
+    }
+
+    // Ability score from SyncContainerData
+    if let Ok(fp) = std::panic::catch_unwind(|| char_base.fight_point) {
+        if let Some(fp_val) = fp {
+            if fp_val > 0 {
+                let should_set = match target_entity.ability_score {
+                    None => true,
+                    Some(existing) => existing <= 0,
+                };
+                if should_set {
+                    target_entity.ability_score = Some(fp_val);
+                }
+            }
+        }
+    }
 
     Some(())
 }
@@ -145,8 +205,8 @@ pub fn process_aoi_sync_delta(
             });
 
         if let Some(attrs_collection) = aoi_sync_delta.attrs {
-            match target_entity_type {
-                blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs),
+                match target_entity_type {
+                blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs, db),
                 blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, attrs_collection.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
                 _ => {}
             }
@@ -255,7 +315,7 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     stats.value += actual_value;
 }
 
-fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<blueprotobuf::Attr>) {
+fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<blueprotobuf::Attr>, db: &crate::db::DbConnection) {
     for attr in attrs {
         let Some(mut raw_bytes) = attr.raw_data else {
             continue;
@@ -268,16 +328,50 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
                 raw_bytes.remove(0); // not sure why, there's some weird character as the first e.g. "\u{6}Sketal"
                 let player_name_result = BinaryReader::from(raw_bytes).read_string();
                 if let Ok(player_name) = player_name_result {
-                    player_entity.name = Some(player_name.clone());
-                    info!("Found player {player_name} with UID {player_uid}");
+                    // Only set the name if it's useful. Avoid overwriting a previously-known
+                    // name with an empty or placeholder value (e.g. "Unknown"). This prevents
+                    // later packets from degrading previously-captured player names.
+                    if !player_name.is_empty() && player_name != "Unknown" {
+                        set_entity_name(player_entity, player_uid, &player_name, db);
+                        info!("Found player {player_name} with UID {player_uid}");
+                    } else {
+                        info!("Skipping empty/Unknown name for UID {player_uid}");
+                    }
                 } else {
                     warn!("Failed to read player name for UID {player_uid}");
                 }
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_PROFESSION_ID => player_entity.class = Some(Class::from(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)),
+            attr_type::ATTR_PROFESSION_ID => {
+                let prof_id = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                let new_class = Class::from(prof_id);
+                // Only set class if the new value is meaningful and we don't already have
+                // a better class recorded. Class::Unimplemented (and Unknown) are not
+                // considered useful values to overwrite an existing one.
+                if !matches!(new_class, Class::Unimplemented | Class::Unknown) {
+                    let should_set = match player_entity.class {
+                        None => true,
+                        Some(existing) => matches!(existing, Class::Unimplemented | Class::Unknown),
+                    };
+                    if should_set {
+                        player_entity.class = Some(new_class);
+                    }
+                }
+            }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_FIGHT_POINT => player_entity.ability_score = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_FIGHT_POINT => {
+                let fp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                // Only set ability_score if it's positive and we don't already have a positive value.
+                if fp > 0 {
+                    let should_set = match player_entity.ability_score {
+                        None => true,
+                        Some(existing) => existing <= 0,
+                    };
+                    if should_set {
+                        player_entity.ability_score = Some(fp);
+                    }
+                }
+            }
             _ => (),
         }
     }

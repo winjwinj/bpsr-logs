@@ -152,6 +152,18 @@ pub fn init_db(db_path: PathBuf) -> SqliteResult<DbConnection> {
             [],
         )?;
     }
+    // Migration: Add players_metadata table for storing latest-known metadata per player
+    // This table stores a single row per player_uid and is independent of encounters.
+    conn.execute_batch(
+        "CREATE TABLE IF NOT EXISTS players_metadata (
+            player_uid INTEGER PRIMARY KEY,
+            name TEXT,
+            class TEXT,
+            class_spec TEXT,
+            ability_score INTEGER,
+            last_seen TEXT
+        );",
+    )?;
 
     Ok(Mutex::new(conn))
 }
@@ -539,43 +551,93 @@ pub fn clear_all_encounters(db: &DbConnection) -> SqliteResult<()> {
     let _ = conn.execute("DELETE FROM sqlite_sequence WHERE name = 'players'", []);
     let _ = conn.execute("DELETE FROM sqlite_sequence WHERE name = 'abilities'", []);
 
+    // Also clear the players_metadata table so historical user metadata does not grow unbounded
+    // This table holds one row per player_uid and is independent of encounters; when the user
+    // explicitly clears encounters they expect history to be cleared as well.
+    let _ = conn.execute("DELETE FROM players_metadata", []);
+    // players_metadata uses player_uid as primary key (not AUTOINCREMENT), but delete any sqlite_sequence
+    // entry if present for completeness.
+    let _ = conn.execute("DELETE FROM sqlite_sequence WHERE name = 'players_metadata'", []);
+
     // Optional: run VACUUM to ensure the database file is compacted and sqlite_sequence changes apply cleanly.
     // VACUUM can be somewhat expensive but this is a user-initiated clear operation and should be fine.
     let _ = conn.execute_batch("VACUUM;") ;
 
-    log::info!("Cleared all encounters and reset autoincrement sequences");
+    log::info!("Cleared all encounters, players_metadata and reset autoincrement sequences");
 
     Ok(())
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, specta::Type)]
 pub struct PlayerMetadata {
     pub name: String,
     pub class: Option<String>,
     pub class_spec: Option<String>,
+    pub ability_score: Option<i32>,
 }
 
 /// Look up player metadata from history by player UID
 /// Returns the most recent player metadata for the given UID
 pub fn lookup_player_metadata(db: &DbConnection, player_uid: i64) -> SqliteResult<Option<PlayerMetadata>> {
     let conn = db.lock().unwrap();
-    
+    // First, try the dedicated players_metadata table (single row per player_uid).
     let mut stmt = conn.prepare(
-        "SELECT name, class, class_spec FROM players 
-         WHERE player_uid = ?1 
-         ORDER BY encounter_id DESC 
-         LIMIT 1"
+        "SELECT name, class, class_spec, ability_score FROM players_metadata WHERE player_uid = ?1 LIMIT 1",
     )?;
-    
-    let result = stmt.query_row([player_uid], |row| {
+    if let Ok(row_res) = stmt.query_row([player_uid], |row| {
         Ok(PlayerMetadata {
             name: row.get(0)?,
             class: row.get(1)?,
             class_spec: row.get(2)?,
+            ability_score: row.get(3)?,
+        })
+    }).optional() {
+        if row_res.is_some() {
+            return Ok(row_res);
+        }
+    }
+
+    // Fallback: look in the players table for the most recent encounter row
+    let mut stmt2 = conn.prepare(
+        "SELECT name, class, class_spec, ability_score FROM players 
+         WHERE player_uid = ?1 
+         ORDER BY id DESC 
+         LIMIT 1"
+    )?;
+    let result = stmt2.query_row([player_uid], |row| {
+        Ok(PlayerMetadata {
+            name: row.get(0)?,
+            class: row.get(1)?,
+            class_spec: row.get(2)?,
+            ability_score: row.get(3)?,
         })
     }).optional()?;
-    
     Ok(result)
+}
+
+/// Upsert latest metadata for a player into players_metadata
+pub fn upsert_player_metadata(
+    db: &DbConnection,
+    player_uid: i64,
+    name: Option<&str>,
+    class: Option<&str>,
+    class_spec: Option<&str>,
+    ability_score: Option<i32>,
+) -> SqliteResult<()> {
+    let conn = db.lock().unwrap();
+    let now = Utc::now().to_rfc3339();
+    conn.execute(
+        "INSERT INTO players_metadata (player_uid, name, class, class_spec, ability_score, last_seen)
+         VALUES (?1, ?2, ?3, ?4, ?5, ?6)
+         ON CONFLICT(player_uid) DO UPDATE SET
+            name = COALESCE(?2, name),
+            class = COALESCE(?3, class),
+            class_spec = COALESCE(?4, class_spec),
+            ability_score = COALESCE(?5, ability_score),
+            last_seen = ?6",
+        params![player_uid, name, class, class_spec, ability_score, now],
+    )?;
+    Ok(())
 }
 
 /// Look up ability_score from history by player UID
@@ -586,7 +648,7 @@ pub fn lookup_player_ability_score_from_history(db: &DbConnection, player_uid: i
     conn.query_row(
         "SELECT ability_score FROM players 
          WHERE player_uid = ?1 AND ability_score IS NOT NULL
-         ORDER BY encounter_id DESC 
+         ORDER BY id DESC 
          LIMIT 1",
         [player_uid],
         |row| row.get(0),
@@ -601,7 +663,7 @@ pub fn lookup_player_class_spec_from_history(db: &DbConnection, player_uid: i64)
     conn.query_row(
         "SELECT class_spec FROM players 
          WHERE player_uid = ?1 AND class_spec IS NOT NULL
-         ORDER BY encounter_id DESC 
+         ORDER BY id DESC 
          LIMIT 1",
         [player_uid],
         |row| row.get(0),

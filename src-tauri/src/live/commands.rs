@@ -155,8 +155,18 @@ pub fn get_dps_boss_only_player_window(
 /// Look up a player's name from the database by their UID
 fn lookup_player_name_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
     let conn = db.lock().ok()?;
+    // Prefer a historical name that is not a placeholder. Try to find a meaningful
+    // name first; if none exists, fall back to any recorded name.
+    let meaningful = conn.query_row(
+        "SELECT name FROM players WHERE player_uid = ?1 AND name IS NOT NULL AND name NOT IN ('', 'Unknown', 'Unknown Name') ORDER BY id DESC LIMIT 1",
+        [player_uid],
+        |row| row.get(0),
+    ).ok();
+    if meaningful.is_some() {
+        return meaningful;
+    }
     conn.query_row(
-        "SELECT name FROM players WHERE player_uid = ?1 ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        "SELECT name FROM players WHERE player_uid = ?1 ORDER BY id DESC LIMIT 1",
         [player_uid],
         |row| row.get(0),
     ).ok()
@@ -166,7 +176,7 @@ fn lookup_player_name_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i
 fn lookup_player_class_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
     let conn = db.lock().ok()?;
     conn.query_row(
-        "SELECT class FROM players WHERE player_uid = ?1 AND class IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        "SELECT class FROM players WHERE player_uid = ?1 AND class IS NOT NULL ORDER BY id DESC LIMIT 1",
         [player_uid],
         |row| row.get(0),
     ).ok()
@@ -176,7 +186,7 @@ fn lookup_player_class_from_db(db: &tauri::State<'_, DbConnection>, player_uid: 
 fn lookup_player_class_spec_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<String> {
     let conn = db.lock().ok()?;
     conn.query_row(
-        "SELECT class_spec FROM players WHERE player_uid = ?1 AND class_spec IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        "SELECT class_spec FROM players WHERE player_uid = ?1 AND class_spec IS NOT NULL ORDER BY id DESC LIMIT 1",
         [player_uid],
         |row| row.get(0),
     ).ok()
@@ -186,20 +196,60 @@ fn lookup_player_class_spec_from_db(db: &tauri::State<'_, DbConnection>, player_
 fn lookup_player_ability_score_from_db(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<i32> {
     let conn = db.lock().ok()?;
     conn.query_row(
-        "SELECT ability_score FROM players WHERE player_uid = ?1 AND ability_score IS NOT NULL ORDER BY encounter_id DESC, id DESC LIMIT 1",
+        "SELECT ability_score FROM players WHERE player_uid = ?1 AND ability_score IS NOT NULL ORDER BY id DESC LIMIT 1",
         [player_uid],
         |row| row.get(0),
     ).ok()
 }
 
+/// Tauri command: fetch player metadata (name, class, class_spec) from DB by UID
+#[tauri::command]
+#[specta::specta]
+pub fn get_player_metadata(
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid: i64,
+) -> Option<crate::db::PlayerMetadata> {
+    crate::db::lookup_player_metadata(&db, player_uid).ok().flatten()
+}
+
 pub fn get_player_window(
-    encounter: MutexGuard<Encounter>,
+    mut encounter: MutexGuard<Encounter>,
     stat_type: StatType,
     db: &tauri::State<'_, crate::db::DbConnection>,
 ) -> PlayersWindow {
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
+
+    // Prefill missing or placeholder names from DB so the UI can show them when
+    // the player bars are first drawn (prevents transient 'Unknown Name').
+    for (&entity_uid, entity) in encounter.entity_uid_to_entity.iter_mut() {
+        if entity.entity_type != EEntityType::EntChar {
+            continue;
+        }
+        let needs_prefill = match &entity.name {
+            Some(n) => n.is_empty() || n == "Unknown" || n == "Unknown Name",
+            None => true,
+        };
+        if needs_prefill {
+            if let Some(db_name) = lookup_player_name_from_db(db, entity_uid as i64) {
+                // Only apply meaningful names
+                if !db_name.is_empty() && db_name != "Unknown" && db_name != "Unknown Name" {
+                    entity.name = Some(db_name.clone());
+                    info!("Prefilled name for UID {entity_uid} from DB: {db_name}");
+                }
+            }
+        }
+
+        // Prefill ability_score when missing so first-draw UI can show it
+        if entity.ability_score.is_none() {
+            if let Some(db_ability) = lookup_player_ability_score_from_db(db, entity_uid as i64) {
+                // Only set meaningful ability scores (non-negative assumed valid)
+                entity.ability_score = Some(db_ability);
+                info!("Prefilled ability_score for UID {entity_uid} from DB: {db_ability}");
+            }
+        }
+    }
 
     #[allow(clippy::cast_precision_loss)]
     let mut player_window = PlayersWindow {
@@ -290,26 +340,43 @@ pub fn get_player_window(
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_dps_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Dmg)
+    get_skill_window(state, &db, player_uid, StatType::Dmg)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_dps_boss_only_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::DmgBossOnly)
+    get_skill_window(state, &db, player_uid, StatType::DmgBossOnly)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_heal_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Heal)
+    get_skill_window(state, &db, player_uid, StatType::Heal)
 }
 
-pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64, stat_type: StatType) -> Result<SkillsWindow, String> {
+pub fn get_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: &tauri::State<'_, DbConnection>,
+    player_uid: i64,
+    stat_type: StatType,
+) -> Result<SkillsWindow, String> {
     let encounter = state.lock().unwrap();
 
     let Some(player) = encounter.entity_uid_to_entity.get(&player_uid) else {
@@ -328,10 +395,21 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
 
     // Player DPS Stats
     #[allow(clippy::cast_precision_loss)]
+    // Determine inspected player's name: prefer an in-memory meaningful name, else query DB
+    let inspected_name = if let Some(name) = &player.name {
+        if !name.is_empty() && name != "Unknown" && name != "Unknown Name" {
+            name.clone()
+        } else {
+            lookup_player_name_from_db(db, player_uid).unwrap_or_else(|| String::from("Unknown Name"))
+        }
+    } else {
+        lookup_player_name_from_db(db, player_uid).unwrap_or_else(|| String::from("Unknown Name"))
+    };
+
     let mut skill_window = SkillsWindow {
         inspected_player: PlayerRow {
             uid: player_uid as f64,
-            name: player.name.clone().unwrap_or(String::from("Unknown Name")),
+            name: inspected_name,
             class_name: class::get_class_name(player.class.unwrap_or(Class::Unknown)),
             class_spec_name: class::get_class_spec(player.class_spec.unwrap_or(ClassSpec::Unknown)),
             ability_score: player.ability_score.unwrap_or(-1) as f64,

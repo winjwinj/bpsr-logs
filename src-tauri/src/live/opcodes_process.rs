@@ -2,7 +2,7 @@ use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_fro
 use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
-use log::{error, info, warn};
+use log::{error, info, warn, debug};
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
 use crate::db::DbConnection;
@@ -10,43 +10,14 @@ use crate::db::DbConnection;
 /// Helper function to load historical class_spec from database for a player
 fn load_historical_class_spec_for_player(
     entity: &mut Entity,
-    player_uid: i64,
-    db: &DbConnection,
+    _player_uid: i64,
+    _db: &DbConnection,
 ) {
     // Skip if already has a valid class_spec
     if entity.class_spec.is_some() && entity.class_spec != Some(ClassSpec::Unknown) {
         return;
     }
 
-    // Try to look up from database
-    if let Ok(Some(metadata)) = crate::db::lookup_player_metadata(db, player_uid) {
-        if let Some(class_spec_str) = metadata.class_spec {
-            // Convert string back to enum
-            let class_spec = match class_spec_str.as_str() {
-                "Iaido" => ClassSpec::Iaido,
-                "Moonstrike" => ClassSpec::Moonstrike,
-                "Icicle" => ClassSpec::Icicle,
-                "Frostbeam" => ClassSpec::Frostbeam,
-                "Vanguard" => ClassSpec::Vanguard,
-                "Skyward" => ClassSpec::Skyward,
-                "Smite" => ClassSpec::Smite,
-                "Lifebind" => ClassSpec::Lifebind,
-                "Earthfort" => ClassSpec::Earthfort,
-                "Block" => ClassSpec::Block,
-                "Wildpack" => ClassSpec::Wildpack,
-                "Falconry" => ClassSpec::Falconry,
-                "Recovery" => ClassSpec::Recovery,
-                "Shield" => ClassSpec::Shield,
-                "Dissonance" => ClassSpec::Dissonance,
-                "Concerto" => ClassSpec::Concerto,
-                _ => ClassSpec::Unknown,
-            };
-            if class_spec != ClassSpec::Unknown {
-                entity.class_spec = Some(class_spec);
-                info!("Loaded historical class_spec '{}' for player {}", class_spec_str, player_uid);
-            }
-        }
-    }
 }
 
 pub fn on_server_change(encounter: &mut Encounter) {
@@ -57,16 +28,16 @@ pub fn on_server_change(encounter: &mut Encounter) {
 }
 
 /// Set an entity's name conservatively: only apply the incoming name when it is
-/// non-empty and not a placeholder ("Unknown"). Do not overwrite an existing
+/// non-empty and not a placeholder ("Unknown", "Unknown Name"). Do not overwrite an existing
 /// useful name. Log prior and new values for visibility when changes occur.
-fn set_entity_name(entity: &mut Entity, uid: i64, incoming_name: &str, db: &crate::db::DbConnection) {
-    if incoming_name.is_empty() || incoming_name == "Unknown" {
-        info!("Skipping empty/Unknown incoming name for UID {uid}");
+fn set_entity_name(entity: &mut Entity, uid: i64, incoming_name: &str, _db: &crate::db::DbConnection) {
+    if !crate::db::is_valid_player_name(incoming_name) {
+        info!("Skipping invalid incoming name for UID {uid}: '{incoming_name}'");
         return;
     }
 
     match &entity.name {
-        Some(existing) if !existing.is_empty() && existing != "Unknown" => {
+        Some(existing) if crate::db::is_valid_player_name(existing) => {
             if existing != incoming_name {
                 info!("Keeping existing name for UID {uid}: '{existing}' (incoming: '{incoming_name}')");
             }
@@ -74,9 +45,7 @@ fn set_entity_name(entity: &mut Entity, uid: i64, incoming_name: &str, db: &crat
         _ => {
             let prev = entity.name.clone().unwrap_or_else(|| String::from("<none>"));
             entity.name = Some(incoming_name.to_string());
-            info!("Set name for UID {uid}: '{prev}' -> '{incoming_name}'");
-            // Persist latest-known name to players_metadata so future sessions can use it
-            let _ = crate::db::upsert_player_metadata(db, uid as i64, Some(incoming_name), None, None, None);
+            info!("Set name for UID {uid}: '{prev}' -> '{incoming_name}'")
         }
     }
 }
@@ -178,9 +147,12 @@ pub fn process_sync_to_me_delta_info(
     is_bptimer_enabled: bool,
     db: &DbConnection,
 ) -> Option<()> {
-    let delta_info = sync_to_me_delta_info.delta_info?;
-    encounter.local_player_uid = Some(delta_info.uuid? >> 16); // UUID =/= uid (have to >> 16)
-    process_aoi_sync_delta(encounter, delta_info.base_delta?, is_bptimer_enabled, db);
+    let delta_info = sync_to_me_delta_info.delta_info.as_ref()?;
+    let uuid = delta_info.uuid?;
+    encounter.local_player_uid = Some(uuid >> 16); // UUID =/= uid (have to >> 16)
+    
+    let base_delta = delta_info.base_delta.as_ref()?;
+    process_aoi_sync_delta(encounter, base_delta.clone(), is_bptimer_enabled, db);
     Some(())
 }
 
@@ -205,11 +177,17 @@ pub fn process_aoi_sync_delta(
             });
 
         if let Some(attrs_collection) = aoi_sync_delta.attrs {
-                match target_entity_type {
+            let attr_count = attrs_collection.attrs.len();
+            if attr_count > 0 {
+                debug!("Processing {} attributes for entity {} (type: {:?})", attr_count, target_uid, target_entity_type);
+            }
+            match target_entity_type {
                 blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs, db),
                 blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, attrs_collection.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
                 _ => {}
             }
+        } else {
+            debug!("No attributes in delta for entity {} (type: {:?})", target_uid, target_entity_type);
         }
     }
 
@@ -329,13 +307,13 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
                 let player_name_result = BinaryReader::from(raw_bytes).read_string();
                 if let Ok(player_name) = player_name_result {
                     // Only set the name if it's useful. Avoid overwriting a previously-known
-                    // name with an empty or placeholder value (e.g. "Unknown"). This prevents
-                    // later packets from degrading previously-captured player names.
-                    if !player_name.is_empty() && player_name != "Unknown" {
+                    // name with an empty or placeholder value (e.g. "Unknown", "Unknown Name"). 
+                    // This prevents later packets from degrading previously-captured player names.
+                    if crate::db::is_valid_player_name(&player_name) {
                         set_entity_name(player_entity, player_uid, &player_name, db);
                         info!("Found player {player_name} with UID {player_uid}");
                     } else {
-                        info!("Skipping empty/Unknown name for UID {player_uid}");
+                        info!("Skipping invalid name for UID {player_uid}: '{player_name}'");
                     }
                 } else {
                     warn!("Failed to read player name for UID {player_uid}");

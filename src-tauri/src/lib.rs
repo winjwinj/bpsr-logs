@@ -43,6 +43,11 @@ pub fn run() {
             live::commands::get_dps_boss_only_skill_window,
             live::commands::get_heal_player_window,
             live::commands::get_heal_skill_window,
+            live::commands::get_player_metadata,
+            live::commands::update_player_metadata,
+            live::commands::persist_player_metadata,
+            live::commands::set_local_player_uid,
+            live::commands::get_local_player_uid,
             live::commands::reset_encounter,
             live::commands::toggle_pause_encounter,
             live::commands::hard_reset,
@@ -92,11 +97,66 @@ pub fn run() {
             setup_autostart(&app_handle);
             setup_blur(&app_handle);
 
-            // Setup database
+            // Setup database - tauri_plugin_sql handles connection pooling and migrations
+            // The plugin will run migrations automatically
             let app_data_dir = app.path().app_data_dir().expect("failed to get app data dir");
             std::fs::create_dir_all(&app_data_dir).expect("failed to create app data dir");
             let db_path = app_data_dir.join("encounters.db");
-            let db_connection = db::init_db(db_path).expect("failed to initialize database");
+            
+            // Create connection pool using sqlx directly
+            // SQLite URL format: sqlite:path/to/db.db (or sqlite::memory: for in-memory)
+            let db_url = format!("sqlite:{}", db_path.to_string_lossy());
+            log::info!("Initializing database at: {}", db_path.display());
+            
+            let db_connection = match tauri::async_runtime::block_on(async {
+                match sqlx::sqlite::SqlitePoolOptions::new()
+                    .max_connections(20)
+                    .connect(&db_url)
+                    .await
+                {
+                    Ok(pool) => {
+                        // Run migrations manually since we're managing the pool directly
+                        for migration in db::init_db() {
+                            match migration.kind {
+                                tauri_plugin_sql::MigrationKind::Up => {
+                                    log::info!("Running migration: v{} - {}", migration.version, migration.description);
+                                    // Split migrations that might have multiple statements
+                                    for statement in migration.sql.split(';').filter(|s| !s.trim().is_empty()) {
+                                        match sqlx::query(statement).execute(&pool).await {
+                                            Ok(_) => {
+                                                log::debug!("Migration statement executed successfully");
+                                            }
+                                            Err(e) => {
+                                                // Ignore errors for ALTER TABLE if column already exists
+                                                if statement.contains("ALTER TABLE") && e.to_string().contains("duplicate") {
+                                                    log::info!("Column already exists (skipped): {}", e);
+                                                } else {
+                                                    log::warn!("Migration warning: {}", e);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                _ => {} // Skip Down migrations
+                            }
+                        }
+                        
+                        log::info!("Database initialized successfully");
+                        Ok(pool)
+                    }
+                    Err(e) => {
+                        log::error!("Failed to create database pool: {}", e);
+                        Err(e)
+                    }
+                }
+            }) {
+                Ok(pool) => pool,
+                Err(e) => {
+                    log::error!("Database initialization failed: {}", e);
+                    return Err(format!("Database initialization failed: {}", e).into());
+                }
+            };
+            
             app.manage(db_connection);
 
             // Live Meter

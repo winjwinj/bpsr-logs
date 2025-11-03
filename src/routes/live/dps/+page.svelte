@@ -74,13 +74,22 @@
         // For live data: fetch but do not overwrite an existing non-empty view with an empty/zeroed result.
         // This keeps the UI showing the last legitimate combat until a new combat with any non-zero
         // damage/healing arrives. This is purely a frontend guard and does not send any commands.
-        let fetched: PlayersWindow;
+        let fetchedResult: any;
         if (SETTINGS.misc.state.testingMode) {
-          fetched = await commands.getTestPlayerWindow();
+          fetchedResult = await commands.getTestPlayerWindow();
         } else if (SETTINGS.general.state.bossOnly) {
-          fetched = await commands.getDpsBossOnlyPlayerWindow();
+          fetchedResult = await commands.getDpsBossOnlyPlayerWindow();
         } else {
-          fetched = await commands.getDpsPlayerWindow();
+          fetchedResult = await commands.getDpsPlayerWindow();
+        }
+
+        // Extract the data from Result type
+        let fetched: PlayersWindow;
+        if (fetchedResult.status === 'ok') {
+          fetched = fetchedResult.data;
+        } else {
+          console.error("Failed to fetch DPS player window:", fetchedResult.error);
+          return;
         }
 
         const fetchedHasAnyValue = (fetched.playerRows ?? []).some((r) => (r.totalValue ?? 0) > 0) || (fetched.topValue ?? 0) > 0;

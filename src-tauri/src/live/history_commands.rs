@@ -4,8 +4,9 @@ use log::error;
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_all_encounter_history(state: tauri::State<'_, DbConnection>) -> Result<Vec<EncounterRecord>, String> {
+pub async fn get_all_encounter_history(state: tauri::State<'_, DbConnection>) -> Result<Vec<EncounterRecord>, String> {
     db::get_all_encounters(&state)
+        .await
         .map_err(|e| {
             error!("Failed to get encounters: {}", e);
             format!("Failed to get encounters: {}", e)
@@ -14,11 +15,12 @@ pub fn get_all_encounter_history(state: tauri::State<'_, DbConnection>) -> Resul
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_encounter_detail(
+pub async fn get_encounter_detail(
     state: tauri::State<'_, DbConnection>,
     encounter_id: i64,
 ) -> Result<EncounterDetail, String> {
     db::get_encounter_detail(&state, encounter_id)
+        .await
         .map_err(|e| {
             error!("Failed to get encounter detail: {}", e);
             format!("Failed to get encounter detail: {}", e)
@@ -28,8 +30,9 @@ pub fn get_encounter_detail(
 
 #[tauri::command]
 #[specta::specta]
-pub fn delete_encounter_history(state: tauri::State<'_, DbConnection>, encounter_id: i64) -> Result<(), String> {
+pub async fn delete_encounter_history(state: tauri::State<'_, DbConnection>, encounter_id: i64) -> Result<(), String> {
     db::delete_encounter(&state, encounter_id)
+        .await
         .map_err(|e| {
             error!("Failed to delete encounter: {}", e);
             format!("Failed to delete encounter: {}", e)
@@ -38,12 +41,13 @@ pub fn delete_encounter_history(state: tauri::State<'_, DbConnection>, encounter
 
 #[tauri::command]
 #[specta::specta]
-pub fn clear_all_data(
+pub async fn clear_all_data(
     state: tauri::State<'_, DbConnection>,
     encounter_state: tauri::State<'_, crate::live::opcodes_models::EncounterMutex>,
 ) -> Result<(), String> {
     // Clear all encounter history from the database
     db::clear_all_encounters(&state)
+        .await
         .map_err(|e| {
             error!("Failed to clear all encounters: {}", e);
             format!("Failed to clear all encounters: {}", e)
@@ -65,17 +69,18 @@ fn nan_is_zero(value: f64) -> f64 {
 }
 
 /// Look up ability_score from historical data for a player UID
-fn lookup_player_ability_score(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<i32> {
-    db::lookup_player_ability_score_from_history(db, player_uid).ok().flatten()
+async fn lookup_player_ability_score(db: &tauri::State<'_, DbConnection>, player_uid: i64) -> Option<i32> {
+    db::lookup_player_ability_score_from_history(db, player_uid).await.ok().flatten()
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_historical_players_window(
+pub async fn get_historical_players_window(
     state: tauri::State<'_, DbConnection>,
     encounter_id: i64,
 ) -> Result<PlayersWindow, String> {
     let detail = db::get_encounter_detail(&state, encounter_id)
+        .await
         .map_err(|e| {
             error!("Failed to get encounter detail: {}", e);
             format!("Failed to get encounter detail: {}", e)
@@ -100,7 +105,10 @@ pub fn get_historical_players_window(
         player_window.top_value = player_window.top_value.max(player.total_damage as f64);
 
         // Try to get ability_score from current record, fall back to historical data if None
-        let ability_score = player.ability_score.or_else(|| lookup_player_ability_score(&state, player.id));
+        let ability_score = match player.ability_score {
+            Some(score) => Some(score),
+            None => lookup_player_ability_score(&state, player.id).await,
+        };
 
         #[allow(clippy::cast_precision_loss)]
         let player_row = PlayerRow {
@@ -135,12 +143,13 @@ pub fn get_historical_players_window(
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_historical_skills_window(
+pub async fn get_historical_skills_window(
     state: tauri::State<'_, DbConnection>,
     encounter_id: i64,
     player_id: i64,
 ) -> Result<SkillsWindow, String> {
     let detail = db::get_encounter_detail(&state, encounter_id)
+        .await
         .map_err(|e| {
             error!("Failed to get encounter detail: {}", e);
             format!("Failed to get encounter detail: {}", e)
@@ -159,7 +168,10 @@ pub fn get_historical_skills_window(
     let player = &player_detail.player;
 
     // Try to get ability_score from current record, fall back to historical data if None
-    let ability_score = player.ability_score.or_else(|| lookup_player_ability_score(&state, player.id));
+    let ability_score = match player.ability_score {
+        Some(score) => Some(score),
+        None => lookup_player_ability_score(&state, player.id).await,
+    };
 
     #[allow(clippy::cast_precision_loss)]
     let mut skill_window = SkillsWindow {

@@ -66,7 +66,19 @@
         healPlayersWindow = result.data;
       } else {
         // Similar guard as DPS: keep last non-empty heal view until new non-zero heal data arrives.
-        let fetched: PlayersWindow = SETTINGS.misc.state.testingMode ? await commands.getTestPlayerWindow() : await commands.getHealPlayerWindow();
+        let fetchedResult = SETTINGS.misc.state.testingMode ? await commands.getTestPlayerWindow() : await commands.getHealPlayerWindow();
+        
+        // Extract the data from Result type
+        let fetched: PlayersWindow;
+        if ('status' in fetchedResult && fetchedResult.status === 'ok') {
+          fetched = fetchedResult.data;
+        } else if ('status' in fetchedResult) {
+          console.error("Failed to fetch heal player window:", fetchedResult.error);
+          return;
+        } else {
+          // Direct PlayersWindow object
+          fetched = fetchedResult;
+        }
 
         const fetchedHasAnyValue = (fetched.playerRows ?? []).some((r) => (r.totalValue ?? 0) > 0) || (fetched.topValue ?? 0) > 0;
         const currentHasAnyValue = (healPlayersWindow.playerRows ?? []).some((r) => (r.totalValue ?? 0) > 0) || (healPlayersWindow.topValue ?? 0) > 0;

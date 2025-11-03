@@ -104,7 +104,7 @@ pub mod attr_type {
 // TODO: this logic needs to be severely cleaned up
 pub mod class {
 
-    #[derive(Debug, Default, Clone, Copy)]
+    #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
     #[repr(i32)]
     pub enum Class {
         Stormblade,

@@ -69,6 +69,18 @@
     try {
       const data = await getPlayerMetadata(currentUid);
       if (data) {
+        // Always update the live encounter cache with any discovered metadata
+        // The backend will validate and apply the updates
+        const { updateLivePlayerMetadata } = await import('$lib/player-metadata');
+        await updateLivePlayerMetadata(
+          currentUid,
+          data.name,
+          data.class,
+          data.class_spec,
+          data.ability_score
+        );
+        
+        // Also update local component state for immediate UI feedback
         if (data.name && data.name !== "" && data.name !== "Unknown" && data.name !== "Unknown Name") {
           name = data.name;
         }

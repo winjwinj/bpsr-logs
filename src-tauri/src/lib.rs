@@ -103,6 +103,19 @@ pub fn run() {
             std::fs::create_dir_all(&app_data_dir).expect("failed to create app data dir");
             let db_path = app_data_dir.join("encounters.db");
             
+            // Ensure database file can be created by touching it if it doesn't exist
+            if !db_path.exists() {
+                match std::fs::File::create(&db_path) {
+                    Ok(_) => {
+                        log::info!("Created new database file at: {}", db_path.display());
+                    }
+                    Err(e) => {
+                        log::error!("Failed to create database file: {}", e);
+                        return Err(format!("Failed to create database file at {}: {}", db_path.display(), e).into());
+                    }
+                }
+            }
+            
             // Create connection pool using sqlx directly
             // SQLite URL format: sqlite:path/to/db.db (or sqlite::memory: for in-memory)
             let db_url = format!("sqlite:{}", db_path.to_string_lossy());

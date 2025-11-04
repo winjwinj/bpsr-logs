@@ -2,10 +2,10 @@ use crate::live::commands_models::{HeaderInfo, PlayerRow, PlayersWindow, SkillRo
 use crate::live::opcodes_models::class::{Class, ClassSpec};
 use crate::live::opcodes_models::{class, CombatStats, Encounter, EncounterMutex};
 use crate::packets::packet_capture::request_restart;
+use crate::db::DbConnection;
 use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
-use std::sync::MutexGuard;
 use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
@@ -81,10 +81,51 @@ pub fn hard_reset(state: tauri::State<'_, EncounterMutex>) {
 
 #[tauri::command]
 #[specta::specta]
-pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
-    let mut encounter = state.lock().unwrap();
-    encounter.clone_from(&Encounter::default());
-    info!("encounter reset");
+pub async fn reset_encounter(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, DbConnection>,
+) -> Result<(), String> {
+    // Get a copy of the encounter and drop the lock immediately
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        info!("reset_encounter called - dmg: {}, heal: {}", encounter.dmg_stats.value, encounter.heal_stats.value);
+        
+        // Only save if there's actual combat data
+        if encounter.dmg_stats.value > 0 || encounter.heal_stats.value > 0 {
+            Some(encounter.clone())
+        } else {
+            info!("No combat data to save");
+            None
+        }
+    };
+    
+    // Reset the encounter IMMEDIATELY without waiting for save to complete
+    // This allows new packets to be processed right away
+    {
+        let mut encounter = state.lock().unwrap();
+        encounter.clone_from(&Encounter::default());
+        info!("encounter reset");
+    }
+    
+    // Spawn background task to save encounter asynchronously
+    // This prevents blocking the packet processing thread
+    if let Some(encounter_copy) = encounter_copy {
+        // Clone the pool for the background task
+        let db_pool = (*db).clone();
+        tokio::spawn(async move {
+            info!("Saving encounter in background...");
+            match crate::db::save_encounter(&db_pool, &encounter_copy).await {
+                Ok(encounter_id) => {
+                    info!("Encounter saved with ID: {}", encounter_id);
+                }
+                Err(e) => {
+                    info!("Failed to save encounter: {}", e);
+                }
+            }
+        });
+    }
+    
+    Ok(())
 }
 
 #[tauri::command]
@@ -92,6 +133,151 @@ pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
 pub fn toggle_pause_encounter(state: tauri::State<'_, EncounterMutex>) {
     let mut encounter = state.lock().unwrap();
     encounter.is_encounter_paused = !encounter.is_encounter_paused;
+}
+
+/// Update a player's metadata in the live encounter cache
+/// This allows newly discovered player information (name, class, spec, ability_score) to be
+/// reflected immediately in the live UI without waiting for the next full refresh
+/// If the player entity doesn't exist yet, it will be created with the provided metadata.
+#[tauri::command]
+#[specta::specta]
+pub fn update_player_metadata(
+    state: tauri::State<'_, EncounterMutex>,
+    player_uid: i64,
+    name: Option<String>,
+    player_class: Option<String>,
+    player_class_spec: Option<String>,
+    ability_score: Option<i32>,
+) -> Result<(), String> {
+    use crate::live::opcodes_models::class::{Class, ClassSpec};
+    use crate::live::opcodes_models::Entity;
+    
+    let mut encounter = state.lock().unwrap();
+    
+    // Get or create the entity - this ensures the local player can be updated even before
+    // they appear in a combat packet
+    let entity = encounter
+        .entity_uid_to_entity
+        .entry(player_uid)
+        .or_insert_with(|| Entity {
+            entity_type: blueprotobuf_lib::blueprotobuf::EEntityType::EntChar,
+            ..Default::default()
+        });
+    
+    // Update name if provided and non-empty
+    if let Some(new_name) = name {
+        if !new_name.is_empty() && new_name != "Unknown" && new_name != "Unknown Name" {
+            entity.name = Some(new_name.clone());
+            info!("Updated player {} name to: {}", player_uid, new_name);
+        }
+    }
+    
+    // Update ability_score if provided and valid (>= 0)
+    if let Some(score) = ability_score {
+        if score >= 0 {
+            entity.ability_score = Some(score);
+            info!("Updated player {} ability_score to: {}", player_uid, score);
+        }
+    }
+    
+    // Update class if provided - parse the class name string to enum
+    if let Some(class_name) = player_class {
+        if !class_name.is_empty() && class_name != "Unknown Class" {
+            let parsed_class = match class_name.as_str() {
+                "Stormblade" => Class::Stormblade,
+                "Frost Mage" => Class::FrostMage,
+                "Wind Knight" => Class::WindKnight,
+                "Verdant Oracle" => Class::VerdantOracle,
+                "Heavy Guardian" => Class::HeavyGuardian,
+                "Marksman" => Class::Marksman,
+                "Shield Knight" => Class::ShieldKnight,
+                "Beat Performer" => Class::BeatPerformer,
+                _ => Class::Unknown,
+            };
+            entity.class = Some(parsed_class);
+            info!("Updated player {} class to: {:?}", player_uid, parsed_class);
+        }
+    }
+    
+    // Update class_spec if provided - parse the spec name string to enum
+    if let Some(spec_name) = player_class_spec {
+        if !spec_name.is_empty() && spec_name != "Unknown Spec" {
+            let parsed_spec = match spec_name.as_str() {
+                "Iaido" => ClassSpec::Iaido,
+                "Moonstrike" => ClassSpec::Moonstrike,
+                "Icicle" => ClassSpec::Icicle,
+                "Frostbeam" => ClassSpec::Frostbeam,
+                "Vanguard" => ClassSpec::Vanguard,
+                "Skyward" => ClassSpec::Skyward,
+                "Smite" => ClassSpec::Smite,
+                "Lifebind" => ClassSpec::Lifebind,
+                "Earthfort" => ClassSpec::Earthfort,
+                "Block" => ClassSpec::Block,
+                "Wildpack" => ClassSpec::Wildpack,
+                "Falconry" => ClassSpec::Falconry,
+                "Recovery" => ClassSpec::Recovery,
+                "Shield" => ClassSpec::Shield,
+                "Dissonance" => ClassSpec::Dissonance,
+                "Concerto" => ClassSpec::Concerto,
+                _ => ClassSpec::Unknown,
+            };
+            entity.class_spec = Some(parsed_spec);
+            info!("Updated player {} class_spec to: {:?}", player_uid, parsed_spec);
+        }
+    }
+    
+    Ok(())
+}
+
+/// Set the local player UID for the current encounter
+/// This is needed to identify which player is "you" on the live meter
+/// Normally this is set automatically when SyncToMeDeltaInfo packets arrive,
+/// but this command allows explicit setting if needed
+#[tauri::command]
+#[specta::specta]
+pub fn set_local_player_uid(
+    state: tauri::State<'_, EncounterMutex>,
+    player_uid: i64,
+) -> Result<(), String> {
+    let mut encounter = state.lock().unwrap();
+    encounter.local_player_uid = Some(player_uid);
+    info!("Set local player UID to: {}", player_uid);
+    Ok(())
+}
+
+/// Get the current local player UID for the live encounter
+#[tauri::command]
+#[specta::specta]
+pub fn get_local_player_uid(
+    state: tauri::State<'_, EncounterMutex>,
+) -> i64 {
+    let encounter = state.lock().unwrap();
+    encounter.local_player_uid.unwrap_or(-1)
+}
+
+/// Persist player metadata to the database immediately
+/// This ensures newly discovered metadata is saved even before encounter ends
+#[tauri::command]
+#[specta::specta]
+pub async fn persist_player_metadata(
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid: i64,
+    name: Option<String>,
+    player_class: Option<String>,
+    player_class_spec: Option<String>,
+    ability_score: Option<i32>,
+) -> Result<(), String> {
+    let name_ref = name.as_deref();
+    let class_ref = player_class.as_deref();
+    let spec_ref = player_class_spec.as_deref();
+    
+    crate::db::upsert_player_metadata(&db, player_uid, name_ref, class_ref, spec_ref, ability_score)
+        .await
+        .map_err(|e| e.to_string())?;
+    
+    info!("Persisted metadata for player {}: name={:?}, class={:?}, spec={:?}, ability_score={:?}", 
+        player_uid, name, player_class, player_class_spec, ability_score);
+    Ok(())
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -103,56 +289,205 @@ pub enum StatType {
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
-    let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Dmg)
+pub async fn get_dps_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> Result<PlayersWindow, String> {
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_player_window(encounter_copy, StatType::Dmg, &db).await.map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
-    let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Heal)
+pub async fn get_heal_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> Result<PlayersWindow, String> {
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_player_window(encounter_copy, StatType::Heal, &db).await.map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
-    let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::DmgBossOnly)
+pub async fn get_dps_boss_only_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+) -> Result<PlayersWindow, String> {
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_player_window(encounter_copy, StatType::DmgBossOnly, &db).await.map_err(|e| e.to_string())
 }
 
-pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) -> PlayersWindow {
+/// Tauri command: fetch player metadata (name, class, class_spec) from DB by UID
+#[tauri::command]
+#[specta::specta]
+pub async fn get_player_metadata(
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid: i64,
+) -> Result<Option<crate::db::PlayerMetadata>, String> {
+    crate::db::lookup_player_metadata(&db, player_uid)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+pub async fn get_player_window(
+    encounter: Encounter,
+    stat_type: StatType,
+    db: &DbConnection,
+) -> Result<PlayersWindow, Box<dyn std::error::Error>> {
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
+    // Extract data we need from the encounter - no lock needed since we own it
+    let local_player_uid = encounter.local_player_uid;
+    let dmg_stats_global = encounter.dmg_stats.clone();
+    let dmg_stats_boss_only_global = encounter.dmg_stats_boss_only.clone();
+    let heal_stats_global = encounter.heal_stats.clone();
+
+    let entity_data: Vec<_> = encounter
+        .entity_uid_to_entity
+        .iter()
+        .map(|(uid, entity)| {
+            (
+                *uid,
+                entity.entity_type,
+                entity.dmg_stats.clone(),
+                entity.dmg_stats_boss_only.clone(),
+                entity.heal_stats.clone(),
+                entity.name.clone(),
+                entity.class,
+                entity.class_spec,
+                entity.ability_score,
+            )
+        })
+        .collect();
+
+    // Now fetch metadata for players that might need it
+    // Only fetch if we have players with missing metadata - and do it sparingly
+    let mut metadata_cache: std::collections::HashMap<i64, Option<crate::db::PlayerMetadata>> =
+        std::collections::HashMap::new();
+
+    let mut players_needing_metadata = Vec::new();
+    for (uid, entity_type, _, _, _, name, _, _, _) in &entity_data {
+        if *entity_type != EEntityType::EntChar {
+            continue;
+        }
+        let needs_fetch = match name {
+            Some(n) => n.is_empty() || n == "Unknown" || n == "Unknown Name",
+            None => true,
+        };
+        if needs_fetch {
+            players_needing_metadata.push(*uid);
+        }
+    }
+
+    // Only do DB lookups if there are players missing metadata
+    // and limit to avoid exhausting connection pool during heavy load
+    if !players_needing_metadata.is_empty() && players_needing_metadata.len() <= 10 {
+        for uid in players_needing_metadata {
+            if let Ok(metadata) = crate::db::lookup_player_metadata(db, uid).await {
+                metadata_cache.insert(uid, metadata);
+            }
+        }
+    }
+
     #[allow(clippy::cast_precision_loss)]
     let mut player_window = PlayersWindow {
         player_rows: Vec::new(),
-        local_player_uid: encounter.local_player_uid.unwrap_or(-1) as f64,
+        local_player_uid: local_player_uid.unwrap_or(-1) as f64,
         top_value: 0.0,
     };
-    for (&entity_uid, entity) in &encounter.entity_uid_to_entity {
+
+    for (entity_uid, entity_type, dmg_stats, dmg_stats_boss_only, heal_stats, name, class, class_spec, ability_score) in entity_data {
         // Select stats per player and encounter
         let (entity_stats, encounter_stats) = match stat_type {
-            StatType::Dmg => (&entity.dmg_stats, &encounter.dmg_stats),
-            StatType::DmgBossOnly => (&entity.dmg_stats_boss_only, &encounter.dmg_stats_boss_only),
-            StatType::Heal => (&entity.heal_stats, &encounter.heal_stats),
+            StatType::Dmg => (&dmg_stats, &dmg_stats_global),
+            StatType::DmgBossOnly => (&dmg_stats_boss_only, &dmg_stats_boss_only_global),
+            StatType::Heal => (&heal_stats, &heal_stats_global),
         };
-        let is_player = entity.entity_type == EEntityType::EntChar;
+
+        let is_player = entity_type == EEntityType::EntChar;
         let did_damage = entity_stats.value > 0;
         if !is_player || !did_damage {
             continue;
         }
         player_window.top_value = player_window.top_value.max(entity_stats.value as f64);
+
+        // Resolve player name with proper fallback chain:
+        // 1. Use current entity name if valid (non-empty, not "Unknown")
+        // 2. Otherwise use cached database metadata name if available
+        // 3. As last resort, use cached name or "Unknown Name"
+        let player_name = {
+            let is_valid_name = |n: &str| !n.is_empty() && n != "Unknown" && n != "Unknown Name";
+            
+            // Try current entity name first
+            if let Some(ref n) = name {
+                if is_valid_name(n) {
+                    n.clone()
+                } else {
+                    // Fall back to cache
+                    metadata_cache
+                        .get(&entity_uid)
+                        .and_then(|m| m.as_ref().map(|md| md.name.clone()))
+                        .filter(|n| is_valid_name(n))
+                        .unwrap_or_else(|| String::from("Unknown Name"))
+                }
+            } else {
+                // No current name, try cache
+                metadata_cache
+                    .get(&entity_uid)
+                    .and_then(|m| m.as_ref().map(|md| md.name.clone()))
+                    .filter(|n| is_valid_name(n))
+                    .unwrap_or_else(|| String::from("Unknown Name"))
+            }
+        };
+
+        // Resolve class: prefer current entity, fallback to cache, default to Unknown
+        let class_name = class
+            .map(class::get_class_name)
+            .or_else(|| {
+                metadata_cache
+                    .get(&entity_uid)
+                    .and_then(|m| m.as_ref().and_then(|md| md.class.clone()))
+            })
+            .unwrap_or_else(|| class::get_class_name(Class::Unknown));
+
+        // Resolve class_spec: prefer current entity, fallback to cache, default to Unknown
+        let class_spec_name = class_spec
+            .map(class::get_class_spec)
+            .or_else(|| {
+                metadata_cache
+                    .get(&entity_uid)
+                    .and_then(|m| m.as_ref().and_then(|md| md.class_spec.clone()))
+            })
+            .unwrap_or_else(|| class::get_class_spec(ClassSpec::Unknown));
+
+        // Resolve ability_score: prefer current entity, fallback to cache
+        let final_ability_score = ability_score.or_else(|| {
+            metadata_cache
+                .get(&entity_uid)
+                .and_then(|m| m.as_ref().and_then(|md| md.ability_score))
+        });
+
         #[allow(clippy::cast_precision_loss)]
         let damage_row = PlayerRow {
             uid: entity_uid as f64,
-            name: entity.name.clone().unwrap_or(String::from("Unknown Name")),
-            class_name: class::get_class_name(entity.class.unwrap_or(Class::Unknown)),
-            class_spec_name: class::get_class_spec(entity.class_spec.unwrap_or(ClassSpec::Unknown)),
-            ability_score: entity.ability_score.unwrap_or(-1) as f64,
+            name: player_name,
+            class_name,
+            class_spec_name,
+            ability_score: final_ability_score.unwrap_or(-1) as f64,
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(entity_stats.value as f64 / encounter_stats.value as f64 * 100.0),
@@ -165,42 +500,72 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
         };
         player_window.player_rows.push(damage_row);
     }
-    drop(encounter); // drop lock before expensive sort
 
     // Sort skills descending by damage dealt
     player_window.player_rows.sort_by(|this_row, other_row| {
-        other_row.total_value
-                 .partial_cmp(&this_row.total_value)
-                 .unwrap_or(std::cmp::Ordering::Equal)
+        other_row
+            .total_value
+            .partial_cmp(&this_row.total_value)
+            .unwrap_or(std::cmp::Ordering::Equal)
     });
 
-    player_window
+    Ok(player_window)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
-    let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Dmg)
+pub async fn get_dps_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
+    let player_uid: i64 = player_uid_str.parse().map_err(|_| "Invalid player_uid")?;
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_skill_window(encounter_copy, &db, player_uid, StatType::Dmg).await
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
-    let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::DmgBossOnly)
+pub async fn get_dps_boss_only_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
+    let player_uid: i64 = player_uid_str.parse().map_err(|_| "Invalid player_uid")?;
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_skill_window(encounter_copy, &db, player_uid, StatType::DmgBossOnly).await
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
-    let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Heal)
+pub async fn get_heal_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    db: tauri::State<'_, crate::db::DbConnection>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
+    let player_uid: i64 = player_uid_str.parse().map_err(|_| "Invalid player_uid")?;
+    // Clone encounter data and immediately drop the lock
+    let encounter_copy = {
+        let encounter = state.lock().unwrap();
+        encounter.clone()
+    };
+    get_skill_window(encounter_copy, &db, player_uid, StatType::Heal).await
 }
 
-pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64, stat_type: StatType) -> Result<SkillsWindow, String> {
-    let encounter = state.lock().unwrap();
-
+pub async fn get_skill_window(
+    encounter: Encounter,
+    db: &DbConnection,
+    player_uid: i64,
+    stat_type: StatType,
+) -> Result<SkillsWindow, String> {
     let Some(player) = encounter.entity_uid_to_entity.get(&player_uid) else {
         return Err(format!("Could not find player with uid {player_uid}"));
     };
@@ -215,12 +580,46 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
         StatType::Heal => (&player.heal_stats, &encounter.heal_stats, &player.skill_uid_to_heal_stats),
     };
 
-    // Player DPS Stats
-    #[allow(clippy::cast_precision_loss)]
+    // Fetch metadata for this player if needed
+    let metadata = if player.name.is_none() || player.name.as_ref().map_or(false, |n| n.is_empty() || n == "Unknown" || n == "Unknown Name") {
+        crate::db::lookup_player_metadata(db, player_uid)
+            .await
+            .ok()
+            .flatten()
+    } else {
+        None
+    };
+
+    // Determine inspected player's name with proper fallback:
+    // 1. Use current player name if valid (non-empty, not "Unknown", not "Unknown Name")
+    // 2. Otherwise use cached database metadata name if available
+    // 3. As last resort, use "Unknown Name"
+    let inspected_name = {
+        let is_valid_name = |n: &str| !n.is_empty() && n != "Unknown" && n != "Unknown Name";
+        
+        if let Some(name) = &player.name {
+            if is_valid_name(name) {
+                name.clone()
+            } else {
+                metadata
+                    .as_ref()
+                    .map(|md| md.name.clone())
+                    .filter(|n| is_valid_name(n))
+                    .unwrap_or_else(|| String::from("Unknown Name"))
+            }
+        } else {
+            metadata
+                .as_ref()
+                .map(|md| md.name.clone())
+                .filter(|n| is_valid_name(n))
+                .unwrap_or_else(|| String::from("Unknown Name"))
+        }
+    };
+
     let mut skill_window = SkillsWindow {
         inspected_player: PlayerRow {
             uid: player_uid as f64,
-            name: player.name.clone().unwrap_or(String::from("Unknown Name")),
+            name: inspected_name,
             class_name: class::get_class_name(player.class.unwrap_or(Class::Unknown)),
             class_spec_name: class::get_class_spec(player.class_spec.unwrap_or(ClassSpec::Unknown)),
             ability_score: player.ability_score.unwrap_or(-1) as f64,
@@ -258,7 +657,6 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
         };
         skill_window.skill_rows.push(skill_row);
     }
-    drop(encounter);  // drop before expensive sort
 
     // Sort skills descending by damage dealt
     skill_window.skill_rows.sort_by(|this_row, other_row| {

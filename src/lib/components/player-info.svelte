@@ -1,6 +1,8 @@
 <script lang="ts">
   import { SETTINGS } from "$lib/settings-store";
   import { copyToClipboard, getClassIcon, tooltip } from "$lib/utils.svelte";
+  import { onMount, onDestroy } from 'svelte';
+  import { getPlayerMetadata } from "$lib/player-metadata";
   import AbbreviatedNumber from "./abbreviated-number.svelte";
 
   let {
@@ -55,6 +57,72 @@
       }
     }
     return className;
+  });
+
+  // If the incoming name or ability score is a placeholder but we have a UID,
+  // try to fetch historical metadata from the DB so bars don't initially show
+  // "Unknown Name" or "??" for ability score. If it's still missing after the
+  // first attempt, try again once after 5 seconds.
+  let _retryTimer: ReturnType<typeof setTimeout> | null = null;
+
+  async function tryLookupOnce(currentUid: number) {
+    try {
+      const data = await getPlayerMetadata(currentUid);
+      if (data) {
+        // Always update the live encounter cache with any discovered metadata
+        // The backend will validate and apply the updates
+        const { updateLivePlayerMetadata } = await import('$lib/player-metadata');
+        await updateLivePlayerMetadata(
+          currentUid,
+          data.name,
+          data.class,
+          data.class_spec,
+          data.ability_score
+        );
+        
+        // Also update local component state for immediate UI feedback
+        if (data.name && data.name !== "" && data.name !== "Unknown" && data.name !== "Unknown Name") {
+          name = data.name;
+        }
+        if (data.class && (!className || className === "Unknown Class")) {
+          className = data.class;
+        }
+        if (data.class_spec && (!classSpecName || classSpecName === "Unknown Spec")) {
+          classSpecName = data.class_spec;
+        }
+        if (data.ability_score !== undefined && data.ability_score !== null && (abilityScore === -1 || abilityScore === null)) {
+          abilityScore = data.ability_score as number;
+        }
+      }
+    } catch (err) {
+      // Non-fatal; leave placeholder if lookup fails
+      console.warn('Failed to lookup player metadata for uid', currentUid, err);
+    }
+  }
+
+  onMount(() => {
+    const uidVal = uid;
+    const needsLookupNow = uidVal !== -1 && (name === "" || name === "Unknown" || name === "Unknown Name" || abilityScore === -1 || abilityScore === null);
+    if (!needsLookupNow) return;
+
+    // First immediate attempt
+    void tryLookupOnce(uidVal).then(() => {
+      // After the first attempt, if still missing, schedule a single retry in 5s
+      const stillMissing = (name === "" || name === "Unknown" || name === "Unknown Name") || (abilityScore === -1 || abilityScore === null);
+      if (stillMissing) {
+        _retryTimer = setTimeout(() => {
+          void tryLookupOnce(uidVal);
+          _retryTimer = null;
+        }, 5000);
+      }
+    });
+  });
+
+  onDestroy(() => {
+    if (_retryTimer) {
+      clearTimeout(_retryTimer);
+      _retryTimer = null;
+    }
   });
 </script>
 

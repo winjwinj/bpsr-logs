@@ -2,19 +2,59 @@ use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_fro
 use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
-use log::{error, info, warn};
+use log::{error, info, warn, debug};
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
+use crate::db::DbConnection;
+
+/// Helper function to load historical class_spec from database for a player
+fn load_historical_class_spec_for_player(
+    entity: &mut Entity,
+    _player_uid: i64,
+    _db: &DbConnection,
+) {
+    // Skip if already has a valid class_spec
+    if entity.class_spec.is_some() && entity.class_spec != Some(ClassSpec::Unknown) {
+        return;
+    }
+
+}
 
 pub fn on_server_change(encounter: &mut Encounter) {
-    info!("on server change");
+    info!("on server change - preserving local_player data");
+    let local_player = encounter.local_player.clone(); // Preserve local player data across zone changes
     encounter.clone_from(&Encounter::default());
+    encounter.local_player = local_player; // Restore it after reset
+}
+
+/// Set an entity's name conservatively: only apply the incoming name when it is
+/// non-empty and not a placeholder ("Unknown", "Unknown Name"). Do not overwrite an existing
+/// useful name. Log prior and new values for visibility when changes occur.
+fn set_entity_name(entity: &mut Entity, uid: i64, incoming_name: &str, _db: &crate::db::DbConnection) {
+    if !crate::db::is_valid_player_name(incoming_name) {
+        info!("Skipping invalid incoming name for UID {uid}: '{incoming_name}'");
+        return;
+    }
+
+    match &entity.name {
+        Some(existing) if crate::db::is_valid_player_name(existing) => {
+            if existing != incoming_name {
+                info!("Keeping existing name for UID {uid}: '{existing}' (incoming: '{incoming_name}')");
+            }
+        }
+        _ => {
+            let prev = entity.name.clone().unwrap_or_else(|| String::from("<none>"));
+            entity.name = Some(incoming_name.to_string());
+            info!("Set name for UID {uid}: '{prev}' -> '{incoming_name}'")
+        }
+    }
 }
 
 pub fn process_sync_near_entities(
     encounter: &mut Encounter,
     sync_near_entities: blueprotobuf::SyncNearEntities,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
     for pkt_entity in sync_near_entities.appear {
         let target_uuid = pkt_entity.uuid?;
@@ -28,7 +68,10 @@ pub fn process_sync_near_entities(
         target_entity.entity_type = target_entity_type;
 
         match target_entity_type {
-            blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs),
+            blueprotobuf::EEntityType::EntChar => {
+                process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs, db);
+                load_historical_class_spec_for_player(target_entity, target_uid as i64, db);
+            },
             blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, pkt_entity.attrs?.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
             _ => {}
         }
@@ -39,6 +82,7 @@ pub fn process_sync_near_entities(
 pub fn process_sync_container_data(
     encounter: &mut Encounter,
     sync_container_data: blueprotobuf::SyncContainerData,
+    db: &DbConnection,
 ) -> Option<()> {
     let v_data = sync_container_data.v_data?;
     let player_uid = v_data.char_id?;
@@ -48,10 +92,44 @@ pub fn process_sync_container_data(
         .entry(player_uid)
         .or_default();
     let char_base = v_data.char_base?;
-    target_entity.name = Some(char_base.name?);
+    // Only set name if it's meaningful
+    if let Ok(name) = std::panic::catch_unwind(|| char_base.name.clone()) {
+        if let Some(name_str) = name {
+            set_entity_name(target_entity, player_uid, &name_str, db);
+        }
+    }
     target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
-    target_entity.class = Some(Class::from(v_data.profession_list?.cur_profession_id?));
-    target_entity.ability_score = Some(char_base.fight_point?);
+
+    // Profession id may be absent; only set class if it's meaningful and doesn't overwrite a better one
+    if let Some(prof_list) = &v_data.profession_list {
+        if let Some(prof_id) = prof_list.cur_profession_id {
+            let new_class = Class::from(prof_id);
+            if !matches!(new_class, Class::Unimplemented | Class::Unknown) {
+                let should_set = match target_entity.class {
+                    None => true,
+                    Some(existing) => matches!(existing, Class::Unimplemented | Class::Unknown),
+                };
+                if should_set {
+                    target_entity.class = Some(new_class);
+                }
+            }
+        }
+    }
+
+    // Ability score from SyncContainerData
+    if let Ok(fp) = std::panic::catch_unwind(|| char_base.fight_point) {
+        if let Some(fp_val) = fp {
+            if fp_val > 0 {
+                let should_set = match target_entity.ability_score {
+                    None => true,
+                    Some(existing) => existing <= 0,
+                };
+                if should_set {
+                    target_entity.ability_score = Some(fp_val);
+                }
+            }
+        }
+    }
 
     Some(())
 }
@@ -67,10 +145,14 @@ pub fn process_sync_to_me_delta_info(
     encounter: &mut Encounter,
     sync_to_me_delta_info: blueprotobuf::SyncToMeDeltaInfo,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
-    let delta_info = sync_to_me_delta_info.delta_info?;
-    encounter.local_player_uid = Some(delta_info.uuid? >> 16); // UUID =/= uid (have to >> 16)
-    process_aoi_sync_delta(encounter, delta_info.base_delta?, is_bptimer_enabled);
+    let delta_info = sync_to_me_delta_info.delta_info.as_ref()?;
+    let uuid = delta_info.uuid?;
+    encounter.local_player_uid = Some(uuid >> 16); // UUID =/= uid (have to >> 16)
+    
+    let base_delta = delta_info.base_delta.as_ref()?;
+    process_aoi_sync_delta(encounter, base_delta.clone(), is_bptimer_enabled, db);
     Some(())
 }
 
@@ -78,6 +160,7 @@ pub fn process_aoi_sync_delta(
     encounter: &mut Encounter,
     aoi_sync_delta: blueprotobuf::AoiSyncDelta,
     is_bptimer_enabled: bool,
+    db: &DbConnection,
 ) -> Option<()> {
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
@@ -94,11 +177,17 @@ pub fn process_aoi_sync_delta(
             });
 
         if let Some(attrs_collection) = aoi_sync_delta.attrs {
+            let attr_count = attrs_collection.attrs.len();
+            if attr_count > 0 {
+                debug!("Processing {} attributes for entity {} (type: {:?})", attr_count, target_uid, target_entity_type);
+            }
             match target_entity_type {
-                blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs),
+                blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs, db),
                 blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, attrs_collection.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
                 _ => {}
             }
+        } else {
+            debug!("No attributes in delta for entity {} (type: {:?})", target_uid, target_entity_type);
         }
     }
 
@@ -125,22 +214,29 @@ pub fn process_aoi_sync_delta(
 
         let skill_uid = sync_damage_info.owner_id?;
         if attacker_entity.class_spec.is_none_or(|class_spec| class_spec == ClassSpec::Unknown) {
-            let class_spec = get_class_spec_from_skill_id(skill_uid);
-            attacker_entity.class = Some(get_class_from_spec(class_spec));
-            attacker_entity.class_spec = Some(class_spec);
+            // First try to load from database
+            load_historical_class_spec_for_player(attacker_entity, attacker_uid as i64, db);
+            
+            // If still no class_spec, try to infer from the skill being used
+            if attacker_entity.class_spec.is_none_or(|class_spec| class_spec == ClassSpec::Unknown) {
+                let class_spec = get_class_spec_from_skill_id(skill_uid);
+                attacker_entity.class = Some(get_class_from_spec(class_spec));
+                attacker_entity.class_spec = Some(class_spec);
+            }
         }
 
         // Skills
         let is_heal = sync_damage_info.r#type.unwrap_or(0) == blueprotobuf::EDamageType::Heal as i32;
         if is_heal {
+            // Record heal stats in the heal-specific map (was incorrectly using the dps map)
             let heal_skill = attacker_entity
-                .skill_uid_to_dps_stats
+                .skill_uid_to_heal_stats
                 .entry(skill_uid)
                 .or_default();
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
+            info!("heal packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats
@@ -197,7 +293,7 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     stats.value += actual_value;
 }
 
-fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<blueprotobuf::Attr>) {
+fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<blueprotobuf::Attr>, db: &crate::db::DbConnection) {
     for attr in attrs {
         let Some(mut raw_bytes) = attr.raw_data else {
             continue;
@@ -210,16 +306,50 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
                 raw_bytes.remove(0); // not sure why, there's some weird character as the first e.g. "\u{6}Sketal"
                 let player_name_result = BinaryReader::from(raw_bytes).read_string();
                 if let Ok(player_name) = player_name_result {
-                    player_entity.name = Some(player_name.clone());
-                    info!("Found player {player_name} with UID {player_uid}");
+                    // Only set the name if it's useful. Avoid overwriting a previously-known
+                    // name with an empty or placeholder value (e.g. "Unknown", "Unknown Name"). 
+                    // This prevents later packets from degrading previously-captured player names.
+                    if crate::db::is_valid_player_name(&player_name) {
+                        set_entity_name(player_entity, player_uid, &player_name, db);
+                        info!("Found player {player_name} with UID {player_uid}");
+                    } else {
+                        info!("Skipping invalid name for UID {player_uid}: '{player_name}'");
+                    }
                 } else {
                     warn!("Failed to read player name for UID {player_uid}");
                 }
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_PROFESSION_ID => player_entity.class = Some(Class::from(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)),
+            attr_type::ATTR_PROFESSION_ID => {
+                let prof_id = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                let new_class = Class::from(prof_id);
+                // Only set class if the new value is meaningful and we don't already have
+                // a better class recorded. Class::Unimplemented (and Unknown) are not
+                // considered useful values to overwrite an existing one.
+                if !matches!(new_class, Class::Unimplemented | Class::Unknown) {
+                    let should_set = match player_entity.class {
+                        None => true,
+                        Some(existing) => matches!(existing, Class::Unimplemented | Class::Unknown),
+                    };
+                    if should_set {
+                        player_entity.class = Some(new_class);
+                    }
+                }
+            }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_FIGHT_POINT => player_entity.ability_score = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_FIGHT_POINT => {
+                let fp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                // Only set ability_score if it's positive and we don't already have a positive value.
+                if fp > 0 {
+                    let should_set = match player_entity.ability_score {
+                        None => true,
+                        Some(existing) => existing <= 0,
+                    };
+                    if should_set {
+                        player_entity.ability_score = Some(fp);
+                    }
+                }
+            }
             _ => (),
         }
     }

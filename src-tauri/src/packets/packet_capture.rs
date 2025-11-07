@@ -1,7 +1,7 @@
 use crate::packets;
-use crate::packets::read_packets::read_packets;
 use once_cell::sync::OnceCell;
 use tokio::sync::watch;
+use crate::packets::read_packets;
 
 // Global sender for restart signal
 static RESTART_SENDER: OnceCell<watch::Sender<bool>> = OnceCell::new();

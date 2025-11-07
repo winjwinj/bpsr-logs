@@ -40,7 +40,7 @@ pub async fn read_packets(
 
     while let Ok(packet) = cap.next_packet() {
         // info!("{}", line!());
-        let Ok(network_slices) = SlicedPacket::from_ip(packet.data) else {
+        let Ok(network_slices) = SlicedPacket::from_ethernet(packet.data) else {
             continue; // if it's not ip, go next packet
         };
         // info!("{}", line!());

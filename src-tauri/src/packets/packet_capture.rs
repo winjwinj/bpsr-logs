@@ -8,7 +8,9 @@ use etherparse::TransportSlice::Tcp;
 use log::{debug, error, info, warn};
 use once_cell::sync::OnceCell;
 use tokio::sync::watch;
+#[cfg(target_os = "windows")]
 use windivert::WinDivert;
+#[cfg(target_os = "windows")]
 use windivert::prelude::WinDivertFlags;
 
 // Global sender for restart signal
@@ -35,6 +37,7 @@ pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Ve
 }
 
 #[allow(clippy::too_many_lines)]
+#[cfg(target_os = "windows")]
 async fn read_packets(
     packet_sender: &tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>,
     restart_receiver: &mut watch::Receiver<bool>,
@@ -251,6 +254,14 @@ async fn read_packets(
         }
     } // todo: if it errors, it breaks out of the loop but will it ever error?
     // info!("{}", line!());
+}
+
+#[cfg(target_os = "linux")]
+async fn read_packets(
+    packet_sender: &tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>,
+    restart_receiver: &mut watch::Receiver<bool>,
+) {
+    
 }
 
 // Function to send restart signal from another thread/task

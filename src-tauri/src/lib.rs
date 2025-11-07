@@ -25,11 +25,11 @@ pub fn run() {
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
         #[cfg(target_os = "windows")]
-        info!("Unloading and removing windivert...");
-        #[cfg(target_os = "windows")]
-        stop_windivert();
-        #[cfg(target_os = "windows")]
-        remove_windivert();
+        {
+            info!("Unloading and removing windivert...");
+            stop_windivert();
+            remove_windivert();
+        }
     }));
 
     let builder = Builder::<tauri::Wry>::new()
@@ -68,9 +68,10 @@ pub fn run() {
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
             #[cfg(target_os = "windows")]
-            stop_windivert();
-            #[cfg(target_os = "windows")]
-            remove_windivert();
+            {
+                stop_windivert();
+                remove_windivert();
+            }
 
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates

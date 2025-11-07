@@ -1,5 +1,8 @@
 use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_from_skill_id, Class, ClassSpec};
-use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
+use crate::live::opcodes_models::{
+    attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS,
+    MONSTER_NAMES_CROWDSOURCE, MONSTER_UID_CROWDSOURCE_MAP,
+};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use log::{error, info, warn};
@@ -108,10 +111,23 @@ pub fn process_aoi_sync_delta(
 
     // Process Damage
     for sync_damage_info in skill_effect.damages {
-        let is_boss = encounter.entity_uid_to_entity
-                               .get(&target_uid)
-                               .and_then(|e| e.monster_id)
-                               .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
+        let target_entity = encounter.entity_uid_to_entity.get(&target_uid);
+        let monster_id = target_entity.and_then(|e| e.monster_id);
+        let is_boss = monster_id
+            .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
+        let is_crowdsource = monster_id
+            .is_some_and(|id| MONSTER_NAMES_CROWDSOURCE.contains_key(&id));
+        let crowdsource_name = if is_crowdsource {
+        monster_id
+                .and_then(|id| MONSTER_NAMES.get(&id))
+                .or_else(|| target_entity.and_then(|e| e.name.as_ref()))
+                .cloned()
+        } else {
+            None
+        };
+        // info!("crowdsource_name={crowdsource_name:?}, monster_id={monster_id:?}");
+        let crowdsource_remote_id = monster_id
+            .and_then(|id| MONSTER_UID_CROWDSOURCE_MAP.get(&id).cloned());
         let attacker_uuid = sync_damage_info
             .top_summoner_id
             .or(sync_damage_info.attacker_uuid)?;
@@ -140,7 +156,7 @@ pub fn process_aoi_sync_delta(
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
+            // info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats
@@ -149,6 +165,19 @@ pub fn process_aoi_sync_delta(
             process_stats(&sync_damage_info, dps_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats); // update total entity dmg stats
             process_stats(&sync_damage_info, &mut encounter.dmg_stats); // update total encounter heal stats
+            
+            // Track last hit crowdsourced monster name and ID
+            if is_crowdsource {
+                if crowdsource_remote_id.is_none() {
+                    warn!(
+                        "live::opcodes_process::handle_damage_packet - crowdsourced monster missing remote id for monster_id={monster_id:?}, monster_name={crowdsource_name:?}"
+                    );
+                }
+                encounter.crowdsource_monster_name = crowdsource_name.clone();
+                encounter.crowdsource_monster_id = monster_id;
+                encounter.crowdsource_monster_remote_id = crowdsource_remote_id.clone();
+            }
+            
             if is_boss {
                 let skill_boss_only = attacker_entity
                     .skill_uid_to_dps_stats_boss_only
@@ -158,7 +187,7 @@ pub fn process_aoi_sync_delta(
                 process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats_boss_only); // update total entity boss only dmg stats
                 process_stats(&sync_damage_info, &mut encounter.dmg_stats_boss_only); // update total encounter heal stats
             }
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total dmg", dps_skill.value);
+            // info!("dmg packet: {attacker_uid} to {target_uid}: {} total dmg", dps_skill.value);
         }
     }
 

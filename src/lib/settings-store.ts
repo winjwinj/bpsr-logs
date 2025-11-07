@@ -53,6 +53,7 @@ const DEFAULT_SETTINGS = {
   },
   integration: {
     bptimer: true,
+    bptimerUI: true,
   }
 };
 

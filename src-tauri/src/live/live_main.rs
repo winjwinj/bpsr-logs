@@ -1,3 +1,6 @@
+use crate::live::crowdsource_persistence::{
+    apply_snapshot_to_encounter, load_snapshot, save_snapshot, snapshot_from_encounter,
+};
 use crate::live::opcodes_models::EncounterMutex;
 use crate::live::opcodes_process::{
     on_server_change, process_aoi_sync_delta, process_sync_container_data,
@@ -35,6 +38,10 @@ pub async fn start(app_handle: AppHandle) {
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 on_server_change(&mut encounter_state);
+
+                if let Some(snapshot) = load_snapshot(&app_handle) {
+                    apply_snapshot_to_encounter(&snapshot, &mut encounter_state);
+                }
             }
             packets::opcodes::Pkt::SyncNearEntities => {
                 // info!("Received {op:?}");
@@ -50,8 +57,19 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let previous_remote_id = encounter_state.crowdsource_monster_remote_id.clone();
+                let mut snapshot_to_save = None;
                 if process_sync_near_entities(&mut encounter_state, sync_near_entities, is_bptimer_enabled).is_none() {
                     warn!("Error processing SyncNearEntities.. ignoring.");
+                }
+                if encounter_state.crowdsource_monster_remote_id != previous_remote_id {
+                    snapshot_to_save = snapshot_from_encounter(&encounter_state);
+                }
+                drop(encounter_state);
+                if let Some(snapshot) = snapshot_to_save {
+                    if let Err(err) = save_snapshot(&app_handle, &snapshot) {
+                        warn!("live_main::start - failed to persist crowdsourced monster snapshot: {err}");
+                    }
                 }
             }
             packets::opcodes::Pkt::SyncContainerData => {
@@ -68,9 +86,20 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let previous_remote_id = encounter_state.crowdsource_monster_remote_id.clone();
                 encounter_state.local_player = Some(sync_container_data.clone());
                 if process_sync_container_data(&mut encounter_state, sync_container_data).is_none() {
                     warn!("Error processing SyncContainerData.. ignoring.");
+                }
+                let mut snapshot_to_save = None;
+                if encounter_state.crowdsource_monster_remote_id != previous_remote_id {
+                    snapshot_to_save = snapshot_from_encounter(&encounter_state);
+                }
+                drop(encounter_state);
+                if let Some(snapshot) = snapshot_to_save {
+                    if let Err(err) = save_snapshot(&app_handle, &snapshot) {
+                        warn!("live_main::start - failed to persist crowdsourced monster snapshot: {err}");
+                    }
                 }
             }
             // packets::opcodes::Pkt::SyncContainerDirtyData => {
@@ -117,8 +146,19 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let previous_remote_id = encounter_state.crowdsource_monster_remote_id.clone();
+                let mut snapshot_to_save = None;
                 if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info, is_bptimer_enabled).is_none() {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
+                }
+                if encounter_state.crowdsource_monster_remote_id != previous_remote_id {
+                    snapshot_to_save = snapshot_from_encounter(&encounter_state);
+                }
+                drop(encounter_state);
+                if let Some(snapshot) = snapshot_to_save {
+                    if let Err(err) = save_snapshot(&app_handle, &snapshot) {
+                        warn!("live_main::start - failed to persist crowdsourced monster snapshot: {err}");
+                    }
                 }
             }
             packets::opcodes::Pkt::SyncNearDeltaInfo => {
@@ -134,9 +174,22 @@ pub async fn start(app_handle: AppHandle) {
                     };
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let mut snapshot_to_save = None;
                 for aoi_sync_delta in sync_near_delta_info.delta_infos {
+                    let previous_remote_id = encounter_state.crowdsource_monster_remote_id.clone();
                     if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta, is_bptimer_enabled).is_none() {
                         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
+                        continue;
+                    }
+
+                    if encounter_state.crowdsource_monster_remote_id != previous_remote_id {
+                        snapshot_to_save = snapshot_from_encounter(&encounter_state);
+                    }
+                }
+                drop(encounter_state);
+                if let Some(snapshot) = snapshot_to_save {
+                    if let Err(err) = save_snapshot(&app_handle, &snapshot) {
+                        warn!("live_main::start - failed to persist crowdsourced monster snapshot: {err}");
                     }
                 }
             }

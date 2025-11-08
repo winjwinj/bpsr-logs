@@ -5,7 +5,10 @@ use crate::live::opcodes_models::{
     class, get_crowdsource_monster_choices, resolve_crowdsource_remote, CombatStats, Encounter,
     EncounterMutex,
 };
-use crate::live::bptimer_stream::{MobHpData, MobHpStoreMutex, BpTimerStreamControlSender};
+use crate::live::bptimer_stream::{
+    MobHpData, MobHpStoreMutex, BpTimerStreamControlSender, BPTIMER_BASE_URL,
+    CREATE_HP_REPORT_ENDPOINT,
+};
 use crate::packets::packet_capture::request_restart;
 use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
@@ -18,7 +21,6 @@ use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
 
-const CROWD_SOURCE_ENDPOINT: &str = "https://db.bptimer.com/api/create-hp-report";
 const CROWD_SOURCE_API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
 
 fn nan_is_zero(value: f64) -> f64 {
@@ -257,7 +259,7 @@ pub async fn mark_current_crowdsourced_line_dead(
 
     let client = Client::new();
     let response = client
-        .post(CROWD_SOURCE_ENDPOINT)
+        .post(format!("{BPTIMER_BASE_URL}{CREATE_HP_REPORT_ENDPOINT}"))
         .header("X-API-Key", CROWD_SOURCE_API_KEY)
         .json(&body)
         .send()

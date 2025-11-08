@@ -13,8 +13,12 @@ use tauri_plugin_svelte::ManagerExt;
 use super::opcodes_models::EncounterMutex;
 
 pub const USER_AGENT: &str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36";
+pub const BPTIMER_BASE_URL: &str = "https://db.bptimer.com";
 pub const MOB_COLLECTION_AUTH_TOKEN: &str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3NjMxMTYwMTIsImlkIjoibmhtc2s3Z2g1ODhieXc3IiwicmVmcmVzaGFibGUiOnRydWUsInR5cGUiOiJhdXRoIn0.I81wYPhG0u8IUcQWZGBFsKS5abnQ1JOtFjIcjqkyO0A";
-pub const MOB_CHANNEL_STATUS_URL: &str = "https://db.bptimer.com/api/collections/mob_channel_status/records";
+pub const MOB_CHANNEL_STATUS_ENDPOINT: &str =
+    "/api/collections/mob_channel_status/records";
+pub const REALTIME_ENDPOINT: &str = "/api/realtime";
+pub const CREATE_HP_REPORT_ENDPOINT: &str = "/api/create-hp-report";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MobHpUpdate {
@@ -168,7 +172,7 @@ pub async fn start_bptimer_stream(
         .tcp_keepalive(std::time::Duration::from_secs(60))
         .build()
         .expect("Failed to create HTTP client");
-    let url = "https://db.bptimer.com/api/realtime";
+    let realtime_url = format!("{BPTIMER_BASE_URL}{REALTIME_ENDPOINT}");
     let mut last_seeded_remote_id: Option<String> = None;
 
     loop {
@@ -213,7 +217,7 @@ pub async fn start_bptimer_stream(
         }
 
         match client
-            .get(url)
+            .get(&realtime_url)
             .header("accept", "text/event-stream")
             .header("accept-language", "en-US,en;q=0.8")
             .header("cache-control", "no-cache")
@@ -317,8 +321,10 @@ pub async fn fetch_mob_channel_status(
     mob_uid: &str,
 ) -> Result<Vec<MobChannelStatusItem>, Box<dyn std::error::Error>> {
     let url = format!(
-        "{}?page=1&perPage=200&skipTotal=true&filter=mob%20%3D%20%27{}%27",
-        MOB_CHANNEL_STATUS_URL, mob_uid
+        "{base}{endpoint}?page=1&perPage=200&skipTotal=true&filter=mob%20%3D%20%27{uid}%27",
+        base = BPTIMER_BASE_URL,
+        endpoint = MOB_CHANNEL_STATUS_ENDPOINT,
+        uid = mob_uid
     );
 
     info!(
@@ -546,7 +552,7 @@ async fn send_subscription(client_id: &str) -> Result<(), Box<dyn std::error::Er
         .user_agent(USER_AGENT)
         .build()?;
     let response = client
-        .post("https://db.bptimer.com/api/realtime")
+        .post(format!("{BPTIMER_BASE_URL}{REALTIME_ENDPOINT}"))
         .header("content-type", "application/json")
         .header("origin", "https://bptimer.com")
         .header("referer", "https://bptimer.com/")

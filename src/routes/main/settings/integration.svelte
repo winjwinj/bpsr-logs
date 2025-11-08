@@ -10,5 +10,5 @@
 
 <Tabs.Content value={SETTINGS_CATEGORY}>
   <SettingsSwitchDialog bind:checked={SETTINGS.integration.state.bptimer} label="BP Timer" description="World Boss and Magical Creature HP data for bptimer.com" />
-  <SettingsSwitch bind:checked={SETTINGS.integration.state.bptimerUI} label="BETA: BP Timer UI" description="Shows live HP data for the selected monster in the boss timers tab" />
+  <SettingsSwitch bind:checked={SETTINGS.integration.state.bptimerUI} label="BP Timer UI (WIP)" description="Shows live HP data for the selected monster in the boss timers tab" />
 </Tabs.Content>

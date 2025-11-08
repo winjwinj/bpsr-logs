@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "app": {
+    "security": {
+      "capabilities": ["default", "live", "main"]
+    }
+  },
+  "build": {
+    "beforeBundleCommand": "sudo setcap CAP_NET_RAW=+ep src-tauri/target/release/bpsr-logs"
+  },
+  "bundle": {
+    "targets": ["deb", "rpm"],
+    "linux": {
+      "deb": {
+        "depends": ["libpcap0.8"]
+      },
+      "rpm": {
+        "depends": ["libpcap"]
+      }
+    }
+  }
+}

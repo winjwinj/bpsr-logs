@@ -5,6 +5,7 @@ mod packets;
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
+#[cfg(target_os = "windows")]
 use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
@@ -22,11 +23,20 @@ pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    #[cfg(target_os = "linux")]
+    // https://github.com/tauri-apps/tauri/issues/10702
+    unsafe {
+        std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+    }
+    
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
-        info!("Unloading and removing windivert...");
-        stop_windivert();
-        remove_windivert();
+        #[cfg(target_os = "windows")]
+        {
+            info!("Unloading and removing windivert...");
+            stop_windivert();
+            remove_windivert();
+        }
     }));
 
     let builder = Builder::<tauri::Wry>::new()
@@ -56,17 +66,26 @@ pub fn run() {
                .expect("Failed to export typescript bindings");
     }
 
-    let tauri_builder = tauri::Builder::default()
+    let mut tauri_builder = tauri::Builder::default();
+
+    #[cfg(target_os = "windows")]
+    {
+        tauri_builder = tauri_builder.plugin(tauri_plugin_global_shortcut::Builder::new().build());
+    }
+
+    tauri_builder = tauri_builder
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_os::init())
-        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .invoke_handler(builder.invoke_handler())
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
-            stop_windivert();
-            remove_windivert();
-
+            #[cfg(target_os = "windows")]
+            {
+                stop_windivert();
+                remove_windivert();
+            }
+    
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
             #[cfg(not(debug_assertions))] // <- Only check for updates on release builds
@@ -76,15 +95,15 @@ pub fn run() {
                     update(handle).await.unwrap();
                 });
             }
-
+    
             let app_handle = app.handle().clone();
-
+    
             // Setup stuff
             setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
             setup_blur(&app_handle);
-
+    
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
             app.manage(EncounterMutex::default()); // setup encounter state
@@ -105,6 +124,7 @@ pub fn run() {
                         .run(|_app_handle, event| {
                             // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
                             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
+                                #[cfg(target_os = "windows")]
                                 stop_windivert();
                                 info!("App is closing! Cleaning up resources...");
                             }
@@ -112,6 +132,7 @@ pub fn run() {
 }
 
 #[allow(unused)]
+#[cfg(target_os = "windows")]
 fn start_windivert() {
     let status = Command::new("sc")
         .args([
@@ -132,6 +153,7 @@ fn start_windivert() {
     }
 }
 
+#[cfg(target_os = "windows")]
 fn stop_windivert() {
     let status = Command::new("sc").args(["stop", "windivert"]).status();
     if status.is_ok_and(|status| status.success()) {
@@ -141,6 +163,7 @@ fn stop_windivert() {
     }
 }
 
+#[cfg(target_os = "windows")]
 fn remove_windivert() {
     let status = Command::new("sc")
         .args(["delete", "windivert", "start=", "demand"])
@@ -274,6 +297,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 }
             }
             "quit" => {
+                #[cfg(target_os = "windows")]
                 stop_windivert();
                 tray_app.exit(0);
             }

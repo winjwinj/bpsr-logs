@@ -15,6 +15,8 @@ jobs:
         include:
           - platform: 'windows-latest'
             args: ''
+          - platform: 'ubuntu-22.04'
+            args: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -37,6 +39,7 @@ jobs:
         run: npm install # change this to npm, pnpm or bun depending on which one you use.
 
       - name: Read changelog
+        if: matrix.platform == 'windows-latest'
         run: |
           @(
           'RELEASE_BODY<<EOF'
@@ -46,7 +49,11 @@ jobs:
           (Get-Content .github/workflows/RELEASE.md)
           'EOF'
           ) | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libpcap-dev
       - name: build and release tauri-apps
         uses: tauri-apps/tauri-action@v0
         id: tauri
@@ -67,11 +74,11 @@ jobs:
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: bpsr-logs-production-v${{ steps.tauri.outputs.appVersion }}
+          name: bpsr-logs-production-${{ runner.os }}-v${{ steps.tauri.outputs.appVersion }}
           path: src-tauri/target/release/bundle/
 
       - name: Upload Debug Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: bpsr-logs-debug-v${{ steps.tauri.outputs.appVersion }}
+          name: bpsr-logs-debug-${{ runner.os }}-v${{ steps.tauri.outputs.appVersion }}
           path: src-tauri/target/debug/bundle/

@@ -277,8 +277,7 @@ fn process_monster_attrs(
 
                 if is_bptimer_enabled {
                     // Crowdsource Data: if people abuse this, we will change the security
-                    #[allow(dead_code)]
-                    const LOCAL_ENDPOINT: &str = "http://localhost:3000";
+                    // const LOCAL_ENDPOINT: &str = "http://localhost:3000";
                     let endpoint = format!("{BPTIMER_BASE_URL}{CREATE_HP_REPORT_ENDPOINT}");
                     let (Some(monster_id), Some(local_player)) = (monster_entity.monster_id, &local_player) else {
                         continue;

@@ -41,6 +41,7 @@ const DEFAULT_SETTINGS = {
     toggleClickthrough: "",
     resetEncounter: "",
     hardReset: "",
+    markCurrentMonsterDead: "",
   },
   live: {
     dpsPlayers: { ...DEFAULT_STATS },

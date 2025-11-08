@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "bpsr-logs",
+    "version": "0.20.0",
+    "identifier": "com.bpsr-logs",
+    "build": {
+        "beforeDevCommand": "npm run dev",
+        "beforeBuildCommand": "npm run build",
+        "devUrl": "http://localhost:1420",
+        "frontendDist": "../build"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "BPSR Logs - Live",
+                "label": "live",
+                "url": "live",
+                "shadow": false,
+                "decorations": false,
+                "transparent": true,
+                "minWidth": 400,
+                "minHeight": 120,
+                "alwaysOnTop": true,
+                "skipTaskbar": true
+            },
+            {
+                "title": "BPSR Logs - Main",
+                "label": "main",
+                "url": "main",
+                "minWidth": 650,
+                "minHeight": 300,
+                "visible": false
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "active": true,
+        "copyright": "GNU General Public License v3.0",
+        "targets": "all",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ],
+        "resources": [
+            "./WinDivert.dll",
+            "./WinDivert64.sys"
+        ],
+        "createUpdaterArtifacts": true
+    },
+    "plugins": {
+        "updater": {
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYyREM5QkZEQzRDRDM4REUKUldUZU9NM0UvWnZjOG9qUmZZR25LVmVsa2RBZ3A3RGdneFBGMnJMVUdENmwvZU90YWY0V3NMbnAK",
+            "endpoints": [
+                "https://github.com/winjwinj/bpsr-logs/releases/latest/download/latest.json",
+                "https://github.com/winjwinj2/bpsr-logs/releases/latest/download/latest.json",
+                "https://github.com/anonymtester421-cmd/bpsr-logs/releases/latest/download/latest.json"
+            ],
+            "windows": {
+                "installMode": "basicUi"
+            }
+        }
+    }
+}

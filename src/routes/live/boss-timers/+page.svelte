@@ -206,9 +206,9 @@
         {#if mobHpData.length > 0}
           <div class="grid w-full gap-2 grid-cols-10">
             {#each mobHpData
-              .filter((mob) => mob.hp_percent > 5 || currentLineId === mob.server_id)
+              .filter((mob) => mob.hp_percent > 0 || currentLineId === mob.server_id)
               .sort((a, b) => a.hp_percent - b.hp_percent)
-              .slice(0, 40) as mob}
+              .slice(0, 20) as mob}
               <div class={`relative overflow-hidden rounded-md border ${currentLineId === mob.server_id ? "border-primary/80 ring-2 ring-primary/30" : "border-neutral-700"} bg-neutral-900/60 p-2 text-center text-xs`}>
                 <div
                   class={`absolute inset-y-0 left-0 ${barClass(mob.hp_percent)} transition-all duration-200`}
@@ -226,28 +226,6 @@
         {:else}
           <p class="text-xs text-neutral-600">No HP data available</p>
         {/if}
-        <button
-          class="btn-outline text-neutral-600 bg-neutral-900/60"
-          title="Will mark current line monster as dead"
-          onclick={() => {
-            void commandsExtended
-              .markCurrentCrowdsourcedLineDead()
-              .then((result) => {
-                if (result.status === "error") {
-                  console.error("boss-timers/+page:markCurrentCrowdsourcedLineDead", {
-                    error: result.error,
-                  });
-                }
-              })
-              .catch((error) => {
-                console.error("boss-timers/+page:markCurrentCrowdsourcedLineDead", {
-                  error,
-                });
-              });
-          }}
-        >
-          Current line 💀
-        </button>
       </div>
     {:else}
       <p class="text-sm text-neutral-500">No timed monster found, select a monster to track:</p>
@@ -269,7 +247,8 @@
           </option>
         {/each}
       </select>
-    </div> 
+    </div>
+    <p class="text-xs text-neutral-600">Use shortcut to mark current line dead</p>
 
 </div>
 

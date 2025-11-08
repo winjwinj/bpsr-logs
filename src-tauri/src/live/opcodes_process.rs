@@ -269,7 +269,7 @@ fn process_monster_attrs(
             attr_type::ATTR_ID => monster_entity.monster_id = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
             attr_type::ATTR_HP => {
                 let curr_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-                let prev_hp = monster_entity.curr_hp.unwrap_or(curr_hp); // If previous hp doesn't exist, just use the current hp
+                let prev_hp_opt = monster_entity.curr_hp;
                 monster_entity.curr_hp = Some(curr_hp);
 
                 if is_bptimer_enabled {
@@ -285,8 +285,9 @@ fn process_monster_attrs(
                     };
                     if MONSTER_NAMES_CROWDSOURCE.contains_key(&monster_id) { // only record if it's a world boss, magical creature, etc.
                         let monster_name = MONSTER_NAMES.get(&monster_id).map_or("Unknown Monster Name", |s| s.as_str());
-                        let old_hp_pct = (prev_hp * 100 / max_hp).clamp(0, 100);
                         let new_hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
+                        let old_hp_pct_opt =
+                            prev_hp_opt.map(|prev_hp| (prev_hp * 100 / max_hp).clamp(0, 100));
                         let Some((Some(line), Some(pos_x), Some(pos_y))) = local_player.v_data.as_ref()
                                                                                        .and_then(|v| v.scene_data.as_ref())
                                                                                        .map(|s| (
@@ -298,8 +299,14 @@ fn process_monster_attrs(
                             continue;
                         };
 
+                        let should_report = match old_hp_pct_opt {
+                            None => true,
+                            Some(old_hp_pct) => old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0,
+                        };
+
                         // Rate limit: only report if hp% changed and hp% is divisible by 5 (e.g. 0%, 5%, etc.)
-                        if old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0 {
+                        // Always report the first time we see HP data for a monster.
+                        if should_report {
                             info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y})");
                             let body = serde_json::json!({
                                     "monster_id": monster_id,

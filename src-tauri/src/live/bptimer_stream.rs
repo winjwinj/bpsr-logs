@@ -141,6 +141,20 @@ pub struct MobChannelStatusItem {
     pub mob: String,
 }
 
+fn current_monster_info(app_handle: &AppHandle) -> (Option<String>, Option<String>) {
+    app_handle
+        .try_state::<EncounterMutex>()
+        .and_then(|encounter_mutex| {
+            encounter_mutex.lock().ok().map(|encounter| {
+                (
+                    encounter.crowdsource_monster_name.clone(),
+                    encounter.crowdsource_monster_remote_id.clone(),
+                )
+            })
+        })
+        .unwrap_or((None, None))
+}
+
 pub async fn start_bptimer_stream(
     app_handle: AppHandle,
     store: MobHpStoreMutex,
@@ -174,23 +188,11 @@ pub async fn start_bptimer_stream(
             continue;
         }
 
-        let (_current_monster_name, current_remote_id) = app_handle
-            .try_state::<EncounterMutex>()
-            .and_then(|encounter_mutex| {
-                encounter_mutex
-                    .lock()
-                    .ok()
-                    .map(|encounter| {
-                        (
-                            encounter.crowdsource_monster_name.clone(),
-                            encounter.crowdsource_monster_remote_id.clone(),
-                        )
-                    })
-            })
-            .unwrap_or((None, None));
+        let (_current_monster_name, current_remote_id) = current_monster_info(&app_handle);
 
         if current_remote_id != last_seeded_remote_id {
             if let Err(e) = seed_initial_mob_state(
+                &app_handle,
                 &client,
                 store.clone(),
                 current_remote_id.as_deref(),
@@ -225,9 +227,10 @@ pub async fn start_bptimer_stream(
             .await
         {
             Ok(response) => {
-                let mut stream_control_rx = control_rx.clone();
+                let stream_control_rx = control_rx.clone();
                 if let Err(e) = stream_sse(
                     response,
+                    &client,
                     app_handle.clone(),
                     store.clone(),
                     stream_control_rx,
@@ -253,6 +256,7 @@ pub async fn start_bptimer_stream(
 }
 
 async fn seed_initial_mob_state(
+    app_handle: &AppHandle,
     client: &Client,
     store: MobHpStoreMutex,
     remote_id: Option<&str>,
@@ -271,6 +275,8 @@ async fn seed_initial_mob_state(
 
     let items = fetch_mob_channel_status(client, remote_id).await?;
 
+    let mut updates_to_emit = Vec::new();
+
     {
         let mut store = store.write();
 
@@ -282,11 +288,25 @@ async fn seed_initial_mob_state(
 
         if items.is_empty() {
             store.seed_remote_hp(remote_id, 0, None);
+            updates_to_emit.push(MobHpUpdate {
+                remote_id: remote_id.to_string(),
+                server_id: 0,
+                hp_percent: 100,
+            });
         } else {
             for item in items {
                 store.seed_remote_hp(&item.mob, item.channel_number, item.last_hp);
+                updates_to_emit.push(MobHpUpdate {
+                    remote_id: item.mob.clone(),
+                    server_id: item.channel_number,
+                    hp_percent: item.last_hp.unwrap_or(100),
+                });
             }
         }
+    }
+
+    for update in updates_to_emit {
+        let _ = app_handle.emit("mob-hp-update", &update);
     }
 
     Ok(())
@@ -345,16 +365,38 @@ pub async fn fetch_mob_channel_status(
 
 async fn stream_sse(
     response: reqwest::Response,
+    client: &Client,
     app_handle: AppHandle,
     store: MobHpStoreMutex,
-    mut control: BpTimerStreamControlReceiver,
+    control: BpTimerStreamControlReceiver,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let mut stream = response.bytes_stream();
     let mut buffer = Vec::<u8>::new();
     let mut current_event: Option<SseEvent> = None;
     let mut subscribed = false;
+    let mut last_reseed = std::time::Instant::now();
     
     loop {
+        if last_reseed.elapsed() >= std::time::Duration::from_secs(30) {
+            let (_monster_name, current_remote_id) = current_monster_info(&app_handle);
+            if let Some(remote_id) = current_remote_id.as_deref() {
+                if let Err(e) = seed_initial_mob_state(
+                    &app_handle,
+                    client,
+                    store.clone(),
+                    Some(remote_id),
+                )
+                .await
+                {
+                    warn!(
+                        "bptimer_stream::stream_sse - Periodic reseed failed for {}: {e}",
+                        remote_id
+                    );
+                }
+            }
+            last_reseed = std::time::Instant::now();
+        }
+
         if !*control.borrow() {
             info!("bptimer_stream::stream_sse - control disabled, closing stream");
             return Ok(());

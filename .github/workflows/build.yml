@@ -74,7 +74,7 @@ jobs:
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: bpsr-logs-production-v${{ steps.tauri.outputs.appVersion }}
+          name: bpsr-logs-production-${{ runner.os }}-v${{ steps.tauri.outputs.appVersion }}
           path: src-tauri/target/release/bundle/
 
       - name: Upload Debug Artifacts

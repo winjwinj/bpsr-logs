@@ -6,7 +6,7 @@ use std::sync::Mutex;
 
 pub type EncounterMutex = Mutex<Encounter>;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Default, Clone)]
 pub struct Encounter {
     pub is_encounter_paused: bool,
     pub time_last_combat_packet_ms: u128,
@@ -20,25 +20,6 @@ pub struct Encounter {
     pub crowdsource_monster_name: Option<String>,
     pub crowdsource_monster_id: Option<i32>,
     pub crowdsource_monster_remote_id: Option<String>,
-}
-
-impl Default for Encounter {
-    fn default() -> Self {
-        Self {
-            is_encounter_paused: false,
-            time_last_combat_packet_ms: 0,
-            time_fight_start_ms: 0,
-            local_player_uid: None,
-            entity_uid_to_entity: HashMap::new(),
-            dmg_stats: CombatStats::default(),
-            dmg_stats_boss_only: CombatStats::default(),
-            heal_stats: CombatStats::default(),
-            local_player: None,
-            crowdsource_monster_name: None,
-            crowdsource_monster_id: None,
-            crowdsource_monster_remote_id: None,
-        }
-    }
 }
 
 #[derive(Debug, Default, Clone)]

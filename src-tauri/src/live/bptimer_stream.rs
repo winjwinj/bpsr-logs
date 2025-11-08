@@ -19,6 +19,7 @@ pub const MOB_CHANNEL_STATUS_ENDPOINT: &str =
     "/api/collections/mob_channel_status/records";
 pub const REALTIME_ENDPOINT: &str = "/api/realtime";
 pub const CREATE_HP_REPORT_ENDPOINT: &str = "/api/create-hp-report";
+pub const CROWD_SOURCE_API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MobHpUpdate {

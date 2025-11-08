@@ -1,4 +1,6 @@
-use crate::live::bptimer_stream::{BPTIMER_BASE_URL, CREATE_HP_REPORT_ENDPOINT};
+use crate::live::bptimer_stream::{
+    BPTIMER_BASE_URL, CREATE_HP_REPORT_ENDPOINT, CROWD_SOURCE_API_KEY,
+};
 use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_from_skill_id, Class, ClassSpec};
 use crate::live::opcodes_models::{
     attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS,
@@ -278,7 +280,6 @@ fn process_monster_attrs(
                     #[allow(dead_code)]
                     const LOCAL_ENDPOINT: &str = "http://localhost:3000";
                     let endpoint = format!("{BPTIMER_BASE_URL}{CREATE_HP_REPORT_ENDPOINT}");
-                    const API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
                     let (Some(monster_id), Some(local_player)) = (monster_entity.monster_id, &local_player) else {
                         continue;
                     };
@@ -322,7 +323,7 @@ fn process_monster_attrs(
                                 let client = reqwest::Client::new();
                                 let res = client
                                     .post(endpoint)
-                                    .header("X-API-Key", API_KEY)
+                                    .header("X-API-Key", CROWD_SOURCE_API_KEY)
                                     .json(&body)
                                     .send().await;
                                 match res {

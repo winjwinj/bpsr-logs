@@ -7,7 +7,7 @@ use crate::live::opcodes_models::{
 };
 use crate::live::bptimer_stream::{
     MobHpData, MobHpStoreMutex, BpTimerStreamControlSender, BPTIMER_BASE_URL,
-    CREATE_HP_REPORT_ENDPOINT,
+    CREATE_HP_REPORT_ENDPOINT, CROWD_SOURCE_API_KEY,
 };
 use crate::packets::packet_capture::request_restart;
 use crate::WINDOW_LIVE_LABEL;
@@ -20,8 +20,6 @@ use std::sync::MutexGuard;
 use tauri::Manager;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
-
-const CROWD_SOURCE_API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
 
 fn nan_is_zero(value: f64) -> f64 {
     if value.is_nan() || value.is_infinite() {

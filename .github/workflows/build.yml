@@ -39,6 +39,7 @@ jobs:
         run: npm install # change this to npm, pnpm or bun depending on which one you use.
 
       - name: Read changelog
+        if: matrix.platform == 'windows-latest'
         run: |
           @(
           'RELEASE_BODY<<EOF'
@@ -48,7 +49,11 @@ jobs:
           (Get-Content .github/workflows/RELEASE.md)
           'EOF'
           ) | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
       - name: build and release tauri-apps
         uses: tauri-apps/tauri-action@v0
         id: tauri

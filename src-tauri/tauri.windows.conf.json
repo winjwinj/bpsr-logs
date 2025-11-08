@@ -4,5 +4,11 @@
     "security": {
       "capabilities": ["default", "live", "main", "windows"]
     }
+  },
+  "bundle": {
+    "resources": [
+      "./WinDivert.dll",
+      "./WinDivert64.sys"
+    ]
   }
 }

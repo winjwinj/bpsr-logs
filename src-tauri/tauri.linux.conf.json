@@ -4,5 +4,11 @@
     "security": {
       "capabilities": ["default", "live", "main"]
     }
+  },
+  "build": {
+    "beforeBundleCommand": "sudo setcap CAP_NET_RAW=+ep src-tauri/target/release/bpsr-logs"
+  },
+  "bundle": {
+    "targets": ["deb", "rpm"]
   }
 }

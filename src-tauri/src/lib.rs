@@ -22,6 +22,12 @@ pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    #[cfg(target_os = "linux")]
+    // https://github.com/tauri-apps/tauri/issues/10702
+    unsafe {
+        std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+    }
+    
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
         #[cfg(target_os = "windows")]

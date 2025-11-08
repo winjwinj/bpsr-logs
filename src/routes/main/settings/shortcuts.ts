@@ -95,6 +95,19 @@ export async function registerShortcut(cmdId: string, shortcutKey: string) {
         });
         break;
 
+      case "markCurrentMonsterDead":
+        await register(shortcutKey, async (event) => {
+          if (event.state === "Pressed") {
+            const result = await commands.markCurrentCrowdsourcedLineDead();
+            if (result.status === "error") {
+              console.error("Shortcut markCurrentMonsterDead failed", {
+                error: result.error,
+              });
+            }
+          }
+        });
+        break;
+
       case "hardReset":
         await register(shortcutKey, async (event) => {
           if (event.state === "Pressed") {

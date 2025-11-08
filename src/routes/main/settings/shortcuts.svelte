@@ -149,6 +149,10 @@
       label: "Reset Encounter",
     },
     {
+      id: "markCurrentMonsterDead",
+      label: "Mark Current Monster Dead",
+    },
+    {
       id: "hardReset",
       label: "TEMP FIX: Hard Reset",
     },

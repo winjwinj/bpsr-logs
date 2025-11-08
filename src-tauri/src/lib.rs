@@ -3,7 +3,11 @@ mod live;
 mod packets;
 
 use crate::build_app::build;
-use crate::live::opcodes_models::EncounterMutex;
+use crate::live::opcodes_models::{Encounter, EncounterMutex};
+use crate::live::crowdsource_persistence::{apply_snapshot_to_encounter, load_snapshot};
+use crate::live::bptimer_stream::{MobHpStore, MobHpStoreMutex, stream_control_channel};
+use std::sync::Arc;
+use parking_lot::RwLock;
 use log::{info, warn};
 use std::process::Command;
 
@@ -36,6 +40,14 @@ pub fn run() {
             live::commands::disable_blur,
             live::commands::copy_sync_container_data,
             live::commands::get_header_info,
+            live::commands::get_last_hit_boss_name,
+            live::commands::get_crowdsourced_monster,
+            live::commands::get_crowdsourced_monster_options,
+            live::commands::get_crowdsourced_mob_hp,
+            live::commands::set_bptimer_stream_active,
+            live::commands::set_crowdsourced_monster_remote,
+            live::commands::get_local_player_line,
+            live::commands::mark_current_crowdsourced_line_dead,
             live::commands::get_dps_player_window,
             live::commands::get_dps_skill_window,
             live::commands::get_dps_boss_only_player_window,
@@ -87,10 +99,38 @@ pub fn run() {
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
-            app.manage(EncounterMutex::default()); // setup encounter state
+            let mut encounter = Encounter::default();
+            if let Some(snapshot) = load_snapshot(&app_handle) {
+                apply_snapshot_to_encounter(&snapshot, &mut encounter);
+            }
+            let encounter_mutex: EncounterMutex = std::sync::Mutex::new(encounter);
+            app.manage(encounter_mutex); // setup encounter state
+            
+            // BPTimer HP Store
+            let mob_hp_store: MobHpStoreMutex = Arc::new(RwLock::new(MobHpStore::default()));
+            app.manage(mob_hp_store.clone());
+            let (stream_control_sender, stream_control_receiver) =
+                stream_control_channel();
+            app.manage(stream_control_sender.clone());
+            
             tauri::async_runtime::spawn(
                 async move { live::live_main::start(app_handle.clone()).await },
             );
+            
+            // BPTimer SSE Stream
+            let app_handle_stream = app.handle().clone();
+            let stream_store = mob_hp_store.clone();
+            tauri::async_runtime::spawn(
+                async move {
+                    live::bptimer_stream::start_bptimer_stream(
+                        app_handle_stream,
+                        stream_store,
+                        stream_control_receiver,
+                    )
+                    .await
+                },
+            );
+            
             Ok(())
         })
         .on_window_event(on_window_event_fn)

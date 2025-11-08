@@ -1,5 +1,11 @@
+use crate::live::bptimer_stream::{
+    BPTIMER_BASE_URL, CREATE_HP_REPORT_ENDPOINT, CROWD_SOURCE_API_KEY,
+};
 use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_from_skill_id, Class, ClassSpec};
-use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
+use crate::live::opcodes_models::{
+    attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS,
+    MONSTER_NAMES_CROWDSOURCE, MONSTER_UID_CROWDSOURCE_MAP,
+};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use log::{error, info, warn};
@@ -108,10 +114,23 @@ pub fn process_aoi_sync_delta(
 
     // Process Damage
     for sync_damage_info in skill_effect.damages {
-        let is_boss = encounter.entity_uid_to_entity
-                               .get(&target_uid)
-                               .and_then(|e| e.monster_id)
-                               .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
+        let target_entity = encounter.entity_uid_to_entity.get(&target_uid);
+        let monster_id = target_entity.and_then(|e| e.monster_id);
+        let is_boss = monster_id
+            .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
+        let is_crowdsource = monster_id
+            .is_some_and(|id| MONSTER_NAMES_CROWDSOURCE.contains_key(&id));
+        let crowdsource_name = if is_crowdsource {
+        monster_id
+                .and_then(|id| MONSTER_NAMES.get(&id))
+                .or_else(|| target_entity.and_then(|e| e.name.as_ref()))
+                .cloned()
+        } else {
+            None
+        };
+        // info!("crowdsource_name={crowdsource_name:?}, monster_id={monster_id:?}");
+        let crowdsource_remote_id = monster_id
+            .and_then(|id| MONSTER_UID_CROWDSOURCE_MAP.get(&id).cloned());
         let attacker_uuid = sync_damage_info
             .top_summoner_id
             .or(sync_damage_info.attacker_uuid)?;
@@ -140,7 +159,7 @@ pub fn process_aoi_sync_delta(
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
+            // info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats
@@ -149,6 +168,19 @@ pub fn process_aoi_sync_delta(
             process_stats(&sync_damage_info, dps_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats); // update total entity dmg stats
             process_stats(&sync_damage_info, &mut encounter.dmg_stats); // update total encounter heal stats
+            
+            // Track last hit crowdsourced monster name and ID
+            if is_crowdsource {
+                if crowdsource_remote_id.is_none() {
+                    warn!(
+                        "live::opcodes_process::handle_damage_packet - crowdsourced monster missing remote id for monster_id={monster_id:?}, monster_name={crowdsource_name:?}"
+                    );
+                }
+                encounter.crowdsource_monster_name = crowdsource_name.clone();
+                encounter.crowdsource_monster_id = monster_id;
+                encounter.crowdsource_monster_remote_id = crowdsource_remote_id.clone();
+            }
+            
             if is_boss {
                 let skill_boss_only = attacker_entity
                     .skill_uid_to_dps_stats_boss_only
@@ -158,7 +190,7 @@ pub fn process_aoi_sync_delta(
                 process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats_boss_only); // update total entity boss only dmg stats
                 process_stats(&sync_damage_info, &mut encounter.dmg_stats_boss_only); // update total encounter heal stats
             }
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total dmg", dps_skill.value);
+            // info!("dmg packet: {attacker_uid} to {target_uid}: {} total dmg", dps_skill.value);
         }
     }
 
@@ -240,14 +272,13 @@ fn process_monster_attrs(
             attr_type::ATTR_ID => monster_entity.monster_id = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
             attr_type::ATTR_HP => {
                 let curr_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-                let prev_hp = monster_entity.curr_hp.unwrap_or(curr_hp); // If previous hp doesn't exist, just use the current hp
+                let prev_hp_opt = monster_entity.curr_hp;
                 monster_entity.curr_hp = Some(curr_hp);
 
                 if is_bptimer_enabled {
                     // Crowdsource Data: if people abuse this, we will change the security
-                    // const ENDPOINT: &str = "http://localhost:3000";
-                    const ENDPOINT: &str = "https://db.bptimer.com/api/create-hp-report";
-                    const API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
+                    // const LOCAL_ENDPOINT: &str = "http://localhost:3000";
+                    let endpoint = format!("{BPTIMER_BASE_URL}{CREATE_HP_REPORT_ENDPOINT}");
                     let (Some(monster_id), Some(local_player)) = (monster_entity.monster_id, &local_player) else {
                         continue;
                     };
@@ -256,8 +287,9 @@ fn process_monster_attrs(
                     };
                     if MONSTER_NAMES_CROWDSOURCE.contains_key(&monster_id) { // only record if it's a world boss, magical creature, etc.
                         let monster_name = MONSTER_NAMES.get(&monster_id).map_or("Unknown Monster Name", |s| s.as_str());
-                        let old_hp_pct = (prev_hp * 100 / max_hp).clamp(0, 100);
                         let new_hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
+                        let old_hp_pct_opt =
+                            prev_hp_opt.map(|prev_hp| (prev_hp * 100 / max_hp).clamp(0, 100));
                         let Some((Some(line), Some(pos_x), Some(pos_y))) = local_player.v_data.as_ref()
                                                                                        .and_then(|v| v.scene_data.as_ref())
                                                                                        .map(|s| (
@@ -269,8 +301,14 @@ fn process_monster_attrs(
                             continue;
                         };
 
+                        let should_report = match old_hp_pct_opt {
+                            None => true,
+                            Some(old_hp_pct) => old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0,
+                        };
+
                         // Rate limit: only report if hp% changed and hp% is divisible by 5 (e.g. 0%, 5%, etc.)
-                        if old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0 {
+                        // Always report the first time we see HP data for a monster.
+                        if should_report {
                             info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y})");
                             let body = serde_json::json!({
                                     "monster_id": monster_id,
@@ -280,10 +318,11 @@ fn process_monster_attrs(
                                     "pos_y": pos_y,
                                 });
                             tokio::spawn(async move {
+                                let endpoint = endpoint.clone();
                                 let client = reqwest::Client::new();
                                 let res = client
-                                    .post(ENDPOINT)
-                                    .header("X-API-Key", API_KEY)
+                                    .post(endpoint)
+                                    .header("X-API-Key", CROWD_SOURCE_API_KEY)
                                     .json(&body)
                                     .send().await;
                                 match res {

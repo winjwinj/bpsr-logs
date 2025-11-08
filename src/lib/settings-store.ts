@@ -41,6 +41,7 @@ const DEFAULT_SETTINGS = {
     toggleClickthrough: "",
     resetEncounter: "",
     hardReset: "",
+    markCurrentMonsterDead: "",
   },
   live: {
     dpsPlayers: { ...DEFAULT_STATS },
@@ -53,6 +54,7 @@ const DEFAULT_SETTINGS = {
   },
   integration: {
     bptimer: true,
+    bptimerUI: true,
   }
 };
 

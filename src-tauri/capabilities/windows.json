@@ -1,6 +1,6 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "windows-capability",
+  "identifier": "windows",
   "description": "Capability for Windows-specific features",
   "windows": ["main", "live"],
   "permissions": [
@@ -10,5 +10,6 @@
     "global-shortcut:allow-unregister-all",
     "global-shortcut:default"
   ],
-  "capabilities": []
+  "capabilities": [],
+  "platforms": ["windows"]
 }

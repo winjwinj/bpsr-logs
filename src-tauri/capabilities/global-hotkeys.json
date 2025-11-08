@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "windows",
-  "description": "Capability for Windows-specific features",
+  "identifier": "global-hotkeys",
+  "description": "Capability for global hotkeys",
   "windows": ["main", "live"],
   "permissions": [
     "global-shortcut:allow-register",
@@ -10,6 +10,5 @@
     "global-shortcut:allow-unregister-all",
     "global-shortcut:default"
   ],
-  "capabilities": [],
   "platforms": ["windows"]
 }

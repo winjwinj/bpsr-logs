@@ -5,6 +5,7 @@ mod packets;
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
 use log::{info, warn};
+#[cfg(target_os = "windows")]
 use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
@@ -65,12 +66,14 @@ pub fn run() {
                .expect("Failed to export typescript bindings");
     }
 
-    let tauri_builder = tauri::Builder::default();
+    let mut tauri_builder = tauri::Builder::default();
 
     #[cfg(target_os = "windows")]
-    tauri_builder.plugin(tauri_plugin_global_shortcut::Builder::new().build());
+    {
+        tauri_builder = tauri_builder.plugin(tauri_plugin_global_shortcut::Builder::new().build());
+    }
 
-    let app = tauri_builder
+    tauri_builder = tauri_builder
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_os::init())
@@ -117,7 +120,7 @@ pub fn run() {
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
-    build(app).expect("error while running tauri application")
+    build(tauri_builder).expect("error while running tauri application")
                         .run(|_app_handle, event| {
                             // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
                             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {

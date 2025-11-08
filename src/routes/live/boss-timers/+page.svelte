@@ -43,6 +43,50 @@
   const mobHpCache = new Map<string, CacheEntry>();
   const CACHE_TTL_MS = 20_000;
 
+  type HpChangeRecord = { hp: number; timestamp: number };
+  const mobHpLastChange = new Map<string, HpChangeRecord>();
+  const STALE_HP_THRESHOLD = 30;
+  const STALE_HP_DURATION_MS = 30_000;
+  let activeRemoteId: string | null = null;
+
+  function mobKey(entry: MobHpData) {
+    return `${entry.remote_id}:${entry.server_id}`;
+  }
+
+  function updateMobLastChange(entries: MobHpData[]) {
+    const now = Date.now();
+    const seen = new Set<string>();
+
+    for (const entry of entries) {
+      const key = mobKey(entry);
+      seen.add(key);
+      const record = mobHpLastChange.get(key);
+      if (!record || record.hp !== entry.hp_percent) {
+        mobHpLastChange.set(key, { hp: entry.hp_percent, timestamp: now });
+      }
+    }
+
+    for (const key of Array.from(mobHpLastChange.keys())) {
+      if (!seen.has(key)) {
+        mobHpLastChange.delete(key);
+      }
+    }
+  }
+
+  function filterStaleEntries(entries: MobHpData[]) {
+    const now = Date.now();
+    return entries.filter((entry) => {
+      if (entry.hp_percent > STALE_HP_THRESHOLD) {
+        return true;
+      }
+      const record = mobHpLastChange.get(mobKey(entry));
+      if (!record) {
+        return true;
+      }
+      return now - record.timestamp < STALE_HP_DURATION_MS;
+    });
+  }
+
   function setStreamActive(active: boolean) {
     if (streamActive === active) {
       return;
@@ -118,6 +162,8 @@
       }
 
       selectedRemoteId = remoteId;
+      activeRemoteId = remoteId;
+      mobHpLastChange.clear();
       mobHpCache.delete(remoteId);
       await fetchData();
     } catch (error) {
@@ -136,7 +182,12 @@
       currentMonster = null;
     }
 
-    selectedRemoteId = currentMonster?.remote_id ?? null;
+    const remoteId = currentMonster?.remote_id ?? null;
+    if (remoteId !== activeRemoteId) {
+      mobHpLastChange.clear();
+      activeRemoteId = remoteId;
+    }
+    selectedRemoteId = remoteId;
 
     try {
       const lineResult = await commandsExtended.getLocalPlayerLine();
@@ -149,34 +200,44 @@
 
     if (!currentMonster) {
       mobHpData = [];
+      activeRemoteId = null;
+      mobHpLastChange.clear();
       return;
     }
 
     try {
       const result = await commandsExtended.getCrowdsourcedMobHp();
-      const remoteId = currentMonster.remote_id;
+      const currentRemoteId = currentMonster.remote_id;
 
       if (result.status === "ok") {
         const data = result.data;
 
-        if (remoteId) {
+        if (currentRemoteId) {
           if (data.length > 0) {
-            mobHpCache.set(remoteId, {
+            updateMobLastChange(data);
+            const filteredData = filterStaleEntries(data);
+            mobHpCache.set(currentRemoteId, {
               data,
               timestamp: Date.now(),
             });
-            mobHpData = data;
+            mobHpData = filteredData;
           } else {
-            const cached = mobHpCache.get(remoteId);
+            const cached = mobHpCache.get(currentRemoteId);
             if (cached && Date.now() - cached.timestamp <= CACHE_TTL_MS) {
-              mobHpData = cached.data;
+              updateMobLastChange(cached.data);
+              mobHpData = filterStaleEntries(cached.data);
             } else {
-              mobHpCache.delete(remoteId);
+              mobHpCache.delete(currentRemoteId);
               mobHpData = [];
             }
           }
         } else {
-          mobHpData = data;
+          if (data.length > 0) {
+            updateMobLastChange(data);
+            mobHpData = filterStaleEntries(data);
+          } else {
+            mobHpData = [];
+          }
         }
       } else {
         mobHpData = [];

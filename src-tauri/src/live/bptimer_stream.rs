@@ -382,26 +382,35 @@ async fn stream_sse(
     let mut current_event: Option<SseEvent> = None;
     let mut subscribed = false;
     let mut last_reseed = std::time::Instant::now();
+    let mut last_remote_id: Option<String> = None;
     
     loop {
-        if last_reseed.elapsed() >= std::time::Duration::from_secs(30) {
-            let (_monster_name, current_remote_id) = current_monster_info(&app_handle);
-            if let Some(remote_id) = current_remote_id.as_deref() {
-                if let Err(e) = seed_initial_mob_state(
-                    &app_handle,
-                    client,
-                    store.clone(),
-                    Some(remote_id),
-                )
-                .await
-                {
+        let (_monster_name, current_remote_id) = current_monster_info(&app_handle);
+        let reseed_due =
+            current_remote_id != last_remote_id || last_reseed.elapsed() >= std::time::Duration::from_secs(120);
+
+        if reseed_due {
+            if let Err(e) = seed_initial_mob_state(
+                &app_handle,
+                client,
+                store.clone(),
+                current_remote_id.as_deref(),
+            )
+            .await
+            {
+                if let Some(remote_id) = current_remote_id.as_deref() {
                     warn!(
-                        "bptimer_stream::stream_sse - Periodic reseed failed for {}: {e}",
+                        "bptimer_stream::stream_sse - Reseed failed for {}: {e}",
                         remote_id
+                    );
+                } else {
+                    warn!(
+                        "bptimer_stream::stream_sse - Reseed failed without a remote id: {e}"
                     );
                 }
             }
             last_reseed = std::time::Instant::now();
+            last_remote_id = current_remote_id.clone();
         }
 
         if !*control.borrow() {

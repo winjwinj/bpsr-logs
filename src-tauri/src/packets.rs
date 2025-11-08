@@ -5,11 +5,11 @@ pub mod packet_capture;
 mod packet_process;
 pub mod utils;
 #[cfg(target_os = "windows")]
-mod read_packets_windows;
+mod read_packets_windivert;
 #[cfg(target_os = "windows")]
-pub use read_packets_windows::*;
+pub use read_packets_windivert::*;
 #[cfg(target_os = "linux")]
-mod read_packets_linux;
+mod read_packets_pcap;
 #[cfg(target_os = "linux")]
-pub use read_packets_linux::*;
+pub use read_packets_pcap::*;
 

@@ -9,6 +9,14 @@
     "beforeBundleCommand": "sudo setcap CAP_NET_RAW=+ep src-tauri/target/release/bpsr-logs"
   },
   "bundle": {
-    "targets": ["deb", "rpm"]
+    "targets": ["deb", "rpm"],
+    "linux": {
+      "deb": {
+        "depends": ["libpcap0.8"]
+      },
+      "rpm": {
+        "depends": ["libpcap"]
+      }
+    }
   }
 }

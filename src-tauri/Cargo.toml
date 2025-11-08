@@ -53,5 +53,6 @@ windivert = { version = "0.6.0", features = ["vendored"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-autostart = "2"
-tauri-plugin-global-shortcut = "2"
 tauri-plugin-updater = "2"
+[target.'cfg(not(any(target_os = "android", target_os = "ios", target_os = "linux")))'.dependencies]
+tauri-plugin-global-shortcut = "2"

@@ -59,11 +59,15 @@ pub fn run() {
                .expect("Failed to export typescript bindings");
     }
 
-    let tauri_builder = tauri::Builder::default()
+    let tauri_builder = tauri::Builder::default();
+
+    #[cfg(target_os = "windows")]
+    tauri_builder.plugin(tauri_plugin_global_shortcut::Builder::new().build());
+
+    let app = tauri_builder
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_os::init())
-        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .invoke_handler(builder.invoke_handler())
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
@@ -72,7 +76,7 @@ pub fn run() {
                 stop_windivert();
                 remove_windivert();
             }
-
+    
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
             #[cfg(not(debug_assertions))] // <- Only check for updates on release builds
@@ -82,15 +86,15 @@ pub fn run() {
                     update(handle).await.unwrap();
                 });
             }
-
+    
             let app_handle = app.handle().clone();
-
+    
             // Setup stuff
             setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
             setup_blur(&app_handle);
-
+    
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
             app.manage(EncounterMutex::default()); // setup encounter state
@@ -107,7 +111,7 @@ pub fn run() {
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
-    build(tauri_builder).expect("error while running tauri application")
+    build(app).expect("error while running tauri application")
                         .run(|_app_handle, event| {
                             // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
                             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {

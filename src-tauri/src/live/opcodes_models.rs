@@ -3,6 +3,7 @@ use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use blueprotobuf_lib::blueprotobuf;
 
 #[derive(Debug, Default, Clone)]
 pub struct Encounter {
@@ -46,6 +47,7 @@ pub struct Entity {
     pub curr_hp: i32,
     pub max_hp: i32,
     pub monster_id: i32,
+    pub monster_pos: blueprotobuf::Vector3,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -97,6 +99,7 @@ pub mod attr_type {
     // pub const ATTR_REDUCTION_LEVEL: i32 = 0x64696d;
     // pub const ATTR_REDUCTION_ID: i32 = 0x6f6c65;
     // pub const ATTR_ENERGY_FLAG: i32 = 0x543cd3c6;
+    pub const ATTR_POS: i32 = 0x34;
 }
 
 // TODO: this logic needs to be severely cleaned up

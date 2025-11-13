@@ -10,6 +10,8 @@ use blueprotobuf_lib::blueprotobuf::{Attr, EDamageType, EEntityType, SyncContain
 use log::{error, info, warn};
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
+use bytes::Bytes;
+use prost::Message;
 
 pub fn on_server_change(encounter: &mut Encounter) {
     info!("on server change");
@@ -296,10 +298,10 @@ fn process_monster_attrs(
                             None
                         };
                         let line = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|s| s.line_id));
-                        // TODO: this position is snapshot based on when SyncContainerData is detected (e.g. line change), figure out if there's a way to get the monster's position instead
-                        let pos_x = local_player.v_data.as_ref().and_then(|v| { v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.x)) });
-                        let pos_y = local_player.v_data.as_ref().and_then(|v| { v.scene_data.as_ref().and_then(|v| v.pos.as_ref().and_then(|s| s.y)) });
-                        if let (Some(old_hp_pct), Some(new_hp_pct), Some(line), Some(pos_x), Some(pos_y)) = (old_hp_pct, new_hp_pct, line, pos_x, pos_y) {
+                        let pos_x = monster_entity.monster_pos.x;
+                        let pos_y = monster_entity.monster_pos.y;
+                        let pos_z = monster_entity.monster_pos.z;
+                        if let (Some(old_hp_pct), Some(new_hp_pct), Some(line), Some(pos_x), Some(pos_y), Some(pos_z)) = (old_hp_pct, new_hp_pct, line, pos_x, pos_y, pos_z) {
                             // Rate limit: only report if hp% changed and hp% is divisible by 5 (e.g. 0%, 5%, etc.)
                             if old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0 {
                                 info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y})");
@@ -309,6 +311,7 @@ fn process_monster_attrs(
                                     "line": line,
                                     "pos_x": pos_x,
                                     "pos_y": pos_y,
+                                    "pos_z": pos_z,
                                 });
                                 tokio::spawn(async move {
                                     let client = reqwest::Client::new();
@@ -338,6 +341,9 @@ fn process_monster_attrs(
             attr_type::ATTR_MAX_HP => {
                 monster_entity.max_hp =
                     prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32
+            }
+            attr_type::ATTR_POS => {
+                monster_entity.monster_pos = blueprotobuf::Vector3::decode(Bytes::from(raw_bytes)).unwrap()
             }
             _ => (),
         }

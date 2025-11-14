@@ -71,10 +71,10 @@ impl CombatStats {
     }
 }
 
-pub static MONSTER_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
-    let data = include_str!("../../../src/lib/data/json/MonsterName.json");
-    serde_json::from_str(data).expect("invalid MonsterName.json")
-});
+// pub static MONSTER_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| { // not currently used
+//     let data = include_str!("../../../src/lib/data/json/MonsterName.json");
+//     serde_json::from_str(data).expect("invalid MonsterName.json")
+// });
 
 pub static MONSTER_NAMES_BOSS: Lazy<HashMap<i32, String>> = Lazy::new(|| {
     let data = include_str!("../../../src/lib/data/json/MonsterNameBoss.json");

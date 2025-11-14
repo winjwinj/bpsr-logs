@@ -22,6 +22,13 @@ pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Ignored in production GH action
+    if let Err(e) = dotenvy::dotenv() {
+        info!("No .env file found or error loading .env: {e}");
+    } else {
+        info!("Loaded .env file successfully");
+    }
+
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
         info!("Unloading and removing windivert...");

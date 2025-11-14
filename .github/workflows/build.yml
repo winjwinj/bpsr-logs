@@ -53,6 +53,8 @@ jobs:
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BP_TIMER_ENDPOINT: ${{ secrets.BP_TIMER_ENDPOINT }}
+          BP_TIMER_API_KEY: ${{ secrets.BP_TIMER_API_KEY }}
         with:
           tagName: ${{ github.ref_name == 'release' && 'app-v__VERSION__' || '' }} # the action automatically replaces \_\_VERSION\_\_ with the app version.
           includeDebug: ${{ github.ref_name != 'release' }}

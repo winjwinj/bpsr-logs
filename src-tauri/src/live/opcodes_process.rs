@@ -2,7 +2,9 @@ use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_fro
 use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
+use bytes::Bytes;
 use log::{error, info, warn};
+use prost::Message;
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -258,27 +260,30 @@ fn process_monster_attrs(
                         let monster_name = MONSTER_NAMES.get(&monster_id).map_or("Unknown Monster Name", |s| s.as_str());
                         let old_hp_pct = (prev_hp * 100 / max_hp).clamp(0, 100);
                         let new_hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
-                        let Some((Some(line), Some(pos_x), Some(pos_y))) = local_player.v_data.as_ref()
-                                                                                       .and_then(|v| v.scene_data.as_ref())
-                                                                                       .map(|s| (
-                                                                                           s.line_id,
-                                                                                           s.pos.as_ref().and_then(|p| p.x),
-                                                                                           s.pos.as_ref().and_then(|p| p.y),
-                                                                                       ))
-                        else {
-                            continue;
+                        let Some(line) = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|s| s.line_id)) else {
+                            continue
+                        };
+                        let Some(pos_x) = monster_entity.monster_pos.x else {
+                            continue
+                        };
+                        let Some(pos_y) = monster_entity.monster_pos.y else {
+                            continue
+                        };
+                        let Some(pos_z) = monster_entity.monster_pos.z else {
+                            continue
                         };
 
                         // Rate limit: only report if hp% changed and hp% is divisible by 5 (e.g. 0%, 5%, etc.)
                         if old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0 {
-                            info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y})");
+                            info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y},{pos_z})");
                             let body = serde_json::json!({
-                                    "monster_id": monster_id,
-                                    "hp_pct": new_hp_pct,
-                                    "line": line,
-                                    "pos_x": pos_x,
-                                    "pos_y": pos_y,
-                                });
+                                "monster_id": monster_id,
+                                "hp_pct": new_hp_pct,
+                                "line": line,
+                                "pos_x": pos_x,
+                                "pos_y": pos_y,
+                                "pos_z": pos_z,
+                            });
                             tokio::spawn(async move {
                                 let client = reqwest::Client::new();
                                 let res = client
@@ -303,6 +308,9 @@ fn process_monster_attrs(
             }
             #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_MAX_HP => monster_entity.max_hp = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_POS => {
+                monster_entity.monster_pos = blueprotobuf::Vector3::decode(Bytes::from(raw_bytes)).unwrap()
+            }
             _ => (),
         }
     }

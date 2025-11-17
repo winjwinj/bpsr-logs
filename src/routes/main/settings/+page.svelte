@@ -6,15 +6,21 @@
   import Live from "./live.svelte";
   import Misc from "./misc.svelte";
   import Shortcuts from "./shortcuts.svelte";
+  import { type } from '@tauri-apps/plugin-os';
+
 
   const settingsTabs = [
     { id: "general", label: "General" },
     { id: "accessibility", label: "Accessibility" },
-    { id: "shortcuts", label: "Shortcuts" },
     { id: "live", label: "Live" },
     { id: "misc", label: "Misc" },
     { id: "integration", label: "Integration" },
   ];
+
+  const osType = type();
+  if (osType === "windows") {
+    settingsTabs.splice(2, 0, { id: "shortcuts", label: "Shortcuts" });
+  }
 </script>
 
 <Tabs.Root value="general">

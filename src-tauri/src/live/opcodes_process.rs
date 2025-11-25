@@ -1,12 +1,45 @@
-use crate::live::opcodes_models::class::{get_class_from_spec, get_class_spec_from_skill_id, Class, ClassSpec};
-use crate::live::opcodes_models::{attr_type, CombatStats, Encounter, Entity, MONSTER_NAMES, MONSTER_NAMES_BOSS, MONSTER_NAMES_CROWDSOURCE};
+use crate::live::bptimer::BPTimerClient;
+use crate::live::opcodes_models::class::{
+    Class, ClassSpec, get_class_from_spec, get_class_spec_from_skill_id,
+};
+use crate::live::opcodes_models::{CombatStats, Encounter, Entity, MONSTER_NAMES_BOSS, attr_type};
+use crate::live::player_state::{PlayerCacheMutex, PlayerState};
 use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
-use log::{error, info, warn};
+use log::{debug, info, warn};
+use once_cell::sync::Lazy;
 use prost::Message;
 use std::default::Default;
 use std::time::{SystemTime, UNIX_EPOCH};
+
+// Needed for Github Actions compile-time env vars
+const COMPILE_TIME_ENDPOINT: Option<&str> = option_env!("BP_TIMER_ENDPOINT");
+const COMPILE_TIME_API_KEY: Option<&str> = option_env!("BP_TIMER_API_KEY");
+
+// Checks runtime env vars first, then falls back to compile-time env vars
+static BP_TIMER_CLIENT: Lazy<Option<BPTimerClient>> = Lazy::new(|| {
+    let endpoint = std::env::var("BP_TIMER_ENDPOINT")
+        .ok()
+        .or_else(|| COMPILE_TIME_ENDPOINT.map(String::from));
+
+    let api_key = std::env::var("BP_TIMER_API_KEY")
+        .ok()
+        .or_else(|| COMPILE_TIME_API_KEY.map(String::from));
+
+    match (endpoint, api_key) {
+        (Some(endpoint), Some(api_key)) => {
+            info!("BPTimer Client enabled: {}", endpoint);
+            Some(BPTimerClient::new(endpoint, api_key))
+        }
+        _ => {
+            warn!(
+                "BPTimer Client disabled: missing ENV vars (set BP_TIMER_ENDPOINT and BP_TIMER_API_KEY)"
+            );
+            None
+        }
+    }
+});
 
 pub fn on_server_change(encounter: &mut Encounter) {
     info!("on server change");
@@ -16,7 +49,9 @@ pub fn on_server_change(encounter: &mut Encounter) {
 pub fn process_sync_near_entities(
     encounter: &mut Encounter,
     sync_near_entities: blueprotobuf::SyncNearEntities,
+    player_state: &PlayerState,
     is_bptimer_enabled: bool,
+    player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     for pkt_entity in sync_near_entities.appear {
         let target_uuid = pkt_entity.uuid?;
@@ -30,8 +65,18 @@ pub fn process_sync_near_entities(
         target_entity.entity_type = target_entity_type;
 
         match target_entity_type {
-            blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, pkt_entity.attrs?.attrs),
-            blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, pkt_entity.attrs?.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
+            blueprotobuf::EEntityType::EntChar => process_player_attrs(
+                target_entity,
+                target_uid,
+                pkt_entity.attrs?.attrs,
+                player_cache,
+            ),
+            blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
+                target_entity,
+                pkt_entity.attrs?.attrs,
+                player_state,
+                is_bptimer_enabled,
+            ),
             _ => {}
         }
     }
@@ -41,6 +86,7 @@ pub fn process_sync_near_entities(
 pub fn process_sync_container_data(
     encounter: &mut Encounter,
     sync_container_data: blueprotobuf::SyncContainerData,
+    player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     let v_data = sync_container_data.v_data?;
     let player_uid = v_data.char_id?;
@@ -50,10 +96,18 @@ pub fn process_sync_container_data(
         .entry(player_uid)
         .or_default();
     let char_base = v_data.char_base?;
-    target_entity.name = Some(char_base.name?);
+    let player_name = char_base.name?;
+    target_entity.name = Some(player_name.clone());
     target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
-    target_entity.class = Some(Class::from(v_data.profession_list?.cur_profession_id?));
+    let player_class = Class::from(v_data.profession_list?.cur_profession_id?);
+    target_entity.class = Some(player_class);
     target_entity.ability_score = Some(char_base.fight_point?);
+
+    if let Some(cache) = player_cache {
+        if let Ok(mut cache) = cache.lock() {
+            cache.set_both(player_uid, Some(player_name), Some(player_class));
+        }
+    }
 
     Some(())
 }
@@ -68,18 +122,26 @@ pub fn process_sync_container_data(
 pub fn process_sync_to_me_delta_info(
     encounter: &mut Encounter,
     sync_to_me_delta_info: blueprotobuf::SyncToMeDeltaInfo,
+    player_state: &PlayerState,
     is_bptimer_enabled: bool,
+    player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     let delta_info = sync_to_me_delta_info.delta_info?;
-    encounter.local_player_uid = Some(delta_info.uuid? >> 16); // UUID =/= uid (have to >> 16)
-    process_aoi_sync_delta(encounter, delta_info.base_delta?, is_bptimer_enabled);
-    Some(())
+    process_aoi_sync_delta(
+        encounter,
+        delta_info.base_delta?,
+        player_state,
+        is_bptimer_enabled,
+        player_cache,
+    )
 }
 
 pub fn process_aoi_sync_delta(
     encounter: &mut Encounter,
     aoi_sync_delta: blueprotobuf::AoiSyncDelta,
+    player_state: &PlayerState,
     is_bptimer_enabled: bool,
+    player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
     let target_uid = target_uuid >> 16;
@@ -97,8 +159,18 @@ pub fn process_aoi_sync_delta(
 
         if let Some(attrs_collection) = aoi_sync_delta.attrs {
             match target_entity_type {
-                blueprotobuf::EEntityType::EntChar => process_player_attrs(target_entity, target_uid, attrs_collection.attrs),
-                blueprotobuf::EEntityType::EntMonster => process_monster_attrs(target_entity, attrs_collection.attrs, encounter.local_player.as_ref(), is_bptimer_enabled),
+                blueprotobuf::EEntityType::EntChar => process_player_attrs(
+                    target_entity,
+                    target_uid,
+                    attrs_collection.attrs,
+                    player_cache,
+                ),
+                blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
+                    target_entity,
+                    attrs_collection.attrs,
+                    player_state,
+                    is_bptimer_enabled,
+                ),
                 _ => {}
             }
         }
@@ -110,39 +182,65 @@ pub fn process_aoi_sync_delta(
 
     // Process Damage
     for sync_damage_info in skill_effect.damages {
-        let is_boss = encounter.entity_uid_to_entity
-                               .get(&target_uid)
-                               .and_then(|e| e.monster_id)
-                               .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
-        let attacker_uuid = sync_damage_info
-            .top_summoner_id
-            .or(sync_damage_info.attacker_uuid)?;
-        let attacker_uid = attacker_uuid >> 16;
-        let attacker_entity = encounter.entity_uid_to_entity
-                                       .entry(attacker_uid)
-                                       .or_insert_with(|| Entity {
-                                           entity_type: blueprotobuf::EEntityType::from(attacker_uuid),
-                                           ..Default::default()
-                                       });
+        let is_boss = encounter
+            .entity_uid_to_entity
+            .get(&target_uid)
+            .and_then(|e| e.monster_id)
+            .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
 
-        let skill_uid = sync_damage_info.owner_id?;
-        if attacker_entity.class_spec.is_none_or(|class_spec| class_spec == ClassSpec::Unknown) {
+        let Some(attacker_uuid) = sync_damage_info
+            .top_summoner_id
+            .or(sync_damage_info.attacker_uuid)
+        else {
+            continue; // Skip this damage packet if no attacker
+        };
+        let attacker_uid = attacker_uuid >> 16;
+        let attacker_entity = encounter
+            .entity_uid_to_entity
+            .entry(attacker_uid)
+            .or_insert_with(|| Entity {
+                entity_type: blueprotobuf::EEntityType::from(attacker_uuid),
+                ..Default::default()
+            });
+
+        let Some(skill_uid) = sync_damage_info.owner_id else {
+            continue; // Skip this damage packet if no skill_uid
+        };
+        if attacker_entity
+            .class_spec
+            .is_none_or(|class_spec| class_spec == ClassSpec::Unknown)
+        {
             let class_spec = get_class_spec_from_skill_id(skill_uid);
-            attacker_entity.class = Some(get_class_from_spec(class_spec));
+            let inferred_class = get_class_from_spec(class_spec);
+            attacker_entity.class = Some(inferred_class);
             attacker_entity.class_spec = Some(class_spec);
+
+            // Cache the inferred class (only for players)
+            if blueprotobuf::EEntityType::from(attacker_uuid) == blueprotobuf::EEntityType::EntChar
+            {
+                if let Some(cache) = player_cache {
+                    if let Ok(mut cache) = cache.lock() {
+                        cache.set_class(attacker_uid, inferred_class);
+                    }
+                }
+            }
         }
 
         // Skills
-        let is_heal = sync_damage_info.r#type.unwrap_or(0) == blueprotobuf::EDamageType::Heal as i32;
+        let is_heal =
+            sync_damage_info.r#type.unwrap_or(0) == blueprotobuf::EDamageType::Heal as i32;
         if is_heal {
             let heal_skill = attacker_entity
-                .skill_uid_to_dps_stats
+                .skill_uid_to_heal_stats
                 .entry(skill_uid)
                 .or_default();
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total heal", heal_skill.value);
+            debug!(
+                "dmg packet: {attacker_uid} to {target_uid}: {} total heal",
+                heal_skill.value
+            );
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats
@@ -160,7 +258,10 @@ pub fn process_aoi_sync_delta(
                 process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats_boss_only); // update total entity boss only dmg stats
                 process_stats(&sync_damage_info, &mut encounter.dmg_stats_boss_only); // update total encounter heal stats
             }
-            info!("dmg packet: {attacker_uid} to {target_uid}: {} total dmg", dps_skill.value);
+            debug!(
+                "dmg packet: {attacker_uid} to {target_uid}: {} total dmg",
+                dps_skill.value
+            );
         }
     }
 
@@ -199,12 +300,35 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     stats.value += actual_value;
 }
 
-fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<blueprotobuf::Attr>) {
+fn process_player_attrs(
+    player_entity: &mut Entity,
+    player_uid: i64,
+    attrs: Vec<blueprotobuf::Attr>,
+    player_cache: Option<&PlayerCacheMutex>,
+) {
+    // Restore from cache if not already set
+    if player_entity.name.is_none() || player_entity.class.is_none() {
+        if let Some(cache) = player_cache {
+            if let Ok(cache) = cache.lock() {
+                if let Some(cached_entry) = cache.get(player_uid) {
+                    if player_entity.name.is_none() {
+                        player_entity.name = cached_entry.name.clone();
+                    }
+                    if player_entity.class.is_none() {
+                        player_entity.class = cached_entry.class;
+                    }
+                }
+            }
+        }
+    }
+
     for attr in attrs {
         let Some(mut raw_bytes) = attr.raw_data else {
             continue;
         };
-        let Some(attr_id) = attr.id else { continue; };
+        let Some(attr_id) = attr.id else {
+            continue;
+        };
 
         // info!("{} {}", attr_type::(attr_id),hex::encode(raw_bytes.read_remaining()));
         match attr_id {
@@ -213,15 +337,35 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
                 let player_name_result = BinaryReader::from(raw_bytes).read_string();
                 if let Ok(player_name) = player_name_result {
                     player_entity.name = Some(player_name.clone());
-                    info!("Found player {player_name} with UID {player_uid}");
+                    debug!("Found player {player_name} with UID {player_uid}");
+                    if let Some(cache) = player_cache {
+                        if let Ok(mut cache) = cache.lock() {
+                            cache.set_name(player_uid, player_name);
+                        }
+                    }
                 } else {
                     warn!("Failed to read player name for UID {player_uid}");
                 }
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_PROFESSION_ID => player_entity.class = Some(Class::from(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)),
+            attr_type::ATTR_PROFESSION_ID => {
+                let player_class = Class::from(
+                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
+                );
+                player_entity.class = Some(player_class);
+
+                // Cache the class
+                if let Some(cache) = player_cache {
+                    if let Ok(mut cache) = cache.lock() {
+                        cache.set_class(player_uid, player_class);
+                    }
+                }
+            }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_FIGHT_POINT => player_entity.ability_score = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_FIGHT_POINT => {
+                player_entity.ability_score =
+                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+            }
             _ => (),
         }
     }
@@ -230,88 +374,66 @@ fn process_player_attrs(player_entity: &mut Entity, player_uid: i64, attrs: Vec<
 fn process_monster_attrs(
     monster_entity: &mut Entity,
     attrs: Vec<blueprotobuf::Attr>,
-    local_player: Option<&blueprotobuf::SyncContainerData>,
+    player_state: &PlayerState,
     is_bptimer_enabled: bool,
 ) {
+    // Track if HP was updated during this attribute batch
+    // Prevents unnecessary report_hp calls even if catched in the api client itself
+    // Also prevents calls if HP does not change, but the other attributes do
+    let mut hp_updated = false;
+
+    // Process all attributes and update entity state
     for attr in attrs {
-        let Some(raw_bytes) = attr.raw_data else { continue; };
-        let Some(attr_id) = attr.id else { continue; };
+        let Some(raw_bytes) = attr.raw_data else {
+            continue;
+        };
+        let Some(attr_id) = attr.id else {
+            continue;
+        };
 
         #[allow(clippy::cast_possible_truncation)]
         match attr_id {
-            attr_type::ATTR_ID => monster_entity.monster_id = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_ID => {
+                monster_entity.monster_id =
+                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+            }
             attr_type::ATTR_HP => {
-                let curr_hp = prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-                let prev_hp = monster_entity.curr_hp.unwrap_or(curr_hp); // If previous hp doesn't exist, just use the current hp
+                let curr_hp =
+                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
                 monster_entity.curr_hp = Some(curr_hp);
-
-                if is_bptimer_enabled {
-                    // Crowdsource Data: if people abuse this, we will change the security
-                    // const ENDPOINT: &str = "http://localhost:3000";
-                    const ENDPOINT: &str = "https://db.bptimer.com/api/create-hp-report";
-                    const API_KEY: &str = "8fibznvjgf9vh29bg7g730fan9xaskf7h45lzdl2891vi0w1d2";
-                    let (Some(monster_id), Some(local_player)) = (monster_entity.monster_id, &local_player) else {
-                        continue;
-                    };
-                    let Some(max_hp) = monster_entity.max_hp else {
-                        continue;
-                    };
-                    if MONSTER_NAMES_CROWDSOURCE.contains_key(&monster_id) { // only record if it's a world boss, magical creature, etc.
-                        let monster_name = MONSTER_NAMES.get(&monster_id).map_or("Unknown Monster Name", |s| s.as_str());
-                        let old_hp_pct = (prev_hp * 100 / max_hp).clamp(0, 100);
-                        let new_hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
-                        let Some(line) = local_player.v_data.as_ref().and_then(|v| v.scene_data.as_ref().and_then(|s| s.line_id)) else {
-                            continue
-                        };
-                        let Some(pos_x) = monster_entity.monster_pos.x else {
-                            continue
-                        };
-                        let Some(pos_y) = monster_entity.monster_pos.y else {
-                            continue
-                        };
-                        let Some(pos_z) = monster_entity.monster_pos.z else {
-                            continue
-                        };
-
-                        // Rate limit: only report if hp% changed and hp% is divisible by 5 (e.g. 0%, 5%, etc.)
-                        if old_hp_pct != new_hp_pct && new_hp_pct % 5 == 0 {
-                            info!("Found crowdsourced monster with Name {monster_name} - ID {monster_id} - HP% {new_hp_pct}% on line {line} and pos ({pos_x},{pos_y},{pos_z})");
-                            let body = serde_json::json!({
-                                "monster_id": monster_id,
-                                "hp_pct": new_hp_pct,
-                                "line": line,
-                                "pos_x": pos_x,
-                                "pos_y": pos_y,
-                                "pos_z": pos_z,
-                            });
-                            tokio::spawn(async move {
-                                let client = reqwest::Client::new();
-                                let res = client
-                                    .post(ENDPOINT)
-                                    .header("X-API-Key", API_KEY)
-                                    .json(&body)
-                                    .send().await;
-                                match res {
-                                    Ok(resp) => {
-                                        if resp.status() != reqwest::StatusCode::OK {
-                                            error!("POST monster info failed: status {}", resp.status());
-                                        }
-                                    }
-                                    Err(e) => {
-                                        error!("Failed to POST monster info: {e}");
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
+                hp_updated = true;
             }
             #[allow(clippy::cast_possible_truncation)]
-            attr_type::ATTR_MAX_HP => monster_entity.max_hp = Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32),
+            attr_type::ATTR_MAX_HP => {
+                monster_entity.max_hp =
+                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+            }
             attr_type::ATTR_POS => {
-                monster_entity.monster_pos = blueprotobuf::Vector3::decode(Bytes::from(raw_bytes)).unwrap()
+                monster_entity.monster_pos =
+                    blueprotobuf::Vector3::decode(Bytes::from(raw_bytes)).unwrap()
             }
             _ => (),
         }
+    }
+
+    // Report to bptimer if HP was updated and feature is enabled
+    // bptimer client handles all validation internally
+    if hp_updated && is_bptimer_enabled && BP_TIMER_CLIENT.is_some() {
+        let client = BP_TIMER_CLIENT.as_ref().unwrap();
+        let line = player_state.get_line_id();
+        let account_id = player_state.get_account_id();
+        let uid = player_state.get_uid();
+
+        client.report_hp(
+            monster_entity.monster_id,
+            monster_entity.curr_hp,
+            monster_entity.max_hp,
+            line,
+            monster_entity.monster_pos.x,
+            monster_entity.monster_pos.y,
+            monster_entity.monster_pos.z,
+            account_id,
+            uid,
+        );
     }
 }

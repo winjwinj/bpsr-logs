@@ -4,7 +4,10 @@ mod packets;
 
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
+use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
+use chrono::Utc;
 use log::{info, warn};
+use std::fs;
 use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
@@ -15,13 +18,20 @@ use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
-use tauri_specta::{collect_commands, Builder};
+use tauri_specta::{Builder, collect_commands};
 
 pub const WINDOW_LIVE_LABEL: &str = "live";
 pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Ignored in production GH action
+    if let Err(e) = dotenvy::dotenv() {
+        info!("No .env file found or error loading .env: {e}");
+    } else {
+        info!("Loaded .env file successfully");
+    }
+
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
         info!("Unloading and removing windivert...");
@@ -52,8 +62,12 @@ pub fn run() {
     #[cfg(debug_assertions)] // <- Only export on non-release builds
     {
         use specta_typescript::{BigIntExportBehavior, Typescript};
-        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number), "../src/lib/bindings.ts")
-               .expect("Failed to export typescript bindings");
+        builder
+            .export(
+                Typescript::new().bigint(BigIntExportBehavior::Number),
+                "../src/lib/bindings.ts",
+            )
+            .expect("Failed to export typescript bindings");
     }
 
     let tauri_builder = tauri::Builder::default()
@@ -80,6 +94,7 @@ pub fn run() {
             let app_handle = app.handle().clone();
 
             // Setup stuff
+            cleanup_old_logs(&app_handle);
             setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
@@ -88,27 +103,33 @@ pub fn run() {
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
             app.manage(EncounterMutex::default()); // setup encounter state
+            app.manage(PlayerStateMutex::default()); // setup player state
+            app.manage(PlayerCacheMutex::default()); // setup player cache
             tauri::async_runtime::spawn(
                 async move { live::live_main::start(app_handle.clone()).await },
             );
             Ok(())
         })
         .on_window_event(on_window_event_fn)
-        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![])))
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec![]),
+        ))
         .plugin(tauri_plugin_clipboard_manager::init()) // used to read/write to the clipboard
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
-    build(tauri_builder).expect("error while running tauri application")
-                        .run(|_app_handle, event| {
-                            // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
-                            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
+    build(tauri_builder)
+        .expect("error while running tauri application")
+        .run(|_app_handle, event| {
+            // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
+            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
                                 stop_windivert();
                                 info!("App is closing! Cleaning up resources...");
                             }
-                        });
+        });
 }
 
 #[allow(unused)]
@@ -176,29 +197,83 @@ async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     Ok(())
 }
 
+fn cleanup_old_logs(app: &tauri::AppHandle) {
+    let Ok(log_dir) = app.path().app_log_dir() else {
+        return;
+    };
+    let Ok(entries) = fs::read_dir(&log_dir) else {
+        return;
+    };
+
+    let current_version = app.package_info().version.to_string();
+    let version_prefix = format!("bpsr-logs-v{}-", current_version);
+
+    let mut session_logs: Vec<_> = Vec::new();
+    let mut other_logs_to_delete: Vec<_> = Vec::new();
+
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if !path.is_file() {
+            continue;
+        }
+
+        let Ok(metadata) = entry.metadata() else {
+            continue;
+        };
+        let Ok(modified) = metadata.modified() else {
+            continue;
+        };
+
+        let file_name = entry.file_name().to_string_lossy().to_string();
+
+        // Match session log pattern: bpsr-logs-v{version}-{timestamp}.log
+        if file_name.starts_with(&version_prefix) && file_name.ends_with(".log") {
+            session_logs.push((path, modified));
+        }
+        // Delete anything else (old format logs, etc.)
+        else {
+            other_logs_to_delete.push(path);
+        }
+    }
+
+    // Sort session logs by modified time (newest first)
+    session_logs.sort_by(|a, b| b.1.cmp(&a.1));
+
+    // Keep only the last 3 session log files (not including current), delete older ones
+    for (path, _) in session_logs.into_iter().skip(3) {
+        other_logs_to_delete.push(path);
+    }
+
+    // Delete all old/unwanted log files
+    for path in other_logs_to_delete {
+        if let Err(e) = fs::remove_file(&path) {
+            eprintln!("Failed to delete old log file {:?}: {}", path, e);
+        }
+    }
+}
+
 fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
     let app_version = &app.package_info().version;
-    let pst_time = chrono::Utc::now()
-        .with_timezone(&chrono_tz::America::Los_Angeles)
-        .format("%m-%d-%Y %H_%M_%S")
-        .to_string();
-    let log_file_name = format!("log v{app_version} {pst_time} PST", );
+    let timestamp = Utc::now().format("%Y-%m-%d_%H-%M-%S").to_string();
+    let log_file_name = format!("bpsr-logs-v{}-{}", app_version, timestamp);
 
-    app.plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-                   .clear_targets()
-                   .with_colors(ColoredLevelConfig::default())
-                   .targets([
-                       #[cfg(debug_assertions)]
-                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
-                           .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                           file_name: Some(log_file_name),
-                       }),
-                   ])
-                   .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-                   .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)) // keep the last 10 logs
-                   .max_file_size(1_073_741_824 /* 1 gb */)
-                   .build())?;
+    app.plugin(
+        tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+            .clear_targets()
+            .with_colors(ColoredLevelConfig::default())
+            .targets([
+                #[cfg(debug_assertions)]
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
+                    .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                    file_name: Some(log_file_name),
+                })
+                .filter(|metadata| metadata.level() <= log::LevelFilter::Info), // Exclude DEBUG logs from file
+            ])
+            .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+            .max_file_size(104_857_600 /* 100 MB */)
+            .build(),
+    )?;
     Ok(())
 }
 
@@ -258,7 +333,9 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                         height: 350.0,
                     }))
                     .unwrap();
-                if let Err(e) = live_meter_window.set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 })) {
+                if let Err(e) = live_meter_window
+                    .set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 }))
+                {
                     warn!("failed to set default window position: {e}");
                 }
                 if let Err(e) = show_window(&live_meter_window) {

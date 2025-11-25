@@ -1,8 +1,9 @@
+use crate::WINDOW_LIVE_LABEL;
 use crate::live::commands_models::{HeaderInfo, PlayerRow, PlayersWindow, SkillRow, SkillsWindow};
 use crate::live::opcodes_models::class::{Class, ClassSpec};
-use crate::live::opcodes_models::{class, CombatStats, Encounter, EncounterMutex};
+use crate::live::opcodes_models::{CombatStats, Encounter, EncounterMutex, class};
+use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets::packet_capture::request_restart;
-use crate::WINDOW_LIVE_LABEL;
 use blueprotobuf_lib::blueprotobuf::EEntityType;
 use log::info;
 use std::sync::MutexGuard;
@@ -103,26 +104,54 @@ pub enum StatType {
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_dps_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Dmg)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state = player_state.lock().unwrap();
+    get_player_window(encounter, StatType::Dmg, &player_cache, &player_state)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_heal_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::Heal)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state = player_state.lock().unwrap();
+    get_player_window(encounter, StatType::Heal, &player_cache, &player_state)
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_player_window(state: tauri::State<'_, EncounterMutex>) -> PlayersWindow {
+pub fn get_dps_boss_only_player_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+) -> PlayersWindow {
     let encounter = state.lock().unwrap();
-    get_player_window(encounter, StatType::DmgBossOnly)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state = player_state.lock().unwrap();
+    get_player_window(
+        encounter,
+        StatType::DmgBossOnly,
+        &player_cache,
+        &player_state,
+    )
 }
 
-pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) -> PlayersWindow {
+pub fn get_player_window(
+    encounter: MutexGuard<Encounter>,
+    stat_type: StatType,
+    player_cache: &std::sync::MutexGuard<crate::live::player_state::PlayerCache>,
+    player_state: &std::sync::MutexGuard<crate::live::player_state::PlayerState>,
+) -> PlayersWindow {
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
     #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
@@ -130,7 +159,7 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
     #[allow(clippy::cast_precision_loss)]
     let mut player_window = PlayersWindow {
         player_rows: Vec::new(),
-        local_player_uid: encounter.local_player_uid.unwrap_or(-1) as f64,
+        local_player_uid: player_state.get_local_player_uid().unwrap_or(-1) as f64,
         top_value: 0.0,
     };
     for (&entity_uid, entity) in &encounter.entity_uid_to_entity {
@@ -149,17 +178,36 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
         #[allow(clippy::cast_precision_loss)]
         let damage_row = PlayerRow {
             uid: entity_uid as f64,
-            name: entity.name.clone().unwrap_or(String::from("Unknown Name")),
-            class_name: class::get_class_name(entity.class.unwrap_or(Class::Unknown)),
+            name: entity
+                .name
+                .clone()
+                .or_else(|| player_cache.get_name(entity_uid))
+                .unwrap_or_else(|| format!("Player {}", entity_uid)),
+            class_name: class::get_class_name(
+                entity
+                    .class
+                    .or_else(|| player_cache.get_class(entity_uid))
+                    .unwrap_or(Class::Unknown),
+            ),
             class_spec_name: class::get_class_spec(entity.class_spec.unwrap_or(ClassSpec::Unknown)),
             ability_score: entity.ability_score.unwrap_or(-1) as f64,
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
-            value_pct: nan_is_zero(entity_stats.value as f64 / encounter_stats.value as f64 * 100.0),
-            crit_rate: nan_is_zero(entity_stats.crit_hits as f64 / entity_stats.hits as f64 * 100.0),
-            crit_value_rate: nan_is_zero(entity_stats.crit_value as f64 / entity_stats.value as f64 * 100.0),
-            lucky_rate: nan_is_zero(entity_stats.lucky_hits as f64 / entity_stats.hits as f64 * 100.0),
-            lucky_value_rate: nan_is_zero(entity_stats.lucky_value as f64 / entity_stats.value as f64 * 100.0),
+            value_pct: nan_is_zero(
+                entity_stats.value as f64 / encounter_stats.value as f64 * 100.0,
+            ),
+            crit_rate: nan_is_zero(
+                entity_stats.crit_hits as f64 / entity_stats.hits as f64 * 100.0,
+            ),
+            crit_value_rate: nan_is_zero(
+                entity_stats.crit_value as f64 / entity_stats.value as f64 * 100.0,
+            ),
+            lucky_rate: nan_is_zero(
+                entity_stats.lucky_hits as f64 / entity_stats.hits as f64 * 100.0,
+            ),
+            lucky_value_rate: nan_is_zero(
+                entity_stats.lucky_value as f64 / entity_stats.value as f64 * 100.0,
+            ),
             hits: entity_stats.hits as f64,
             hits_per_minute: nan_is_zero(entity_stats.hits as f64 / time_elapsed_secs * 60.0),
         };
@@ -169,9 +217,10 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
 
     // Sort skills descending by damage dealt
     player_window.player_rows.sort_by(|this_row, other_row| {
-        other_row.total_value
-                 .partial_cmp(&this_row.total_value)
-                 .unwrap_or(std::cmp::Ordering::Equal)
+        other_row
+            .total_value
+            .partial_cmp(&this_row.total_value)
+            .unwrap_or(std::cmp::Ordering::Equal)
     });
 
     player_window
@@ -179,26 +228,71 @@ pub fn get_player_window(encounter: MutexGuard<Encounter>, stat_type: StatType) 
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_dps_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Dmg)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state_guard = player_state.lock().unwrap();
+    get_skill_window(
+        state,
+        player_uid,
+        StatType::Dmg,
+        &player_cache,
+        &player_state_guard,
+    )
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_dps_boss_only_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_dps_boss_only_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::DmgBossOnly)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state_guard = player_state.lock().unwrap();
+    get_skill_window(
+        state,
+        player_uid,
+        StatType::DmgBossOnly,
+        &player_cache,
+        &player_state_guard,
+    )
 }
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_heal_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid_str: &str) -> Result<SkillsWindow, String> {
+pub fn get_heal_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_cache_state: tauri::State<'_, PlayerCacheMutex>,
+    player_state: tauri::State<'_, PlayerStateMutex>,
+    player_uid_str: &str,
+) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
-    get_skill_window(state, player_uid, StatType::Heal)
+    let player_cache = player_cache_state.lock().unwrap();
+    let player_state_guard = player_state.lock().unwrap();
+    get_skill_window(
+        state,
+        player_uid,
+        StatType::Heal,
+        &player_cache,
+        &player_state_guard,
+    )
 }
 
-pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64, stat_type: StatType) -> Result<SkillsWindow, String> {
+pub fn get_skill_window(
+    state: tauri::State<'_, EncounterMutex>,
+    player_uid: i64,
+    stat_type: StatType,
+    player_cache: &std::sync::MutexGuard<crate::live::player_state::PlayerCache>,
+    player_state: &std::sync::MutexGuard<crate::live::player_state::PlayerState>,
+) -> Result<SkillsWindow, String> {
     let encounter = state.lock().unwrap();
 
     let Some(player) = encounter.entity_uid_to_entity.get(&player_uid) else {
@@ -210,9 +304,21 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
     let (player_stats, encounter_stats, skill_uid_to_stats) = match stat_type {
-        StatType::Dmg => (&player.dmg_stats, &encounter.dmg_stats, &player.skill_uid_to_dps_stats),
-        StatType::DmgBossOnly => (&player.dmg_stats_boss_only, &encounter.dmg_stats_boss_only, &player.skill_uid_to_dps_stats_boss_only),
-        StatType::Heal => (&player.heal_stats, &encounter.heal_stats, &player.skill_uid_to_heal_stats),
+        StatType::Dmg => (
+            &player.dmg_stats,
+            &encounter.dmg_stats,
+            &player.skill_uid_to_dps_stats,
+        ),
+        StatType::DmgBossOnly => (
+            &player.dmg_stats_boss_only,
+            &encounter.dmg_stats_boss_only,
+            &player.skill_uid_to_dps_stats_boss_only,
+        ),
+        StatType::Heal => (
+            &player.heal_stats,
+            &encounter.heal_stats,
+            &player.skill_uid_to_heal_stats,
+        ),
     };
 
     // Player DPS Stats
@@ -220,21 +326,40 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
     let mut skill_window = SkillsWindow {
         inspected_player: PlayerRow {
             uid: player_uid as f64,
-            name: player.name.clone().unwrap_or(String::from("Unknown Name")),
-            class_name: class::get_class_name(player.class.unwrap_or(Class::Unknown)),
+            name: player
+                .name
+                .clone()
+                .or_else(|| player_cache.get_name(player_uid))
+                .unwrap_or_else(|| format!("Player {}", player_uid)),
+            class_name: class::get_class_name(
+                player
+                    .class
+                    .or_else(|| player_cache.get_class(player_uid))
+                    .unwrap_or(Class::Unknown),
+            ),
             class_spec_name: class::get_class_spec(player.class_spec.unwrap_or(ClassSpec::Unknown)),
             ability_score: player.ability_score.unwrap_or(-1) as f64,
             total_value: player_stats.value as f64,
             value_per_sec: nan_is_zero(player_stats.value as f64 / time_elapsed_secs),
-            value_pct: nan_is_zero(player_stats.value as f64 / encounter_stats.value as f64 * 100.0),
-            crit_rate: nan_is_zero(player_stats.crit_hits as f64 / player_stats.hits as f64 * 100.0),
-            crit_value_rate: nan_is_zero(player_stats.crit_value as f64 / player_stats.value as f64 * 100.0),
-            lucky_rate: nan_is_zero(player_stats.lucky_hits as f64 / player_stats.hits as f64 * 100.0),
-            lucky_value_rate: nan_is_zero(player_stats.lucky_value as f64 / player_stats.value as f64 * 100.0),
+            value_pct: nan_is_zero(
+                player_stats.value as f64 / encounter_stats.value as f64 * 100.0,
+            ),
+            crit_rate: nan_is_zero(
+                player_stats.crit_hits as f64 / player_stats.hits as f64 * 100.0,
+            ),
+            crit_value_rate: nan_is_zero(
+                player_stats.crit_value as f64 / player_stats.value as f64 * 100.0,
+            ),
+            lucky_rate: nan_is_zero(
+                player_stats.lucky_hits as f64 / player_stats.hits as f64 * 100.0,
+            ),
+            lucky_value_rate: nan_is_zero(
+                player_stats.lucky_value as f64 / player_stats.value as f64 * 100.0,
+            ),
             hits: player_stats.hits as f64,
             hits_per_minute: nan_is_zero(player_stats.hits as f64 / time_elapsed_secs * 60.0),
         },
-        local_player_uid: encounter.local_player_uid.unwrap_or(-1) as f64,
+        local_player_uid: player_state.get_local_player_uid().unwrap_or(-1) as f64,
         skill_rows: Vec::new(),
         top_value: 0.0,
     };
@@ -250,15 +375,19 @@ pub fn get_skill_window(state: tauri::State<'_, EncounterMutex>, player_uid: i64
             value_per_sec: nan_is_zero(skill_stat.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(skill_stat.value as f64 / player_stats.value as f64 * 100.0),
             crit_rate: nan_is_zero(skill_stat.crit_hits as f64 / skill_stat.hits as f64 * 100.0),
-            crit_value_rate: nan_is_zero(skill_stat.crit_value as f64 / skill_stat.value as f64 * 100.0),
+            crit_value_rate: nan_is_zero(
+                skill_stat.crit_value as f64 / skill_stat.value as f64 * 100.0,
+            ),
             lucky_rate: nan_is_zero(skill_stat.lucky_hits as f64 / skill_stat.hits as f64 * 100.0),
-            lucky_value_rate: nan_is_zero(skill_stat.lucky_value as f64 / skill_stat.value as f64 * 100.0),
+            lucky_value_rate: nan_is_zero(
+                skill_stat.lucky_value as f64 / skill_stat.value as f64 * 100.0,
+            ),
             hits: skill_stat.hits as f64,
             hits_per_minute: nan_is_zero(skill_stat.hits as f64 / time_elapsed_secs * 60.0),
         };
         skill_window.skill_rows.push(skill_row);
     }
-    drop(encounter);  // drop before expensive sort
+    drop(encounter); // drop before expensive sort
 
     // Sort skills descending by damage dealt
     skill_window.skill_rows.sort_by(|this_row, other_row| {

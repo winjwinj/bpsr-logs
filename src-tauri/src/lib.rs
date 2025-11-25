@@ -5,7 +5,9 @@ mod packets;
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
 use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
+use chrono::Utc;
 use log::{info, warn};
+use std::fs;
 use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
@@ -92,6 +94,7 @@ pub fn run() {
             let app_handle = app.handle().clone();
 
             // Setup stuff
+            cleanup_old_logs(&app_handle);
             setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
@@ -194,13 +197,65 @@ async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
     Ok(())
 }
 
+fn cleanup_old_logs(app: &tauri::AppHandle) {
+    let Ok(log_dir) = app.path().app_log_dir() else {
+        return;
+    };
+    let Ok(entries) = fs::read_dir(&log_dir) else {
+        return;
+    };
+
+    let current_version = app.package_info().version.to_string();
+    let version_prefix = format!("bpsr-logs-v{}-", current_version);
+
+    let mut session_logs: Vec<_> = Vec::new();
+    let mut other_logs_to_delete: Vec<_> = Vec::new();
+
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if !path.is_file() {
+            continue;
+        }
+
+        let Ok(metadata) = entry.metadata() else {
+            continue;
+        };
+        let Ok(modified) = metadata.modified() else {
+            continue;
+        };
+
+        let file_name = entry.file_name().to_string_lossy().to_string();
+
+        // Match session log pattern: bpsr-logs-v{version}-{timestamp}.log
+        if file_name.starts_with(&version_prefix) && file_name.ends_with(".log") {
+            session_logs.push((path, modified));
+        }
+        // Delete anything else (old format logs, etc.)
+        else {
+            other_logs_to_delete.push(path);
+        }
+    }
+
+    // Sort session logs by modified time (newest first)
+    session_logs.sort_by(|a, b| b.1.cmp(&a.1));
+
+    // Keep only the last 3 session log files (not including current), delete older ones
+    for (path, _) in session_logs.into_iter().skip(3) {
+        other_logs_to_delete.push(path);
+    }
+
+    // Delete all old/unwanted log files
+    for path in other_logs_to_delete {
+        if let Err(e) = fs::remove_file(&path) {
+            eprintln!("Failed to delete old log file {:?}: {}", path, e);
+        }
+    }
+}
+
 fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
     let app_version = &app.package_info().version;
-    let pst_time = chrono::Utc::now()
-        .with_timezone(&chrono_tz::America::Los_Angeles)
-        .format("%m-%d-%Y %H_%M_%S")
-        .to_string();
-    let log_file_name = format!("log v{app_version} {pst_time} PST",);
+    let timestamp = Utc::now().format("%Y-%m-%d_%H-%M-%S").to_string();
+    let log_file_name = format!("bpsr-logs-v{}-{}", app_version, timestamp);
 
     app.plugin(
         tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
@@ -212,11 +267,11 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
                     .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
                 tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
                     file_name: Some(log_file_name),
-                }),
+                })
+                .filter(|metadata| metadata.level() <= log::LevelFilter::Info), // Exclude DEBUG logs from file
             ])
             .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-            .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(3)) // keep last 3 log files
-            .max_file_size(52_428_800 /* 50 MB */) // reduced from 1GB to 50MB
+            .max_file_size(104_857_600 /* 100 MB */)
             .build(),
     )?;
     Ok(())

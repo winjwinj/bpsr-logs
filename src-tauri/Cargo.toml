@@ -42,7 +42,7 @@ tauri-plugin-clipboard-manager = "2"
 tauri-plugin-svelte = "3"
 tauri-plugin-os = "2"
 chrono-tz = "0.10.4"
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", features = ["json", "blocking", "rustls-tls"], default-features = false }
 tauri-plugin-opener = "2"
 dotenvy = "0.15.7"
 

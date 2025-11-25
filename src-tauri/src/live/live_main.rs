@@ -3,6 +3,7 @@ use crate::live::opcodes_process::{
     on_server_change, process_aoi_sync_delta, process_sync_container_data,
     process_sync_near_entities, process_sync_to_me_delta_info,
 };
+use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
@@ -17,7 +18,9 @@ pub async fn start(app_handle: AppHandle) {
     // 1. Start capturing packets and send to rx
     let mut rx = packets::packet_capture::start_capture(); // Since live meter is not critical, it's ok to just log it // TODO: maybe bubble an error up to the frontend instead?
 
-    let is_bptimer_enabled = app_handle.svelte().get_or::<bool>("integration", "bptimer", true);
+    let is_bptimer_enabled = app_handle
+        .svelte()
+        .get_or::<bool>("integration", "bptimer", true);
 
     // 2. Use the channel to receive packets back and process them
     while let Some((op, data)) = rx.recv().await {
@@ -48,9 +51,20 @@ pub async fn start(app_handle: AppHandle) {
                             continue;
                         }
                     };
+                let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                let player_state = player_state_mutex.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_near_entities(&mut encounter_state, sync_near_entities, is_bptimer_enabled).is_none() {
+                if process_sync_near_entities(
+                    &mut encounter_state,
+                    sync_near_entities,
+                    &player_state,
+                    is_bptimer_enabled,
+                    Some(&player_cache_mutex),
+                )
+                .is_none()
+                {
                     warn!("Error processing SyncNearEntities.. ignoring.");
                 }
             }
@@ -66,10 +80,40 @@ pub async fn start(app_handle: AppHandle) {
                             continue;
                         }
                     };
+
+                // Store persistent player identity data
+                if let Some(v_data) = &sync_container_data.v_data {
+                    let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                    let mut player_state = player_state_mutex.lock().unwrap();
+
+                    // Extract and store account_id and uid
+                    if let Some(char_base) = &v_data.char_base {
+                        if let (Some(account_id), Some(uid)) =
+                            (&char_base.account_id, v_data.char_id)
+                        {
+                            player_state.set_account_info(account_id.clone(), uid);
+                        }
+                    }
+
+                    // Extract and store line_id
+                    if let Some(scene_data) = &v_data.scene_data {
+                        if let Some(line_id) = scene_data.line_id {
+                            player_state.set_line_id(line_id);
+                        }
+                    }
+                }
+
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 encounter_state.local_player = Some(sync_container_data.clone());
-                if process_sync_container_data(&mut encounter_state, sync_container_data).is_none() {
+                if process_sync_container_data(
+                    &mut encounter_state,
+                    sync_container_data,
+                    Some(&player_cache_mutex),
+                )
+                .is_none()
+                {
                     warn!("Error processing SyncContainerData.. ignoring.");
                 }
             }
@@ -115,9 +159,35 @@ pub async fn start(app_handle: AppHandle) {
                             continue;
                         }
                     };
+
+                if let Some(delta_info) = &sync_to_me_delta_info.delta_info {
+                    if let Some(uuid) = delta_info.uuid {
+                        let local_player_uid = uuid >> 16;
+                        let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                        let mut player_state = player_state_mutex.lock().unwrap();
+
+                        // Update uid if not yet set or if different (shouldn't change but be defensive)
+                        if player_state.uid.is_none() || player_state.uid != Some(local_player_uid)
+                        {
+                            player_state.uid = Some(local_player_uid);
+                        }
+                    }
+                }
+
+                let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                let player_state = player_state_mutex.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
-                if process_sync_to_me_delta_info(&mut encounter_state, sync_to_me_delta_info, is_bptimer_enabled).is_none() {
+                if process_sync_to_me_delta_info(
+                    &mut encounter_state,
+                    sync_to_me_delta_info,
+                    &player_state,
+                    is_bptimer_enabled,
+                    Some(&player_cache_mutex),
+                )
+                .is_none()
+                {
                     warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                 }
             }
@@ -132,10 +202,21 @@ pub async fn start(app_handle: AppHandle) {
                             continue;
                         }
                     };
+                let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                let player_state = player_state_mutex.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 for aoi_sync_delta in sync_near_delta_info.delta_infos {
-                    if process_aoi_sync_delta(&mut encounter_state, aoi_sync_delta, is_bptimer_enabled).is_none() {
+                    if process_aoi_sync_delta(
+                        &mut encounter_state,
+                        aoi_sync_delta,
+                        &player_state,
+                        is_bptimer_enabled,
+                        Some(&player_cache_mutex),
+                    )
+                    .is_none()
+                    {
                         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
                     }
                 }

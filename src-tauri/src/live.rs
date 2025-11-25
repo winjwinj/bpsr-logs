@@ -6,3 +6,4 @@ mod commands_models;
 pub mod live_main;
 pub mod opcodes_models;
 mod opcodes_process;
+pub mod player_state;

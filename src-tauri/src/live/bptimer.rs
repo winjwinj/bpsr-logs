@@ -1,8 +1,6 @@
 use crate::live::opcodes_models::MONSTER_NAMES_CROWDSOURCE;
 use log::{error, info};
 use once_cell::sync::Lazy;
-use reqwest::{Client, StatusCode};
-use serde_json;
 use std::collections::HashMap;
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -14,8 +12,8 @@ struct CacheEntry {
     is_pending: bool,
 }
 
-static HP_REPORT_CACHE: Lazy<Mutex<HashMap<String, CacheEntry>>> = Lazy::new(|| Mutex::new(HashMap::new()));
-static HTTP_CLIENT: Lazy<Client> = Lazy::new(Client::new);
+static HP_REPORT_CACHE: Lazy<Mutex<HashMap<String, CacheEntry>>> =
+    Lazy::new(|| Mutex::new(HashMap::new()));
 const CACHE_EXPIRY_MS: u128 = 5 * 60 * 1000; // 5 minutes
 
 pub struct BPTimerClient {
@@ -25,10 +23,7 @@ pub struct BPTimerClient {
 
 impl BPTimerClient {
     pub fn new(api_url: String, api_key: String) -> Self {
-        Self {
-            api_url,
-            api_key,
-        }
+        Self { api_url, api_key }
     }
 
     /// Report HP to bptimer API
@@ -41,15 +36,31 @@ impl BPTimerClient {
         pos_x: Option<f32>,
         pos_y: Option<f32>,
         pos_z: Option<f32>,
+        account_id: Option<String>,
+        uid: Option<i64>,
     ) {
         // Validate all required fields are present
-        let Some(monster_id) = monster_id else { return; };
-        let Some(curr_hp) = curr_hp else { return; };
-        let Some(max_hp) = max_hp else { return; };
-        let Some(line) = line else { return; };
-        let Some(pos_x) = pos_x else { return; };
-        let Some(pos_y) = pos_y else { return; };
-        let Some(pos_z) = pos_z else { return; };
+        let Some(monster_id) = monster_id else {
+            return;
+        };
+        let Some(curr_hp) = curr_hp else {
+            return;
+        };
+        let Some(max_hp) = max_hp else {
+            return;
+        };
+        let Some(line) = line else {
+            return;
+        };
+        let Some(pos_x) = pos_x else {
+            return;
+        };
+        let Some(pos_y) = pos_y else {
+            return;
+        };
+        let Some(pos_z) = pos_z else {
+            return;
+        };
 
         // Only process crowdsourced monsters
         if !MONSTER_NAMES_CROWDSOURCE.contains_key(&monster_id) {
@@ -57,7 +68,9 @@ impl BPTimerClient {
         }
 
         // Calculate HP percentage
-        if max_hp == 0 { return; }
+        if max_hp == 0 {
+            return;
+        }
         let hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
 
         // Round to nearest 5%
@@ -73,11 +86,13 @@ impl BPTimerClient {
         // Check cache
         let should_report = {
             let mut cache = HP_REPORT_CACHE.lock().unwrap();
-            let entry = cache.entry(cache_key.clone()).or_insert_with(|| CacheEntry {
-                timestamp: now,
-                last_reported_hp: None,
-                is_pending: false,
-            });
+            let entry = cache
+                .entry(cache_key.clone())
+                .or_insert_with(|| CacheEntry {
+                    timestamp: now,
+                    last_reported_hp: None,
+                    is_pending: false,
+                });
 
             // Reset expired entries
             if now - entry.timestamp > CACHE_EXPIRY_MS {
@@ -101,7 +116,9 @@ impl BPTimerClient {
                 .map(|s| s.as_str())
                 .unwrap_or("Unknown Monster");
 
-            info!("Reporting monster HP: {monster_name} (ID: {monster_id}) - HP: {rounded_hp_pct}% on line {line} at ({pos_x:.2}, {pos_y:.2}, {pos_z:.2})");
+            info!(
+                "Reporting monster HP: {monster_name} (ID: {monster_id}) - HP: {rounded_hp_pct}% on line {line} at ({pos_x:.2}, {pos_y:.2}, {pos_z:.2})"
+            );
 
             let body = serde_json::json!({
                 "monster_id": monster_id,
@@ -110,22 +127,31 @@ impl BPTimerClient {
                 "pos_x": pos_x,
                 "pos_y": pos_y,
                 "pos_z": pos_z,
+                "account_id": account_id,
+                "uid": uid,
             });
 
             let api_url = format!("{}/api/create-hp-report", self.api_url);
             let api_key = self.api_key.clone();
             let cache_key_clone = cache_key.clone();
 
-            tokio::spawn(async move {
-                let res = HTTP_CLIENT
+            std::thread::spawn(move || {
+                let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
+                let client = reqwest::blocking::Client::builder()
+                    .user_agent(&user_agent)
+                    .use_rustls_tls()
+                    .build()
+                    .unwrap_or_else(|_| reqwest::blocking::Client::new());
+
+                let res = client
                     .post(&api_url)
                     .header("X-API-Key", &api_key)
+                    .header("Content-Type", "application/json")
                     .json(&body)
-                    .send()
-                    .await;
+                    .send();
 
                 match res {
-                    Ok(resp) if resp.status() == StatusCode::OK => {
+                    Ok(resp) if resp.status().is_success() => {
                         // Success: Update cache
                         let mut cache = HP_REPORT_CACHE.lock().unwrap();
                         if let Some(entry) = cache.get_mut(&cache_key_clone) {
@@ -156,5 +182,4 @@ impl BPTimerClient {
             });
         }
     }
-
 }

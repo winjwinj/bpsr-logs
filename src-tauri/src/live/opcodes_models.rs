@@ -1,9 +1,9 @@
 use crate::live::opcodes_models::class::{Class, ClassSpec};
+use blueprotobuf_lib::blueprotobuf;
 use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use blueprotobuf_lib::blueprotobuf;
 
 pub type EncounterMutex = Mutex<Encounter>;
 
@@ -12,7 +12,6 @@ pub struct Encounter {
     pub is_encounter_paused: bool,
     pub time_last_combat_packet_ms: u128,
     pub time_fight_start_ms: u128,
-    pub local_player_uid: Option<i64>,
     pub entity_uid_to_entity: HashMap<i64, Entity>,
     pub dmg_stats: CombatStats,
     pub dmg_stats_boss_only: CombatStats,
@@ -33,7 +32,6 @@ pub struct Entity {
     pub heal_stats: CombatStats,
     pub skill_uid_to_heal_stats: HashMap<i32, CombatStats>,
 
-
     // Players
     pub name: Option<String>, // also available for monsters in packets
     pub class: Option<Class>,
@@ -43,7 +41,7 @@ pub struct Entity {
     // Monsters
     pub monster_id: Option<i32>,
     pub curr_hp: Option<i32>, // also available for players in packets
-    pub max_hp: Option<i32>, // also available for players in packets
+    pub max_hp: Option<i32>,  // also available for players in packets
     pub monster_pos: blueprotobuf::Vector3,
 }
 
@@ -190,13 +188,13 @@ pub mod class {
             44701 | 179_906 => ClassSpec::Moonstrike, // AI: Moon Blade, Moonstrike Whirl
 
             120_901 | 120_902 => ClassSpec::Icicle, // AI: Through the ice spear, AI: Ice spear
-            1241 => ClassSpec::Frostbeam, // Frostbeam
+            1241 => ClassSpec::Frostbeam,           // Frostbeam
 
             1405 | 1418 => ClassSpec::Vanguard, // Gale Thrust, Gale Thrust
-            1419 => ClassSpec::Skyward, // Skyfall
+            1419 => ClassSpec::Skyward,         // Skyfall
 
             1518 | 1541 | 21402 => ClassSpec::Smite, // Wild Bloom, Wild Bloom, AI: Blooming wildly
-            20301 => ClassSpec::Lifebind, // AI: Life blooms
+            20301 => ClassSpec::Lifebind,            // AI: Life blooms
 
             199_902 => ClassSpec::Earthfort, // Rage Burst Stone
             1930 | 1931 | 1934 | 1935 => ClassSpec::Block, // Countercrush, Countercrush, Countercrush, Countercrush
@@ -205,7 +203,7 @@ pub mod class {
             2292 | 1_700_820 | 1_700_825 | 1_700_827 => ClassSpec::Wildpack, // Phantom Direwolves, Wild Wolf - Assist, Pet - Foxen Pounce, Pet - Basic Attack
 
             2405 => ClassSpec::Recovery, // Valor Bash
-            2406 => ClassSpec::Shield, // Vanguard Strike
+            2406 => ClassSpec::Shield,   // Vanguard Strike
 
             2306 => ClassSpec::Dissonance, // Amplified Beat
             2307 | 2361 | 55302 => ClassSpec::Concerto, // Healing Beat, Healing Beat copy, AI: Healing beat

@@ -4,6 +4,7 @@ mod packets;
 
 use crate::build_app::build;
 use crate::live::opcodes_models::EncounterMutex;
+use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use log::{info, warn};
 use std::process::Command;
 
@@ -15,7 +16,7 @@ use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
-use tauri_specta::{collect_commands, Builder};
+use tauri_specta::{Builder, collect_commands};
 
 pub const WINDOW_LIVE_LABEL: &str = "live";
 pub const WINDOW_MAIN_LABEL: &str = "main";
@@ -59,8 +60,12 @@ pub fn run() {
     #[cfg(debug_assertions)] // <- Only export on non-release builds
     {
         use specta_typescript::{BigIntExportBehavior, Typescript};
-        builder.export(Typescript::new().bigint(BigIntExportBehavior::Number), "../src/lib/bindings.ts")
-               .expect("Failed to export typescript bindings");
+        builder
+            .export(
+                Typescript::new().bigint(BigIntExportBehavior::Number),
+                "../src/lib/bindings.ts",
+            )
+            .expect("Failed to export typescript bindings");
     }
 
     let tauri_builder = tauri::Builder::default()
@@ -95,27 +100,33 @@ pub fn run() {
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
             app.manage(EncounterMutex::default()); // setup encounter state
+            app.manage(PlayerStateMutex::default()); // setup player state
+            app.manage(PlayerCacheMutex::default()); // setup player cache
             tauri::async_runtime::spawn(
                 async move { live::live_main::start(app_handle.clone()).await },
             );
             Ok(())
         })
         .on_window_event(on_window_event_fn)
-        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![])))
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec![]),
+        ))
         .plugin(tauri_plugin_clipboard_manager::init()) // used to read/write to the clipboard
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
         .plugin(tauri_plugin_single_instance::init(|_app, _argv, _cwd| {})) // used to enforce only 1 instance of the app https://v2.tauri.app/plugin/single-instance/
         .plugin(tauri_plugin_svelte::init()); // used for settings file
 
-    build(tauri_builder).expect("error while running tauri application")
-                        .run(|_app_handle, event| {
-                            // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
-                            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
+    build(tauri_builder)
+        .expect("error while running tauri application")
+        .run(|_app_handle, event| {
+            // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
+            if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
                                 stop_windivert();
                                 info!("App is closing! Cleaning up resources...");
                             }
-                        });
+        });
 }
 
 #[allow(unused)]
@@ -189,23 +200,25 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
         .with_timezone(&chrono_tz::America::Los_Angeles)
         .format("%m-%d-%Y %H_%M_%S")
         .to_string();
-    let log_file_name = format!("log v{app_version} {pst_time} PST", );
+    let log_file_name = format!("log v{app_version} {pst_time} PST",);
 
-    app.plugin(tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
-                   .clear_targets()
-                   .with_colors(ColoredLevelConfig::default())
-                   .targets([
-                       #[cfg(debug_assertions)]
-                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
-                           .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
-                       tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
-                           file_name: Some(log_file_name),
-                       }),
-                   ])
-                   .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-                   .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(10)) // keep the last 10 logs
-                   .max_file_size(1_073_741_824 /* 1 gb */)
-                   .build())?;
+    app.plugin(
+        tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
+            .clear_targets()
+            .with_colors(ColoredLevelConfig::default())
+            .targets([
+                #[cfg(debug_assertions)]
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout)
+                    .filter(|metadata| metadata.level() <= log::LevelFilter::Info),
+                tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                    file_name: Some(log_file_name),
+                }),
+            ])
+            .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+            .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepSome(3)) // keep last 3 log files
+            .max_file_size(52_428_800 /* 50 MB */) // reduced from 1GB to 50MB
+            .build(),
+    )?;
     Ok(())
 }
 
@@ -265,7 +278,9 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                         height: 350.0,
                     }))
                     .unwrap();
-                if let Err(e) = live_meter_window.set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 })) {
+                if let Err(e) = live_meter_window
+                    .set_position(Position::Logical(LogicalPosition { x: 100.0, y: 100.0 }))
+                {
                     warn!("failed to set default window position: {e}");
                 }
                 if let Err(e) = show_window(&live_meter_window) {

@@ -13,10 +13,10 @@ pub struct PlayerState {
 
 impl PlayerState {
     pub fn set_account_info(&mut self, account_id: String, uid: i64) {
-        if self.account_id.is_none() {
+        if self.account_id.is_none() || self.account_id.as_ref() != Some(&account_id) {
             self.account_id = Some(account_id);
         }
-        if self.uid.is_none() {
+        if self.uid.is_none() || self.uid != Some(uid) {
             self.uid = Some(uid);
         }
     }

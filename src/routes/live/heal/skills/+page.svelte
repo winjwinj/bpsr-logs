@@ -1,109 +1,133 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { commands, type SkillsWindow } from "$lib/bindings";
-  import { getClassColor } from "$lib/utils.svelte";
-  import { page } from "$app/state";
-  import { createSvelteTable, FlexRender } from "$lib/svelte-table";
-  import { healPlayersColumnDefs, healSkillsColumnDefs } from "$lib/table-info";
-  import { getCoreRowModel } from "@tanstack/table-core";
-  import { SETTINGS } from "$lib/settings-store";
+	import { onMount } from 'svelte';
+	import { commands, type SkillsWindow } from '$lib/bindings';
+	import { getClassColor } from '$lib/utils.svelte';
+	import { page } from '$app/state';
+	import { createSvelteTable, FlexRender } from '$lib/svelte-table';
+	import { healPlayersColumnDefs, healSkillsColumnDefs } from '$lib/table-info';
+	import { getCoreRowModel } from '@tanstack/table-core';
+	import { SETTINGS } from '$lib/settings-store';
 
-  const playerUid: string = page.url.searchParams.get("playerUid") ?? "-1";
+	const playerUid: string = page.url.searchParams.get('playerUid') ?? '-1';
 
-  onMount(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 200);
-    return () => clearInterval(interval);
-  });
+	onMount(() => {
+		fetchData();
+		const interval = setInterval(fetchData, 200);
+		return () => clearInterval(interval);
+	});
 
-  let healSkillBreakdownWindow: SkillsWindow = $state({ currPlayer: [], skillRows: [] });
+	let healSkillBreakdownWindow: SkillsWindow | undefined = $state(undefined);
 
-  async function fetchData() {
-    try {
-      const result = SETTINGS.misc.state.testingMode ? await commands.getTestSkillWindow(playerUid) : await commands.getHealSkillWindow(playerUid);
-      if (result.status !== "ok") {
-        console.warn("Failed to get skill window: ", result.error);
-        return;
-      } else {
-        healSkillBreakdownWindow = result.data;
-        // console.log("healSkillBreakdown: ", +Date.now(), $state.snapshot(healSkillBreakdownWindow));
-      }
-    } catch (e) {
-      console.error("Error fetching data: ", e);
-    }
-  }
+	async function fetchData() {
+		try {
+			const result = SETTINGS.misc.state.testingMode
+				? await commands.getTestSkillWindow(playerUid)
+				: await commands.getHealSkillWindow(playerUid);
+			if (result.status !== 'ok') {
+				console.warn('Failed to get skill window: ', result.error);
+				return;
+			} else {
+				healSkillBreakdownWindow = result.data;
+				// console.log("healSkillBreakdown: ", +Date.now(), $state.snapshot(healSkillBreakdownWindow));
+			}
+		} catch (e) {
+			console.error('Error fetching data: ', e);
+		}
+	}
 
-  const currPlayerTable = createSvelteTable({
-    get data() {
-      return healSkillBreakdownWindow.currPlayer;
-    },
-    columns: healPlayersColumnDefs,
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      get columnVisibility() {
-        return SETTINGS.live.heal.skillBreakdown.state;
-      },
-    },
-  });
+	const inspectedPlayerTable = createSvelteTable({
+		get data() {
+			if (healSkillBreakdownWindow !== undefined) {
+				return [healSkillBreakdownWindow.inspectedPlayer];
+			} else {
+				return [];
+			}
+		},
+		columns: healPlayersColumnDefs,
+		getCoreRowModel: getCoreRowModel(),
+		state: {
+			get columnVisibility() {
+				return SETTINGS.live.heal.skillBreakdown.state;
+			}
+		}
+	});
 
-  const healSkillBreakdownTable = createSvelteTable({
-    get data() {
-      return healSkillBreakdownWindow.skillRows;
-    },
-    columns: healSkillsColumnDefs,
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      get columnVisibility() {
-        return SETTINGS.live.heal.skillBreakdown.state;
-      },
-    },
-  });
-
-  let maxSkillValue = $derived(healSkillBreakdownWindow.skillRows.reduce((max, p) => (p.totalDmg > max ? p.totalDmg : max), 0));
-
-  let SETTINGS_YOUR_NAME = $derived(SETTINGS.general.state.showYourName);
-  let SETTINGS_OTHERS_NAME = $derived(SETTINGS.general.state.showOthersName);
+	const healSkillBreakdownTable = createSvelteTable({
+		get data() {
+			if (healSkillBreakdownWindow !== undefined) {
+				return healSkillBreakdownWindow.skillRows;
+			} else {
+				return [];
+			}
+		},
+		columns: healSkillsColumnDefs,
+		getCoreRowModel: getCoreRowModel(),
+		state: {
+			get columnVisibility() {
+				return SETTINGS.live.heal.skillBreakdown.state;
+			}
+		}
+	});
 </script>
 
 <svelte:window oncontextmenu={() => window.history.back()} />
 
-<!-- TODO: looks ugly when split, need to figure out logic to combine together https://imgur.com/COalJFe -->
-<div class="relative flex flex-col">
-  <table class="w-screen table-fixed">
-    <thead class="z-1 sticky top-0 h-6">
-      <tr class="bg-neutral-900">
-        {#each healSkillBreakdownTable.getHeaderGroups() as headerGroup (headerGroup.id)}
-          {#each headerGroup.headers as header (header.id)}
-            <th class={header.column.columnDef.meta?.class}><FlexRender content={header.column.columnDef.header ?? "UNKNOWN HEADER"} context={header.getContext()} /></th>
-          {/each}
-        {/each}
-      </tr>
-    </thead>
-    <tbody>
-      {#each currPlayerTable.getRowModel().rows as row (row.id)}
-        {@const currPlayer = healSkillBreakdownWindow.currPlayer[0]}
-        {#if currPlayer}
-          {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? currPlayer.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? currPlayer.className : ""}
-          <tr class="h-7 px-2 py-1 text-center">
-            {#each row.getVisibleCells() as cell (cell.id)}
-              <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
-            {/each}
-            <td class="-z-1 absolute left-0 h-7" style="background-color: {getClassColor(className)}; width: 100vw;"></td>
-          </tr>
-        {/if}
-      {/each}
-      {#each healSkillBreakdownTable.getRowModel().rows as row, i (row.id)}
-        {@const currPlayer = healSkillBreakdownWindow.currPlayer[0]}
-        {#if currPlayer}
-          {@const className = row.original.name.includes("You") ? (SETTINGS_YOUR_NAME !== "Hide Your Name" ? currPlayer.className : "") : SETTINGS_OTHERS_NAME !== "Hide Others' Name" ? currPlayer.className : ""}
-          <tr class="h-7 px-2 py-1 text-center">
-            {#each row.getVisibleCells() as cell (cell.id)}
-              <td><FlexRender content={cell.column.columnDef.cell ?? "UNKNOWN CELL"} context={cell.getContext()} /></td>
-            {/each}
-            <td class="-z-1 absolute left-0 h-7" style="background-color: {`color-mix(in srgb, ${getClassColor(className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {SETTINGS.general.state.relativeToTopHealSkill ? (maxSkillValue > 0 ? (row.original.totalDmg / maxSkillValue) * 100 : 0) : row.original.dmgPct}%;"></td>
-          </tr>
-        {/if}
-      {/each}
-    </tbody>
-  </table>
-</div>
+{#if healSkillBreakdownWindow !== undefined}
+	<div class="relative flex flex-col">
+		<table class="w-screen table-fixed">
+			<thead class="sticky top-0 z-1 h-6">
+				<tr class="bg-neutral-900">
+					{#each healSkillBreakdownTable.getHeaderGroups() as headerGroup (headerGroup.id)}
+						{#each headerGroup.headers as header (header.id)}
+							<th class={header.column.columnDef.meta?.class}
+								><FlexRender
+									content={header.column.columnDef.header ?? 'UNKNOWN HEADER'}
+									context={header.getContext()}
+								/></th
+							>
+						{/each}
+					{/each}
+				</tr>
+			</thead>
+			<tbody>
+				{#each inspectedPlayerTable.getRowModel().rows as row (row.id)}
+					<tr class="h-7 px-2 py-1 text-center">
+						{#each row.getVisibleCells() as cell (cell.id)}
+							<td
+								><FlexRender
+									content={cell.column.columnDef.cell ?? 'UNKNOWN CELL'}
+									context={cell.getContext()}
+								/></td
+							>
+						{/each}
+						<td
+							class="absolute left-0 -z-1 h-7"
+							style="background-color: {getClassColor(
+								healSkillBreakdownWindow.inspectedPlayer.className
+							)}; width: 100vw;"
+						></td>
+					</tr>
+				{/each}
+				{#each healSkillBreakdownTable.getRowModel().rows as row, i (row.id)}
+					<tr class="h-7 px-2 py-1 text-center">
+						{#each row.getVisibleCells() as cell (cell.id)}
+							<td
+								><FlexRender
+									content={cell.column.columnDef.cell ?? 'UNKNOWN CELL'}
+									context={cell.getContext()}
+								/></td
+							>
+						{/each}
+						<td
+							class="absolute left-0 -z-1 h-7"
+							style="background-color: {`color-mix(in srgb, ${getClassColor(healSkillBreakdownWindow.inspectedPlayer.className)} 80%, white ${i % 2 === 0 ? '50%' : '20%'})`}; width: {(row
+								.original.totalValue /
+								healSkillBreakdownWindow.topValue) *
+								100}%;"
+						></td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+{/if}

@@ -3,6 +3,7 @@ mod live;
 mod packets;
 
 use crate::build_app::build;
+use crate::live::bptimer_state::create_bptimer_enabled;
 use crate::live::opcodes_models::EncounterMutex;
 use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use chrono::Utc;
@@ -34,9 +35,8 @@ pub fn run() {
 
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
-        info!("Unloading and removing windivert...");
-        stop_windivert();
-        remove_windivert();
+        info!("Unloading and removing WinDivert...");
+        cleanup_windivert();
     }));
 
     let builder = Builder::<tauri::Wry>::new()
@@ -57,6 +57,7 @@ pub fn run() {
             live::commands::hard_reset,
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
+            live::commands::set_bptimer_enabled,
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
@@ -78,8 +79,8 @@ pub fn run() {
         .invoke_handler(builder.invoke_handler())
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
-            stop_windivert();
-            remove_windivert();
+            // Clean up any leftover WinDivert resources from previous runs
+            cleanup_windivert();
 
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
@@ -102,6 +103,8 @@ pub fn run() {
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
+            let is_bptimer_enabled = app.svelte().get_or::<bool>("integration", "bptimer", true);
+            app.manage(create_bptimer_enabled(is_bptimer_enabled)); // setup bptimer enabled state
             app.manage(EncounterMutex::default()); // setup encounter state
             app.manage(PlayerStateMutex::default()); // setup player state
             app.manage(PlayerCacheMutex::default()); // setup player cache
@@ -126,9 +129,9 @@ pub fn run() {
         .run(|_app_handle, event| {
             // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
-                                stop_windivert();
-                                info!("App is closing! Cleaning up resources...");
-                            }
+                info!("App is closing! Cleaning up WinDivert resources...");
+                cleanup_windivert();
+            }
         });
 }
 
@@ -153,24 +156,69 @@ fn start_windivert() {
     }
 }
 
-fn stop_windivert() {
-    let status = Command::new("sc").args(["stop", "windivert"]).status();
-    if status.is_ok_and(|status| status.success()) {
-        info!("stopped driver");
-    } else {
-        warn!("could not execute command to stop driver");
+fn stop_windivert() -> bool {
+    let output = Command::new("sc").args(["stop", "windivert"]).output();
+
+    match output {
+        Ok(output) if output.status.success() => {
+            info!("stopped WinDivert driver service");
+            true
+        }
+        Ok(output) => {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            let combined = format!("{} {}", stdout, stderr);
+            // Error 1061 = service already stopping, 1060 = service doesn't exist
+            if !combined.contains("1061") && !combined.contains("1060") {
+                let msg = combined.trim();
+                if !msg.is_empty() {
+                    warn!("could not stop WinDivert driver service: {}", msg);
+                }
+            }
+            false
+        }
+        Err(e) => {
+            warn!("failed to execute stop command: {}", e);
+            false
+        }
     }
 }
 
-fn remove_windivert() {
-    let status = Command::new("sc")
-        .args(["delete", "windivert", "start=", "demand"])
-        .status();
-    if status.is_ok_and(|status| status.success()) {
-        info!("deleted driver");
-    } else {
-        warn!("could not execute command to delete driver");
+fn remove_windivert() -> bool {
+    let output = Command::new("sc").args(["delete", "windivert"]).output();
+
+    match output {
+        Ok(output) if output.status.success() => {
+            info!("deleted WinDivert driver service");
+            true
+        }
+        Ok(output) => {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            let combined = format!("{} {}", stdout, stderr);
+            // Error 1072 = service already marked for deletion, 1060 = service doesn't exist
+            if !combined.contains("1072") && !combined.contains("1060") {
+                let msg = combined.trim();
+                if !msg.is_empty() {
+                    warn!("could not delete WinDivert driver service: {}", msg);
+                }
+            }
+            false
+        }
+        Err(e) => {
+            warn!("failed to execute delete command: {}", e);
+            false
+        }
     }
+}
+
+pub fn cleanup_windivert() {
+    info!("Cleaning up WinDivert resources...");
+    let stopped = stop_windivert();
+    if stopped {
+        std::thread::sleep(std::time::Duration::from_millis(200));
+    }
+    remove_windivert();
 }
 
 #[cfg(not(debug_assertions))]

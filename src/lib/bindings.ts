@@ -74,6 +74,9 @@ async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, strin
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async setBptimerEnabled(enabled: boolean) : Promise<void> {
+    await TAURI_INVOKE("set_bptimer_enabled", { enabled });
 }
 }
 

@@ -17,48 +17,54 @@ https://github.com/winjwinj/bpsr-logs/releases/latest
 
 ![validation.png](readme/validation.png)
 ![validation_remove_name.png](readme/validation_remove_name.png)
-*name blocked by their request. You can ping me on the Discord and I can give you the full screenshot.
+\*name blocked by their request. You can ping me on the Discord and I can give you the full screenshot.
 
 # Does it mine Bitcoin?
+
 No, it doesn’t mine Bitcoin. If it did, I'd be answering this from my private island.
 
 ## Serious Answer:
+
 1. Code is open source, you can read it yourself
 1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njcducb/
 1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njn0xr3/
 1. https://www.reddit.com/r/BlueProtocolPC/comments/1o1hhj9/comment/njf92bs/
 1. https://tauri.by.simon.hyll.nu/concepts/security/false_positives/
-    ![false_positive.png](readme/false_positive.png)
+   ![false_positive.png](readme/false_positive.png)
 
 ## How to fix:
+
 1. Temporarily Disable Windows Defender
    1. [windowsdefender://threatsettings/](windowsdefender://threatsettings/)
    1. [https://support.microsoft.com/en-us/windows/virus-and-threat-protection-in-the-windows-security-app-1362f4cd-d71a-b52a-0b66-c2820032b65e#ID0EFH](https://support.microsoft.com/en-us/windows/virus-and-threat-protection-in-the-windows-security-app-1362f4cd-d71a-b52a-0b66-c2820032b65e#ID0EFH)
-1. Don't use Brave 
+1. Don't use Brave
+
 # Roadmap
 
 https://discord.com/channels/1417447600608510015/1417450802561290280
 
 # Contributing to the Project
+
 1. Framework: [Tauri 2.0](https://v2.tauri.app/start/)
-    1. Frontend: [Svelte 5 / SvelteKit v2](https://svelte.dev/docs/svelte/getting-started)
-    1. Backend: [Rust](https://www.rust-lang.org/learn)
+   1. Frontend: [Svelte 5 / SvelteKit v2](https://svelte.dev/docs/svelte/getting-started)
+   1. Backend: [Rust](https://www.rust-lang.org/learn)
 1. Join the [Discord](https://discord.gg/Tcc54ST5BU)
-    1. Get the Developers role and talk in the [chat](https://discord.com/channels/1417447600608510015/1417458452661407754)
-    1. Ping me on Discord to make sure I'm not already working on the feature
+   1. Get the Developers role and talk in the [chat](https://discord.com/channels/1417447600608510015/1417458452661407754)
+   1. Ping me on Discord to make sure I'm not already working on the feature
 
 ## Prerequisites
+
 1. Some version of [Node.js](https://nodejs.org/en/download/)
 1. tauri & Rust (see [tauri getting started](https://v2.tauri.app/start/prerequisites/))
 1. Clone the repository
 1. Install dependencies
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 1. After everything has been installed, you should be able to build the dev version of the meter.
-    ```bash
-    npm run tauri dev
-    ```
+   ```bash
+   npm run tauri dev
+   ```
 1. For IDE, I use
    1. Rust: [Jetbrains RustRover](https://www.jetbrains.com/rust/download/?section=windows)
    1. Svelte: [Visual Studio Code](https://code.visualstudio.com/) w/ [Svelte plugin](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) and lint with [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) (there's a `.code-workspace` committed to the repo)
@@ -66,6 +72,7 @@ https://discord.com/channels/1417447600608510015/1417450802561290280
 # FAQ
 
 ## Table of Contents
+
 - [Missing `WinDivert64.sys`](#q-missing-windivert64sys)
 - [Meter isn't detecting anything...](#q-meter-isnt-detecting-anything)
 - [ExitLag? Other ping reducers?](#q-how-do-i-also-use-exitlag-and-other-ping-reducers)

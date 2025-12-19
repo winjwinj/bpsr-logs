@@ -1,14 +1,7 @@
 {
-    "$schema": "../gen/schemas/desktop-schema.json",
-    "identifier": "default",
-    "description": "Capability for all windows",
-    "windows": [
-        "*"
-    ],
-    "permissions": [
-        "core:default",
-        "core:event:default",
-        "svelte:default",
-        "global-shortcut:default"
-    ]
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "Capability for all windows",
+	"windows": ["*"],
+	"permissions": ["core:default", "core:event:default", "svelte:default", "global-shortcut:default"]
 }

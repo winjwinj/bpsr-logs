@@ -1,110 +1,110 @@
-import { commands } from "$lib/bindings";
-import { SETTINGS } from "$lib/settings-store";
-import { setClickthrough, toggleClickthrough } from "$lib/utils.svelte";
-import { emitTo } from "@tauri-apps/api/event";
-import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { register, unregisterAll } from "@tauri-apps/plugin-global-shortcut";
+import { commands } from '$lib/bindings';
+import { SETTINGS } from '$lib/settings-store';
+import { setClickthrough, toggleClickthrough } from '$lib/utils.svelte';
+import { emitTo } from '@tauri-apps/api/event';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { register, unregisterAll } from '@tauri-apps/plugin-global-shortcut';
 
 export async function setupShortcuts() {
-  await unregisterAll();
-  for (const [cmdId, shortcutKey] of Object.entries(SETTINGS.shortcuts.state)) {
-    registerShortcut(cmdId, shortcutKey);
-  }
+	await unregisterAll();
+	for (const [cmdId, shortcutKey] of Object.entries(SETTINGS.shortcuts.state)) {
+		registerShortcut(cmdId, shortcutKey);
+	}
 }
 
 export async function registerShortcut(cmdId: string, shortcutKey: string) {
-  if (shortcutKey) {
-    switch (cmdId) {
-      case "showLiveMeter":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            const liveWindow = await WebviewWindow.getByLabel("live");
-            await liveWindow?.show();
-          }
-        });
-        break;
+	if (shortcutKey) {
+		switch (cmdId) {
+			case 'showLiveMeter':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						const liveWindow = await WebviewWindow.getByLabel('live');
+						await liveWindow?.show();
+					}
+				});
+				break;
 
-      case "hideLiveMeter":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            const liveWindow = await WebviewWindow.getByLabel("live");
-            await liveWindow?.hide();
-          }
-        });
-        break;
+			case 'hideLiveMeter':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						const liveWindow = await WebviewWindow.getByLabel('live');
+						await liveWindow?.hide();
+					}
+				});
+				break;
 
-      case "toggleLiveMeter":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            const liveWindow = await WebviewWindow.getByLabel("live");
-            const isVisible = await liveWindow?.isVisible();
-            if (isVisible) {
-              await liveWindow?.hide();
-            } else {
-              await liveWindow?.show();
-            }
-          }
-        });
-        break;
-      
-      case "showDpsTab":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await emitTo("live", "navigate", "/live/dps/");
-          }
-        });
-        break;
+			case 'toggleLiveMeter':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						const liveWindow = await WebviewWindow.getByLabel('live');
+						const isVisible = await liveWindow?.isVisible();
+						if (isVisible) {
+							await liveWindow?.hide();
+						} else {
+							await liveWindow?.show();
+						}
+					}
+				});
+				break;
 
-      case "showHealTab":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await emitTo("live", "navigate", "/live/heal/");
-          }
-        });
-        break;
+			case 'showDpsTab':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await emitTo('live', 'navigate', '/live/dps/');
+					}
+				});
+				break;
 
-      case "enableClickthrough":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await setClickthrough(true);
-          }
-        });
-        break;
+			case 'showHealTab':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await emitTo('live', 'navigate', '/live/heal/');
+					}
+				});
+				break;
 
-      case "disableClickthrough":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await setClickthrough(false);
-          }
-        });
-        break;
+			case 'enableClickthrough':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await setClickthrough(true);
+					}
+				});
+				break;
 
-      case "toggleClickthrough":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await toggleClickthrough();
-          }
-        });
-        break;
+			case 'disableClickthrough':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await setClickthrough(false);
+					}
+				});
+				break;
 
-      case "resetEncounter":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            await commands.resetEncounter();
-          }
-        });
-        break;
+			case 'toggleClickthrough':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await toggleClickthrough();
+					}
+				});
+				break;
 
-      case "hardReset":
-        await register(shortcutKey, async (event) => {
-          if (event.state === "Pressed") {
-            commands.hardReset();
-          }
-        });
-        break;
+			case 'resetEncounter':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						await commands.resetEncounter();
+					}
+				});
+				break;
 
-      default:
-        console.log("Unknown command");
-    }
-  }
+			case 'hardReset':
+				await register(shortcutKey, async (event) => {
+					if (event.state === 'Pressed') {
+						commands.hardReset();
+					}
+				});
+				break;
+
+			default:
+				console.log('Unknown command');
+		}
+	}
 }

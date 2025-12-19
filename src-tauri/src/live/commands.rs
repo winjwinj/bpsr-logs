@@ -1,4 +1,7 @@
 use crate::WINDOW_LIVE_LABEL;
+use crate::live::bptimer_state::{
+    BPTimerEnabledMutex, set_bptimer_enabled as update_bptimer_state,
+};
 use crate::live::commands_models::{HeaderInfo, PlayerRow, PlayersWindow, SkillRow, SkillsWindow};
 use crate::live::opcodes_models::class::{Class, ClassSpec};
 use crate::live::opcodes_models::{CombatStats, Encounter, EncounterMutex, class};
@@ -189,7 +192,12 @@ pub fn get_player_window(
                     .or_else(|| player_cache.get_class(entity_uid))
                     .unwrap_or(Class::Unknown),
             ),
-            class_spec_name: class::get_class_spec(entity.class_spec.unwrap_or(ClassSpec::Unknown)),
+            class_spec_name: class::get_class_spec(
+                entity
+                    .class_spec
+                    .or_else(|| player_cache.get_class_spec(entity_uid))
+                    .unwrap_or(ClassSpec::Unknown),
+            ),
             ability_score: entity.ability_score.unwrap_or(-1) as f64,
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
@@ -337,7 +345,12 @@ pub fn get_skill_window(
                     .or_else(|| player_cache.get_class(player_uid))
                     .unwrap_or(Class::Unknown),
             ),
-            class_spec_name: class::get_class_spec(player.class_spec.unwrap_or(ClassSpec::Unknown)),
+            class_spec_name: class::get_class_spec(
+                player
+                    .class_spec
+                    .or_else(|| player_cache.get_class_spec(player_uid))
+                    .unwrap_or(ClassSpec::Unknown),
+            ),
             ability_score: player.ability_score.unwrap_or(-1) as f64,
             total_value: player_stats.value as f64,
             value_per_sec: nan_is_zero(player_stats.value as f64 / time_elapsed_secs),
@@ -555,6 +568,16 @@ pub fn get_test_player_window() -> PlayersWindow {
         local_player_uid: 10_000_001.0,
         top_value: 100_000.0,
     }
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn set_bptimer_enabled(state: tauri::State<BPTimerEnabledMutex>, enabled: bool) {
+    update_bptimer_state(&state, enabled);
+    info!(
+        "BPTimer integration {} via settings",
+        if enabled { "enabled" } else { "disabled" }
+    );
 }
 
 #[tauri::command]

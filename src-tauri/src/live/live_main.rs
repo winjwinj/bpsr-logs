@@ -1,3 +1,4 @@
+use crate::live::bptimer_state::{BPTimerEnabledMutex, is_bptimer_enabled};
 use crate::live::opcodes_models::EncounterMutex;
 use crate::live::opcodes_process::{
     on_server_change, process_aoi_sync_delta, process_sync_container_data,
@@ -10,7 +11,6 @@ use bytes::Bytes;
 use log::{info, warn};
 use prost::Message;
 use tauri::{AppHandle, Manager};
-use tauri_plugin_svelte::ManagerExt;
 
 pub async fn start(app_handle: AppHandle) {
     // todo: add app_handle?
@@ -18,9 +18,7 @@ pub async fn start(app_handle: AppHandle) {
     // 1. Start capturing packets and send to rx
     let mut rx = packets::packet_capture::start_capture(); // Since live meter is not critical, it's ok to just log it // TODO: maybe bubble an error up to the frontend instead?
 
-    let is_bptimer_enabled = app_handle
-        .svelte()
-        .get_or::<bool>("integration", "bptimer", true);
+    let bptimer_enabled_state = app_handle.state::<BPTimerEnabledMutex>();
 
     // 2. Use the channel to receive packets back and process them
     while let Some((op, data)) = rx.recv().await {
@@ -60,7 +58,7 @@ pub async fn start(app_handle: AppHandle) {
                     &mut encounter_state,
                     sync_near_entities,
                     &player_state,
-                    is_bptimer_enabled,
+                    is_bptimer_enabled(&bptimer_enabled_state),
                     Some(&player_cache_mutex),
                 )
                 .is_none()
@@ -183,7 +181,7 @@ pub async fn start(app_handle: AppHandle) {
                     &mut encounter_state,
                     sync_to_me_delta_info,
                     &player_state,
-                    is_bptimer_enabled,
+                    is_bptimer_enabled(&bptimer_enabled_state),
                     Some(&player_cache_mutex),
                 )
                 .is_none()
@@ -212,7 +210,7 @@ pub async fn start(app_handle: AppHandle) {
                         &mut encounter_state,
                         aoi_sync_delta,
                         &player_state,
-                        is_bptimer_enabled,
+                        is_bptimer_enabled(&bptimer_enabled_state),
                         Some(&player_cache_mutex),
                     )
                     .is_none()

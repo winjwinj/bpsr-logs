@@ -211,16 +211,29 @@ pub fn process_aoi_sync_delta(
             .is_none_or(|class_spec| class_spec == ClassSpec::Unknown)
         {
             let class_spec = get_class_spec_from_skill_id(skill_uid);
-            let inferred_class = get_class_from_spec(class_spec);
-            attacker_entity.class = Some(inferred_class);
             attacker_entity.class_spec = Some(class_spec);
 
-            // Cache the inferred class (only for players)
+            // Only infer/overwrite class if it's not already set or is Unknown/Unimplemented
+            let should_cache_class = if attacker_entity
+                .class
+                .is_none_or(|class| matches!(class, Class::Unknown | Class::Unimplemented))
+            {
+                let inferred_class = get_class_from_spec(class_spec);
+                attacker_entity.class = Some(inferred_class);
+                Some(inferred_class)
+            } else {
+                None
+            };
+
+            // Cache the inferred class and class_spec (only for players)
             if blueprotobuf::EEntityType::from(attacker_uuid) == blueprotobuf::EEntityType::EntChar
             {
                 if let Some(cache) = player_cache {
                     if let Ok(mut cache) = cache.lock() {
-                        cache.set_class(attacker_uid, inferred_class);
+                        if let Some(inferred_class) = should_cache_class {
+                            cache.set_class(attacker_uid, inferred_class);
+                        }
+                        cache.set_class_spec(attacker_uid, class_spec);
                     }
                 }
             }
@@ -307,16 +320,17 @@ fn process_player_attrs(
     player_cache: Option<&PlayerCacheMutex>,
 ) {
     // Restore from cache if not already set
-    if player_entity.name.is_none() || player_entity.class.is_none() {
-        if let Some(cache) = player_cache {
-            if let Ok(cache) = cache.lock() {
-                if let Some(cached_entry) = cache.get(player_uid) {
-                    if player_entity.name.is_none() {
-                        player_entity.name = cached_entry.name.clone();
-                    }
-                    if player_entity.class.is_none() {
-                        player_entity.class = cached_entry.class;
-                    }
+    if let Some(cache) = player_cache {
+        if let Ok(cache) = cache.lock() {
+            if let Some(cached_entry) = cache.get(player_uid) {
+                if player_entity.name.is_none() {
+                    player_entity.name = cached_entry.name.clone();
+                }
+                if player_entity.class.is_none() {
+                    player_entity.class = cached_entry.class;
+                }
+                if player_entity.class_spec.is_none() {
+                    player_entity.class_spec = cached_entry.class_spec;
                 }
             }
         }

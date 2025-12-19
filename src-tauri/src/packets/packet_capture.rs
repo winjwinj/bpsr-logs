@@ -14,6 +14,9 @@ use windivert::prelude::WinDivertFlags;
 // Global sender for restart signal
 static RESTART_SENDER: OnceCell<watch::Sender<bool>> = OnceCell::new();
 
+// Delay between handle cleanup and recreation to allow kernel cleanup
+const HANDLE_CLEANUP_DELAY_MS: u64 = 500;
+
 pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Vec<u8>)> {
     let (packet_sender, packet_receiver) =
         tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(1);
@@ -28,8 +31,9 @@ pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Ve
             }
             // Reset signal to false before next loop
             let _ = restart_sender.send(false);
+            // Delay to allow kernel to fully release the old handle
+            tokio::time::sleep(std::time::Duration::from_millis(HANDLE_CLEANUP_DELAY_MS)).await;
         }
-        // info!("oopsies {}", line!());
     });
     packet_receiver
 }
@@ -45,18 +49,21 @@ async fn read_packets(
         WinDivertFlags::new().set_sniff(),
     ) {
         Ok(windivert_handle) => {
-            info!("WinDivert handle opened!");
-            Some(windivert_handle)
+            info!("WinDivert handle opened");
+            windivert_handle
         }
         Err(e) => {
             error!("Failed to initialize WinDivert: {}", e);
             return;
         }
-    }
-    .expect("Failed to initialize WinDivert"); // if windivert doesn't work just exit early - todo: maybe we want to log this with a match so its clearer?
+    };
+
     let mut windivert_buffer = vec![0u8; 10 * 1024 * 1024];
     let mut known_server: Option<Server> = None; // nothing at start
     let mut tcp_reassembler: TCPReassembler = TCPReassembler::new();
+
+    // Note: windivert.recv() is blocking, so we can't check restart signal while it's blocking.
+    // The restart will be detected after the next packet is received.
     while let Ok(packet) = windivert.recv(Some(&mut windivert_buffer)) {
         // info!("{}", line!());
         let Ok(network_slices) = SlicedPacket::from_ip(packet.data.as_ref()) else {
@@ -247,10 +254,14 @@ async fn read_packets(
             }
         }
         if *restart_receiver.borrow() {
+            info!("WinDivert restart requested during packet processing, closing handle");
             break;
         }
-    } // todo: if it errors, it breaks out of the loop but will it ever error?
-    // info!("{}", line!());
+    }
+
+    // Explicitly drop the handle to ensure cleanup
+    drop(windivert);
+    info!("WinDivert handle closed and dropped");
 }
 
 // Function to send restart signal from another thread/task

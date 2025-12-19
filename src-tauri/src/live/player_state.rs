@@ -1,4 +1,4 @@
-use crate::live::opcodes_models::class::Class;
+use crate::live::opcodes_models::class::{Class, ClassSpec};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
@@ -50,6 +50,7 @@ pub type PlayerStateMutex = Mutex<PlayerState>;
 pub struct PlayerCacheEntry {
     pub name: Option<String>,
     pub class: Option<Class>,
+    pub class_spec: Option<ClassSpec>,
 }
 
 /// Global player cache (uid => player data)
@@ -68,6 +69,10 @@ impl PlayerCache {
         self.cache.entry(uid).or_default().class = Some(class);
     }
 
+    pub fn set_class_spec(&mut self, uid: i64, class_spec: ClassSpec) {
+        self.cache.entry(uid).or_default().class_spec = Some(class_spec);
+    }
+
     pub fn set_both(&mut self, uid: i64, name: Option<String>, class: Option<Class>) {
         let entry = self.cache.entry(uid).or_default();
         if let Some(n) = name {
@@ -84,6 +89,10 @@ impl PlayerCache {
 
     pub fn get_class(&self, uid: i64) -> Option<Class> {
         self.cache.get(&uid).and_then(|e| e.class)
+    }
+
+    pub fn get_class_spec(&self, uid: i64) -> Option<ClassSpec> {
+        self.cache.get(&uid).and_then(|e| e.class_spec)
     }
 
     pub fn get(&self, uid: i64) -> Option<&PlayerCacheEntry> {

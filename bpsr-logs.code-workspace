@@ -1,92 +1,90 @@
 {
-  "folders": [
-    {
-      "name": "Frontend Svelte Code",
-      "path": "src"
-    },
-    {
-      "name": "Configuration",
-      "path": "."
-    }
-  ],
-  "settings": {
-    "editor.detectIndentation": false,
-    "editor.formatOnSave": false,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "files.exclude": {
-      "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/.DS_Store": true,
-      "**/Thumbs.db": true,
-      "**/node_modules": true,
-      "**/build": true,
-      ".idea": true,
-      ".svelte-kit": true,
-      "target": true,
-      ".cargo": true,
-      ".github": true,
-      "src-tauri": true,
-      "src": true,
-      "static": true,
-      "app-icon.png": true,
-      ".gitignore": true,
-      "LICENSE": true,
-      "README.md": true,
-      "raw-game-files": true,
-    },
-    "search.exclude": {
-      "**/node_modules": true,
-      "**/build": true,
-    },
-    "eslint.validate": [
-      "svelte"
-    ],
-    "[svelte]": {
-      "editor.defaultFormatter": "svelte.svelte-vscode"
-    },
-    "explorer.fileNesting.enabled": true,
-    "explorer.fileNesting.expand": false,
-    "explorer.sortOrder": "filesFirst",
-    "workbench.tree.indent": 10,
-    "workbench.editor.customLabels.patterns": {
-      // Page
-      "**/routes/**/*/+page.svelte": "${dirname} ❱ page",
-      "**/routes/+page.svelte": "ROOT ❱ page",
-      // Layout
-      "**/routes/**/*/+layout.svelte": "${dirname} ❱ layout",
-      "**/routes/+layout.svelte": "ROOT ❱ layout",
-      // Page Data
-      "**/routes/**/*/+page.[tj]s": "${dirname} ❱ page",
-      "**/routes/+page.[tj]s": "ROOT ❱ page",
-      // Layout Data
-      "**/routes/**/*/+layout.[tj]s": "${dirname} ❱ layout",
-      "**/routes/+layout.[tj]s": "ROOT ❱ layout",
-      // Page Server Data
-      "**/routes/**/*/+page.server.[tj]s": "${dirname} ❱ page.server",
-      "**/routes/+page.server.[tj]s": "ROOT ❱ page.server",
-      // Page Layout Data
-      "**/routes/**/*/+layout.server.[tj]s": "${dirname} ❱ layout.server",
-      "**/routes/+layout.server.[tj]s": "ROOT ❱ layout.server",
-      // Error Page
-      "**/routes/**/*/+error.svelte": "${dirname} ❱ error",
-      "**/routes/+error.svelte": "ROOT ❱ error",
-      // Server Endpoint
-      "**/routes/**/*/+server.[tj]s": "${dirname} ❱ API",
-      "**/routes/+server.[tj]s": "ROOT ❱ API",
-      // Other Files
-      "**/routes/**/*/*.*": "${dirname} ❱ ${filename}.${extname}",
-      "**/routes/*.*": "ROOT ❱ ${filename}.${extname}",
-    },
-    "typescript.tsdk": "Configuration\\node_modules\\typescript\\lib"
-  },
-  "extensions": {
-    "recommendations": [
-      "svelte.svelte-vscode",
-      "dbaeumer.vscode-eslint",
-      "bradlc.vscode-tailwindcss"
-    ]
-  }
+	"folders": [
+		{
+			"name": "Frontend Svelte Code",
+			"path": "src"
+		},
+		{
+			"name": "Configuration",
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.detectIndentation": false,
+		"editor.formatOnSave": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/node_modules": true,
+			"**/build": true,
+			".idea": true,
+			".svelte-kit": true,
+			"target": true,
+			".cargo": true,
+			".github": true,
+			"src-tauri": true,
+			"src": true,
+			"static": true,
+			"app-icon.png": true,
+			".gitignore": true,
+			"LICENSE": true,
+			"README.md": true,
+			"raw-game-files": true
+		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/build": true
+		},
+		"eslint.validate": ["svelte"],
+		"[svelte]": {
+			"editor.defaultFormatter": "svelte.svelte-vscode"
+		},
+		"explorer.fileNesting.enabled": true,
+		"explorer.fileNesting.expand": false,
+		"explorer.sortOrder": "filesFirst",
+		"workbench.tree.indent": 10,
+		"workbench.editor.customLabels.patterns": {
+			// Page
+			"**/routes/**/*/+page.svelte": "${dirname} ❱ page",
+			"**/routes/+page.svelte": "ROOT ❱ page",
+			// Layout
+			"**/routes/**/*/+layout.svelte": "${dirname} ❱ layout",
+			"**/routes/+layout.svelte": "ROOT ❱ layout",
+			// Page Data
+			"**/routes/**/*/+page.[tj]s": "${dirname} ❱ page",
+			"**/routes/+page.[tj]s": "ROOT ❱ page",
+			// Layout Data
+			"**/routes/**/*/+layout.[tj]s": "${dirname} ❱ layout",
+			"**/routes/+layout.[tj]s": "ROOT ❱ layout",
+			// Page Server Data
+			"**/routes/**/*/+page.server.[tj]s": "${dirname} ❱ page.server",
+			"**/routes/+page.server.[tj]s": "ROOT ❱ page.server",
+			// Page Layout Data
+			"**/routes/**/*/+layout.server.[tj]s": "${dirname} ❱ layout.server",
+			"**/routes/+layout.server.[tj]s": "ROOT ❱ layout.server",
+			// Error Page
+			"**/routes/**/*/+error.svelte": "${dirname} ❱ error",
+			"**/routes/+error.svelte": "ROOT ❱ error",
+			// Server Endpoint
+			"**/routes/**/*/+server.[tj]s": "${dirname} ❱ API",
+			"**/routes/+server.[tj]s": "ROOT ❱ API",
+			// Other Files
+			"**/routes/**/*/*.*": "${dirname} ❱ ${filename}.${extname}",
+			"**/routes/*.*": "ROOT ❱ ${filename}.${extname}"
+		},
+		"typescript.tsdk": "Configuration\\node_modules\\typescript\\lib"
+	},
+	"extensions": {
+		"recommendations": [
+			"svelte.svelte-vscode",
+			"dbaeumer.vscode-eslint",
+			"bradlc.vscode-tailwindcss"
+		]
+	}
 }

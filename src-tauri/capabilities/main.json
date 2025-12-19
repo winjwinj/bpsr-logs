@@ -1,43 +1,41 @@
 {
-  "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "main",
-  "description": "Capability for all windows",
-  "windows": [
-    "main"
-  ],
-  "permissions": [
-    "core:window:allow-show",
-    "core:window:allow-hide",
-    "core:window:allow-is-visible",
-    "core:window:allow-set-ignore-cursor-events",
-    "global-shortcut:allow-register",
-    "global-shortcut:allow-unregister",
-    "global-shortcut:allow-unregister-all",
-    "os:default",
-    "autostart:allow-enable",
-    "autostart:allow-disable",
-    {
-      "identifier": "opener:allow-open-path",
-      "allow": [
-        {
-          "path": "$APPLOG"
-        }
-      ]
-    },
-    "opener:allow-default-urls",
-    {
-      "identifier": "opener:allow-reveal-item-in-dir",
-      "allow": [
-        {
-          "path": "$APPDATA\\tauri-plugin-svelte\\general.json"
-        },
-        {
-          "path": "$APPDATA\\.window-state.json"
-        },
-        {
-          "path": "$RESOURCE\\bpsr-logs.exe"
-        }
-      ]
-    }
-  ]
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "main",
+	"description": "Capability for all windows",
+	"windows": ["main"],
+	"permissions": [
+		"core:window:allow-show",
+		"core:window:allow-hide",
+		"core:window:allow-is-visible",
+		"core:window:allow-set-ignore-cursor-events",
+		"global-shortcut:allow-register",
+		"global-shortcut:allow-unregister",
+		"global-shortcut:allow-unregister-all",
+		"os:default",
+		"autostart:allow-enable",
+		"autostart:allow-disable",
+		{
+			"identifier": "opener:allow-open-path",
+			"allow": [
+				{
+					"path": "$APPLOG"
+				}
+			]
+		},
+		"opener:allow-default-urls",
+		{
+			"identifier": "opener:allow-reveal-item-in-dir",
+			"allow": [
+				{
+					"path": "$APPDATA\\tauri-plugin-svelte\\general.json"
+				},
+				{
+					"path": "$APPDATA\\.window-state.json"
+				},
+				{
+					"path": "$RESOURCE\\bpsr-logs.exe"
+				}
+			]
+		}
+	]
 }

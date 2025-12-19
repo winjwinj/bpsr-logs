@@ -1,43 +1,70 @@
-import prettier from 'eslint-config-prettier';
-import { fileURLToPath } from 'node:url';
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
-import { defineConfig } from 'eslint/config';
 import globals from 'globals';
+import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
-export default defineConfig(
-  includeIgnoreFile(gitignorePath),
-  js.configs.recommended,
-  ...ts.configs.recommended,
-  ...svelte.configs.recommended,
-  prettier,
-  ...svelte.configs.prettier,
-  {
-    languageOptions: {
-      globals: { ...globals.browser, ...globals.node }
-    },
-    rules: {
-      // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
-      // see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-      'no-undef': 'off',
-      "@typescript-eslint/typedef": "error",
-      "svelte/no-navigation-without-resolve": "off", // very buggy with search params
-    }
-  },
-  {
-    files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        extraFileExtensions: ['.svelte'],
-        parser: ts.parser,
-        svelteConfig
-      }
-    }
-  }
-);
+export default [
+	// Include gitignore patterns
+	includeIgnoreFile(gitignorePath),
+
+	// Base configs
+	js.configs.recommended,
+	...ts.configs.recommended,
+	...svelte.configs['flat/recommended'],
+	prettier,
+	...svelte.configs['flat/prettier'],
+
+	// Global configuration
+	{
+		languageOptions: {
+			globals: {
+				...globals.browser,
+				...globals.node
+			}
+		},
+		rules: {
+			// typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
+			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
+			'no-undef': 'off',
+			'@typescript-eslint/typedef': 'error',
+			'svelte/no-navigation-without-resolve': 'off' // very buggy with search params
+		}
+	},
+
+	// Svelte-specific configuration
+	{
+		files: ['**/*.svelte'],
+		languageOptions: {
+			parserOptions: {
+				parser: ts.parser
+			}
+		}
+	},
+
+	// Svelte TypeScript files with runes (.svelte.ts)
+	{
+		files: ['**/*.svelte.ts', '**/*.svelte.js'],
+		languageOptions: {
+			parserOptions: {
+				parser: ts.parser
+			}
+		}
+	},
+
+	// Additional ignore patterns
+	{
+		ignores: [
+			'**/build/**',
+			'**/dist/**',
+			'**/.svelte-kit/**',
+			'**/package/**',
+			'**/vite.config.*.timestamp-*',
+			'src/lib/bindings.ts'
+		]
+	}
+];

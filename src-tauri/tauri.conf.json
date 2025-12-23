@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
 	"productName": "bpsr-logs",
-	"version": "0.22.1",
+	"version": "0.22.2",
 	"identifier": "com.bpsr-logs",
 	"build": {
 		"beforeDevCommand": "npm run dev",

@@ -1,8 +1,6 @@
-use crate::live::opcodes_models::MONSTER_NAMES_CROWDSOURCE;
-use log::{error, info};
-use once_cell::sync::Lazy;
-use std::collections::HashMap;
-use std::sync::Mutex;
+use log::{error, info, warn};
+use std::collections::{HashMap, HashSet};
+use std::sync::{LazyLock, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, Clone)]
@@ -12,13 +10,88 @@ struct CacheEntry {
     is_pending: bool,
 }
 
-static HP_REPORT_CACHE: Lazy<Mutex<HashMap<String, CacheEntry>>> =
-    Lazy::new(|| Mutex::new(HashMap::new()));
-const CACHE_EXPIRY_MS: u128 = 5 * 60 * 1000; // 5 minutes
+#[derive(serde::Deserialize)]
+struct MobRecord {
+    monster_id: i32,
+    name: String,
+    location: Option<bool>,
+}
+
+#[derive(serde::Deserialize)]
+struct MobsResponse {
+    items: Vec<MobRecord>,
+}
 
 pub struct BPTimerClient {
     api_url: String,
     api_key: String,
+}
+
+const CACHE_EXPIRY_MS: u128 = 5 * 60 * 1000; // 5 minutes
+
+// Fallback mob mappings
+const FALLBACK_MOB_MAPPINGS: &[(i32, &str)] = &[
+    (10007, "Storm Goblin King"),
+    (10009, "Frost Ogre"),
+    (10010, "Tempest Ogre"),
+    (10018, "Inferno Ogre"),
+    (10029, "Muku King"),
+    (10032, "Golden Juggernaut"),
+    (10056, "Brigand Leader"),
+    (10059, "Muku Chief"),
+    (10069, "Phantom Arachnocrab"),
+    (10077, "Venobzzar Incubator"),
+    (10081, "Iron Fang"),
+    (10084, "Celestial Flier"),
+    (10085, "Lizardman King"),
+    (10086, "Goblin King"),
+    (10900, "Golden Nappo"),
+    (10901, "Silver Nappo"),
+    (10902, "Lovely Boarlet"),
+    (10903, "Breezy Boarlet"),
+    (10904, "Loyal Boarlet"),
+];
+
+// Fallback location-tracked mob IDs
+const FALLBACK_LOCATION_TRACKED_MOBS: &[i32] = &[10900, 10901, 10904];
+
+static HP_REPORT_CACHE: LazyLock<Mutex<HashMap<String, CacheEntry>>> =
+    LazyLock::new(|| Mutex::new(HashMap::new()));
+
+static MOB_MAPPING: LazyLock<Mutex<HashMap<i32, String>>> = LazyLock::new(|| {
+    let mut map = HashMap::new();
+    for (id, name) in FALLBACK_MOB_MAPPINGS {
+        map.insert(*id, name.to_string());
+    }
+    Mutex::new(map)
+});
+
+static LOCATION_TRACKED_MOBS: LazyLock<Mutex<HashSet<i32>>> = LazyLock::new(|| {
+    let mut set = HashSet::new();
+    for &id in FALLBACK_LOCATION_TRACKED_MOBS {
+        set.insert(id);
+    }
+    Mutex::new(set)
+});
+
+fn get_mob_name(mob_id: i32) -> Option<String> {
+    MOB_MAPPING.lock().unwrap().get(&mob_id).cloned()
+}
+
+fn is_location_tracked_mob(mob_id: i32) -> bool {
+    LOCATION_TRACKED_MOBS.lock().unwrap().contains(&mob_id)
+}
+
+fn is_mob_tracked(mob_id: i32) -> bool {
+    MOB_MAPPING.lock().unwrap().contains_key(&mob_id)
+}
+
+fn set_mob_mapping(mapping: HashMap<i32, String>) {
+    *MOB_MAPPING.lock().unwrap() = mapping;
+}
+
+fn set_location_tracked_mobs(mobs: HashSet<i32>) {
+    *LOCATION_TRACKED_MOBS.lock().unwrap() = mobs;
 }
 
 impl BPTimerClient {
@@ -52,19 +125,18 @@ impl BPTimerClient {
         let Some(line) = line else {
             return;
         };
-        let Some(pos_x) = pos_x else {
-            return;
-        };
-        let Some(pos_y) = pos_y else {
-            return;
-        };
-        let Some(pos_z) = pos_z else {
-            return;
-        };
 
-        // Only process crowdsourced monsters
-        if !MONSTER_NAMES_CROWDSOURCE.contains_key(&monster_id) {
+        // Only process tracked monsters
+        if !is_mob_tracked(monster_id) {
             return;
+        }
+
+        // Check if this mob requires position data
+        if is_location_tracked_mob(monster_id) {
+            let has_all_positions = pos_x.is_some() && pos_y.is_some() && pos_z.is_some();
+            if !has_all_positions {
+                return;
+            }
         }
 
         // Calculate HP percentage
@@ -111,13 +183,17 @@ impl BPTimerClient {
         };
 
         if should_report {
-            let monster_name = MONSTER_NAMES_CROWDSOURCE
-                .get(&monster_id)
-                .map(|s| s.as_str())
-                .unwrap_or("Unknown Monster");
+            let monster_name = get_mob_name(monster_id)
+                .unwrap_or_else(|| format!("Unknown Monster ({monster_id})"));
 
+            let pos_info = match (pos_x, pos_y, pos_z) {
+                (Some(x), Some(y), Some(z)) => {
+                    format!(" at ({x:.2}, {y:.2}, {z:.2})")
+                }
+                _ => String::new(),
+            };
             info!(
-                "Reporting monster HP: {monster_name} (ID: {monster_id}) - HP: {rounded_hp_pct}% on line {line} at ({pos_x:.2}, {pos_y:.2}, {pos_z:.2})"
+                "Reporting monster HP: {monster_name} (ID: {monster_id}) - HP: {rounded_hp_pct}% on line {line}{pos_info}"
             );
 
             let body = serde_json::json!({
@@ -181,5 +257,72 @@ impl BPTimerClient {
                 }
             });
         }
+    }
+
+    /// Prefetch mobs from the database endpoint
+    pub fn prefetch_mobs(&self) {
+        if self.api_url.is_empty() || self.api_key.is_empty() {
+            return;
+        }
+
+        let api_url = self.api_url.clone();
+        let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
+
+        std::thread::spawn(move || {
+            let client = reqwest::blocking::Client::builder()
+                .user_agent(&user_agent)
+                .use_rustls_tls()
+                .build()
+                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+
+            let fields = "monster_id,name,location";
+            let url = format!(
+                "{}/api/collections/mobs/records?fields={}&perPage=100&skipTotal=true",
+                api_url, fields
+            );
+
+            match client.get(&url).send() {
+                Ok(resp) => {
+                    if !resp.status().is_success() {
+                        warn!("Prefetch failed: status {}", resp.status());
+                        return;
+                    }
+
+                    match resp.json::<MobsResponse>() {
+                        Ok(data) => {
+                            let mut mob_mapping = HashMap::new();
+                            let mut location_tracked_mobs = HashSet::new();
+
+                            for mob in data.items {
+                                if mob.monster_id > 0 && !mob.name.is_empty() {
+                                    mob_mapping.insert(mob.monster_id, mob.name.clone());
+
+                                    if mob.location == Some(true) {
+                                        location_tracked_mobs.insert(mob.monster_id);
+                                    }
+                                }
+                            }
+
+                            let mob_count = mob_mapping.len();
+                            let location_count = location_tracked_mobs.len();
+
+                            set_mob_mapping(mob_mapping);
+                            set_location_tracked_mobs(location_tracked_mobs);
+
+                            info!(
+                                "Prefetched {} mobs ({} location-tracked)",
+                                mob_count, location_count
+                            );
+                        }
+                        Err(e) => {
+                            warn!("Prefetch failed to parse response: {}", e);
+                        }
+                    }
+                }
+                Err(e) => {
+                    warn!("Prefetch failed: {}", e);
+                }
+            }
+        });
     }
 }

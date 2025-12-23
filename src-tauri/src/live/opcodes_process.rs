@@ -8,9 +8,9 @@ use crate::packets::utils::BinaryReader;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
 use log::{debug, info, warn};
-use once_cell::sync::Lazy;
 use prost::Message;
 use std::default::Default;
+use std::sync::LazyLock;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 // Needed for Github Actions compile-time env vars
@@ -18,7 +18,7 @@ const COMPILE_TIME_ENDPOINT: Option<&str> = option_env!("BP_TIMER_ENDPOINT");
 const COMPILE_TIME_API_KEY: Option<&str> = option_env!("BP_TIMER_API_KEY");
 
 // Checks runtime env vars first, then falls back to compile-time env vars
-static BP_TIMER_CLIENT: Lazy<Option<BPTimerClient>> = Lazy::new(|| {
+static BP_TIMER_CLIENT: LazyLock<Option<BPTimerClient>> = LazyLock::new(|| {
     let endpoint = std::env::var("BP_TIMER_ENDPOINT")
         .ok()
         .or_else(|| COMPILE_TIME_ENDPOINT.map(String::from));
@@ -30,7 +30,9 @@ static BP_TIMER_CLIENT: Lazy<Option<BPTimerClient>> = Lazy::new(|| {
     match (endpoint, api_key) {
         (Some(endpoint), Some(api_key)) => {
             info!("BPTimer Client enabled: {}", endpoint);
-            Some(BPTimerClient::new(endpoint, api_key))
+            let client = BPTimerClient::new(endpoint, api_key);
+            client.prefetch_mobs();
+            Some(client)
         }
         _ => {
             warn!(

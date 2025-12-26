@@ -8,7 +8,10 @@
 	import { getCoreRowModel } from '@tanstack/table-core';
 	import { SETTINGS } from '$lib/settings-store';
 
-	const playerUid: string = page.url.searchParams.get('playerUid') ?? '-1';
+	// Validate playerUid from query params
+	const playerUidParam = page.url.searchParams.get('playerUid');
+	const playerUid: string =
+		playerUidParam && /^-?\d+$/.test(playerUidParam) ? playerUidParam : '-1';
 
 	onMount(() => {
 		fetchData();

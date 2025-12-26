@@ -26,7 +26,7 @@ pub async fn start(app_handle: AppHandle) {
             let state = app_handle.state::<EncounterMutex>();
             let encounter = state.lock().unwrap();
             if encounter.is_encounter_paused {
-                info!("packet dropped due to encounter paused");
+                // info!("packet dropped due to encounter paused");
                 continue;
             }
         }

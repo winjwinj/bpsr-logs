@@ -53,25 +53,29 @@ pub fn copy_sync_container_data(app: tauri::AppHandle) {
 
 #[tauri::command]
 #[specta::specta]
-pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> Result<HeaderInfo, String> {
+#[allow(clippy::cast_precision_loss)]
+pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> HeaderInfo {
     let encounter = state.lock().unwrap();
     if encounter.dmg_stats.value == 0 {
-        return Err("No damage found".to_string());
+        return HeaderInfo {
+            total_dps: 0.0,
+            total_dmg: 0.0,
+            elapsed_ms: 0.0,
+            time_last_combat_packet_ms: 0.0,
+        };
     }
 
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
-    #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
     let encounter_stats = &encounter.dmg_stats;
 
-    #[allow(clippy::cast_precision_loss)]
-    Ok(HeaderInfo {
+    HeaderInfo {
         total_dps: nan_is_zero(encounter_stats.value as f64 / time_elapsed_secs),
         total_dmg: encounter_stats.value as f64,
         elapsed_ms: time_elapsed_ms as f64,
         time_last_combat_packet_ms: encounter.time_last_combat_packet_ms as f64,
-    })
+    }
 }
 
 #[tauri::command]
@@ -198,7 +202,10 @@ pub fn get_player_window(
                     .or_else(|| player_cache.get_class_spec(entity_uid))
                     .unwrap_or(ClassSpec::Unknown),
             ),
-            ability_score: entity.ability_score.unwrap_or(-1) as f64,
+            ability_score: entity
+                .ability_score
+                .or_else(|| player_cache.get_ability_score(entity_uid))
+                .unwrap_or(-1) as f64,
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(
@@ -351,7 +358,10 @@ pub fn get_skill_window(
                     .or_else(|| player_cache.get_class_spec(player_uid))
                     .unwrap_or(ClassSpec::Unknown),
             ),
-            ability_score: player.ability_score.unwrap_or(-1) as f64,
+            ability_score: player
+                .ability_score
+                .or_else(|| player_cache.get_ability_score(player_uid))
+                .unwrap_or(-1) as f64,
             total_value: player_stats.value as f64,
             value_per_sec: nan_is_zero(player_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(

@@ -3,18 +3,21 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { getVersion } from '@tauri-apps/api/app';
+
+	const isDpsActive = $derived(page.url.pathname.startsWith('/live/dps'));
+	const isHealActive = $derived(page.url.pathname.startsWith('/live/heal'));
 </script>
 
 <footer class="sticky bottom-0 flex h-7 items-center justify-between bg-neutral-800/70 px-1.5">
 	<span class="flex h-full items-center">
 		<button
-			class={`rounded-xs px-1.5 ${page.url.pathname.includes('dps') ? 'bg-primary' : ''}`}
+			class={`rounded-xs px-1.5 ${isDpsActive ? 'bg-primary' : ''}`}
 			onclick={() => {
 				goto(resolve('/live/dps'));
 			}}>DPS</button
 		>
 		<button
-			class={`rounded-xs px-1.5 ${page.url.pathname.includes('heal') ? 'bg-primary' : ''}`}
+			class={`rounded-xs px-1.5 ${isHealActive ? 'bg-primary' : ''}`}
 			onclick={() => {
 				goto(resolve('/live/heal'));
 			}}>HEAL</button

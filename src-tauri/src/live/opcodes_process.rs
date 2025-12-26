@@ -103,11 +103,13 @@ pub fn process_sync_container_data(
     target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
     let player_class = Class::from(v_data.profession_list?.cur_profession_id?);
     target_entity.class = Some(player_class);
-    target_entity.ability_score = Some(char_base.fight_point?);
+    let ability_score = char_base.fight_point?;
+    target_entity.ability_score = Some(ability_score);
 
     if let Some(cache) = player_cache {
         if let Ok(mut cache) = cache.lock() {
             cache.set_both(player_uid, Some(player_name), Some(player_class));
+            cache.set_ability_score(player_uid, ability_score);
         }
     }
 
@@ -379,8 +381,15 @@ fn process_player_attrs(
             }
             #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_FIGHT_POINT => {
-                player_entity.ability_score =
-                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+                let ability_score =
+                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
+                player_entity.ability_score = Some(ability_score);
+
+                if let Some(cache) = player_cache {
+                    if let Ok(mut cache) = cache.lock() {
+                        cache.set_ability_score(player_uid, ability_score);
+                    }
+                }
             }
             _ => (),
         }

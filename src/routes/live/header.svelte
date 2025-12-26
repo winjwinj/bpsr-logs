@@ -8,7 +8,6 @@
 	import MinusIcon from 'virtual:icons/lucide/minus';
 	import PointerIcon from 'virtual:icons/lucide/pointer';
 	import SettingsIcon from 'virtual:icons/lucide/settings';
-	import RefreshCwIcon from 'virtual:icons/lucide/refresh-cw';
 
 	import { onMount, tick } from 'svelte';
 	import { commands, type HeaderInfo } from '$lib/bindings';
@@ -23,32 +22,17 @@
 		return () => clearInterval(interval);
 	});
 
-	let hasReset = false;
-
 	async function fetchData() {
-		// TODO: there's a bug here where if headerInfo.timeLastCombatPacketMs is 0 at initial load it just resets instantly
-		if (
-			SETTINGS.general.state.resetElapsed &&
-			!hasReset &&
-			Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000
-		) {
-			hasReset = true;
-			console.log(`Resetting as ${SETTINGS.general.state.resetElapsed}s has passed.`);
-			commands.hardReset(); // TODO: this is temporary, switch to resetEncounter once bug is fixed.
-		}
 		try {
-			const result = await commands.getHeaderInfo();
-			if (result.status !== 'ok') {
-				console.warn('Failed to get header: ', result.error);
-				return;
-			} else {
-				headerInfo = result.data;
-				// console.log("header: ", +Date.now(), $state.snapshot(headerInfo));
-				if (hasReset) {
-					hasReset = false;
-					window.location.reload();
-					console.log('Fresh packet');
-				}
+			headerInfo = await commands.getHeaderInfo();
+			if (
+				SETTINGS.general.state.resetElapsed &&
+				headerInfo.timeLastCombatPacketMs > 0 &&
+				Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000
+			) {
+				console.log(`Resetting as ${SETTINGS.general.state.resetElapsed}s has passed.`);
+				await commands.resetEncounter();
+				headerInfo = await commands.getHeaderInfo();
 			}
 		} catch (e) {
 			console.error('Error fetching data: ', e);
@@ -67,7 +51,7 @@
 		totalDps: 0,
 		totalDmg: 0,
 		elapsedMs: 0,
-		timeLastCombatPacketMs: Date.now() // TODO: tempfix
+		timeLastCombatPacketMs: 0
 	});
 	let isEncounterPaused = $state(false);
 	const {
@@ -95,13 +79,6 @@
 >
 	<!-- Left side -->
 	<span>
-		<button
-			onclick={() => {
-				commands.hardReset();
-				window.location.reload();
-			}}
-			{@attach tooltip(() => 'Temp Fix: Hard Reset')}><RefreshCwIcon /></button
-		>
 		<span {@attach tooltip(() => 'Time Elapsed')}>{formatElapsed(headerInfo.elapsedMs)}</span>
 		<span
 			><span {@attach tooltip(() => 'Total Damage Dealt')}>T.DMG</span>
@@ -142,8 +119,8 @@
 		</button>
 		<button
 			onclick={async () => {
-				commands.resetEncounter();
-				window.location.reload(); // TODO: temp fix
+				await commands.resetEncounter();
+				headerInfo = await commands.getHeaderInfo();
 			}}
 			{@attach tooltip(() => 'Reset Encounter')}><TimerResetIcon /></button
 		>

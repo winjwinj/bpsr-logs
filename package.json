@@ -32,7 +32,7 @@
 		"@tauri-apps/plugin-store": "^2.4.1",
 		"@tauri-apps/plugin-updater": "^2.9.0",
 		"@tauri-store/svelte": "^3.1.0",
-		"html2canvas-pro": "^1.6.1",
+		"html2canvas-pro": "^1.6.2",
 		"tippy.js": "^6.3.7"
 	},
 	"devDependencies": {
@@ -40,7 +40,7 @@
 		"@eslint/js": "^9.39.2",
 		"@iconify-json/logos": "^1.2.10",
 		"@iconify-json/lucide": "^1.2.82",
-		"@iconify/json": "^2.2.420",
+		"@iconify/json": "^2.2.421",
 		"@internationalized/date": "^3.10.1",
 		"@lucide/svelte": "^0.562.0",
 		"@sveltejs/adapter-static": "^3.0.10",
@@ -59,7 +59,7 @@
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"svelte": "^5.46.0",
+		"svelte": "^5.46.1",
 		"svelte-check": "^4.3.5",
 		"sveltekit-superforms": "^2.29.1",
 		"tailwind-merge": "^3.4.0",

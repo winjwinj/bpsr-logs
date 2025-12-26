@@ -11,6 +11,12 @@
 </script>
 
 <Tabs.Content value={SETTINGS_CATEGORY}>
+	<SettingsButton
+		onclick={commands.hardReset}
+		buttonLabel="Restart"
+		label="Restart Packet Capture"
+		description="Restart WinDivert packet capture. Use this if data is not updating or if you encounter issues."
+	/>
 	<SettingsSwitch
 		bind:checked={SETTINGS.misc.state.testingMode}
 		label="Testing Mode"

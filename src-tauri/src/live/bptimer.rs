@@ -1,6 +1,7 @@
 use log::{error, info, warn};
 use std::collections::{HashMap, HashSet};
-use std::sync::{LazyLock, Mutex};
+use std::sync::mpsc::{self, Sender};
+use std::sync::{LazyLock, Mutex, OnceLock};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, Clone)]
@@ -92,6 +93,57 @@ fn set_mob_mapping(mapping: HashMap<i32, String>) {
 
 fn set_location_tracked_mobs(mobs: HashSet<i32>) {
     *LOCATION_TRACKED_MOBS.lock().unwrap() = mobs;
+}
+
+struct HpReportTask {
+    api_url: String,
+    api_key: String,
+    body: serde_json::Value,
+    cache_key: String,
+    rounded_hp_pct: i32,
+}
+
+static HP_REPORT_SENDER: OnceLock<Sender<HpReportTask>> = OnceLock::new();
+
+fn get_hp_report_sender() -> &'static Sender<HpReportTask> {
+    HP_REPORT_SENDER.get_or_init(|| {
+        let (tx, rx) = mpsc::channel::<HpReportTask>();
+
+        std::thread::spawn(move || {
+            let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
+            let client = reqwest::blocking::Client::builder()
+                .user_agent(&user_agent)
+                .tls_backend_rustls()
+                .build()
+                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+
+            while let Ok(task) = rx.recv() {
+                let res = client
+                    .post(&task.api_url)
+                    .header("X-API-Key", &task.api_key)
+                    .header("Content-Type", "application/json")
+                    .json(&task.body)
+                    .send();
+
+                if let Err(e) = &res {
+                    error!("HP report failed: {}", e);
+                } else if let Ok(resp) = &res {
+                    if !resp.status().is_success() {
+                        error!("HP report failed: HTTP {}", resp.status());
+                    }
+                }
+
+                // Update cache on both success and error to prevent spam retries
+                let mut cache = HP_REPORT_CACHE.lock().unwrap();
+                if let Some(entry) = cache.get_mut(&task.cache_key) {
+                    entry.last_reported_hp = Some(task.rounded_hp_pct);
+                    entry.is_pending = false;
+                }
+            }
+        });
+
+        tx
+    })
 }
 
 impl BPTimerClient {
@@ -207,55 +259,23 @@ impl BPTimerClient {
                 "uid": uid,
             });
 
-            let api_url = format!("{}/api/create-hp-report", self.api_url);
-            let api_key = self.api_key.clone();
-            let cache_key_clone = cache_key.clone();
+            let task = HpReportTask {
+                api_url: format!("{}/api/create-hp-report", self.api_url),
+                api_key: self.api_key.clone(),
+                body,
+                cache_key: cache_key.clone(),
+                rounded_hp_pct,
+            };
 
-            std::thread::spawn(move || {
-                let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
-                let client = reqwest::blocking::Client::builder()
-                    .user_agent(&user_agent)
-                    .use_rustls_tls()
-                    .build()
-                    .unwrap_or_else(|_| reqwest::blocking::Client::new());
-
-                let res = client
-                    .post(&api_url)
-                    .header("X-API-Key", &api_key)
-                    .header("Content-Type", "application/json")
-                    .json(&body)
-                    .send();
-
-                match res {
-                    Ok(resp) if resp.status().is_success() => {
-                        // Success: Update cache
-                        let mut cache = HP_REPORT_CACHE.lock().unwrap();
-                        if let Some(entry) = cache.get_mut(&cache_key_clone) {
-                            entry.last_reported_hp = Some(rounded_hp_pct);
-                            entry.is_pending = false;
-                        }
-                        info!("Successfully reported HP for monster {monster_id}");
-                    }
-                    Ok(resp) => {
-                        // HTTP error: Prevent retry spam
-                        error!("HP report failed: HTTP {}", resp.status());
-                        let mut cache = HP_REPORT_CACHE.lock().unwrap();
-                        if let Some(entry) = cache.get_mut(&cache_key_clone) {
-                            entry.last_reported_hp = Some(rounded_hp_pct); // Prevent retries
-                            entry.is_pending = false;
-                        }
-                    }
-                    Err(e) => {
-                        // Network error: Prevent retry spam
-                        error!("HP report failed: {}", e);
-                        let mut cache = HP_REPORT_CACHE.lock().unwrap();
-                        if let Some(entry) = cache.get_mut(&cache_key_clone) {
-                            entry.last_reported_hp = Some(rounded_hp_pct); // Prevent retries
-                            entry.is_pending = false;
-                        }
-                    }
+            if let Err(e) = get_hp_report_sender().send(task) {
+                error!("Failed to queue HP report: {}", e);
+                //  Worker thread died - reset cache to prevent blocking future reports
+                let mut cache = HP_REPORT_CACHE.lock().unwrap();
+                if let Some(entry) = cache.get_mut(&cache_key) {
+                    entry.last_reported_hp = Some(rounded_hp_pct);
+                    entry.is_pending = false;
                 }
-            });
+            }
         }
     }
 
@@ -271,7 +291,7 @@ impl BPTimerClient {
         std::thread::spawn(move || {
             let client = reqwest::blocking::Client::builder()
                 .user_agent(&user_agent)
-                .use_rustls_tls()
+                .tls_backend_rustls()
                 .build()
                 .unwrap_or_else(|_| reqwest::blocking::Client::new());
 

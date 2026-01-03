@@ -8,7 +8,7 @@ use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets;
 use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
-use log::{info, warn};
+use log::warn;
 use prost::Message;
 use tauri::{AppHandle, Manager};
 

@@ -116,9 +116,9 @@ pub fn get_dps_player_window(
     player_cache_state: tauri::State<'_, PlayerCacheMutex>,
     player_state: tauri::State<'_, PlayerStateMutex>,
 ) -> PlayersWindow {
+    let player_state = player_state.lock().unwrap();
     let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state = player_state.lock().unwrap();
     get_player_window(encounter, StatType::Dmg, &player_cache, &player_state)
 }
 
@@ -129,9 +129,9 @@ pub fn get_heal_player_window(
     player_cache_state: tauri::State<'_, PlayerCacheMutex>,
     player_state: tauri::State<'_, PlayerStateMutex>,
 ) -> PlayersWindow {
+    let player_state = player_state.lock().unwrap();
     let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state = player_state.lock().unwrap();
     get_player_window(encounter, StatType::Heal, &player_cache, &player_state)
 }
 
@@ -142,9 +142,9 @@ pub fn get_dps_boss_only_player_window(
     player_cache_state: tauri::State<'_, PlayerCacheMutex>,
     player_state: tauri::State<'_, PlayerStateMutex>,
 ) -> PlayersWindow {
+    let player_state = player_state.lock().unwrap();
     let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state = player_state.lock().unwrap();
     get_player_window(
         encounter,
         StatType::DmgBossOnly,
@@ -250,14 +250,15 @@ pub fn get_dps_skill_window(
     player_uid_str: &str,
 ) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
+    let player_state = player_state.lock().unwrap();
+    let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state_guard = player_state.lock().unwrap();
     get_skill_window(
-        state,
+        encounter,
         player_uid,
         StatType::Dmg,
         &player_cache,
-        &player_state_guard,
+        &player_state,
     )
 }
 
@@ -270,14 +271,15 @@ pub fn get_dps_boss_only_skill_window(
     player_uid_str: &str,
 ) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
+    let player_state = player_state.lock().unwrap();
+    let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state_guard = player_state.lock().unwrap();
     get_skill_window(
-        state,
+        encounter,
         player_uid,
         StatType::DmgBossOnly,
         &player_cache,
-        &player_state_guard,
+        &player_state,
     )
 }
 
@@ -290,26 +292,25 @@ pub fn get_heal_skill_window(
     player_uid_str: &str,
 ) -> Result<SkillsWindow, String> {
     let player_uid = player_uid_str.parse().unwrap();
+    let player_state = player_state.lock().unwrap();
+    let encounter = state.lock().unwrap();
     let player_cache = player_cache_state.lock().unwrap();
-    let player_state_guard = player_state.lock().unwrap();
     get_skill_window(
-        state,
+        encounter,
         player_uid,
         StatType::Heal,
         &player_cache,
-        &player_state_guard,
+        &player_state,
     )
 }
 
 pub fn get_skill_window(
-    state: tauri::State<'_, EncounterMutex>,
+    encounter: MutexGuard<Encounter>,
     player_uid: i64,
     stat_type: StatType,
     player_cache: &std::sync::MutexGuard<crate::live::player_state::PlayerCache>,
     player_state: &std::sync::MutexGuard<crate::live::player_state::PlayerState>,
 ) -> Result<SkillsWindow, String> {
-    let encounter = state.lock().unwrap();
-
     let Some(player) = encounter.entity_uid_to_entity.get(&player_uid) else {
         return Err(format!("Could not find player with uid {player_uid}"));
     };

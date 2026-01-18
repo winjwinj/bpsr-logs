@@ -1,0 +1,7502 @@
+syntax = "proto3";
+
+package pb;
+
+enum BodyPartState {
+  BODY_PART_STATE_DEFAULT = 0;
+  BODY_PART_STATE_INJURY = 1;
+  BODY_PART_STATE_DEAD = 2;
+}
+
+enum BodyPartType {
+  BodyPartTypeDefault = 0;
+  BodyPartTypePart = 1;
+  BodyPartTypeMod = 2;
+}
+
+enum BufferOneofCase {
+  None = 0;
+  BufferS = 1;
+}
+
+enum BuildFurnitureOpType {
+  BuildFurnitureOpAdd = 0;
+  BuildFurnitureOpUpdate = 1;
+  BuildFurnitureOpDelete = 2;
+}
+
+enum CHAT_CLIENT_CMD {
+  CHAT_CLIENT_CMD_INVALID = 0;
+  CHAT_CLIENT_REGISTER_REQ = 101;
+  CHAT_CLIENT_REGISTER_RSP = 102;
+  CHAT_CLIENT_UNREGISTER_REQ = 103;
+  CHAT_CLIENT_UNREGISTER_RSP = 104;
+  CHAT_CLIENT_PRIVATE_CHAT_REQ = 105;
+  CHAT_CLIENT_PRIVATE_CHAT_RSP = 106;
+  CHAT_CLIENT_CHANNEL_CHAT_REQ = 107;
+  CHAT_CLIENT_CHANNEL_CHAT_RSP = 108;
+  CHAT_CLIENT_WORLD_CHAT_REQ = 109;
+  CHAT_CLIENT_WORLD_CHAT_RSP = 110;
+  CHAT_CLIENT_GET_PRIVATE_CHAT_RECORD_REQ = 111;
+  CHAT_CLIENT_GET_PRIVATE_CHAT_RECORD_RSP = 112;
+  CHAT_CLIENT_GET_CHANNEL_CHAT_RECORD_REQ = 113;
+  CHAT_CLIENT_GET_CHANNEL_CHAT_RECORD_RSP = 114;
+  CHAT_CLIENT_GET_WORLD_CHAT_RECORD_REQ = 115;
+  CHAT_CLIENT_GET_WORLD_CHAT_RECORD_RSP = 116;
+  CHAT_CLIENT_DEL_PRIVATE_CHAT_RECORD_REQ = 117;
+  CHAT_CLIENT_DEL_PRIVATE_CHAT_RECORD_RSP = 118;
+  CHAT_CLIENT_GET_CHANNEL_GROUP_INFO_REQ = 119;
+  CHAT_CLIENT_GET_CHANNEL_GROUP_INFO_RSP = 120;
+  CHAT_CLIENT_CHANNEL_GROUP_SWITCH_REQ = 121;
+  CHAT_CLIENT_CHANNEL_GROUP_SWITCH_RSP = 122;
+  CHAT_CLIENT_ADD_BLACKLIST_REQ = 123;
+  CHAT_CLIENT_ADD_BLACKLIST_RSP = 124;
+  CHAT_CLIENT_REMOVE_BLACKLIST_REQ = 125;
+  CHAT_CLIENT_REMOVE_BLACKLIST_RSP = 126;
+  CHAT_CLIENT_GET_BLACKLIST_REQ = 127;
+  CHAT_CLIENT_GET_BLACKLIST_RSP = 128;
+  CHAT_CLIENT_SYNC_BLACKLIST_REQ = 129;
+  CHAT_CLIENT_SYNC_BLACKLIST_RSP = 130;
+  CHAT_CLIENT_GET_PERSONAL_BAN_INFO_REQ = 131;
+  CHAT_CLIENT_GET_PERSONAL_BAN_INFO_RSP = 132;
+  CHAT_CLIENT_DEL_CHANNEL_CHAT_RECORD_REQ = 133;
+  CHAT_CLIENT_DEL_CHANNEL_CHAT_RECORD_RSP = 134;
+  CHAT_CLIENT_DEL_WORLD_CHAT_RECORD_REQ = 135;
+  CHAT_CLIENT_DEL_WORLD_CHAT_RECORD_RSP = 136;
+  CHAT_CLIENT_READ_PRIVATE_LAST_MSG_INDEX_REQ = 137;
+  CHAT_CLIENT_READ_PRIVATE_LAST_MSG_INDEX_RSP = 138;
+  CHAT_CLIENT_PRIVATE_CHAT_RECEIVE = 152;
+  CHAT_CLIENT_CHANNEL_CHAT_RECEIVE = 154;
+  CHAT_CLIENT_WORLD_CHAT_RECEIVE = 156;
+  CHAT_CLIENT_EVENT_NOTICE = 158;
+}
+
+enum CHAT_SERVER_CMD {
+  CHAT_SERVER_CMD_INVALID = 0;
+  CHAT_SERVER_REGISTER_REQ = 201;
+  CHAT_SERVER_REGISTER_RSP = 202;
+  CHAT_SERVER_GET_CLIENT_TOKEN_REQ = 203;
+  CHAT_SERVER_GET_CLIENT_TOKEN_RSP = 204;
+  CHAT_SERVER_CREATE_CHANNEL_REQ = 205;
+  CHAT_SERVER_CREATE_CHANNEL_RSP = 206;
+  CHAT_SERVER_DEL_CHANNEL_REQ = 207;
+  CHAT_SERVER_DEL_CHANNEL_RSP = 208;
+  CHAT_SERVER_JOIN_CHANNEL_REQ = 209;
+  CHAT_SERVER_JOIN_CHANNEL_RSP = 210;
+  CHAT_SERVER_OUT_CHANNEL_REQ = 211;
+  CHAT_SERVER_OUT_CHANNEL_RSP = 212;
+  CHAT_SERVER_GET_CHANNEL_MEMBER_REQ = 213;
+  CHAT_SERVER_GET_CHANNEL_MEMBER_RSP = 214;
+  CHAT_SERVER_SYNC_CHANNEL_MEMBER_REQ = 215;
+  CHAT_SERVER_SYNC_CHANNEL_MEMBER_RSP = 216;
+  CHAT_SERVER_ADD_BLACKLIST_REQ = 217;
+  CHAT_SERVER_ADD_BLACKLIST_RSP = 218;
+  CHAT_SERVER_REMOVE_BLACKLIST_REQ = 219;
+  CHAT_SERVER_REMOVE_BLACKLIST_RSP = 220;
+  CHAT_SERVER_GET_BLACKLIST_REQ = 221;
+  CHAT_SERVER_GET_BLACKLIST_RSP = 222;
+  CHAT_SERVER_SYNC_BLACKLIST_REQ = 223;
+  CHAT_SERVER_SYNC_BLACKLIST_RSP = 224;
+  CHAT_SERVER_CHANNEL_BAN_REQ = 225;
+  CHAT_SERVER_CHANNEL_BAN_RSP = 226;
+  CHAT_SERVER_CHANNEL_GROUP_BAN_REQ = 227;
+  CHAT_SERVER_CHANNEL_GROUP_BAN_RSP = 228;
+  CHAT_SERVER_PERSONAL_BAN_REQ = 229;
+  CHAT_SERVER_PERSONAL_BAN_RSP = 230;
+  CHAT_SERVER_GET_PERSONAL_BAN_INFO_REQ = 231;
+  CHAT_SERVER_GET_PERSONAL_BAN_INFO_RSP = 232;
+  CHAT_SERVER_GET_PERSONAL_CHANNEL_LEVEL_REQ = 233;
+  CHAT_SERVER_GET_PERSONAL_CHANNEL_LEVEL_RSP = 234;
+  CHAT_SERVER_UPDATE_PERSONAL_CHANNEL_LEVEL_REQ = 235;
+  CHAT_SERVER_UPDATE_PERSONAL_CHANNEL_LEVEL_RSP = 236;
+  CHAT_SERVER_SYNC_USER_CHANNEL_REQ = 237;
+  CHAT_SERVER_SYNC_USER_CHANNEL_RSP = 238;
+  CHAT_SERVER_SYSTEM_PRIVATE_CHAT_REQ = 239;
+  CHAT_SERVER_SYSTEM_PRIVATE_CHAT_RSP = 240;
+  CHAT_SERVER_SYSTEM_CHANNEL_CHAT_REQ = 241;
+  CHAT_SERVER_SYSTEM_CHANNEL_CHAT_RSP = 242;
+  CHAT_SERVER_SYSTEM_WORLD_CHAT_REQ = 243;
+  CHAT_SERVER_SYSTEM_WORLD_CHAT_RSP = 244;
+  CHAT_SERVER_CREATE_CHANNEL_GROUP_REQ = 245;
+  CHAT_SERVER_CREATE_CHANNEL_GROUP_RSP = 246;
+  CHAT_SERVER_DEL_CHANNEL_GROUP_REQ = 247;
+  CHAT_SERVER_DEL_CHANNEL_GROUP_RSP = 248;
+  CHAT_SERVER_GET_CHANNEL_GROUP_INFO_REQ = 249;
+  CHAT_SERVER_GET_CHANNEL_GROUP_INFO_RSP = 250;
+  CHAT_SERVER_CHANNEL_GROUP_SWITCH_REQ = 251;
+  CHAT_SERVER_CHANNEL_GROUP_SWITCH_RSP = 252;
+  CHAT_SERVER_DEL_PRIVATE_CHAT_RECORD_REQ = 253;
+  CHAT_SERVER_DEL_PRIVATE_CHAT_RECORD_RSP = 254;
+  CHAT_SERVER_DEL_CHANNEL_CHAT_RECORD_REQ = 255;
+  CHAT_SERVER_DEL_CHANNEL_CHAT_RECORD_RSP = 256;
+  CHAT_SERVER_DEL_WORLD_CHAT_RECORD_REQ = 257;
+  CHAT_SERVER_DEL_WORLD_CHAT_RECORD_RSP = 258;
+  CHAT_SERVER_CLEAR_USER_REQ = 259;
+  CHAT_SERVER_CLEAR_USER_RSP = 260;
+  CHAT_SERVER_USERID_REGISTER_REQ = 261;
+  CHAT_SERVER_USERID_REGISTER_RSP = 262;
+  CHAT_SERVER_CROSS_PRIVATE_CHAT_REQ = 263;
+  CHAT_SERVER_CROSS_PRIVATE_CHAT_RSP = 264;
+}
+
+enum CameraPatternType {
+  Default = 0;
+  SelfPhoto = 1;
+  AR = 2;
+}
+
+enum CameraSchemeType {
+  DefaultScheme = 0;
+  CustomScheme = 1;
+}
+
+enum ChitChatChannelType {
+  ChannelNull = 0;
+  ChannelWorld = 1;
+  ChannelScene = 2;
+  ChannelTeam = 3;
+  ChannelUnion = 4;
+  ChannelPrivate = 5;
+  ChannelGroup = 6;
+  ChannelTopNotice = 7;
+  ChannelSystem = 99;
+}
+
+enum ChitChatMsgType {
+  ChatMsgTextMessage = 0;
+  ChatMsgTextNotice = 1;
+  ChatMsgMultiLangNotice = 2;
+  ChatMsgPictureEmoji = 3;
+  ChatMsgPicture = 4;
+  ChatMsgVoice = 5;
+  ChatMsgHypertext = 6;
+}
+
+enum CommunityWarehouseOpType {
+  CommunityWarehouseOpTypeAdd = 0;
+  CommunityWarehouseOpTypeUpdate = 1;
+  CommunityWarehouseOpTypeDelete = 2;
+}
+
+enum DungeonEventResult {
+  DungeonEventResultNull = 0;
+  DungeonEventResultSuccess = 1;
+  DungeonEventResultTimeOut = 2;
+  DungeonEventResultFailed = 3;
+  DungeonEventResultEnd = 4;
+}
+
+enum DungeonEventState {
+  DungeonEventStateNull = 0;
+  DungeonEventStateRunning = 1;
+  DungeonEventStateEnd = 2;
+}
+
+enum EAccessType {
+  AccessFinishQuest = 0;
+  AccessLevelUp = 1;
+  AccessEquipProfessionType = 2;
+  AccessItemCount = 11;
+  AccessInScene = 12;
+  AccessNotInScene = 13;
+  AccessInVisualLayer = 15;
+  AccessNotInVisualLayer = 16;
+  AccessEnterZone = 17;
+  AccessTimer = 18;
+  AccessInZone = 19;
+  AccessNotInZone = 20;
+  AccessFinishQuestStep = 21;
+  AccessTimeLimit = 80;
+  AccessMastery = 82;
+  AccessSex = 1000;
+  AccessSeason = 1001;
+}
+
+enum EActionEventType {
+  ReqSwitchScene = 0;
+}
+
+enum EActionSource {
+  EActionSource_Default = 0;
+  EActionSource_Dance = 1;
+}
+
+enum EActivityObtainStatus {
+  ActivityObtainStatusNone = 0;
+  ActivityObtainStatusCan = 1;
+  ActivityObtainStatusAlready = 2;
+}
+
+enum EActivityStatus {
+  ActivityStatusNone = 0;
+  ActivityStatusOnline = 1;
+  ActivityStatusOffline = 2;
+}
+
+enum EActivityType {
+  ActivityTypeNone = 0;
+  ActivityTypeBuyGift = 1;
+}
+
+enum EActorRideStateSwitchType {
+  ActorRideStateSwitchTypeParallel = 0;
+  ActorRideStateSwitchTypeSwitch = 1;
+  ActorRideStateSwitchTypeStopAction = 2;
+}
+
+enum EActorState {
+  ActorStateDefault = 0;
+  ActorStateSinging = 1;
+  ActorStateSkill = 2;
+  ActorStateJump = 3;
+  ActorStateRush = 4;
+  ActorStateClimb = 5;
+  ActorStateSwim = 6;
+  ActorStateFishing = 7;
+  ActorStateAction = 8;
+  ActorStateDead = 9;
+  ActorStateStiff = 10;
+  ActorStateSwimStiff = 11;
+  ActorStateBorn = 12;
+  ActorStateTelePort = 13;
+  ActorStateFall = 14;
+  ActorStateFlow = 16;
+  ActorStateGlide = 17;
+  ActorStatePedalWall = 18;
+  ActorStateFallTelePort = 19;
+  ActorStateSelfPhoto = 20;
+  ActorStateCollection = 21;
+  ActorStateReset = 22;
+  ActorStateBreaking = 23;
+  ActorStateWeakness = 24;
+  ActorStateFracture = 25;
+  ActorStateAbnormal = 26;
+  ActorStateResurrection = 27;
+  ActorStateInteraction = 28;
+  ActorStateSceneInteraction = 29;
+  ActorStateTunnelFly = 30;
+  ActorStateLevitation = 31;
+  ActorStateHomelandEdit = 32;
+  ActorStateRide = 33;
+  ActorStateRideControl = 34;
+  ActorStateAll = 35;
+}
+
+enum EAffixEffectType {
+  AffixEffectAll = 0;
+  AffixEffectGain = 1;
+  AffixEffectNegative = 2;
+  AffixEffectHarmonize = 3;
+}
+
+enum EAlbumRight {
+  EveryOneAccess = 0;
+  FriendAccess = 1;
+  SelfAccess = 2;
+  UnionAccess = 3;
+}
+
+enum EAppearType {
+  E_APPEAR_TYPE_E_APPEAR_NULL = 0;
+  E_APPEAR_TYPE_E_APPEAR_TRANSFER_IN = 1;
+  E_APPEAR_TYPE_E_APPEAR_TRANSFER_PASS_LINE_IN = 2;
+  PAppearFlyLineIn = 3;
+  PAppearNpcCreate = 5;
+}
+
+enum EApplyRideResult {
+  ApplyRideResultNone = 0;
+  ApplyRideResultAgree = 1;
+  ApplyRideResultRefuse = 2;
+  ApplyRideResultTimeOut = 3;
+}
+
+enum EAssignSceneSourceType {
+  AssignSceneSourceTypeSilo = 0;
+  AssignSceneSourceTypeWorld = 1;
+}
+
+enum EAttrType {
+  AttrUnknown = 0;
+  AttrName = 1;
+  AttrAimDir = 6;
+  AttrScale = 8;
+  AttrScaleAddRatio = 9;
+  AttrId = 10;
+  AttrState = 11;
+  AttrCamp = 13;
+  AttrLayer = 15;
+  AttrIsBodySeparate = 16;
+  AttrConfigUid = 17;
+  AttrTableUid = 18;
+  AttrVisualLayers = 19;
+  AttrVisualLayer = 20;
+  AttrVisualLayerUid = 21;
+  AttrSummonFlag = 22;
+  AttrTargetId = 30;
+  AttrTargetPartId = 31;
+  AttrIsBot = 32;
+  AttrBasicFleshyType = 33;
+  AttrDir = 50;
+  AttrTargetDir = 51;
+  AttrPos = 52;
+  AttrTargetPos = 53;
+  AttrSummonerPos = 61;
+  AttrVelocity = 70;
+  AttrMoveType = 71;
+  AttrTurnVelocity = 72;
+  AttrReviveCurProgressValue = 73;
+  AttrReviveMaxProgressValue = 74;
+  AttrUnbreakableLevel = 75;
+  AttrStateTime = 77;
+  AttrDeadType = 78;
+  AttrMoveForce = 79;
+  AttrSummonerId = 90;
+  AttrTopSummonerId = 91;
+  AttrIsUnderGround = 92;
+  AttrOffset = 93;
+  AttrInheritingType = 94;
+  AttrFightSourceInfo = 95;
+  AttrSkillId = 100;
+  AttrSkillStage = 101;
+  AttrInAccumulate = 102;
+  AttrSkillLevel = 103;
+  AttrCombatState = 104;
+  AttrSkillStageBeginTime = 105;
+  AttrSkillBeginTime = 106;
+  AttrSkillSpeed = 107;
+  AttrSkillStageNum = 108;
+  AttrReplaceSkillList = 109;
+  AttrFinalTargetDir = 110;
+  AttrSkillUuid = 111;
+  AttrIsCurStageNeedStopMove = 112;
+  AttrSkillShowState = 113;
+  AttrCombatStateTime = 114;
+  AttrSwitchSkill = 115;
+  AttrSkillLevelIdList = 116;
+  AttrCantSilence = 117;
+  AttrFinalTargetPos = 118;
+  AttrTargetPartPos = 119;
+  AttrDmgTargetPos = 120;
+  AttrSkillRemodelLevel = 121;
+  AttrIsInteractionActive = 150;
+  AttrInteractionId = 151;
+  AttrInteractionUuid = 153;
+  AttrInteractionStage = 154;
+  AttrInteractionSeat = 155;
+  AttrInteractionInfo = 156;
+  AttrActionTime = 170;
+  AttrActionId = 171;
+  AttrActionUpperTime = 172;
+  AttrActionUpperId = 173;
+  AttrActionSource = 174;
+  AttrActionLongName = 175;
+  AttrMountId = 176;
+  AttrMountSize = 177;
+  AttrAiming = 180;
+  AttrGender = 181;
+  AttrInBattleShow = 182;
+  AttrFaceData = 183;
+  AttrProfile = 184;
+  AttrBodySize = 185;
+  AttrRoleLevel = 186;
+  AttrOfflineTime = 187;
+  AttrClimbType = 188;
+  AttrClimbNormal = 189;
+  AttrClimbDir = 190;
+  AttrClimbTime = 191;
+  AttrPlaneId = 192;
+  AttrCanSwitchLayer = 193;
+  AttrTeamId = 194;
+  AttrTeamMemberNums = 195;
+  AttrSeasonLv = 196;
+  AttrUseItemState = 197;
+  AttrProfessionSwitchTime = 198;
+  AttrProfessionHitType = 199;
+  AttrEquipData = 200;
+  AttrFashionData = 201;
+  AttrAppearanceData = 202;
+  AttrCommonSkillList = 205;
+  AttrDeadTime = 206;
+  AttrResourceLeft = 207;
+  AttrResourceRight = 208;
+  AttrShowPieceAttrList = 210;
+  AttrSceneInteractionInfo = 211;
+  AttrWeather = 212;
+  AttrDayNightSwitch = 213;
+  AttrRankId = 215;
+  AttrEmoteTime = 216;
+  AttrEmoteId = 217;
+  AttrProfessionId = 220;
+  AttrSwitchProfessionCD = 221;
+  AttrProfessionSkinId = 222;
+  AttrShowId = 225;
+  AttrSlot = 226;
+  AttrShowRankStar = 227;
+  AttrFishingData = 228;
+  AttrPersonalTitle = 229;
+  AttrReviveCount = 230;
+  AttrSceneAreaId = 231;
+  AttrSkillSkinIds = 232;
+  AttrToy = 234;
+  AttrIsNewbie = 235;
+  AttrMoveVersion = 236;
+  AttrPersonalObjData = 237;
+  AttrParkourStep = 240;
+  AttrParkourFallenJump = 241;
+  AttrParkourShimmyJump = 242;
+  AttrParkourFiveJump = 243;
+  AttrParkourKickWallJump = 244;
+  AttrParkourPedalWall = 245;
+  AttrParkourRun = 246;
+  AttrParkourLazyJump = 247;
+  AttrParkourLevitation = 248;
+  AttrShimmyJumpPac = 249;
+  AttrMaxShimmyJumpPac = 250;
+  AttrJumpStep = 260;
+  AttrJumpDir = 261;
+  AttrVerVelocity = 262;
+  AttrHorVelocity = 263;
+  AttrJumpType = 264;
+  AttrGravity = 265;
+  AttrBounceJumpId = 266;
+  AttrJumpExCount = 267;
+  AttrRushDirection = 270;
+  AttrBattleRushChargeBegin = 271;
+  AttrRushMaxCount = 272;
+  AttrRushCountClearInterval = 273;
+  AttrRushCD = 274;
+  AttrGlideVelocityH = 280;
+  AttrGlideVelocityV = 281;
+  AttrGlideRotAngle = 282;
+  AttrWallNormal = 290;
+  AttrPedalWallDir = 291;
+  AttrPedalWallStage = 292;
+  AttrInsightFlag = 300;
+  AttrAttachVelocity = 310;
+  AttrAttachVelocityDirX = 311;
+  AttrAttachVelocityDirY = 312;
+  AttrAttachVelocityDirZ = 313;
+  AttrAttachVelocitySource = 314;
+  AttrAttachSourceEntUuid = 315;
+  AttrTunnelMoveStage = 320;
+  AttrTunnelId = 321;
+  AttrTunnelPointIndex = 322;
+  AttrTunnelPointT = 323;
+  AttrSwimStage = 330;
+  AttrSceneName = 340;
+  AttrSceneBasicId = 341;
+  AttrSceneUuid = 342;
+  AttrSceneChannel = 343;
+  AttrSceneWeather = 344;
+  AttrSceneLevelId = 345;
+  AttrSceneDayNightSwitch = 346;
+  AttrFireworkStartTimeSeconds = 347;
+  AttrDeathCount = 348;
+  AttrDeathSubTimeSecond = 349;
+  AttrFireworkType = 350;
+  AttrSceneLineKickUserEndTime = 351;
+  AttrObjState = 360;
+  AttrObjCounter = 361;
+  AttrOwner = 362;
+  AttrToyState = 363;
+  AttrDynamicInteractionId = 365;
+  AttrZoneParam = 370;
+  AttrDataType = 373;
+  AttrRotation = 374;
+  AttrShape = 375;
+  AttrGMGod = 380;
+  AttrShapeshiftType = 390;
+  AttrShapeshiftConfigId = 391;
+  AttrShapeshiftProfessionId = 392;
+  AttrShapeshiftSkillIds = 393;
+  AttrShapeshiftReplaceAttr = 394;
+  AttrNpcTest = 400;
+  AttrHostId = 410;
+  AttrEventId = 411;
+  AttrEffectType = 412;
+  AttrBulletTargetPos = 413;
+  AttrRayCount = 416;
+  AttrRotate = 420;
+  AttrSummonGroup = 423;
+  AttrSummonIndex = 424;
+  AttrSummonGroupCount = 425;
+  AttrBulletStage = 426;
+  AttrBulletCanMove = 427;
+  AttrBulletCantHit = 428;
+  AttrBulletZoomType = 429;
+  AttrBulletOrientationType = 430;
+  AttrBanDestroyShow = 431;
+  AttrBulletSpeedChangePCT = 432;
+  AttrDirX = 433;
+  AttrDirZ = 434;
+  AttrTargetDirX = 435;
+  AttrTargetDirZ = 436;
+  AttrMaxExtinction = 440;
+  AttrExtinction = 441;
+  AttrMaxStunned = 442;
+  AttrStunned = 443;
+  AttrInOverdrive = 444;
+  AttrIsLockStunned = 445;
+  AttrTargetUuid = 450;
+  AttrAlertIncreaseSpeed = 451;
+  AttrAlertValue = 452;
+  AttrStopBreakingBarTickingFlag = 453;
+  AttrIsStopBehvTree = 454;
+  AttrBreakingStage = 455;
+  AttrFirstAttack = 456;
+  AttrDungeonScoreExtraMultiple = 457;
+  AttrDungeonScoreExtraAddValue = 458;
+  AttrIsMonsterRankEnable = 459;
+  AttrMonsterRank = 460;
+  SupplementaryRewardIndex = 461;
+  AttrHatedCharId = 471;
+  AttrHatedJob = 472;
+  AttrHatedName = 473;
+  AttrHateList = 474;
+  AttrDropType = 480;
+  AttrItemId = 481;
+  AttrAwardId = 482;
+  AttrAni = 483;
+  AttrItemData = 484;
+  AttrInteractionActor = 485;
+  AttrCollectCounter = 500;
+  AttrTransferType = 510;
+  AttrStiffType = 550;
+  AttrStiffStage = 551;
+  AttrStiffStageTime = 552;
+  AttrStiffDir = 553;
+  AttrStiffTime = 554;
+  AttrStiffDownTime = 555;
+  AttrStiffHangTime = 556;
+  AttrStiffTarget = 557;
+  AttrStiffFlowSpeed = 558;
+  AttrStiffFlowOffset = 559;
+  AttrStiffFlowRadius = 560;
+  AttrStiffHorSpeed = 561;
+  AttrStiffHorAccSpeed = 562;
+  AttrStiffVerSpeedUp = 563;
+  AttrStiffVerAccSpeedUp = 564;
+  AttrStiffVerSpeedDown = 565;
+  AttrStiffVerAccSpeedDown = 566;
+  AttrStiffHorSpeedMinimum = 567;
+  AttrStiffDamageWeight = 568;
+  AttrTargetPosIsEnd = 569;
+  AttrStiffThrowMoveInfo = 570;
+  AttrStiffDamageStrength = 571;
+  AttrRideId = 600;
+  AttrIsCantRide = 601;
+  AttrRideIndex = 602;
+  AttrRideStage = 603;
+  AttrRideType = 604;
+  AttrRideUuid = 605;
+  AttrRideAttachEnable = 606;
+  AttrRideMagneticEnable = 607;
+  AttrRideMagneticQueueId = 608;
+  AttrIsForceRide = 609;
+  AttrControllerUuid = 650;
+  AttrPassengerList = 651;
+  AttrIsSilence = 680;
+  AttrIsConfine = 681;
+  AttrRideSeatCantTransfer = 700;
+  AttrCantSwim = 701;
+  AttrGMCantHit = 702;
+  AttrCantStiff = 703;
+  AttrCantStiffBack = 704;
+  AttrCantStiffDown = 705;
+  AttrCantStiffAir = 706;
+  AttrCantNormalAttack = 707;
+  AttrCantSkill = 708;
+  AttrCantMove = 709;
+  AttrCantTurn = 710;
+  AttrCantJump = 711;
+  AttrCantRush = 712;
+  AttrCantGravitational = 713;
+  AttrCantStiffFlow = 714;
+  AttrCantChangeProfession = 715;
+  AttrCantInteraction = 716;
+  AttrCantFallDamage = 717;
+  AttrCanFlow = 718;
+  AttrCanGlide = 719;
+  AttrCanBeHit = 720;
+  AttrCanLessenHP = 721;
+  AttrCanIntoCombat = 722;
+  AttrCantHit = 723;
+  AttrCanBeHatredTarget = 724;
+  AttrCanHitNum = 725;
+  AttrCanHitObj = 726;
+  AttrCanPathFinding = 727;
+  AttrCantNormalAttackInput = 728;
+  AttrCantSkillInput = 729;
+  AttrCantMoveInput = 730;
+  AttrCantJumpInput = 731;
+  AttrCantRushInput = 732;
+  AttrCantUseToy = 733;
+  AttrTopSummonerSkillSkin = 750;
+  AttrSummonSkillId = 751;
+  AttrSceneServStateObjData = 800;
+  AttrCommunityDataMap = 1001;
+  AttrOwnership = 1002;
+  AttrHomeId = 1003;
+  DecorationInfo = 1004;
+  AttrLevel = 10000;
+  AttrGS = 10010;
+  AttrLastMaxGS = 10020;
+  AttrFightPoint = 10030;
+  AttrFightPointTotal = 10031;
+  AttrFightPointAdd = 10032;
+  AttrFightPointExAdd = 10033;
+  AttrFightPointPer = 10034;
+  AttrFightPointExPer = 10035;
+  AttrFightCapability = 10040;
+  AttrFightCapabilityTotal = 10041;
+  AttrFightCapabilityAdd = 10042;
+  AttrFightCapabilityExAdd = 10043;
+  AttrFightCapabilityPer = 10044;
+  AttrFightCapabilityExPer = 10045;
+  AttrSurvivalCapability = 10050;
+  AttrSurvivalCapabilityTotal = 10051;
+  AttrSurvivalCapabilityAdd = 10052;
+  AttrSurvivalCapabilityExAdd = 10053;
+  AttrSurvivalCapabilityPer = 10054;
+  AttrSurvivalCapabilityExPer = 10055;
+  AttrRankLevel = 10060;
+  AttrWalkVelocity = 10200;
+  AttrWalkVelocityTotal = 10201;
+  AttrWalkVelocityAdd = 10202;
+  AttrWalkVelocityExAdd = 10203;
+  AttrWalkVelocityPer = 10204;
+  AttrWalkVelocityExPer = 10205;
+  AttrRunVelocity = 10210;
+  AttrRunVelocityTotal = 10211;
+  AttrRunVelocityAdd = 10212;
+  AttrRunVelocityExAdd = 10213;
+  AttrRunVelocityPer = 10214;
+  AttrRunVelocityExPer = 10215;
+  AttrDashVelocity = 10220;
+  AttrDashVelocityTotal = 10221;
+  AttrDashVelocityAdd = 10222;
+  AttrDashVelocityExAdd = 10223;
+  AttrDashVelocityPer = 10224;
+  AttrDashVelocityExPer = 10225;
+  AttrReviveTimeConsumePCT = 10230;
+  AttrReviveTimeConsumePCTTotal = 10231;
+  AttrReviveTimeConsumePCTAdd = 10232;
+  AttrReviveTimeConsumePCTExAdd = 10233;
+  AttrReviveTimeConsumePCTPer = 10234;
+  AttrReviveTimeConsumePCTExPer = 10235;
+  AttrRideWalkVelocity = 10240;
+  AttrRideWalkVelocityTotal = 10241;
+  AttrRideWalkVelocityAdd = 10242;
+  AttrRideWalkVelocityExAdd = 10243;
+  AttrRideWalkVelocityPer = 10244;
+  AttrRideWalkVelocityExPer = 10245;
+  AttrRideRunVelocity = 10250;
+  AttrRideRunVelocityTotal = 10251;
+  AttrRideRunVelocityAdd = 10252;
+  AttrRideRunVelocityExAdd = 10253;
+  AttrRideRunVelocityPer = 10254;
+  AttrRideRunVelocityExPer = 10255;
+  AttrRideDashVelocity = 10260;
+  AttrRideDashVelocityTotal = 10261;
+  AttrRideDashVelocityAdd = 10262;
+  AttrRideDashVelocityExAdd = 10263;
+  AttrRideDashVelocityPer = 10264;
+  AttrRideDashVelocityExPer = 10265;
+  AttrReviveInterTimeConsumePCT = 10270;
+  AttrReviveInterTimeConsumePCTTotal = 10271;
+  AttrReviveInterTimeConsumePCTAdd = 10272;
+  AttrReviveInterTimeConsumePCTExAdd = 10273;
+  AttrReviveInterTimeConsumePCTPer = 10274;
+  AttrReviveInterTimeConsumePCTExPer = 10275;
+  AttrStrength = 11010;
+  AttrStrengthTotal = 11011;
+  AttrStrengthAdd = 11012;
+  AttrStrengthExAdd = 11013;
+  AttrStrengthPer = 11014;
+  AttrStrengthExPer = 11015;
+  AttrIntelligence = 11020;
+  AttrIntelligenceTotal = 11021;
+  AttrIntelligenceAdd = 11022;
+  AttrIntelligenceExAdd = 11023;
+  AttrIntelligencePer = 11024;
+  AttrIntelligenceExPer = 11025;
+  AttrDexterity = 11030;
+  AttrDexterityTotal = 11031;
+  AttrDexterityAdd = 11032;
+  AttrDexterityExAdd = 11033;
+  AttrDexterityPer = 11034;
+  AttrDexterityExPer = 11035;
+  AttrVitality = 11040;
+  AttrVitalityTotal = 11041;
+  AttrVitalityAdd = 11042;
+  AttrVitalityExAdd = 11043;
+  AttrVitalityPer = 11044;
+  AttrVitalityExPer = 11045;
+  AttrCri = 11110;
+  AttrCriTotal = 11111;
+  AttrCriAdd = 11112;
+  AttrCriExAdd = 11113;
+  AttrCriPer = 11114;
+  AttrCriExPer = 11115;
+  AttrHaste = 11120;
+  AttrHasteTotal = 11121;
+  AttrHasteAdd = 11122;
+  AttrHasteExAdd = 11123;
+  AttrHastePer = 11124;
+  AttrHasteExPer = 11125;
+  AttrLuck = 11130;
+  AttrLuckTotal = 11131;
+  AttrLuckAdd = 11132;
+  AttrLuckExAdd = 11133;
+  AttrLuckPer = 11134;
+  AttrLuckExPer = 11135;
+  AttrMastery = 11140;
+  AttrMasteryTotal = 11141;
+  AttrMasteryAdd = 11142;
+  AttrMasteryExAdd = 11143;
+  AttrMasteryPer = 11144;
+  AttrMasteryExPer = 11145;
+  AttrVersatility = 11150;
+  AttrVersatilityTotal = 11151;
+  AttrVersatilityAdd = 11152;
+  AttrVersatilityExAdd = 11153;
+  AttrVersatilityPer = 11154;
+  AttrVersatilityExPer = 11155;
+  AttrHit = 11160;
+  AttrHitTotal = 11161;
+  AttrHitAdd = 11162;
+  AttrHitExAdd = 11163;
+  AttrHitPer = 11164;
+  AttrHitExPer = 11165;
+  AttrBlock = 11170;
+  AttrBlockTotal = 11171;
+  AttrBlockAdd = 11172;
+  AttrBlockExAdd = 11173;
+  AttrBlockPer = 11174;
+  AttrBlockExPer = 11175;
+  AttrHp = 11310;
+  AttrMaxHp = 11320;
+  AttrMaxHpTotal = 11321;
+  AttrMaxHpAdd = 11322;
+  AttrMaxHpExAdd = 11323;
+  AttrMaxHpPer = 11324;
+  AttrMaxHpExPer = 11325;
+  AttrAttack = 11330;
+  AttrAttackTotal = 11331;
+  AttrAttackAdd = 11332;
+  AttrAttackExAdd = 11333;
+  AttrAttackPer = 11334;
+  AttrAttackExPer = 11335;
+  AttrMAttack = 11340;
+  AttrMAttackTotal = 11341;
+  AttrMAttackAdd = 11342;
+  AttrMAttackExAdd = 11343;
+  AttrMAttackPer = 11344;
+  AttrMAttackExPer = 11345;
+  AttrDefense = 11350;
+  AttrDefenseTotal = 11351;
+  AttrDefenseAdd = 11352;
+  AttrDefenseExAdd = 11353;
+  AttrDefensePer = 11354;
+  AttrDefenseExPer = 11355;
+  AttrMDefense = 11360;
+  AttrMDefenseTotal = 11361;
+  AttrMDefenseAdd = 11362;
+  AttrMDefenseExAdd = 11363;
+  AttrMDefensePer = 11364;
+  AttrMDefenseExPer = 11365;
+  AttrIgnoreDefense = 11370;
+  AttrIgnoreDefenseTotal = 11371;
+  AttrIgnoreDefenseAdd = 11372;
+  AttrIgnoreDefenseExAdd = 11373;
+  AttrIgnoreDefensePer = 11374;
+  AttrIgnoreDefenseExPer = 11375;
+  AttrIgnoreMDefense = 11380;
+  AttrIgnoreMDefenseTotal = 11381;
+  AttrIgnoreMDefenseAdd = 11382;
+  AttrIgnoreMDefenseExAdd = 11383;
+  AttrIgnoreMDefensePer = 11384;
+  AttrIgnoreMDefenseExPer = 11385;
+  AttrIgnoreDefensePCT = 11390;
+  AttrIgnoreDefensePCTTotal = 11391;
+  AttrIgnoreDefensePCTAdd = 11392;
+  AttrIgnoreDefensePCTExAdd = 11393;
+  AttrIgnoreDefensePCTPer = 11394;
+  AttrIgnoreDefensePCTExPer = 11395;
+  AttrIgnoreMDefensePCT = 11400;
+  AttrIgnoreMDefensePCTTotal = 11401;
+  AttrIgnoreMDefensePCTAdd = 11402;
+  AttrIgnoreMDefensePCTExAdd = 11403;
+  AttrIgnoreMDefensePCTPer = 11404;
+  AttrIgnoreMDefensePCTExPer = 11405;
+  AttrRefineAttack = 11410;
+  AttrRefineAttackTotal = 11411;
+  AttrRefineAttackAdd = 11412;
+  AttrRefineAttackExAdd = 11413;
+  AttrRefineAttackPer = 11414;
+  AttrRefineAttackExPer = 11415;
+  AttrRefineDefense = 11420;
+  AttrRefineDefenseTotal = 11421;
+  AttrRefineDefenseAdd = 11422;
+  AttrRefineDefenseExAdd = 11423;
+  AttrRefineDefensePer = 11424;
+  AttrRefineDefenseExPer = 11425;
+  AttrRefineMAttack = 11430;
+  AttrRefineMAttackTotal = 11431;
+  AttrRefineMAttackAdd = 11432;
+  AttrRefineMAttackExAdd = 11433;
+  AttrRefineMAttackPer = 11434;
+  AttrRefineMAttackExPer = 11435;
+  AttrElementAtk = 11500;
+  AttrElementAtkTotal = 11501;
+  AttrElementAtkAdd = 11502;
+  AttrElementAtkExAdd = 11503;
+  AttrElementAtkPer = 11504;
+  AttrElementAtkExPer = 11505;
+  AttrFireAtk = 11510;
+  AttrFireAtkTotal = 11511;
+  AttrFireAtkAdd = 11512;
+  AttrFireAtkExAdd = 11513;
+  AttrFireAtkPer = 11514;
+  AttrFireAtkExPer = 11515;
+  AttrWaterAtk = 11520;
+  AttrWaterAtkTotal = 11521;
+  AttrWaterAtkAdd = 11522;
+  AttrWaterAtkExAdd = 11523;
+  AttrWaterAtkPer = 11524;
+  AttrWaterAtkExPer = 11525;
+  AttrWoodAtk = 11530;
+  AttrWoodAtkTotal = 11531;
+  AttrWoodAtkAdd = 11532;
+  AttrWoodAtkExAdd = 11533;
+  AttrWoodAtkPer = 11534;
+  AttrWoodAtkExPer = 11535;
+  AttrElectricityAtk = 11540;
+  AttrElectricityAtkTotal = 11541;
+  AttrElectricityAtkAdd = 11542;
+  AttrElectricityAtkExAdd = 11543;
+  AttrElectricityAtkPer = 11544;
+  AttrElectricityAtkExPer = 11545;
+  AttrWindAtk = 11550;
+  AttrWindAtkTotal = 11551;
+  AttrWindAtkAdd = 11552;
+  AttrWindAtkExAdd = 11553;
+  AttrWindAtkPer = 11554;
+  AttrWindAtkExPer = 11555;
+  AttrRockAtk = 11560;
+  AttrRockAtkTotal = 11561;
+  AttrRockAtkAdd = 11562;
+  AttrRockAtkExAdd = 11563;
+  AttrRockAtkPer = 11564;
+  AttrRockAtkExPer = 11565;
+  AttrLightAtk = 11570;
+  AttrLightAtkTotal = 11571;
+  AttrLightAtkAdd = 11572;
+  AttrLightAtkExAdd = 11573;
+  AttrLightAtkPer = 11574;
+  AttrLightAtkExPer = 11575;
+  AttrDarkAtk = 11580;
+  AttrDarkAtkTotal = 11581;
+  AttrDarkAtkAdd = 11582;
+  AttrDarkAtkExAdd = 11583;
+  AttrDarkAtkPer = 11584;
+  AttrDarkAtkExPer = 11585;
+  AttrCrit = 11710;
+  AttrCritTotal = 11711;
+  AttrCritAdd = 11712;
+  AttrCritExAdd = 11713;
+  AttrCritPer = 11714;
+  AttrCritExPer = 11715;
+  AttrAttackSpeedPCT = 11720;
+  AttrAttackSpeedPCTTotal = 11721;
+  AttrAttackSpeedPCTAdd = 11722;
+  AttrAttackSpeedPCTExAdd = 11723;
+  AttrAttackSpeedPCTPer = 11724;
+  AttrAttackSpeedPCTExPer = 11725;
+  AttrCastSpeedPCT = 11730;
+  AttrCastSpeedPCTTotal = 11731;
+  AttrCastSpeedPCTAdd = 11732;
+  AttrCastSpeedPCTExAdd = 11733;
+  AttrCastSpeedPCTPer = 11734;
+  AttrCastSpeedPCTExPer = 11735;
+  AttrChargeSpeedPCT = 11740;
+  AttrChargeSpeedPCTTotal = 11741;
+  AttrChargeSpeedPCTAdd = 11742;
+  AttrChargeSpeedPCTExAdd = 11743;
+  AttrChargeSpeedPCTPer = 11744;
+  AttrChargeSpeedPCTExPer = 11745;
+  AttrSkillCD = 11750;
+  AttrSkillCDTotal = 11751;
+  AttrSkillCDAdd = 11752;
+  AttrSkillCDExAdd = 11753;
+  AttrSkillCDPer = 11754;
+  AttrSkillCDExPer = 11755;
+  AttrSkillCDPCT = 11760;
+  AttrSkillCDPCTTotal = 11761;
+  AttrSkillCDPCTAdd = 11762;
+  AttrSkillCDPCTExAdd = 11763;
+  AttrSkillCDPCTPer = 11764;
+  AttrSkillCDPCTExPer = 11765;
+  AttrDotTime = 11770;
+  AttrDotTimeTotal = 11771;
+  AttrDotTimeAdd = 11772;
+  AttrDotTimeExAdd = 11773;
+  AttrDotTimePer = 11774;
+  AttrDotTimeExPer = 11775;
+  AttrLuckyStrikeProb = 11780;
+  AttrLuckyStrikeProbTotal = 11781;
+  AttrLuckyStrikeProbAdd = 11782;
+  AttrLuckyStrikeProbExAdd = 11783;
+  AttrLuckyStrikeProbPer = 11784;
+  AttrLuckyStrikeProbExPer = 11785;
+  AttrHeal = 11790;
+  AttrHealTotal = 11791;
+  AttrHealAdd = 11792;
+  AttrHealExAdd = 11793;
+  AttrHealPer = 11794;
+  AttrHealExPer = 11795;
+  AttrHealed = 11800;
+  AttrHealedTotal = 11801;
+  AttrHealedAdd = 11802;
+  AttrHealedExAdd = 11803;
+  AttrHealedPer = 11804;
+  AttrHealedExPer = 11805;
+  AttrShieldAddPCT = 11810;
+  AttrShieldAddPCTTotal = 11811;
+  AttrShieldAddPCTAdd = 11812;
+  AttrShieldAddPCTExAdd = 11813;
+  AttrShieldAddPCTPer = 11814;
+  AttrShieldAddPCTExPer = 11815;
+  AttrShieldGainPCT = 11820;
+  AttrShieldGainPCTTotal = 11821;
+  AttrShieldGainPCTAdd = 11822;
+  AttrShieldGainPCTExAdd = 11823;
+  AttrShieldGainPCTPer = 11824;
+  AttrShieldGainPCTExPer = 11825;
+  AttrStunnedDamagePCT = 11830;
+  AttrStunnedDamagePCTTotal = 11831;
+  AttrStunnedDamagePCTAdd = 11832;
+  AttrStunnedDamagePCTExAdd = 11833;
+  AttrStunnedDamagePCTPer = 11834;
+  AttrStunnedDamagePCTExPer = 11835;
+  AttrExtDamInc = 11840;
+  AttrExtDamIncTotal = 11841;
+  AttrExtDamIncAdd = 11842;
+  AttrExtDamIncExAdd = 11843;
+  AttrExtDamIncPer = 11844;
+  AttrExtDamIncExPer = 11845;
+  AttrExtDamRes = 11850;
+  AttrExtDamResTotal = 11851;
+  AttrExtDamResAdd = 11852;
+  AttrExtDamResExAdd = 11853;
+  AttrExtDamResPer = 11854;
+  AttrExtDamResExPer = 11855;
+  AttrDpsOwnEffectStr = 11860;
+  AttrDpsOwnEffectStrTotal = 11861;
+  AttrDpsOwnEffectStrAdd = 11862;
+  AttrDpsOwnEffectStrExAdd = 11863;
+  AttrDpsOwnEffectStrPer = 11864;
+  AttrDpsOwnEffectStrExPer = 11865;
+  AttrRainbowDamage = 11870;
+  AttrRainbowDamageTotal = 11871;
+  AttrRainbowDamageAdd = 11872;
+  AttrRainbowDamageExAdd = 11873;
+  AttrRainbowDamagePer = 11874;
+  AttrRainbowDamageExPer = 11875;
+  AttrSuppressDamInc = 11880;
+  AttrSuppressDamIncTotal = 11881;
+  AttrSuppressDamIncAdd = 11882;
+  AttrSuppressDamIncExAdd = 11883;
+  AttrSuppressDamIncPer = 11884;
+  AttrSuppressDamIncExPer = 11885;
+  AttrSuppressDamRes = 11890;
+  AttrSuppressDamResTotal = 11891;
+  AttrSuppressDamResAdd = 11892;
+  AttrSuppressDamResExAdd = 11893;
+  AttrSuppressDamResPer = 11894;
+  AttrSuppressDamResExPer = 11895;
+  AttrInspirePct = 11900;
+  AttrInspirePctTotal = 11901;
+  AttrInspirePctAdd = 11902;
+  AttrInspirePctExAdd = 11903;
+  AttrInspirePctPer = 11904;
+  AttrInspirePctExPer = 11905;
+  AttrHateRatePTC = 11910;
+  AttrHateRatePTCTotal = 11911;
+  AttrHateRatePTCAdd = 11912;
+  AttrHateRatePTCExAdd = 11913;
+  AttrHateRatePTCPer = 11914;
+  AttrHateRatePTCExPer = 11915;
+  AttrHastePct = 11930;
+  AttrHastePctTotal = 11931;
+  AttrHastePctAdd = 11932;
+  AttrHastePctExAdd = 11933;
+  AttrHastePctPer = 11934;
+  AttrHastePctExPer = 11935;
+  AttrMasteryPct = 11940;
+  AttrMasteryPctTotal = 11941;
+  AttrMasteryPctAdd = 11942;
+  AttrMasteryPctExAdd = 11943;
+  AttrMasteryPctPer = 11944;
+  AttrMasteryPctExPer = 11945;
+  AttrVersatilityPct = 11950;
+  AttrVersatilityPctTotal = 11951;
+  AttrVersatilityPctAdd = 11952;
+  AttrVersatilityPctExAdd = 11953;
+  AttrVersatilityPctPer = 11954;
+  AttrVersatilityPctExPer = 11955;
+  AttrCdAcceleratePct = 11960;
+  AttrCdAcceleratePctTotal = 11961;
+  AttrCdAcceleratePctAdd = 11962;
+  AttrCdAcceleratePctExAdd = 11963;
+  AttrCdAcceleratePctPer = 11964;
+  AttrCdAcceleratePctExPer = 11965;
+  AttrBlockPct = 11970;
+  AttrBlockPctTotal = 11971;
+  AttrBlockPctAdd = 11972;
+  AttrBlockPctExAdd = 11973;
+  AttrBlockPctPer = 11974;
+  AttrBlockPctExPer = 11975;
+  AttrFightResCdSpeedPct = 11980;
+  AttrFightResCdSpeedPctTotal = 11981;
+  AttrFightResCdSpeedPctAdd = 11982;
+  AttrFightResCdSpeedPctExAdd = 11983;
+  AttrFightResCdSpeedPctPer = 11984;
+  AttrFightResCdSpeedPctExPer = 11985;
+  AttrPetAttackSpeedPCT = 11990;
+  AttrPetAttackSpeedPCTTotal = 11991;
+  AttrPetAttackSpeedPCTAdd = 11992;
+  AttrPetAttackSpeedPCTExAdd = 11993;
+  AttrPetAttackSpeedPCTPer = 11994;
+  AttrPetAttackSpeedPCTExPer = 11995;
+  AttrCritDamage = 12510;
+  AttrCritDamageTotal = 12511;
+  AttrCritDamageAdd = 12512;
+  AttrCritDamageExAdd = 12513;
+  AttrCritDamagePer = 12514;
+  AttrCritDamageExPer = 12515;
+  AttrCritDamageRes = 12520;
+  AttrCritDamageResTotal = 12521;
+  AttrCritDamageResAdd = 12522;
+  AttrCritDamageResExAdd = 12523;
+  AttrCritDamageResPer = 12524;
+  AttrCritDamageResExPer = 12525;
+  AttrLuckDamInc = 12530;
+  AttrLuckDamIncTotal = 12531;
+  AttrLuckDamIncAdd = 12532;
+  AttrLuckDamIncExAdd = 12533;
+  AttrLuckDamIncPer = 12534;
+  AttrLuckDamIncExPer = 12535;
+  AttrBlockDamRes = 12540;
+  AttrBlockDamResTotal = 12541;
+  AttrBlockDamResAdd = 12542;
+  AttrBlockDamResExAdd = 12543;
+  AttrBlockDamResPer = 12544;
+  AttrBlockDamResExPer = 12545;
+  AttrDamInc = 12550;
+  AttrDamIncTotal = 12551;
+  AttrDamIncAdd = 12552;
+  AttrDamIncExAdd = 12553;
+  AttrDamIncPer = 12554;
+  AttrDamIncExPer = 12555;
+  AttrDamRes = 12560;
+  AttrDamResTotal = 12561;
+  AttrDamResAdd = 12562;
+  AttrDamResExAdd = 12563;
+  AttrDamResPer = 12564;
+  AttrDamResExPer = 12565;
+  AttrMdamInc = 12570;
+  AttrMdamIncTotal = 12571;
+  AttrMdamIncAdd = 12572;
+  AttrMdamIncExAdd = 12573;
+  AttrMdamIncPer = 12574;
+  AttrMdamIncExPer = 12575;
+  AttrMdamRes = 12580;
+  AttrMdamResTotal = 12581;
+  AttrMdamResAdd = 12582;
+  AttrMdamResExAdd = 12583;
+  AttrMdamResPer = 12584;
+  AttrMdamResExPer = 12585;
+  AttrNearDamage = 12590;
+  AttrNearDamageTotal = 12591;
+  AttrNearDamageAdd = 12592;
+  AttrNearDamageExAdd = 12593;
+  AttrNearDamagePer = 12594;
+  AttrNearDamageExPer = 12595;
+  AttrNearDamageReduction = 12600;
+  AttrNearDamageReductionTotal = 12601;
+  AttrNearDamageReductionAdd = 12602;
+  AttrNearDamageReductionExAdd = 12603;
+  AttrNearDamageReductionPer = 12604;
+  AttrNearDamageReductionExPer = 12605;
+  AttrFarDamage = 12610;
+  AttrFarDamageTotal = 12611;
+  AttrFarDamageAdd = 12612;
+  AttrFarDamageExAdd = 12613;
+  AttrFarDamagePer = 12614;
+  AttrFarDamageExPer = 12615;
+  AttrFarDamageReduction = 12620;
+  AttrFarDamageReductionTotal = 12621;
+  AttrFarDamageReductionAdd = 12622;
+  AttrFarDamageReductionExAdd = 12623;
+  AttrFarDamageReductionPer = 12624;
+  AttrFarDamageReductionExPer = 12625;
+  AttrBossDamInc = 12630;
+  AttrBossDamIncTotal = 12631;
+  AttrBossDamIncAdd = 12632;
+  AttrBossDamIncExAdd = 12633;
+  AttrBossDamIncPer = 12634;
+  AttrBossDamIncExPer = 12635;
+  AttrBossDamRes = 12640;
+  AttrBossDamResTotal = 12641;
+  AttrBossDamResAdd = 12642;
+  AttrBossDamResExAdd = 12643;
+  AttrBossDamResPer = 12644;
+  AttrBossDamResExPer = 12645;
+  AttrShieldDamagePCT = 12650;
+  AttrShieldDamagePCTTotal = 12651;
+  AttrShieldDamagePCTAdd = 12652;
+  AttrShieldDamagePCTExAdd = 12653;
+  AttrShieldDamagePCTPer = 12654;
+  AttrShieldDamagePCTExPer = 12655;
+  AttrShieldDamageReductionPCT = 12660;
+  AttrShieldDamageReductionPCTTotal = 12661;
+  AttrShieldDamageReductionPCTAdd = 12662;
+  AttrShieldDamageReductionPCTExAdd = 12663;
+  AttrShieldDamageReductionPCTPer = 12664;
+  AttrShieldDamageReductionPCTExPer = 12665;
+  AttrOtherDamInc = 12670;
+  AttrOtherDamIncTotal = 12671;
+  AttrOtherDamIncAdd = 12672;
+  AttrOtherDamIncExAdd = 12673;
+  AttrOtherDamIncTPer = 12674;
+  AttrOtherDamIncExPer = 12675;
+  AttrOtherDamRes = 12680;
+  AttrOtherDamResTotal = 12681;
+  AttrOtherDamResAdd = 12682;
+  AttrOtherDamResExAdd = 12683;
+  AttrOtherDamResTPer = 12684;
+  AttrOtherDamResExPer = 12685;
+  AttrSeasonDamInc = 12690;
+  AttrSeasonDamIncTotal = 12691;
+  AttrSeasonDamIncAdd = 12692;
+  AttrSeasonDamIncExAdd = 12693;
+  AttrSeasonDamIncTPer = 12694;
+  AttrSeasonDamIncExPer = 12695;
+  AttrSeasonDamRes = 12700;
+  AttrSeasonDamResTotal = 12701;
+  AttrSeasonDamResAdd = 12702;
+  AttrSeasonDamResExAdd = 12703;
+  AttrSeasonDamResTPer = 12704;
+  AttrSeasonDamResExPer = 12705;
+  AttrMultipliesDamPct = 12710;
+  AttrMultipliesDamPctTotal = 12711;
+  AttrMultipliesDamPctAdd = 12712;
+  AttrMultipliesDamPctExAdd = 12713;
+  AttrMultipliesDamPctTPer = 12714;
+  AttrMultipliesDamPctExPer = 12715;
+  AttrLuckHealInc = 12720;
+  AttrLuckHealIncTotal = 12721;
+  AttrLuckHealIncAdd = 12722;
+  AttrLuckHealIncExAdd = 12723;
+  AttrLuckHealIncPer = 12724;
+  AttrLuckHealIncExPer = 12725;
+  AttrPetDamInc = 12730;
+  AttrPetDamIncTotal = 12731;
+  AttrPetDamIncAdd = 12732;
+  AttrPetDamIncExAdd = 12733;
+  AttrPetDamIncPer = 12734;
+  AttrPetDamIncExPer = 12735;
+  AttrCritHeal = 12740;
+  AttrCritHealTotal = 12741;
+  AttrCritHealAdd = 12742;
+  AttrCritHealExAdd = 12743;
+  AttrCritHealPer = 12744;
+  AttrCritHealExPer = 12745;
+  AttrSpDamInc = 12750;
+  AttrSpDamIncTotal = 12751;
+  AttrSpDamIncAdd = 12752;
+  AttrSpDamIncExAdd = 12753;
+  AttrSpDamIncPer = 12754;
+  AttrSpDamIncExPer = 12755;
+  AttrSpDamRes = 12760;
+  AttrSpDamResTotal = 12761;
+  AttrSpDamResAdd = 12762;
+  AttrSpDamResExAdd = 12763;
+  AttrSpDamResPer = 12764;
+  AttrSpDamResExPer = 12765;
+  AttrHealBanPct = 12770;
+  AttrHealBanPctTotal = 12771;
+  AttrHealBanPctAdd = 12772;
+  AttrHealBanPctExAdd = 12773;
+  AttrHealBanPctPer = 12774;
+  AttrHealBanPctExPer = 12775;
+  AttrHealedBanPct = 12780;
+  AttrHealedBanPctTotal = 12781;
+  AttrHealedBanPctAdd = 12782;
+  AttrHealedBanPctExAdd = 12783;
+  AttrHealedBanPctPer = 12784;
+  AttrHealedBanPctExPer = 12785;
+  AttrElementPower = 13000;
+  AttrElementPowerTotal = 13001;
+  AttrElementPowerAdd = 13002;
+  AttrElementPowerExAdd = 13003;
+  AttrElementPowerPer = 13004;
+  AttrElementPowerExPer = 13005;
+  AttrFirePower = 13010;
+  AttrFirePowerTotal = 13011;
+  AttrFirePowerAdd = 13012;
+  AttrFirePowerExAdd = 13013;
+  AttrFirePowerPer = 13014;
+  AttrFirePowerExPer = 13015;
+  AttrWaterPower = 13020;
+  AttrWaterPowerTotal = 13021;
+  AttrWaterPowerAdd = 13022;
+  AttrWaterPowerExAdd = 13023;
+  AttrWaterPowerPer = 13024;
+  AttrWaterPowerExPer = 13025;
+  AttrWoodPower = 13030;
+  AttrWoodPowerTotal = 13031;
+  AttrWoodPowerAdd = 13032;
+  AttrWoodPowerExAdd = 13033;
+  AttrWoodPowerPer = 13034;
+  AttrWoodPowerExPer = 13035;
+  AttrElectricityPower = 13040;
+  AttrElectricityPowerTotal = 13041;
+  AttrElectricityPowerAdd = 13042;
+  AttrElectricityPowerExAdd = 13043;
+  AttrElectricityPowerPer = 13044;
+  AttrElectricityPowerExPer = 13045;
+  AttrWindPower = 13050;
+  AttrWindPowerTotal = 13051;
+  AttrWindPowerAdd = 13052;
+  AttrWindPowerExAdd = 13053;
+  AttrWindPowerPer = 13054;
+  AttrWindPowerExPer = 13055;
+  AttrRockPower = 13060;
+  AttrRockPowerTotal = 13061;
+  AttrRockPowerAdd = 13062;
+  AttrRockPowerExAdd = 13063;
+  AttrRockPowerPer = 13064;
+  AttrRockPowerExPer = 13065;
+  AttrLightPower = 13070;
+  AttrLightPowerTotal = 13071;
+  AttrLightPowerAdd = 13072;
+  AttrLightPowerExAdd = 13073;
+  AttrLightPowerPer = 13074;
+  AttrLightPowerExPer = 13075;
+  AttrDarkPower = 13080;
+  AttrDarkPowerTotal = 13081;
+  AttrDarkPowerAdd = 13082;
+  AttrDarkPowerExAdd = 13083;
+  AttrDarkPowerPer = 13084;
+  AttrDarkPowerExPer = 13085;
+  AttrElementDamage = 13100;
+  AttrElementDamageTotal = 13101;
+  AttrElementDamageAdd = 13102;
+  AttrElementDamageExAdd = 13103;
+  AttrElementDamagePer = 13104;
+  AttrElementDamageExPer = 13105;
+  AttrFireDamage = 13110;
+  AttrFireDamageTotal = 13111;
+  AttrFireDamageAdd = 13112;
+  AttrFireDamageExAdd = 13113;
+  AttrFireDamagePer = 13114;
+  AttrFireDamageExPer = 13115;
+  AttrWaterDamage = 13120;
+  AttrWaterDamageTotal = 13121;
+  AttrWaterDamageAdd = 13122;
+  AttrWaterDamageExAdd = 13123;
+  AttrWaterDamagePer = 13124;
+  AttrWaterDamageExPer = 13125;
+  AttrWoodDamage = 13130;
+  AttrWoodDamageTotal = 13131;
+  AttrWoodDamageAdd = 13132;
+  AttrWoodDamageExAdd = 13133;
+  AttrWoodDamagePer = 13134;
+  AttrWoodDamageExPer = 13135;
+  AttrElectricityDamage = 13140;
+  AttrElectricityDamageTotal = 13141;
+  AttrElectricityDamageAdd = 13142;
+  AttrElectricityDamageExAdd = 13143;
+  AttrElectricityDamagePer = 13144;
+  AttrElectricityDamageExPer = 13145;
+  AttrWindDamage = 13150;
+  AttrWindDamageTotal = 13151;
+  AttrWindDamageAdd = 13152;
+  AttrWindDamageExAdd = 13153;
+  AttrWindDamagePer = 13154;
+  AttrWindDamageExPer = 13155;
+  AttrRockDamage = 13160;
+  AttrRockDamageTotal = 13161;
+  AttrRockDamageAdd = 13162;
+  AttrRockDamageExAdd = 13163;
+  AttrRockDamagePer = 13164;
+  AttrRockDamageExPer = 13165;
+  AttrLightDamage = 13170;
+  AttrLightDamageTotal = 13171;
+  AttrLightDamageAdd = 13172;
+  AttrLightDamageExAdd = 13173;
+  AttrLightDamagePer = 13174;
+  AttrLightDamageExPer = 13175;
+  AttrDarkDamage = 13180;
+  AttrDarkDamageTotal = 13181;
+  AttrDarkDamageAdd = 13182;
+  AttrDarkDamageExAdd = 13183;
+  AttrDarkDamagePer = 13184;
+  AttrDarkDamageExPer = 13185;
+  AttrElementDefense = 13200;
+  AttrElementDefenseTotal = 13201;
+  AttrElementDefenseAdd = 13202;
+  AttrElementDefenseExAdd = 13203;
+  AttrElementDefensePer = 13204;
+  AttrElementDefenseExPer = 13205;
+  AttrFireDefense = 13210;
+  AttrFireDefenseTotal = 13211;
+  AttrFireDefenseAdd = 13212;
+  AttrFireDefenseExAdd = 13213;
+  AttrFireDefensePer = 13214;
+  AttrFireDefenseExPer = 13215;
+  AttrWaterDefense = 13220;
+  AttrWaterDefenseTotal = 13221;
+  AttrWaterDefenseAdd = 13222;
+  AttrWaterDefenseExAdd = 13223;
+  AttrWaterDefensePer = 13224;
+  AttrWaterDefenseExPer = 13225;
+  AttrWoodDefense = 13230;
+  AttrWoodDefenseTotal = 13231;
+  AttrWoodDefenseAdd = 13232;
+  AttrWoodDefenseExAdd = 13233;
+  AttrWoodDefensePer = 13234;
+  AttrWoodDefenseExPer = 13235;
+  AttrElectricityDefense = 13240;
+  AttrElectricityDefenseTotal = 13241;
+  AttrElectricityDefenseAdd = 13242;
+  AttrElectricityDefenseExAdd = 13243;
+  AttrElectricityDefensePer = 13244;
+  AttrElectricityDefenseExPer = 13245;
+  AttrWindDefense = 13250;
+  AttrWindDefenseTotal = 13251;
+  AttrWindDefenseAdd = 13252;
+  AttrWindDefenseExAdd = 13253;
+  AttrWindDefensePer = 13254;
+  AttrWindDefenseExPer = 13255;
+  AttrRockDefense = 13260;
+  AttrRockDefenseTotal = 13261;
+  AttrRockDefenseAdd = 13262;
+  AttrRockDefenseExAdd = 13263;
+  AttrRockDefensePer = 13264;
+  AttrRockDefenseExPer = 13265;
+  AttrLightDefense = 13270;
+  AttrLightDefenseTotal = 13271;
+  AttrLightDefenseAdd = 13272;
+  AttrLightDefenseExAdd = 13273;
+  AttrLightDefensePer = 13274;
+  AttrLightDefenseExPer = 13275;
+  AttrDarkDefense = 13280;
+  AttrDarkDefenseTotal = 13281;
+  AttrDarkDefenseAdd = 13282;
+  AttrDarkDefenseExAdd = 13283;
+  AttrDarkDefensePer = 13284;
+  AttrDarkDefenseExPer = 13285;
+  AttrElementDamRes = 13310;
+  AttrElementDamResTotal = 13311;
+  AttrElementDamResAdd = 13312;
+  AttrElementDamResExAdd = 13313;
+  AttrElementDamResPer = 13314;
+  AttrElementDamResExPer = 13315;
+  AttrFireDamageReduction = 13320;
+  AttrFireDamageReductionTotal = 13321;
+  AttrFireDamageReductionAdd = 13322;
+  AttrFireDamageReductionExAdd = 13323;
+  AttrFireDamageReductionPer = 13324;
+  AttrFireDamageReductionExPer = 13325;
+  AttrWaterDamageReduction = 13330;
+  AttrWaterDamageReductionTotal = 13331;
+  AttrWaterDamageReductionAdd = 13332;
+  AttrWaterDamageReductionExAdd = 13333;
+  AttrWaterDamageReductionPer = 13334;
+  AttrWaterDamageReductionExPer = 13335;
+  AttrWoodDamageReduction = 13340;
+  AttrWoodDamageReductionTotal = 13341;
+  AttrWoodDamageReductionAdd = 13342;
+  AttrWoodDamageReductionExAdd = 13343;
+  AttrWoodDamageReductionPer = 13344;
+  AttrWoodDamageReductionExPer = 13345;
+  AttrElectricityDamageReduction = 13350;
+  AttrElectricityDamageReductionTotal = 13351;
+  AttrElectricityDamageReductionAdd = 13352;
+  AttrElectricityDamageReductionExAdd = 13353;
+  AttrElectricityDamageReductionPer = 13354;
+  AttrElectricityDamageReductionExPer = 13355;
+  AttrWindDamageReduction = 13360;
+  AttrWindDamageReductionTotal = 13361;
+  AttrWindDamageReductionAdd = 13362;
+  AttrWindDamageReductionExAdd = 13363;
+  AttrWindDamageReductionPer = 13364;
+  AttrWindDamageReductionExPer = 13365;
+  AttrRockDamageReduction = 13370;
+  AttrRockDamageReductionTotal = 13371;
+  AttrRockDamageReductionAdd = 13372;
+  AttrRockDamageReductionExAdd = 13373;
+  AttrRockDamageReductionPer = 13374;
+  AttrRockDamageReductionExPer = 13375;
+  AttrLightDamageReduction = 13380;
+  AttrLightDamageReductionTotal = 13381;
+  AttrLightDamageReductionAdd = 13382;
+  AttrLightDamageReductionExAdd = 13383;
+  AttrLightDamageReductionPer = 13384;
+  AttrLightDamageReductionExPer = 13385;
+  AttrDarkDamageReduction = 13390;
+  AttrDarkDamageReductionTotal = 13391;
+  AttrDarkDamageReductionAdd = 13392;
+  AttrDarkDamageReductionExAdd = 13393;
+  AttrDarkDamageReductionPer = 13394;
+  AttrDarkDamageReductionExPer = 13395;
+  AttrOriginEnergy = 20010;
+  AttrMaxOriginEnergy = 20020;
+  AttrMaxOriginEnergyTotal = 20021;
+  AttrMaxOriginEnergyAdd = 20022;
+  AttrMaxOriginEnergyExAdd = 20023;
+  AttrMaxOriginEnergyPer = 20024;
+  AttrMaxOriginEnergyExPer = 20025;
+  AttrOriginEnergyConsumeRate = 20030;
+  AttrParkourStandbyOriginEnergyRecovery = 20040;
+  AttrParkourStandbyOriginEnergyRecoveryTotal = 20041;
+  AttrParkourStandbyOriginEnergyRecoveryAdd = 20042;
+  AttrParkourStandbyOriginEnergyRecoveryExAdd = 20043;
+  AttrParkourStandbyOriginEnergyRecoveryPer = 20044;
+  AttrParkourStandbyOriginEnergyRecoveryExPer = 20045;
+  AttrParkourOriginEnergyRecovery = 20050;
+  AttrParkourOriginEnergyRecoveryTotal = 20051;
+  AttrParkourOriginEnergyRecoveryAdd = 20052;
+  AttrParkourOriginEnergyRecoveryExAdd = 20053;
+  AttrParkourOriginEnergyRecoveryPer = 20054;
+  AttrParkourOriginEnergyRecoveryExPer = 20055;
+  AttrParkourRunPhaseOneAcceleration = 20060;
+  AttrParkourRunPhaseOneAccelerationTotal = 20061;
+  AttrParkourRunPhaseOneAccelerationAdd = 20062;
+  AttrParkourRunPhaseOneAccelerationExAdd = 20063;
+  AttrParkourRunPhaseOneAccelerationPer = 20064;
+  AttrParkourRunPhaseOneAccelerationExPer = 20065;
+  AttrParkourRunPhaseOneSpeedLimit = 20070;
+  AttrParkourRunPhaseOneSpeedLimitTotal = 20071;
+  AttrParkourRunPhaseOneSpeedLimitAdd = 20072;
+  AttrParkourRunPhaseOneSpeedLimitExAdd = 20073;
+  AttrParkourRunPhaseOneSpeedLimitPer = 20074;
+  AttrParkourRunPhaseOneSpeedLimitExPer = 20075;
+  AttrParkourRunPhaseTwoAcceleration = 20080;
+  AttrParkourRunPhaseTwoAccelerationTotal = 20081;
+  AttrParkourRunPhaseTwoAccelerationAdd = 20082;
+  AttrParkourRunPhaseTwoAccelerationExAdd = 20083;
+  AttrParkourRunPhaseTwoAccelerationPer = 20084;
+  AttrParkourRunPhaseTwoAccelerationExPer = 20085;
+  AttrParkourRunPhaseTwoSpeedLimit = 20090;
+  AttrParkourRunPhaseTwoSpeedLimitTotal = 20091;
+  AttrParkourRunPhaseTwoSpeedLimitAdd = 20092;
+  AttrParkourRunPhaseTwoSpeedLimitExAdd = 20093;
+  AttrParkourRunPhaseTwoSpeedLimitPer = 20094;
+  AttrParkourRunPhaseTwoSpeedLimitExPer = 20095;
+  AttrParkourRunPhaseThreeAcceleration = 20100;
+  AttrParkourRunPhaseThreeAccelerationTotal = 20101;
+  AttrParkourRunPhaseThreeAccelerationAdd = 20102;
+  AttrParkourRunPhaseThreeAccelerationExAdd = 20103;
+  AttrParkourRunPhaseThreeAccelerationPer = 20104;
+  AttrParkourRunPhaseThreeAccelerationExPer = 20105;
+  AttrParkourRunPhaseThreeSpeedLimit = 20110;
+  AttrParkourRunPhaseThreeSpeedLimitTotal = 20111;
+  AttrParkourRunPhaseThreeSpeedLimitAdd = 20112;
+  AttrParkourRunPhaseThreeSpeedLimitExAdd = 20113;
+  AttrParkourRunPhaseThreeSpeedLimitPer = 20114;
+  AttrParkourRunPhaseThreeSpeedLimitExPer = 20115;
+  AttrInBattleParkourStandbyOriginEnergyRecovery = 20120;
+  AttrInBattleParkourStandbyOriginEnergyRecoveryTotal = 20121;
+  AttrInBattleParkourStandbyOriginEnergyRecoveryAdd = 20122;
+  AttrInBattleParkourStandbyOriginEnergyRecoveryExAdd = 20123;
+  AttrInBattleParkourStandbyOriginEnergyRecoveryPer = 20124;
+  AttrInBattleParkourStandbyOriginEnergyRecoveryExPer = 20125;
+  AttrInBattleParkourOriginEnergyRecovery = 20130;
+  AttrInBattleParkourOriginEnergyRecoveryTotal = 20131;
+  AttrInBattleParkourOriginEnergyRecoveryAdd = 20132;
+  AttrInBattleParkourOriginEnergyRecoveryExAdd = 20133;
+  AttrInBattleParkourOriginEnergyRecoveryPer = 20134;
+  AttrInBattleParkourOriginEnergyRecoveryExPer = 20135;
+  AttrFallDamageReduction = 20200;
+  AttrDelayDie = 20201;
+  AttrFightResourceIds = 50001;
+  AttrFightResources = 50002;
+  AttrFightResNoUp = 50003;
+  AttrFightResNoDown = 50004;
+  AttrFreezeFrame = 60020;
+  AttrShieldList = 60050;
+  AttrPressingOpen = 60070;
+  AttrUpLift = 60071;
+}
+
+enum EAwardType {
+  EAwardTypeNull = 0;
+  EAwardTypeBdMod = 1;
+  EAwardTypeSelect = 2;
+}
+
+enum EBehitType {
+  BehitNormal = 0;
+  BehitStiff = 1;
+  BehitStiffBack = 2;
+  BehitStiffDown = 3;
+  BehitStiffAir = 4;
+  BehitStiffFall = 5;
+  BehitStiffFlow = 6;
+  BehitStiffAction = 7;
+  BehitStiffThrowMove = 8;
+  BehitStiffThrowEnd = 9;
+  BehitStiffBackBlocked = 10;
+}
+
+enum EBodySize {
+  BodySizeNull = 0;
+  BodySizeS = 1;
+  BodySizeM = 2;
+  BodySizeL = 3;
+}
+
+enum EBreakingStage {
+  Breaking = 0;
+  BreakEnd = 1;
+}
+
+enum EBuffEffectLogicPbType {
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_PLAY_EFFECT = 0;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_GRAVITY = 1;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_PARABOLA_EFFECT = 2;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_LINKING = 3;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_CONFUSION_EFFECT = 4;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_ZOOM_SCALE = 5;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_PROFESSION_EFFECT = 7;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_TELEPORT_BELT = 8;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_RAINBOW = 9;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_ATTR_HUD = 11;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_STOP = 12;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_PROGRESS = 13;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_ENERGY_DISPLAY = 14;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_STOP_ALL = 15;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_BUFF_EFFECT_LAYER_CHANGE = 16;
+  E_BUFF_EFFECT_LOGIC_PB_TYPE_TENSION = 17;
+}
+
+enum EBuffEventType {
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_UNKNOWN = 0;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ADD_TO = 1;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_REMOVE = 2;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_REPLACE = 3;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TIMER = 4;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_STACK_LAYER = 5;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_REMOVE_LAYER = 6;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HIT_TARGET_BEFORE = 7;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HIT_TARGET_AFTER = 8;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HITTED_BEFORE = 9;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HITTED_AFTER = 10;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_REACH_MAX_LAYER = 11;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_HOST_DEATH = 12;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_SKILL_HIT_AFTER = 13;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TRIG_TIMING_AURA = 14;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_BODY_PART_DEAD = 15;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_BODY_PART_HIT = 16;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_BODY_PART_STATE_CHANGE = 17;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_PART_HITTED_BEFORE = 18;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_PART_HITTED_AFTER = 19;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_GRAVITATIONAL = 20;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_FIGHT_RES_CHANGE = 21;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_KILL_ACTOR = 23;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ATTR_WATCHER = 24;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HITTED_LH_BEFORE = 25;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_HITTED_LH_BEFORE = 26;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ADD_BY_TARGET = 27;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_REMOVE_BY_TARGET = 28;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_IN_COMBAT_STATE = 29;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_OUT_COMBAT_STATE = 30;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SKILL_BEGIN = 31;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SKILL_END = 32;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SINGING_END = 34;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SUMMON_BUFF_ADD = 35;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SUMMON_ENTITY = 36;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_GUIDE_END = 37;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_DELAY_HIT = 39;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TEAM_BUFF_ADD = 40;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_CHANGE_PROFESSION = 41;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_DODGE_SUCCESS = 42;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_HEAL_BEFORE = 43;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_HEAL_AFTER = 44;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PRODUCE_HEAL_BEFORE = 45;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PRODUCE_HEAL_AFTER = 46;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SHIELD_BROKEN = 47;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_LINKING_START = 48;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_LINKING_END = 49;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_LINKING_WATCHER = 50;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SUPER_ARMOR_BROKEN = 51;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ADDED_BY_TARGET_TAG = 52;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ADD_TO_TARGET_TAG = 53;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_HIT_LESSEN_HP = 57;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ENTER_BREAKING = 58;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TELEPORT_BELT = 59;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_HIT_AFTER_ONLY = 63;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HIT_AFTER_ONLY = 64;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_HEAL_AFTER_ONLY = 65;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_HEAL_AFTER_ONLY = 66;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_HEAL_CALC_ATTR_BEFORE = 67;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PRODUCE_HEAL_CALC_ATTR_BEFORE = 68;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_REVIVE_SUCCESS_END = 69;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_AFTER_REVIVE_FIRST_MOVE = 70;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_MONSTER_INTO_ALERT = 71;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_MONSTER_OUT_ALERT = 72;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_ADD_SHIELD_CALC_BEFORE = 73;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_ADD_SHIELD_BEFORE = 74;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_ADD_SHIELD_AFTER = 75;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_ADDED_SHIELD_CALC_BEFORE = 76;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_ADDED_SHIELD_BEFORE = 77;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_BE_ADDED_SHIELD_AFTER = 78;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PROGRESS_WATCHER = 79;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_ON_LUCKY_DAMAGE = 80;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SKILL_CD_END = 81;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_MOTIONLESS = 82;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PARTICIPATE_KILL = 83;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PROFESSION_BD_TYPE_CHANGE = 84;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_SINGING_BEGIN = 85;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_GUIDE_BEGIN = 86;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_RAND_TIMER = 87;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_INTO_FRACTURE_STATE = 88;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TAKE_ON_RIDE = 89;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_TAKE_OFF_RIDE = 90;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_START_JUMP = 91;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PLAY_ACTION = 92;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_PLAY_EMOTE = 93;
+  E_BUFF_EVENT_TYPE_BUFF_EVENT_CHECK = 1001;
+  BuffEventCustomize = 1002;
+  BuffEventShapeshiftEndEvent = 1003;
+  BuffEventAttrRefresh = 1004;
+  BuffEventMonitorTeamKillActor = 1005;
+  BuffEventSpecialEffects = 10001;
+}
+
+enum EDamageMode {
+  E_DAMAGE_MODE_DAMAGE_NORMAL = 0;
+  E_DAMAGE_MODE_DAMAGE_PHYSICAL = 1;
+  E_DAMAGE_MODE_DAMAGE_MAGICAL = 2;
+}
+
+enum EDamageProperty {
+  E_DAMAGE_PROPERTY_GENERAL = 0;
+  E_DAMAGE_PROPERTY_FIRE = 1;
+  E_DAMAGE_PROPERTY_WATER = 2;
+  E_DAMAGE_PROPERTY_ELECTRICITY = 3;
+  E_DAMAGE_PROPERTY_WOOD = 4;
+  E_DAMAGE_PROPERTY_WIND = 5;
+  E_DAMAGE_PROPERTY_ROCK = 6;
+  E_DAMAGE_PROPERTY_LIGHT = 7;
+  E_DAMAGE_PROPERTY_DARK = 8;
+  E_DAMAGE_PROPERTY_COUNT = 9;
+}
+
+enum EDamageSource {
+  E_DAMAGE_SOURCE_SKILL = 0;
+  E_DAMAGE_SOURCE_BULLET = 1;
+  E_DAMAGE_SOURCE_BUFF = 2;
+  E_DAMAGE_SOURCE_FALL = 3;
+  E_DAMAGE_SOURCE_FAKE_BULLET = 4;
+  E_DAMAGE_SOURCE_OTHER = 100;
+}
+
+enum EDamageType {
+  E_DAMAGE_TYPE_NORMAL = 0;
+  E_DAMAGE_TYPE_MISS = 1;
+  E_DAMAGE_TYPE_HEAL = 2;
+  E_DAMAGE_TYPE_IMMUNE = 3;
+  E_DAMAGE_TYPE_FALL = 4;
+  E_DAMAGE_TYPE_ABSORBED = 5;
+}
+
+enum EDetachMagneticType {
+  EOperate = 0;
+  EFall = 1;
+}
+
+enum EDisappearType {
+  E_DISAPPEAR_TYPE_E_DISAPPEAR_NORMAL = 0;
+  E_DISAPPEAR_TYPE_E_DISAPPEAR_DEAD = 1;
+  E_DISAPPEAR_TYPE_E_DISAPPEAR_DESTROY = 2;
+  E_DISAPPEAR_TYPE_E_DISAPPEAR_TRANSFER_LEAVE = 3;
+  E_DISAPPEAR_TYPE_E_DISAPPEAR_TRANSFER_PASS_LINE_LEAVE = 4;
+}
+
+enum EDungeonState {
+  DungeonStateNull = 0;
+  DungeonStateActive = 1;
+  DungeonStateReady = 2;
+  DungeonStatePlaying = 3;
+  DungeonStateEnd = 4;
+  DungeonStateSettlement = 5;
+  DungeonStateVote = 6;
+}
+
+enum EDungeonTimerDirection {
+  DungeonTimerDirectionDown = 0;
+  DungeonTimerDirectionUp = 1;
+}
+
+enum EDungeonTimerEffectType {
+  EDungeonTimerEffectTypeNull = 0;
+  EDungeonTimerEffectTypeAdd = 1;
+  EDungeonTimerEffectTypeSub = 2;
+  EDungeonTimerEffectTypeChange = 3;
+}
+
+enum EDungeonTimerTimerLookType {
+  EDungeonTimerTimerLookTypeDefault = 0;
+  EDungeonTimerTimerLookTypeRed = 1;
+}
+
+enum EDungeonTimerType {
+  DungeonTimerTypeNull = 0;
+  DungeonTimerTypeRightCommon = 1;
+  DungeonTimerTypeMiddlerCommon = 2;
+  DungeonTimerTypeHero = 3;
+  DungeonTimerTypeWait = 4;
+  DungeonTimerTypePrepare = 5;
+}
+
+enum EEntityType {
+  E_ENTITY_TYPE_ENT_ERR_TYPE = 0;
+  E_ENTITY_TYPE_ENT_MONSTER = 1;
+  E_ENTITY_TYPE_ENT_NPC = 2;
+  E_ENTITY_TYPE_ENT_SCENE_OBJECT = 3;
+  E_ENTITY_TYPE_ENT_ZONE = 5;
+  E_ENTITY_TYPE_ENT_BULLET = 6;
+  E_ENTITY_TYPE_ENT_CLIENT_BULLET = 7;
+  E_ENTITY_TYPE_ENT_PET = 8;
+  E_ENTITY_TYPE_ENT_CHAR = 10;
+  E_ENTITY_TYPE_ENT_DUMMY = 11;
+  E_ENTITY_TYPE_ENT_DROP = 12;
+  E_ENTITY_TYPE_ENT_FIELD = 14;
+  E_ENTITY_TYPE_ENT_TRAP = 15;
+  E_ENTITY_TYPE_ENT_COLLECTION = 16;
+  E_ENTITY_TYPE_ENT_STATIC_OBJECT = 18;
+  E_ENTITY_TYPE_ENT_VEHICLE = 19;
+  E_ENTITY_TYPE_ENT_TOY = 20;
+  E_ENTITY_TYPE_ENT_COMMUNITY_HOUSE = 21;
+  E_ENTITY_TYPE_ENT_HOUSE_ITEM = 22;
+  E_ENTITY_TYPE_ENT_COUNT = 23;
+}
+
+enum EEquipEnchantType {
+  EEquipEnchantNone = 0;
+  EEquipEnchantOrdinary = 1;
+  EEquipEnchantIntermediate = 2;
+  EEquipEnchantAdvanced = 3;
+}
+
+enum EErrorCode {
+  ErrSuccess = 0;
+  ErrNoRecord = 101;
+  ErrExceptionCancel = 102;
+  ErrDBException = 103;
+  ErrDBSeqException = 104;
+  ErrDBSceneException = 105;
+  ErrDBTokenException = 106;
+  ErrCancelled = 201;
+  ErrUnknownRpc = 202;
+  ErrInvalidArgument = 203;
+  ErrDeadlineExceeded = 204;
+  ErrNotFound = 205;
+  ErrAlreadyExists = 206;
+  ErrPermissionDenied = 207;
+  ErrResourceExhausted = 208;
+  ErrFailedPrecondition = 209;
+  ErrAborted = 210;
+  ErrOutOfRange = 211;
+  ErrUnimplemented = 212;
+  ErrInternal = 213;
+  ErrUnavailable = 214;
+  ErrDataLoss = 215;
+  ErrUnauthenticated = 216;
+  ErrSystemMax = 999;
+  ErrDBError = 1000;
+  ErrCreateOpenInfo = 1001;
+  ErrCreateAccountInfo = 1002;
+  ErrCreateCharInfo = 1003;
+  ErrCreateAccountToken = 1004;
+  ErrGetOpenInfo = 1005;
+  ErrGetAccountInfo = 1006;
+  ErrGetCharInfo = 1007;
+  ErrGetAccountToken = 1008;
+  ErrLoginInQueue = 1009;
+  ErrOtherLogin = 1010;
+  ErrServerError = 1011;
+  ErrNoAccountInfo = 1012;
+  ErrNoCharInfo = 1013;
+  ErrTokenExpired = 1014;
+  ErrUpdateTokenFail = 1015;
+  ErrRegIntoSceneError = 1016;
+  ErrLoginTypeErr = 1017;
+  ErrChangeMapErr = 1018;
+  ErrLoginPlatformErr = 1019;
+  ErrVersionErr = 1020;
+  ErrDelayOffLineKickOff = 1021;
+  ErrServiceLanguageError = 1022;
+  NoEnterScene = 1023;
+  ModIDNotOpen = 1024;
+  ErrFaceData = 1025;
+  ErrInitProfession = 1026;
+  ErrSceneCloseKickoff = 1027;
+  ErrLoginReconnectKick = 1028;
+  ErrLoginErrorResume = 1029;
+  ErrRepeatedLogin = 1030;
+  ErrRestrictLogin = 1031;
+  ErrRestrictBlack = 1032;
+  ErrSdkVerifyFail = 1033;
+  ErrSdkTokenExpired = 1034;
+  ErrServerNotOpen = 1035;
+  ErrServerEndOpen = 1036;
+  ErrNormalKick = 1037;
+  ErrServerBusy = 1038;
+  ErrServerClose = 1039;
+  ErrExitGame = 1040;
+  ErrHopeKick = 1041;
+  ErrClientVersionError = 1042;
+  ErrInvalidDeviceId = 1043;
+  ErrInvalidSystemType = 1044;
+  ErrDeleteChar = 1045;
+  ErrCancelDeleteChar = 1046;
+  ErrCancelDeleteCharIsDelete = 1047;
+  ErrIntoSceneOwnerFail = 1048;
+  ErrLoginNoEnoughToken = 1049;
+  ErrSceneQueueUp = 1050;
+  ErrProtocolVersionErr = 1051;
+  ErrConfigVersionErr = 1052;
+  ErrStateEventFailed = 1053;
+  ErrSelectCharDoing = 1054;
+  ErrSelectCharDeleted = 1055;
+  ErrLoginChannelMax = 1056;
+  ErrDeleteAccountKick = 1057;
+  ErrIsDeleteAccount = 1058;
+  ErrIsVersionKick = 1059;
+  ErrNotQQChnnel = 1060;
+  ErrIncorrectLaunchPlatform = 1061;
+  ErrConditionWrong = 1062;
+  ErrNotSupportLoginType = 1063;
+  ErrSceneNotExist = 2001;
+  ErrUserNotExist = 2002;
+  ErrComponentNotExist = 2003;
+  ErrSceneConfigNotExist = 2004;
+  ErrServiceNotExist = 2005;
+  ErrDataContainerNotExist = 2006;
+  ErrAsynchronousReturn = 2007;
+  ErrConfigNotExist = 2008;
+  ErrNotUser = 2009;
+  ErrConfigError = 2010;
+  ErrActorNotExist = 2011;
+  ErrCutSceneAlreadyPlayed = 2012;
+  ErrFunctionUnlock = 2020;
+  ErrFunctionClosed = 2021;
+  ErrUserPlayerNotFurniturePackage = 2022;
+  ErrSysInnerError = 2200;
+  ErrSysWebClientNull = 2201;
+  ErrSysWebRequestTimeOut = 2202;
+  ErrSysWebReturnError = 2203;
+  ErrRequestTooFrequently = 2204;
+  ErrArgStringTooLong = 2251;
+  ErrArgStringEmpty = 2252;
+  ErrArgArrayTooBig = 2253;
+  ErrArgArrayEmpty = 2254;
+  ErrArgMapTooBig = 2255;
+  ErrArgMapEmpty = 2256;
+  ErrItemNotExist = 2300;
+  ErrPackageNotExist = 2301;
+  ErrPackageFull = 2302;
+  ErrItemExpireTime = 2303;
+  ErrItemPackageGridNotEnough = 2304;
+  ErrItemUUIDError = 2305;
+  ErrItemNotEnough = 2306;
+  ErrOptTypeError = 2307;
+  ErrItemInCoolDown = 2308;
+  ErrItemNotUse = 2309;
+  ErrItemEffectTypeError = 2310;
+  ErrItemParamError = 2311;
+  ErrItemAddBuffError = 2312;
+  ErrItemAdd = 2313;
+  ErrUseItemState = 2314;
+  ErrBatchUse = 2315;
+  ErrFullSendMail = 2316;
+  ErrItemNumZero = 2317;
+  ErrItemSelectAwardIllegalNum = 2318;
+  ErrItemSelectAwardIllegalPos = 2319;
+  ErrItemSelectLimit = 2320;
+  ErrItemPeriodGainExceeded = 2321;
+  ErrItemNoRecycle = 2322;
+  ErrItemRecycleBeyondMaxGrid = 2323;
+  ErrItemRecycleBeyondMaxNum = 2324;
+  ErrItemRecycleIdNoMatchItemId = 2325;
+  ErrItemRecycleIllegalId = 2326;
+  ErrItemLimitCount = 2327;
+  ErrItemFriendPontExceeded = 2328;
+  ErrItemToySingleEntUseExceeded = 2329;
+  ErrItemToySceneUseExceeded = 2330;
+  ErrItemToyUseInDisableArea = 2331;
+  ErrItemToySingleCellUseExceeded = 2332;
+  ErrItemToyCantUse = 2333;
+  ErrItemLifeProfessionExceeded = 2334;
+  ErrMonthlyCardNotExists = 2380;
+  ErrMonthlyCardDataError = 2381;
+  ErrMonthlyCardDayAwardReceived = 2382;
+  ErrMonthlyCardLimitCount = 2383;
+  ErrCommunityNoHome = 2400;
+  ErrNotHouseOwner = 2401;
+  ErrHomeLandExisted = 2402;
+  ErrHomeLandContentWrongful = 2403;
+  ErrHouseLivetogetherCD = 2404;
+  ErrHomeLandNotExisted = 2405;
+  ErrHomeLandNotInScene = 2406;
+  ErrHomeLandIsInvitation = 2407;
+  ErrHomeLandInsufficientAuthority = 2408;
+  ErrHomeLandTransferRequestPending = 2409;
+  ErrHomeLandTransferRequestTimeout = 2410;
+  ErrHomeLandTransferCD = 2411;
+  ErrHomelandTargetIsHasHome = 2412;
+  ErrHomelandTargetIsOwner = 2413;
+  ErrHomelandNotOwnerCannotOperate = 2414;
+  ErrHomeLandHasHouse = 2415;
+  ErrHomeLandContentTooLong = 2416;
+  ErrHomeLandClutterNotExist = 2417;
+  ErrHouseNameOrStatementCD = 2418;
+  ErrHouseIntroductionStatementCD = 2419;
+  ErrCommunityBuildInvalidRecipeId = 2420;
+  ErrCommunityBuildRecipeIsUnlock = 2421;
+  ErrCommunityBuildMax = 2422;
+  ErrCommunityBuildNoAuthority = 2423;
+  ErrCommunityNotBuildCannotCancel = 2424;
+  ErrCommunityBuildNotSelfCannotCancel = 2425;
+  ErrCommunityNotBuildCannotAccelerate = 2426;
+  ErrCommunityBuildNotSelfCannotAccelerate = 2427;
+  ErrCommunityBuildCannotAccelerate = 2428;
+  ErrCommunityBuildAlreadyAccelerate = 2429;
+  ErrCommunityBuildInDungeon = 2430;
+  ErrCommunityBuildRecipeIsLock = 2431;
+  ErrCommunityBuildRecipeNotItemUnlock = 2432;
+  ErrCommunityBuildInvalidCount = 2433;
+  ErrCommunityNotBuildCannotReceive = 2434;
+  ErrCommunityCanNotBuild = 2435;
+  ErrHomeLandCohabitantLimit = 2436;
+  ErrHomeLandRootNotQuitCohabitant = 2437;
+  ErrHomeLandNotOwnerCannotQuitCohabitant = 2438;
+  ErrHomeLandCohabitantIsExiting = 2439;
+  ErrHomeLandCohabitantNotExists = 2440;
+  ErrHomeLandCohabitantExitRequestExists = 2441;
+  ErrHomeLandCohabitantDismiss = 2442;
+  ErrHomeLandNotInvitation = 2443;
+  ErrHomeLandCohabitantInvitationTimeout = 2444;
+  ErrHomeLandCohabitantNotFriend = 2445;
+  ErrHomeLandCohabitantFriendLevel = 2446;
+  ErrHomeLandCohabitantLevel = 2447;
+  ErrHomeLandInviteCohabitantNotOwner = 2448;
+  ErrCommunityWarehouseGridFull = 2451;
+  ErrCommunityWarehouseNoAuthority = 2452;
+  ErrCommunityWarehouseGridPosItemNoEnough = 2453;
+  ErrHomeLandInsufficientFurniture = 2454;
+  ErrCommunityWarehouseTakeOutCountLimit = 2455;
+  ErrHomeLandTaskNotExist = 2456;
+  ErrHomeLandTaskTimeNotEnough = 2457;
+  ErrHomeLandTaskAlreadyFinished = 2458;
+  ErrHomeLandTaskItemNotEnough = 2459;
+  ErrHomeLandCurLevelError = 2461;
+  ErrHomeLandExpNotEnough = 2462;
+  ErrHomeLandAlreadyMaxLevel = 2463;
+  ErrHomeLandLevelLocked = 2464;
+  ErrHomeLandLevelConfigError = 2465;
+  ErrCommunityEditorNotEditable = 2466;
+  ErrCommunityEditorNotFurniture = 2467;
+  ErrCommunityEditorNotOutdoor = 2468;
+  ErrCommunityEditorNotIndoor = 2469;
+  ErrCommunityEditorOverMax = 2470;
+  ErrCommunityEditorOverTypeMax = 2471;
+  ErrCommunityEditorFurnitureNotEnough = 2472;
+  ErrCommunityEditorFurnitureNotExist = 2473;
+  ErrCommunityEditorOverMaxGroup = 2474;
+  ErrCommunityEditorNoStructure = 2475;
+  ErrCommunityEditorGroupMaxStructure = 2476;
+  ErrCommunityEditorStructureInGroup = 2477;
+  ErrCommunityEditorGroupNotExist = 2478;
+  ErrCommunityEditorAlreadyExist = 2479;
+  ErrHomeLandSellItemNotExist = 2481;
+  ErrHomeLandLeftNumNotEnough = 2482;
+  ErrHomeLandSellShopLocked = 2483;
+  ErrHomeLandSeedExist = 2486;
+  ErrHomeLandItemNotOwner = 2487;
+  ErrHomeLandSeedStateError = 2488;
+  ErrHomeLandNoSeed = 2489;
+  ErrHomeLandNoWater = 2490;
+  ErrHomeLandFertilizerMaxNumLimit = 2491;
+  ErrHomeLandNotFertilize = 2492;
+  ErrHomeLandNotPollen = 2493;
+  ErrHomeLandAlreadyPollen = 2494;
+  ErrHomeLandNotHarvest = 2495;
+  ErrHomeLandPickUpSinglePlayerLimit = 2496;
+  ErrHomeLandPickUpTotalLimit = 2497;
+  ErrHomeLandPickUpFlowerNotFinished = 2498;
+  ErrHomeLandPickUpOwner = 2499;
+  ErrHomeLandGainNotOwner = 2500;
+  ErrHomeLandItemFullGrid = 2501;
+  ErrHomeLandFurnitureFull = 2502;
+  ErrCommunityWarehouseNotBindOrCooldown = 2503;
+  ErrComposeItemNotEnough = 2571;
+  ErrComposeFailed = 2572;
+  ErrRedemptionItemNotExist = 2573;
+  ErrRedemptionItemMaxCount = 2574;
+  ErrRedemptionItemNotEnough = 2575;
+  ErrRedemptionItemGender = 2576;
+  ErrAwardConfigNotFound = 2600;
+  ErrAwardConfigWeightError = 2601;
+  ErrAwardConfigLimitAndContentNotMatch = 2602;
+  ErrAwardConfigContentSizeError = 2603;
+  ErrAwardConfigContentRatesSizeError = 2604;
+  ErrAwardConfigContentWeightSizeError = 2605;
+  ErrAwardConfigGroupContentEmpty = 2606;
+  ErrAwardConfigGroupNumEmpty = 2607;
+  ErrAwardConfigGroupContentNoMatchGroupNum = 2608;
+  ErrAwardConfigNoRandomDrop = 2609;
+  ErrAwardConfigNoSelectAward = 2610;
+  ErrAwardConfigSelfSelectContentNoItem = 2611;
+  ErrAwardConfigWeightRateMustOne = 2612;
+  ErrAwardConfigGroupContentRandomNoMatch = 2613;
+  ErrAwardConfigGroupContentError = 2614;
+  ErrAwardConfigPackageContentRandomNoMatch = 2615;
+  ErrAwardConfigLevelUpPackConfigPackageNoMatch = 2616;
+  ErrAwardConfigProItemRuleNoMatch = 2617;
+  ErrAwardConfigPackageContentEmpty = 2618;
+  ErrAwardConfigDropContentSize = 2619;
+  ErrAwardConfigDropContentNum = 2620;
+  ErrAwardConfigGroupRateEmpty = 2621;
+  ErrAwardConfigGroupWeightEmpty = 2622;
+  ErrAwardInnerError = 2623;
+  ErrAwardIllegalRandomType = 2624;
+  ErrAwardConditionNoMeet = 2625;
+  ErrAwardRandomTypeNone = 2626;
+  ErrAwardRandomTypeNoMatch = 2627;
+  ErrAwardActorIsNull = 2628;
+  ErrCounterUpToLimit = 2629;
+  ErrEquipWashAttrNotExist = 2700;
+  ErrNotEquipInCombat = 2701;
+  ErrEquipPart = 2702;
+  ErrComposeItemNotExist = 2750;
+  ErrPickupDropItemDistance = 2800;
+  ErrPickupDropItemPackageFull = 2801;
+  ErrPickupDropItemNoAuthority = 2802;
+  ErrLayerActorExist = 2851;
+  ErrTeamCreateHas = 2900;
+  ErrTeamIllTarget = 2901;
+  ErrTeamCreateTryLater = 2902;
+  ErrTeamGetNo = 2903;
+  ErrTeamListEmpty = 2904;
+  ErrTeamInner = 2905;
+  ErrTeamNoLeader = 2906;
+  ErrTeamInMatch = 2907;
+  ErrTeamCustomizeTarget = 2908;
+  ErrTeamNoOwn = 2909;
+  ErrTeamTickSelf = 2910;
+  ErrTeamNoMem = 2911;
+  ErrTeamApplyingLeader = 2912;
+  ErrTeamHasBeLeader = 2913;
+  ErrTeamNoTransferSelf = 2914;
+  ErrTeamNoLeaderTransfer = 2915;
+  ErrTeamHasOwnTeam = 2916;
+  ErrTeamNoExist = 2917;
+  ErrTeamApplyInCD = 2918;
+  ErrTeamApplyExpire = 2919;
+  ErrTeamJoinOther = 2920;
+  ErrTeamMemMax = 2921;
+  ErrTeamNoInvited = 2924;
+  ErrTeamIsMatching = 2925;
+  ErrTeamIllegalTag = 2926;
+  ErrTeamNoMatching = 2927;
+  ErrTeamIllegalActivity = 2928;
+  ErrTeamInActivity = 2929;
+  ErrTeamNoMeetCondition = 2930;
+  ErrTeamWaitVoting = 2931;
+  ErrTeamDoingActivity = 2932;
+  ErrTeamNoInVoting = 2933;
+  ErrTeamVoteEnd = 2934;
+  ErrTeamHasVoted = 2935;
+  ErrTeamInviteCD = 2936;
+  ErrTeamApplyLeadCD = 2937;
+  ErrTeamMoreMaxWorlds = 2938;
+  ErrTeamValidApplyInfo = 2939;
+  ErrTeamInMatchCancelCD = 2940;
+  ErrTeamMatchFinished = 2941;
+  ErrTeamMatchWaitSec = 2942;
+  ErrTeamMemWorldFull = 2943;
+  ErrTeamMemNotLeader = 2944;
+  ErrTeamLeaderNotStaticScene = 2945;
+  ErrTeamLeaderCallDoing = 2946;
+  ErrTeamIllegalCallOperator = 2947;
+  ErrTeamLeaderIllegalCallOperator = 2948;
+  ErrTeamNoMemCall = 2949;
+  ErrTeamLeaderCallEnd = 2950;
+  ErrTeamSameScene = 2951;
+  ErrTeamNotSameScene = 2952;
+  ErrTeamMemTooMore = 2953;
+  ErrTeamMemInDungeon = 2954;
+  ErrTeamMemTooLess = 2955;
+  ErrTeamIllegalInviteType = 2956;
+  ErrTeamMemberNotInScene = 2957;
+  ErrTeamLeaderReadyCheckTimeNotReady = 2958;
+  ErrTeamExistDungeonCheck = 2959;
+  ErrTeamTargetMatchTalentLimit = 2960;
+  ErrTeamEditGroupNotAllowed = 2961;
+  ErrTeamGroupNotExist = 2962;
+  ErrTeamTargetNoMatchMemberType = 2963;
+  ErrTeamMemberInDungeon = 2964;
+  ErrDecomposeItemNotExist = 3000;
+  ErrDecomposeItemNotEnough = 3001;
+  ErrRefineEnergyNotEnough = 3002;
+  ErrRefineItemMaxCount = 3003;
+  ErrRefineItemNotExist = 3004;
+  ErrRefineItemColumnNotUnlock = 3005;
+  ErrRefineItemColumnUnlock = 3006;
+  ErrRefineItemExist = 3007;
+  ErrEnergyLimitMax = 3008;
+  ErrRefineItemColumnNotEmpty = 3009;
+  ErrProfessionNotExist = 3056;
+  ErrModSlotNotUnlock = 3058;
+  ErrChangeProfessionStateFail = 3065;
+  ErrChangeProfessionCDFail = 3066;
+  ErrProfessionSkinNotActive = 3071;
+  ErrProfessionSkinActive = 3072;
+  ErrProfessionNotUseSkin = 3073;
+  ErrProfessionSkillSkinActive = 3074;
+  ErrProfessionSkillSkinNotActive = 3075;
+  ErrProfessionSkillNotActive = 3076;
+  ErrCharOffline = 3101;
+  ErrUserDataBaseError = 3102;
+  ErrCharGetFail = 3103;
+  ErrAlreadyAlive = 3200;
+  ErrReviveParam = 3201;
+  ErrStateIllegal = 3202;
+  ErrStateNoChange = 3203;
+  ErrReviveConsumeNotEnough = 3204;
+  ErrReviveByOtherForbid = 3205;
+  ErrReviveTimeNotArrived = 3206;
+  ErrReviveBossBattle = 3207;
+  ErrReviveCountLimit = 3208;
+  ErrReviveInDeadTp = 3209;
+  ErrDungeonPlayTypeError = 3301;
+  ErrDungeonNotExist = 3302;
+  ErrDungeonCreateError = 3303;
+  ErrCantChangeDungeon = 3304;
+  ErrDungeonLock = 3305;
+  ErrPioneerFail = 3306;
+  ErrAwardFail = 3307;
+  ErrGsNotEnough = 3308;
+  ErrQuestNotCompleted = 3309;
+  ErrDungeonNotClear = 3310;
+  ErrConditionNotExist = 3311;
+  ErrAwardReceived = 3312;
+  ErrCantRepeatedPlay = 3313;
+  ErrNeedPassPreRoom = 3314;
+  ErrDungeonEnterCountLimit = 3315;
+  ErrDungeonScoreError = 3316;
+  ErrDungeonRepeatedVote = 3317;
+  ErrDungeonChallengeAwardState = 3318;
+  ErrDungeonChallengeAffixNotFound = 3319;
+  ErrDungeonStateNotActive = 3320;
+  ErrDungeonCantVoteSelf = 3321;
+  ErrDungeonPlayerNotEnough = 3322;
+  ErrDungeonPlayerFull = 3323;
+  ErrDungeonCantHeroKey = 3324;
+  ErrDungeonNotSettlement = 3325;
+  ErrDungeonNotFindRollItem = 3326;
+  ErrDungeonCantRoll = 3327;
+  ErrDungeonRollFinish = 3328;
+  ErrDungeonSelectError = 3329;
+  ErrDungeonAiModeError = 3330;
+  ErrDungeonTargetNotFinish = 3331;
+  ErrDungeonTargetBeAward = 3332;
+  ErrDungeonSinglePlayerMore = 3333;
+  ErrDungeonAiGroupNotEnough = 3334;
+  ErrDungeonNoPass = 3335;
+  ErrDungeonCloseSceneId = 3336;
+  ErrDungeonEnterTypeError = 3337;
+  ErrDungeonActorCount = 3338;
+  ErrDungeonDiffLocked = 3339;
+  ErrDungeonPreBattleVoteCd = 3340;
+  ErrDungeonBossInvalid = 3341;
+  ErrDungeonNoUser = 3342;
+  ErrDungeonUserInvalid = 3343;
+  ErrDungeonAwardualification = 3344;
+  ErrDungeonAwardTriesLimit = 3345;
+  ErrFashionIsLimit = 3401;
+  ErrFashionNotFound = 3402;
+  ErrFashionSlotEmpty = 3403;
+  ErrFashionIDNotFound = 3404;
+  ErrFashionLock = 3405;
+  ErrFashCollectionAwardAlread = 3406;
+  ErrFashCollectionScoreNotEnough = 3407;
+  ErrFashCollectionAwardAlreadMonth = 3408;
+  ErrFashionAlreadUnlock = 3409;
+  ErrFashionAdvanceNotExist = 3410;
+  ErrFashionBaseNotUnlock = 3411;
+  ErrFashionAdvanceAlreadyUnlock = 3412;
+  ErrCameraNoExistAlbum = 3501;
+  ErrCameraBeyondPhotoNum = 3502;
+  ErrCameraBeyondAlumNum = 3503;
+  ErrCameraNoAccessRight = 3504;
+  ErrCameraNoExistPhoto = 3505;
+  ErrCameraBeyondWordNum = 3506;
+  ErrCameraPhotoNoInAlbum = 3507;
+  ErrCameraInnerError = 3508;
+  ErrCameraIllegalRight = 3509;
+  ErrCameraNoExistChar = 3510;
+  ErrCameraNoDelCloudAlbum = 3511;
+  ErrCameraBeyondMaxURlLen = 3512;
+  ErrCameraBeyondMaxXMLLen = 3513;
+  ErrCameraBeyondMaxNameLen = 3514;
+  ErrCameraIllegalUrl = 3515;
+  ErrCameraRenderInfoEmpty = 3516;
+  ErrCameraBeyondPhotoMaxSize = 3517;
+  ErrCameraIllegalPictureType = 3518;
+  ErrCameraTypeRepeated = 3519;
+  ErrCameraWithoutOriginal = 3520;
+  ErrCameraWithoutThumbnailOrRender = 3521;
+  ErrCameraPhotoNameEmpty = 3522;
+  ErrCameraPhotoNameOutMaxLen = 3523;
+  ErrCameraAlbumNameEmpty = 3524;
+  ErrCameraPhotoHasDel = 3525;
+  ErrCameraSysInnerError = 3526;
+  ErrCameraIllegalPictureId = 3527;
+  ErrCameraBeyondMaxExtraLen = 3528;
+  ErrCameraNoIncludeOriginal = 3529;
+  ErrCameraNoDealingPhoto = 3530;
+  ErrCameraNoDealingPhotoType = 3531;
+  ErrCameraNoAnyAlbum = 3532;
+  ErrCameraNoPassReview = 3533;
+  ErrCameraPhotoMissImage = 3534;
+  ErrCameraWithoutThumbnail = 3535;
+  ErrCameraBeyondMaxUploadTimes = 3536;
+  ErrInvalidLifeProfessionId = 3601;
+  ErrLifeProfessionIsUnlock = 3602;
+  ErrLifeProfessionMaxLevel = 3603;
+  ErrLifeProfessionLevelNotEnough = 3604;
+  ErrLifeProfessionLevelRewardGot = 3605;
+  ErrInvalidLifeProfessionSpecializationId = 3606;
+  ErrLifeProfessionSpecializationNotEnough = 3607;
+  ErrLifeProfessionSpecializationUpgradeError = 3608;
+  ErrLifeProfessionPointNotEnough = 3609;
+  ErrInvalidLifeProfessionTargetId = 3610;
+  ErrLifeProfessionTargetNotEnough = 3611;
+  ErrLifeProfessionRewardCanNotGet = 3612;
+  ErrLifeProfessionEnergyChange = 3613;
+  ErrLifeProfessionRecipeIsUnlock = 3614;
+  ErrLifeProfessionRecipeNotExist = 3615;
+  ErrLifeProfessionRecipeNotUnlock = 3616;
+  ErrLifeProfessionMaxRDRecipeCount = 3617;
+  ErrLifeProfessionWorkingNotEnd = 3618;
+  ErrLifeProfessionAlreadyWorking = 3619;
+  ErrLifeProfessionNotWorking = 3620;
+  ErrLifeProfessionWorkingIsEnd = 3621;
+  ErrLifeProfessionUnActiveSpecialization = 3622;
+  ErrCurLevelConfigNotExist = 4001;
+  ErrNeedBreakthrough = 4002;
+  ErrExperienceConfigNotExist = 4003;
+  ErrExperienceMismatch = 4004;
+  ErrNotNeedToBreakthrough = 4005;
+  ErrConsumeConfigError = 4006;
+  ErrSkillNotExist = 4007;
+  ErrSkillLevelMax = 4008;
+  ErrSkillLevelNotExist = 4009;
+  ErrSkillConfigError = 4010;
+  ErrStarNotExist = 4011;
+  ErrMaxStar = 4012;
+  ErrMaxLevel = 4013;
+  ErrSkillLevelNotEnough = 4014;
+  ErrCanNotChangeActionState = 4051;
+  ErrActionNotExist = 4052;
+  ErrIsInteracting = 4053;
+  ErrState = 4054;
+  ErrRequestExpired = 4055;
+  ErrStateSetFailed = 4071;
+  ErrCollectIdError = 4072;
+  ErrCollectStateFailed = 4073;
+  ErrCollectActorErr = 4074;
+  ErrCollectOutRange = 4075;
+  ErrCollectConditionEquip = 4076;
+  ErrCollectConditionQuest = 4077;
+  ErrAlreadyCollected = 4078;
+  ErrMailGetFailed = 4101;
+  ErrMailIllegality = 4102;
+  ErrMailIsGet = 4103;
+  ErrMailIsDel = 4104;
+  ErrMailAcceptorEmpty = 4105;
+  ErrMailTokenInvalid = 4106;
+  ErrUnRegisterType = 4201;
+  ErrIndexNotFound = 4202;
+  ErrCantOpenTreasureBox = 4203;
+  ErrPersonalStateEnd = 4204;
+  ErrPersonalObjectStatus = 4205;
+  ErrExp = 4301;
+  ErrLevel = 4302;
+  ErrAward = 4303;
+  ErrReceivedLevelAward = 4304;
+  ErrLevelNotEnough = 4305;
+  ErrRoleLevelNoRewards = 4306;
+  ErrUnionNotHaveLimit = 4401;
+  ErrUnionIsNotMember = 4402;
+  ErrUnionOfficialNotExits = 4403;
+  ErrUnionOfficialTooMany = 4404;
+  ErrUnionHas = 4405;
+  ErrUnionReqCd = 4406;
+  ErrUnionReqHas = 4407;
+  ErrUnionFull = 4408;
+  ErrUnionFailed = 4409;
+  ErrUnionNameWrongful = 4410;
+  ErrUnionNameUsed = 4411;
+  ErrUnionNameOccupied = 4412;
+  ErrApplyMax = 4415;
+  ErrUnionChangeNameCD = 4416;
+  ErrUnionNameSizeError = 4417;
+  ErrDeclarationSize = 4418;
+  ErrDeclarationError = 4419;
+  ErrOfficialNameRepeat = 4420;
+  ErrDeclarationCd = 4421;
+  ErrUnionInfoCd = 4422;
+  ErrUnionNotExist = 4423;
+  ErrUnionIllegalConditionType = 4424;
+  ErrUnionRecruitSloganTooLong = 4425;
+  ErrUnionRecruitDescriptionTooLong = 4426;
+  ErrUnionCreateTooOften = 4427;
+  ErrUnionTagNoExist = 4428;
+  ErrUnionIconTooMuch = 4429;
+  ErrUnionGetListCd = 4430;
+  ErrUnionBatchSearchUnionIdsTooMuch = 4431;
+  ErrUnionBatchSearchCd = 4432;
+  ErrUnionGetCollectedIdsCd = 4433;
+  ErrUnionBeyondMaxCollectedNum = 4434;
+  ErrUnionIdHasCollected = 4435;
+  ErrUnionIdNoCollected = 4436;
+  ErrUnionActiveValueNotEnough = 4437;
+  ErrUnionIllegalActiveId = 4438;
+  ErrUnionTooShortForAwards = 4439;
+  ErrUnionHasActiveAwards = 4440;
+  ErrUnionNoJoin = 4441;
+  ErrUnionOnlyEnterSelf = 4442;
+  ErrUnionNoUnlockScene = 4443;
+  ErrUnionBuildingMaxLevel = 4444;
+  ErrUnionBuildingUpgrading = 4445;
+  ErrUnionBuildingUpgradeNoFinish = 4446;
+  ErrUnionPrefixBuildNoMeet = 4447;
+  ErrUnionExperienceNoEnough = 4448;
+  ErrUnionMoneyNoEnough = 4449;
+  ErrUnionBuildingNoUpgrading = 4450;
+  ErrUnionSpeedUpItemNoEnough = 4451;
+  ErrUnionSpeedUpTimesOut = 4452;
+  ErrUnionTryLater = 4453;
+  ErrUnionSpeedUpLevelError = 4454;
+  ErrUnionUpgradeHasCompleted = 4455;
+  ErrUnionIllegalBuildIdLv = 4456;
+  ErrUnionBeyMaxCount = 4457;
+  ErrUnionUserNoApply = 4458;
+  ErrUnionNoOneKeyNoMuch = 4459;
+  ErrUnionActivityNotStart = 4460;
+  ErrUnionActivityNotProgress = 4461;
+  ErrUnionActivityAwardGet = 4462;
+  ErrUnionActivityNotEnjoy = 4463;
+  ErrUnionCreateTimeTooShort = 4464;
+  ErrUnionFunctionLock = 4465;
+  ErrUnionEScreenLock = 4466;
+  ErrUnionEScreenPositionLock = 4467;
+  ErrUnionEScreenNoSet = 4468;
+  ErrUnionEScreenPositionNoSet = 4469;
+  ErrUnionEffectGridLock = 4470;
+  ErrUnionEffectIdLock = 4471;
+  ErrUnionEffectPosNoSet = 4472;
+  ErrUnionEffectPosHasEnd = 4473;
+  ErrUnionCrowFuncHasEnd = 4474;
+  ErrUnionCrowFuncPosHasUsed = 4475;
+  ErrUnionCrowFuncHasJoined = 4476;
+  ErrUnionCrowFuncNoBegin = 4477;
+  ErrUnionNoFinishBaseBuilding = 4478;
+  ErrUnionCrowFuncIllegalFuncPos = 4479;
+  ErrUnionEScreenBeyondMaxTimes = 4480;
+  ErrUnionTargetFunctionLock = 4481;
+  ErrUnionNoMeet = 4482;
+  ErrUnionActivityAwardCd = 4483;
+  ErrUnionManagerNoKicked = 4484;
+  ErrUnionDanceNoBegin = 4485;
+  ErrUnionDanceEnd = 4486;
+  ErrUnionDanceDrawnBox = 4487;
+  ErrUnionDanceBoxDrawn = 4488;
+  ErrUnionDanceNoDanceId = 4489;
+  ErrUnionNoJoinDance = 4490;
+  ErrUnionDanceNoDancing = 4491;
+  ErrUnionRejectInvite = 4492;
+  ErrUnionActivityHuntEnd = 4493;
+  ErrUnionApplyListFull = 4494;
+  ErrUionApplyListExist = 4495;
+  ErrUnionGroupIvalid = 4496;
+  ErrRepeatedRequest = 4501;
+  ErrHasBeenBlackened = 4502;
+  ErrNotFoundCharInfo = 4503;
+  ErrInner = 4504;
+  ErrParam = 4505;
+  ErrSetShowPicture = 4506;
+  ErrSetSignature = 4507;
+  ErrSetHobbyMark = 4508;
+  ErrSetTimeMark = 4509;
+  ErrSetRemind = 4510;
+  ErrSetTop = 4511;
+  ErrAddFriend = 4512;
+  ErrSetProcessed = 4513;
+  ErrSetRemark = 4514;
+  ErrDeleteFriend = 4515;
+  ErrNotFoundGroup = 4516;
+  ErrNotExistInGroup = 4517;
+  ErrChangeGroup = 4518;
+  ErrPersonalState = 4519;
+  ErrOtherFriendMax = 4520;
+  ErrCurFriendMax = 4521;
+  ErrConfig = 4522;
+  ErrAlreadyFriend = 4523;
+  ErrSearchSelf = 4524;
+  ErrSuggestionCd = 4525;
+  ErrGroupMax = 4526;
+  ErrGroupNotExist = 4527;
+  ErrGroupNameEmpty = 4528;
+  ErrIllegalCharacter = 4529;
+  ErrStringMax = 4530;
+  ErrOtherApplicationMax = 4531;
+  ErrFriendlinessAwardHasRecord = 4532;
+  ErrFriendlinessLevelLowAwardLevel = 4533;
+  ErrFriendBeyondAllFriendNum = 4534;
+  ErrFriendIsNoUserFriend = 4535;
+  ErrFriendlinessIllegalAwardLevel = 4536;
+  ErrFriendlinessLevelAwardIsEmpty = 4537;
+  ErrFriendBeBlackenedByTarget = 4538;
+  ErrFriendApplyEachOther = 4539;
+  ErrFriendCallBySmallerCharId = 4540;
+  ErrFriendCallByBiggerCharId = 4541;
+  ErrFriendBeBlackenedBySmaller = 4542;
+  ErrFriendBeBlackenedByBigger = 4543;
+  ErrFriendNoApply = 4544;
+  ErrFriendApplySelf = 4545;
+  ErrUserNameFormat = 4546;
+  ErrFriendGetBaseTooOften = 4547;
+  ErrFriendOnlyGetSelfBaseInfo = 4548;
+  ErrActorGetFailed = 4601;
+  ErrPivotIsActive = 4602;
+  ErrPivotIsNotActive = 4603;
+  ErrBreakPointIsGet = 4604;
+  ErrActorIsNotPivot = 4605;
+  ErrActorIsNotBreakPoint = 4606;
+  ErrActorIsBreakPointNotFull = 4607;
+  ErrPivotRewardIsGiven = 4608;
+  ErrNotInsight = 4609;
+  ErrLearnSkillFail = 4651;
+  ErrRemoveSkillFail = 4652;
+  ErrUpdateSkillFail = 4653;
+  ErrSkillOperatorType = 4654;
+  ErrContainerOperator = 4655;
+  ErrExchangeFail = 4656;
+  ErrExchangeFailInCombat = 4657;
+  ErrAvatarBeyondMaxPictureSize = 4671;
+  ErrGetTokenFailed = 4672;
+  ErrPictureVerifyFailed = 4673;
+  ErrPictureIllegalType = 4674;
+  ErrPictureErrorInfo = 4675;
+  ErrPictureSizeInconsistent = 4676;
+  ErrPictureFuncTypeIllegal = 4677;
+  ErrPictureCallBackJudgeIllegal = 4678;
+  ErrPictureVerifyNoPass = 4679;
+  ErrPictureVerifyBackParamIllegal = 4680;
+  ErrPictureCallBackParamIllegal = 4681;
+  ErrPictureIllegalId = 4682;
+  ErrPictureCosErrors = 4683;
+  ErrPictureInnerSysErr = 4684;
+  ErrPictureNoSetEnvCosSecretId = 4685;
+  ErrPictureNoSetEnvCosSecretKey = 4686;
+  ErrPictureCheckInMachineLocked = 4687;
+  ErrPictureNoTryOutItem = 4688;
+  ErrPictureNoUploadItem = 4689;
+  ErrPictureNoUnion = 4690;
+  ErrNameSizeError = 4701;
+  ErrSensitiveContent = 4702;
+  ErrChangeNameFail = 4703;
+  ErrChangeNameCardNotEnough = 4704;
+  ErrChangeSameName = 4705;
+  ErrCheckMuteWordsFailed = 4706;
+  ErrCheckMuteWordsEmpty = 4708;
+  ErrChangeShowIdFail = 4711;
+  ErrChangeShowIdDuplicated = 4712;
+  ErrChangeShowIdCardNotEnough = 4713;
+  ErrFaceItemLock = 4721;
+  ErrFaceItemGender = 4722;
+  ErrFaceNoUploading = 4723;
+  ErrFaceNoSupportFileSuffix = 4724;
+  ErrFaceFileSuffixEmpty = 4725;
+  ErrFaceIllegalCosKey = 4726;
+  ErrFaceParseSuffixFailed = 4727;
+  ErrFaceParseShortGuidFailed = 4728;
+  ErrProficiencyNeedUnlock = 4751;
+  ErrProficiencyUnlock = 4752;
+  ErrUnlockItemNotEnough = 4753;
+  ErrTaskNotFinish = 4771;
+  ErrStickerAwardIsGet = 4772;
+  ErrBookAwardIsGet = 4773;
+  ErrInCd = 4791;
+  ErrMoneyNotEnough = 4801;
+  ErrShopItemCantBuy = 4802;
+  ErrShopBuyBusy = 4803;
+  ErrPaymentConfigNotFound = 4804;
+  ErrRefreshShopCountExceed = 4806;
+  ErrShopCouponNotEnough = 4807;
+  ErrShopCouponLimitNum = 4808;
+  ErrShopCantBuyNoPrice = 4809;
+  ErrNotFoundMonster = 4901;
+  ErrNotMonster = 4902;
+  ErrMonsterUnlockExist = 4903;
+  ErrMonsterAwardIsGet = 4904;
+  ErrMonsterTargetNotFinish = 4905;
+  ErrDropTypeNotSupport = 4906;
+  ErrCounterNotEnough = 4907;
+  ErrDropItemAlreadyPicked = 4908;
+  ErrInteractionDoing = 4941;
+  ErrInteractionCondition = 4942;
+  ErrInteractionNotMore = 4943;
+  ErrInteractionExistPos = 4944;
+  ErrInteractionNotExist = 4945;
+  ErrInteractionEntityNotExist = 4946;
+  ErrInteractionHandleNotExist = 4947;
+  ErrInteractionType = 4948;
+  ErrInteractionBan = 4949;
+  ErrInteractionConfig = 4950;
+  ErrInteractionNotOneself = 4951;
+  ErrInteractionDistance = 4952;
+  ErrInteractionNotDoing = 4953;
+  ErrShowPieceIllegalPieceType = 4961;
+  ErrShowPieceIllegalPieceId = 4962;
+  ErrShowPieceNoInOftenUseList = 4963;
+  ErrShowPieceNoUnlockList = 4964;
+  ErrShowPieceRoulettePositionNoSet = 4965;
+  ErrShowPieceBeyondOftenUseMaxLen = 4966;
+  ErrShowPieceBeyondOftenRoulettePositionNum = 4967;
+  ErrShowPieceNoCommonPiece = 4968;
+  ErrShowPieceNoTakeOn = 4969;
+  ErrProfessionActivated = 5001;
+  ErrProfessionNotHas = 5002;
+  ErrProfessionSlotErr = 5003;
+  ErrProfessionRemoveErr = 5004;
+  ErrProfessionChangePlanFail = 5005;
+  ErrProfessionStarConfigNotExist = 5006;
+  ErrProfessionStarNodeUnlock = 5007;
+  ErrProfessionStarNodeNotUnlock = 5008;
+  ErrProfessionReplaceSkillNotExist = 5009;
+  ErrProfessionUpgradeNotGreaterCurLevel = 5010;
+  ErrProfessionProfessionBeForged = 5011;
+  ErrProfessionSlotTwoNotUnlock = 5012;
+  ErrProfessionSkillAlreadyActive = 5013;
+  ErrProfessionSkillRemodelLevelWrong = 5014;
+  ErrAoyiSkillAlreadyActive = 5015;
+  ErrAoyiSkillRemodelConfigNotExist = 5016;
+  ErrAoyiSkillRemodelLevelWrong = 5017;
+  ErrProfessionEquipInCombat = 5018;
+  ErrProfessionSwitchInCombat = 5019;
+  ErrProfessionDungeonNotAllowSwitch = 5020;
+  ErrAoYiDecomposeOverflow = 5021;
+  ErrTalentIllegalTalentPoolId = 5101;
+  ErrTalentBeyondCurTalentMaxPlanNum = 5102;
+  ErrTalentPoolNoActive = 5108;
+  ErrTalentPlanNoActive = 5109;
+  ErrTalentIllegalTalentId = 5110;
+  ErrTalentTalentHasUnlocked = 5111;
+  ErrTalentTalentNoUnlocked = 5112;
+  ErrTalentChangeLvPassiveTalentMoreThanInPool = 5113;
+  ErrTalentRepeatedTalentId = 5114;
+  ErrTalentNoPoolPassiveTalent = 5115;
+  ErrTalentTalentPointsNoEnough = 5116;
+  ErrTalentPassiveTalentListNoEmpty = 5118;
+  ErrTalentIllegalTalentLevel = 5119;
+  ErrTalentNoMeetUpgradeCondition = 5120;
+  ErrTalentNoSupportDownLevelNow = 5121;
+  ErrTalentNoMeetPrevTalentLv = 5122;
+  ErrTalentNoMeetPrevTalentPoint = 5123;
+  ErrTalentTreeNodeBDExclusive = 5124;
+  ErrTalentTotalTalentPointNotEnough = 5125;
+  ErrTalentPreTalentNodeNotActivated = 5126;
+  ErrTalentResetTalentInCombat = 5127;
+  ErrTalentActiveTalentInCombat = 5128;
+  ErrCookBookNotExist = 5151;
+  ErrCookFoodNotEnough = 5152;
+  ErrCookTypeMore = 5153;
+  ErrCookCountMore = 5154;
+  ErrCookHasBook = 5155;
+  ErrCookMaterialNotMatch = 5156;
+  ErrChatIllegalPrivateChatTarget = 5201;
+  ErrChatInTargetBlockList = 5202;
+  ErrChatSendMsgBeyondMaxWords = 5203;
+  ErrChatWorldChannelIdIsZero = 5204;
+  ErrChatWorldChannelIdBeyondMaxId = 5205;
+  ErrChatIllegalChannelType = 5206;
+  ErrChatIllegalMsgType = 5207;
+  ErrChatNoInGoalChannel = 5208;
+  ErrChatNeedConfigIdNotZero = 5209;
+  ErrChatNeedMsgTextNotEmpty = 5210;
+  ErrChatSendCdNoEnd = 5211;
+  ErrChatRecordListIsEmpty = 5212;
+  ErrChatTargetNotInPrivateList = 5213;
+  ErrChatMsgIdMoreThanMaxReadMsgId = 5214;
+  ErrChatBeyondBlockListLimit = 5215;
+  ErrChatWorldChannelIdBeyondMaxNum = 5216;
+  ErrChatBeyondMaxRecordId = 5217;
+  ErrChatNoCreatePrivateSession = 5218;
+  ErrChatPrivateSessionHasExit = 5219;
+  ErrChatBeBan = 5220;
+  ErrChatFileIdTooLong = 5221;
+  ErrChatFileIdEmpty = 5222;
+  ErrChatMsgInfoEmpty = 5223;
+  ErrChatNoShareChannel = 5224;
+  ErrChatIllegalShareType = 5225;
+  ErrChatIllegalHolderType = 5226;
+  ErrChatNoSupportShareType = 5227;
+  ErrChatShareTpeNoChatId = 5228;
+  ErrChatShareNoFishRank = 5229;
+  ErrChatLevelLimit = 5230;
+  ErrChatNoFoundBlockListLimit = 5231;
+  ErrTalentModTalentTagNotExist = 5301;
+  ErrTextCheckForbidden = 5351;
+  ErrTextCheckNoSceneType = 5352;
+  ErrTextCheckIllegal = 5353;
+  ErrTextCheckHttpError = 5354;
+  ErrTextCheckTooManyItems = 5355;
+  ErrConditionTimerOpen = 5401;
+  ErrConditionOpenServer = 5402;
+  ErrSkillDisable = 5700;
+  ErrSkillIsCD = 5701;
+  ErrSkillMaxPassiveCount = 5702;
+  ErrSkillInit = 5703;
+  ErrSkillInfo = 5704;
+  ErrUseSkillFightResInsufficient = 5705;
+  ErrUseSkillBuffNotEnough = 5706;
+  ErrUseSkillItemInsufficient = 5707;
+  ErrUseSkillAttrInsufficient = 5708;
+  ErrUseSkillEnduranceInsufficient = 5709;
+  ErrUseSkillStateChange = 5710;
+  ErrUseSkillClientSkillUuid = 5711;
+  ErrFightLogicConditionBlockInvalid = 5730;
+  ErrFightLogicActionGroupInvalid = 5731;
+  ErrFightLogicConditionNotMatch = 5732;
+  ErrFightLogicRunDataInvalid = 5733;
+  ErrSkillStageNotFind = 5734;
+  ErrConditionCfgSize = 6000;
+  ErrConditionDissatisfy = 6001;
+  ErrConditionObjectIsNull = 6002;
+  ErrConditionTypeNotFound = 6003;
+  ErrConditionEntityDeath = 6004;
+  ErrConditionUnionLevel = 6005;
+  ErrConditionUnionMoney = 6006;
+  ErrConditionNotMeet = 6007;
+  ErrConditionNotInShapeShift = 6008;
+  ErrSeasonAchievementNoExist = 6101;
+  ErrSeasonAchievementNoFinish = 6102;
+  ErrSeasonAchievementHasReceived = 6103;
+  ErrSeasonAchievementPrevIdNoReceived = 6104;
+  ErrSeasonAchievementPrevIdNoExist = 6105;
+  ErrSeasonAchievementTargetConfigError = 6106;
+  ErrSeasonRankHasMax = 6151;
+  ErrSeasonRankHasReceived = 6152;
+  ErrSeasonRankNoAchieve = 6153;
+  ErrSeasonRankCurSeasonIdZero = 6154;
+  ErrSeasonRankNoMeetCondition = 6155;
+  ErrSeasonRankSeasonNoSame = 6156;
+  ErrBattlePassBuyLevel = 6201;
+  ErrBattlePassBuyMaterial = 6202;
+  ErrBattlePassAwardGet = 6203;
+  ErrBattlePassAwardNotUnlock = 6204;
+  ErrBattlePassBuyWeekExpLimit = 6205;
+  ErrBattlePassLevelError = 6206;
+  ErrNoRefreshTimes = 6207;
+  ErrTargetNotCompleted = 6208;
+  ErrOnlinePeriodTooMore = 6251;
+  ErrPersonalTagTooMore = 6252;
+  ErrPersonalTagNotFound = 6253;
+  ErrPersonalAvatarUnearned = 6254;
+  ErrPersonalAvatarFrameUnearned = 6255;
+  ErrPersonalCardStyleUnearned = 6256;
+  ErrPersonalPhotoTooMore = 6257;
+  ErrPersonalMedalUnearned = 6258;
+  ErrPersonalTargetUnlock = 6259;
+  ErrPersonalTargetAlreadyGet = 6260;
+  ErrPersonalMedalInvalidSlot = 6261;
+  ErrPersonalMedalDuplicateValue = 6262;
+  ErrOnlinePeriodDuplicate = 6263;
+  ErrPersonalTagDuplicate = 6264;
+  ErrPersonalPhotoInvalidSlot = 6265;
+  ErrPersonalPhotoDuplicateValue = 6266;
+  ErrSeasonMedalNoMeetActiveCondition = 6301;
+  ErrSeasonMedalNoMeetUpgradeCondition = 6302;
+  ErrSeasonMedalActiveMeetNoEnough = 6303;
+  ErrSeasonMedalUpgradeMeetNoEnough = 6304;
+  ErrSeasonMedalIllegalNodeId = 6305;
+  ErrSeasonMedalChooseNodeIdBeyondMax = 6306;
+  ErrSeasonMedalHoleNoExist = 6307;
+  ErrSeasonMedalHoleLock = 6308;
+  ErrSeasonMedalNodeNoExist = 6309;
+  ErrSeasonMedalHoleNoGet = 6310;
+  ErrSeasonMedalMaxHoleLevel = 6311;
+  ErrSeasonMedalCoreHoleLock = 6312;
+  ErrSeasonMedalUpgradeMoneyNoEnough = 6313;
+  ErrSeasonNoCoreHole = 6314;
+  ErrSeasonNoNormalHole = 6315;
+  ErrSeasonMedalNoUpgradeNormalHoleItem = 6316;
+  ErrSceneLineNotExists = 6351;
+  ErrSceneLineRefreshCd = 6352;
+  ErrSceneLineNotSameScene = 6353;
+  ErrSceneLineSameLine = 6354;
+  ErrSceneLineInteracting = 6355;
+  ErrSceneLineUserDead = 6356;
+  ErrSceneLineFull = 6357;
+  ErrSceneLineChangeCd = 6358;
+  ErrSceneVersionRecycle = 6359;
+  ErrSceneLineKick = 6360;
+  ErrInstallSlotFailed = 6401;
+  ErrUseSlotFailed = 6402;
+  ErrUseSlotInCd = 6403;
+  ErrInstatallSlotFailedInCombat = 6404;
+  ErrSlotSkillUnLoad = 6405;
+  ErrUseCfgSkillFailed = 6406;
+  ErrResonanceNotExists = 6407;
+  ErrResonanceUnLoad = 6408;
+  ErrUseDodgeFailed = 6409;
+  ErrUseFixedSkillFailed = 6410;
+  ErrUseBlockedSkill = 6411;
+  ErrInstallBlockedSkill = 6412;
+  ErrExchangeNotFound = 6451;
+  ErrExchangeNotEnough = 6452;
+  ErrExchangeItemLimit = 6453;
+  ErrExchangeStepRange = 6454;
+  ErrExchangeItemFull = 6455;
+  ErrExchangePackageFull = 6456;
+  ErrExchangePriceItemNotFind = 6457;
+  ErrExchangeBuyNumNotEnough = 6458;
+  ErrExchangeBuyItemNotFound = 6459;
+  ErrExchangeTakeFailDelayTime = 6460;
+  ErrExchangeTakeFailSellNum = 6461;
+  ErrExchangeTakeItemNotFound = 6462;
+  ErrExchangeWithdrawNoMoney = 6463;
+  ErrExchangeDepositNotEnough = 6464;
+  ErrExchangeItemNotBindOrCooldownNotExpire = 6465;
+  ErrExchangeInCd = 6466;
+  ErrExchangeBuyCurrencyNoEnough = 6467;
+  ErrExchangeItemDelayTimeOver = 6468;
+  ErrExchangeItemIsNotWithdraw = 6469;
+  ErrExchangeBuyItemLimit = 6470;
+  ErrExchangeItemIsNotNoticeShopItem = 6471;
+  ErrExchangeItemIsPreBuyAlready = 6472;
+  ErrExchangeItemNotPublic = 6473;
+  ErrExchangeSaleRankExist = 6474;
+  ErrExchangeSaleItemFull = 6475;
+  ErrExchangeSaleDiamondNotEnough = 6476;
+  ErrExchangeSaleItemNotExists = 6477;
+  ErrExchangeBuySaleCurrencyNoEnough = 6478;
+  ErrExchangeDiamondNotEnough = 6479;
+  ErrExchangeSaleTakeOffCd = 6480;
+  ErrExchangeSaleRateInvalid = 6481;
+  ErrExchangePreItemFull = 6482;
+  ErrExchangeSaleNumInvalid = 6483;
+  ErrExchangeCareItemAlready = 6484;
+  ErrExchangePriceRange = 6485;
+  ErrExchangeRequestLimit = 6486;
+  ErrExchangeItemBanned = 6487;
+  ErrExchangePriceNotLow = 6488;
+  ErrExchangeItemNotFind = 6489;
+  ErrExchangeItemExistMinPrice = 6490;
+  ErrExchangeNoticeItemMin = 6491;
+  ErrExchangePreBuyUserFull = 6492;
+  ErrModHoleNotUnlock = 6501;
+  ErrModNotExist = 6502;
+  ErrModSimilarRepeated = 6503;
+  ErrModTypeLimitExceeded = 6504;
+  ErrModPartNotExist = 6505;
+  ErrModPartEnhanceLimit = 6506;
+  ErrModInUse = 6507;
+  ErrModAlreadyInstalled = 6508;
+  ErrModInitConfigNotExist = 6509;
+  ErrModPartOverflow = 6510;
+  ErrModCanNotLink = 6511;
+  ErrModDecomposeOverflow = 6512;
+  ErrFishingNotUseBait = 6551;
+  ErrFishingRandomFailed = 6552;
+  ErrFishingAlreadyGetFishItem = 6553;
+  ErrFishingGetFishIdWrong = 6554;
+  ErrFishingNotGet = 6555;
+  ErrFishingNotResearchYet = 6556;
+  ErrFishingNotUseRod = 6557;
+  ErrFishingNoSeat = 6558;
+  ErrFishingCantResearch = 6559;
+  ErrFishDrawnLevelAward = 6560;
+  ErrFishCannotDrawLevelAward = 6561;
+  ErrFishDrawnNoLevelAward = 6562;
+  ErrFreightNoRefreshGoods = 6601;
+  ErrFreightBeyondMaxValue = 6602;
+  ErrFreightDownMinValue = 6603;
+  ErrFreightHasSetOff = 6604;
+  ErrFreightNoSetOff = 6605;
+  ErrFreightHasReward = 6606;
+  ErrFreightIllegalGoodsId = 6607;
+  ErrFreightItemNoEnough = 6608;
+  ErrFreightNoUpSetOffTime = 6609;
+  ErrFreightNoUpRewardTime = 6610;
+  ErrFreightAutoSetOff = 6611;
+  ErrTrialRoadAwardNotFinished = 6651;
+  ErrTrialRoadAwardRoomGet = 6652;
+  ErrNotCanRide = 6701;
+  ErrCombatStateNotRide = 6702;
+  ErrAlreadyRide = 6703;
+  ErrRideNotEnough = 6704;
+  ErrCreateVehicleActorFailed = 6705;
+  ErrNotVehicleOwner = 6706;
+  ErrVehicleHasController = 6707;
+  ErrVehicleNoSeat = 6708;
+  ErrVehicleHasSeat = 6709;
+  ErrNotRideVehicle = 6710;
+  ErrVehicleNotExits = 6711;
+  ErrInvalidRidePropertyType = 6712;
+  ErrRideApplyTargetUserNotExist = 6713;
+  ErrRideConfigNotFind = 6714;
+  ErrRideNotUnlock = 6715;
+  ErrRideNotFind = 6716;
+  ErrInvalidRideType = 6717;
+  ErrRideApplyAlreadyExist = 6718;
+  ErrRideApplyNotRideVehicle = 6719;
+  ErrRideApplyVehicleNotSeat = 6720;
+  ErrRideAlReadyRide = 6721;
+  ErrRideApplyTargetTooFar = 6722;
+  ErrRideNotTake = 6723;
+  ErrRideInteracting = 6724;
+  ErrShapeshiftNotRide = 6725;
+  ErrFishingNotRide = 6726;
+  ErrRideStateReject = 6727;
+  ErrRideTypeNotSupport = 6728;
+  ErrRideNotControl = 6729;
+  ErrRideNotFunction = 6730;
+  ErrRideSkinNotSupport = 6731;
+  ErrRideSkinNotUnlock = 6732;
+  ErrRideSkinDataAddFailed = 6733;
+  ErrRideSkinNotSkin = 6734;
+  ErrRideSkinAlreadyActivate = 6735;
+  ErrWarehouseHas = 7000;
+  ErrWarehouseNoHas = 7001;
+  ErrWarehouseNoMem = 7002;
+  ErrWarehouseNoPresident = 7003;
+  ErrWarehouseNoHasItem = 7004;
+  ErrWarehouseItemNoDeposit = 7005;
+  ErrWarehouseGridPosNoExist = 7006;
+  ErrWarehouseGridPosItemNoEnough = 7007;
+  ErrWarehouseNoInviteSelf = 7008;
+  ErrWarehouseInviteesHas = 7009;
+  ErrWarehouseMemBeyondMax = 7010;
+  ErrWarehouseGridBeyondMax = 7011;
+  ErrWarehouseNoSelf = 7012;
+  ErrWarehouseIsMem = 7013;
+  ErrWarehouseNoExist = 7014;
+  ErrWarehouseDepositBeyondMax = 7015;
+  ErrWarehouseTakeOutBeyondMax = 7016;
+  ErrWarehouseItemIdNotSame = 7017;
+  ErrWarehouseParams = 7018;
+  ErrWarehouseNoKickSelf = 7019;
+  ErrWarehousePresidentNoExit = 7020;
+  ErrGashaDrawCount = 7021;
+  ErrGashaDrawLimit = 7022;
+  ErrGashaInvalidWishId = 7023;
+  EErGashaWishRepeated = 7026;
+  EErGashaWishCountNoEnough = 7027;
+  ErrWarehouseAuthority = 7028;
+  ErrEquipCantDecompose = 7051;
+  ErrEquipNotRecastRecord = 7052;
+  ErrEquipOnCantUsedRecastConsume = 7053;
+  ErrEquipWeaponNotEqualProfession = 7054;
+  ErrEquipSlotRefineBlessNotFit = 7055;
+  ErrEquipNotRecast = 7056;
+  ErrEquipEnchantItemMismatch = 7057;
+  ErrEquipEnchantAlreadyEnchanted = 7058;
+  ErrEquipAnyItemMismatch = 7059;
+  ErrEquipSlotRefineBlessNumTooMuch = 7060;
+  ErrEquipNameGroupNoMatch = 7061;
+  ErrEquipPerfectionNoMatch = 7062;
+  ErrEquipNotBreak = 7063;
+  ErrEquipPutOnIng = 7064;
+  ErrEquipDecomposeOverflow = 7065;
+  ErrUserIsMatching = 7101;
+  ErrUserNotInMatching = 7102;
+  ErrUseNotWaitReady = 7103;
+  ErrDungeonCantMatch = 7104;
+  ErrMatchQueueFull = 7105;
+  ErrCommonAwardCantReceive = 7151;
+  ErrCommonAwardHasReceived = 7152;
+  ErrCraftEnergyNotEnough = 7201;
+  ErrCraftEnergyFull = 7202;
+  ErrRecommendPlayNotOpen = 7250;
+  ErrWeeklyTowerNoStart = 7251;
+  ErrWeeklyTowerHasEnd = 7252;
+  ErrWeeklyNoMeetProcessAward = 7253;
+  ErrWeeklyHasRewardProcessAward = 7254;
+  ErrWeeklyNoLayerStageAward = 7255;
+  ErrWeekOnlyCurSeasonAward = 7256;
+  ErrWeeklyTowerCannotEnterLayer = 7257;
+  ErrWeeklyTowerBoxHasOpen = 7258;
+  ErrWeeklyTowerNoBox = 7259;
+  ErrWeeklyTowerNoStageAward = 7260;
+  ErrWeeklyTowerNoTowerDungeon = 7261;
+  ErrWeeklyTowerLayerNotSatisfy = 7262;
+  ErrFunctionNoAward = 7271;
+  ErrFunctionHasDrawn = 7272;
+  ErrTLogIllegalExportArea = 7281;
+  ErrPayOrderFail = 7300;
+  ErrPayCostNotEnough = 7301;
+  ErrPayCantBuy = 7302;
+  ErrPayCantExplore = 7303;
+  ErrActivityNotFind = 7350;
+  ErrActivityOffline = 7351;
+  ErrActivityNotOpen = 7352;
+  ErrActivityRewardNotFound = 7353;
+  ErrActivityConditionNotFinish = 7354;
+  ErrActivityAlreadyObtain = 7355;
+  ErrActivityNotUnlock = 7356;
+  ErrEmojiConfigError = 7401;
+  ErrEmojiAlreadyUnlock = 7402;
+  ErrEmojiUnlockItemError = 7403;
+  ErrEmojiUnlockItemErrorItemNotEnough = 7404;
+  ErrEmojiUnlock = 7405;
+  ErrGlobalConditionNotFound = 7406;
+  ErrGlobalConditionNotLuckyValue = 7407;
+  ErrPathFindingCant = 7412;
+  ErrPathFindingDataError = 7413;
+  ErrPathFindingEndPosError = 7414;
+  ErrPathFindingStartPosError = 7415;
+  ErrPathFindingNoPath = 7416;
+  ErrSignNotOpen = 7421;
+  ErrSignNotSigned = 7422;
+  ErrSignAlreadySigned = 7423;
+  ErrSignTimeError = 7424;
+  CdKeyInvalid = 7501;
+  CdKeyDuplicate = 7502;
+  CdKeyExpired = 7503;
+  CdKeyNotFound = 7504;
+  CdKeyNotActivated = 7505;
+  CdKeyPlayerLevelTooLow = 7506;
+  CdKeyTakeLimitReached = 7507;
+  CdKeyGroupNotFound = 7508;
+  ErrTokenBucketLimit = 9998;
+  ErrUnknown = 9999;
+}
+
+enum EFarmlandState {
+  EFarmlandStateEmpty = 0;
+  EFarmlandStateGrow = 1;
+  EFarmlandStatePollen = 2;
+  EFarmlandStateHarvest = 3;
+  EFarmlandStateOver = 4;
+}
+
+enum EGender {
+  GenderNull = 0;
+  GenderMale = 1;
+  GenderFemale = 2;
+}
+
+enum EGmParsingType {
+  GmParsingJson = 0;
+  GmParsingString = 1;
+}
+
+enum EHeroKeyRollType {
+  HeroKeyRollTypeNull = 0;
+  HeroKeyRollTypeGiveup = 1;
+  HeroKeyRollTypeRoll = 2;
+  HeroKeyRollTypeGet = 3;
+  HeroKeyRollTypeRollGet = 4;
+  HeroKeyRollTypeCountFull = 5;
+}
+
+enum EHomelandLamplightState {
+  HomelandLamplightStateDefault = 0;
+  HomelandLamplightStateOn = 1;
+  HomelandLamplightStateOff = 2;
+}
+
+enum EInteractionAction {
+  EInteractionActionNone = 0;
+  EInteractionActionToServer = 1;
+  EInteractionActionNpcTalk = 2;
+  EInteractionActionDungeonEntry = 3;
+  EInteractionActionFunctionEntry = 4;
+  EInteractionActionClientSceneEvent = 5;
+  EInteractionActionOptionSelect = 6;
+  EInteractionActionHeroNormalDungeon = 7;
+  EInteractionActionHeroChallengeDungeon = 8;
+  EInteractionActionRevive = 9;
+  EInteractionActionVMFuction = 10;
+  EInteractionActionTips = 11;
+  EInteractionActionOpenUI = 12;
+  EInteractionActionWindZone = 13;
+  EInteractionActionWindRing = 14;
+  EInteractionActionWindTornado = 15;
+  EInteractionActionDanceTogether = 16;
+  EInteractionActionStartFlow = 17;
+  EInteractionActionShowCutScene = 18;
+  EInteractionActionUnionHuntEntry = 19;
+  EInteractionActionUnionBuild = 20;
+  EInteractionActionUnionBuildFunc = 21;
+  EInteractionActionExploreMonsterDeplete = 22;
+  EInteractionActionUseSkill = 23;
+  EInteractionActionFishing = 24;
+  EInteractionActionSendClientAiEvent = 25;
+  EInteractionActionDoNoThing = 27;
+  EInteractionActionCookFunc = 28;
+  EInteractionActionMoveToDistance = 29;
+  EInteractionActionMoveToPosition = 30;
+  EInteractionActionMoveToInteractionSeat = 31;
+  EInteractionActionRotateToTarget = 32;
+  EInteractionActionRotateToTargetAndWait = 33;
+  EInteractionActionAddClientBuff = 34;
+  EInteractionActionAddClientBuffAndWait = 35;
+  EInteractionActionAddClientBuffToTarget = 36;
+  EInteractionActionAddClientBuffToTargetAndWait = 37;
+  EInteractionActionProgressBar = 38;
+  EInteractionActionCameraInvoke = 39;
+  EInteractionActionWaitUiConfirm = 40;
+  EInteractionActionIgnoreInput = 41;
+  EInteractionActionHideHud = 42;
+  EInteractionActionHideUI = 43;
+  EInteractionActionMoveToStaticObj = 44;
+  EInteractionActionUnionWarDance = 45;
+  EInteractionActionWaitInputMove = 46;
+  EInteractionActionRemoveClientBuff = 47;
+  EInteractionActionRemoveTargetClientBuff = 48;
+  EInteractionActionEnterAutoFlow = 49;
+  EInteractionActionNpcTalkFlow = 51;
+  EInteractionActionStartFlowAndWait = 52;
+  EInteractionActionShowCutSceneAndWait = 53;
+  EInteractionActionSittingControl = 54;
+  EInteractionActionMagneticAttach = 55;
+  EInteractionActionSwitchCameraTemplate = 56;
+  EInteractionActionHomeFarm = 57;
+  EInteractionActionLua = 999;
+  EInteractionActionBase = 1000;
+  EInteractionActionPivot = 1001;
+  EInteractionActionPivotBreak = 1002;
+  EInteractionActionTransferPoint = 1003;
+  EInteractionActionLogicResonance = 1004;
+  EInteractionActionLogicStatic = 1005;
+  EInteractionActionLogicDance = 1006;
+  EInteractionActionAddBuff = 1007;
+  EInteractionActionTeleport = 1008;
+  EInteractionActionEnterDungeon = 1009;
+  EInteractionActionEnterVisualLayer = 1010;
+  EInteractionActionExitVisualLayer = 1011;
+  EInteractionActionTriggerSceneEvent = 1012;
+  EInteractionActionTriggerSceneCustomEvent = 1013;
+  EInteractionActionUserDoAction = 1014;
+  EInteractionActionPickup = 1015;
+  EInteractionActionOpenEliteTreasureBox = 1016;
+  EInteractionActionOpenBossTreasureBox = 1017;
+  EInteractionActionQuest = 1018;
+  EInteractionActionQuestEvent = 1019;
+  EInteractionActionKillSelf = 1020;
+  EInteractionActionSendAiEvent = 1021;
+  EInteractionActionDanceAwardNPC = 1022;
+  EInteractionActionRequestInteractionSeat = 1023;
+  EInteractionActionRemoveBuff = 1024;
+  EInteractionActionAddBuffToTarget = 1025;
+  EInteractionActionRemoveBuffToTarget = 1026;
+  EInteractionActionPaintToySwitchPage = 1027;
+  EInteractionActionOpenTowerTreasureBox = 1030;
+  EInteractionActionRoughCollection = 1031;
+  EInteractionActionFineCollection = 1032;
+  EInteractionActionBubbleActStart = 1033;
+  EInteractionActionBubbleActEnd = 1034;
+  EInteractionActionRaidOpenBox = 1035;
+}
+
+enum EInteractionTemplateAction {
+  EInteractionTemplateDefault = 0;
+  EInteractionTemplateBegin = 1;
+  EInteractionTemplateUpdate = 2;
+  EInteractionTemplateEnd = 3;
+  EInteractionTemplateAbort = 4;
+  EInteractionTemplateStageEnd = 5;
+}
+
+enum EItemBindFlag {
+  ItemBindNone = 0;
+  ItemNotBind = 1;
+  ItemBindAll = 2;
+}
+
+enum EMoveType {
+  MoveIdle = 0;
+  MoveWalk = 1;
+  MoveRun = 2;
+  MoveDash = 3;
+  MoveDashEnd = 4;
+  MoveAlert = 5;
+  MoveFly = 6;
+  MovePatrol = 7;
+  MovePatrolRun = 8;
+  MoveFlyDash = 9;
+  MoveCustom = 10;
+  MoveParkourRun = 11;
+  MoveSelfPhoto = 12;
+  MoveRotate = 13;
+  MoveDashTurn = 14;
+  MoveWalkEnd = 15;
+  MoveRunEnd = 16;
+  MoveWalkEndToIdle = 17;
+  MoveRunEndToIdle = 18;
+  MoveEightDir = 19;
+  MoveByForce = 20;
+  MoveSitRotate = 21;
+  MoveJumpEndToIdle = 22;
+}
+
+enum ENotifyTrigger {
+  ETypeInZone = 0;
+  ETypeOutZone = 1;
+  ETypeRange = 2;
+}
+
+enum EPictureType {
+  ENormalPicture = 0;
+  ECameraOriginal = 1;
+  ECameraRender = 2;
+  ECameraThumbnail = 3;
+  EProfileSnapShot = 4;
+  EProfileHalfBody = 5;
+}
+
+enum EQuestStepStatus {
+  QuestStepGoing = 0;
+  QuestStepFinish = 1;
+  QuestStepFail = 2;
+}
+
+enum EReceiveRewardStatus {
+  EReceiveRewardStatusNotReceive = 0;
+  EReceiveRewardStatusCanReceive = 1;
+  EReceiveRewardStatusReceived = 2;
+}
+
+enum ERidePropertyType {
+  RidePropertyTypeNone = 0;
+  RidePropertyTypeLand = 11;
+  RidePropertyTypeWater = 12;
+  RidePropertyTypeMax = 13;
+}
+
+enum ESceneLineStatus {
+  SceneLineStatusNone = 0;
+  SceneLineStatusLow = 1;
+  SceneLineStatusMedium = 2;
+  SceneLineStatusHigh = 3;
+  SceneLineStatusFull = 4;
+  SceneLineStatusRecycle = 5;
+}
+
+enum EShowPieceType {
+  ShowPieceNull = 0;
+  ShowPieceNormalAction = 1;
+  ShowPieceEmote = 2;
+  ShowPieceDoubleAction = 3;
+  ShowPieceSticker = 4;
+}
+
+enum ESkillCDType {
+  ESkillCDNormal = 0;
+  ESkillCDCharge = 1;
+}
+
+enum ESkillCdType {
+  E_SKILL_CD_TYPE_E_SKILL_CD_NORMAL = 0;
+  E_SKILL_CD_TYPE_E_SKILL_CD_CHARGE = 1;
+}
+
+enum ETeamMemberType {
+  ETeamMemberTypeFive = 0;
+  ETeamMemberTypeTwenty = 1;
+}
+
+enum ETimerExeType {
+  TimerExeTypeNull = 0;
+  TimerExeType_Start = 1;
+  TimerExeType_End = 2;
+  TimerExeType_Cycle_Start = 3;
+  TimerExeType_Cycle_End = 4;
+}
+
+enum ETimerType {
+  TimerTypeNull = 0;
+  TimerType_Point = 1;
+  TimerType_Day = 2;
+  TimerType_Month = 3;
+  TimerType_Week = 4;
+  TimerType_Interval = 5;
+}
+
+enum EUseSlotType {
+  UseSlotType_Other = 0;
+  UseSlotType_Skill = 1;
+}
+
+enum EUserTransferType {
+  EUserTransferTypeDefault = 0;
+  EUserTransferTypeScenePosition = 1;
+  EUserTransferTypeScenePosId = 2;
+  EUserTransferTypePivot = 3;
+  EUserTransferTypeCutScene = 4;
+  EUserTransferTypeNear = 5;
+}
+
+enum LaunchPlatform {
+  LaunchPlatformNull = 0;
+  LaunchPlatformWeXin = 1001;
+  LaunchPlatformQq = 1002;
+}
+
+enum MonsterTargetAward {
+  MonsterTargetAwardNull = 0;
+  MonsterTargetAwardGet = 1;
+  MonsterTargetAwardReceived = 2;
+}
+
+enum StructureOpType {
+  StructureOpTypeAdd = 0;
+  StructureOpTypeUpdate = 1;
+  StructureOpTypeDelete = 2;
+}
+
+enum SystemType {
+  SystemType_Null = 0;
+  SystemType_Android = 1;
+  SystemType_Ios = 2;
+  SystemType_Web = 3;
+  SystemType_Linux = 4;
+  SystemType_Windows = 5;
+}
+
+enum VDataOneofCase {
+  VDataOneofCaseNone = 0;
+  VData = 1;
+}
+
+enum WorldReconnectStatus {
+  FastReconnect = 0;
+  NewSession = 1;
+}
+
+message AITableBase {
+  int32 id = 1463;
+  string remarks = 803;
+  string normal_sub_tree = 1572;
+  bool is_recover_normal = 1494;
+  bool is_patrol = 643;
+  bool is_play_action = 1507;
+  int32 play_action_probability = 269;
+  int32 play_action_mode = 497;
+  int_array play_action_id = 947;
+  bool is_random_move = 1558;
+  int32 random_move_probability = 1498;
+  float random_move_radius = 761;
+  bool is_alert_normal_patrol = 1515;
+  bool is_walking_around = 591;
+  string way_point_name = 620;
+  string alert_normal_patrol_path = 1506;
+  bool is_alert_action = 1551;
+  int_array alert_action_list = 354;
+  string normal_play_sub_tree = 1438;
+  string_array battle_action_id_array = 1985;
+  int32 battle_action_release_probability = 379;
+  bool is_play_action_when_into_battle = 1069;
+  bool is_play_action_only_normal_into_battle = 1738;
+  int32 in_battle_action_id = 1185;
+  int32 alert_in_battle_action_id = 2032;
+  bool is_have_battle_action = 16;
+  int32 battle_skill_release_probability = 1224;
+  int32 battle_skill_id = 326;
+  string normal_battle_sub_tree = 244;
+  int32 skill_release_probability = 218;
+  bool is_not_move = 1006;
+  bool is_skill_release_close = 1078;
+  bool is_release_skill_when_into_battle = 932;
+  int32 normal_into_battle_skill_id = 2000;
+  string battle_alert_sub_tree = 390;
+  bool is_alert_move_require = 2015;
+  int32 chase_and_alert_move_probability = 1274;
+  bool is_chase_monster = 415;
+  bool is_have_back_skill = 850;
+  int32 back_skill_id = 617;
+  bool is_need_translation_alert_move = 270;
+  int32 alert_move_probability = 979;
+  float alert_speed = 1159;
+  float min_alert_dis = 607;
+  float max_alert_dis = 500;
+  int32 min_alert_move_time = 430;
+  int32 max_alert_move_time = 608;
+  int32 min_alert_back_time = 1261;
+  int32 max_alert_back_time = 606;
+  string to_battle_action_json_name = 106;
+  bool is_play_vigilance_action = 149;
+  string vigilance_action_json_name = 1933;
+}
+
+message AITableMgr {
+  map<int32, bokura.AITableBase> datas = 1;
+}
+
+message AcceptProfessionQuestRequest {
+  int32 profession_id = 1;
+}
+
+message AcceptQuestInfo {
+  int32 quest_id = 1;
+  repeated int32 param_list = 2;
+}
+
+message AcceptTransferBeLeaderRequest {
+  bool agree = 2;
+}
+
+message AccountData {
+  string open_id = 1;
+  int32 sdk_type = 2;
+  string account_id = 3;
+  string account_uuid = 4;
+  SystemType os = 5;
+}
+
+message AccountInfo {
+  string account_id = 1;
+  string open_id = 2;
+  repeated SocialData chars = 3;
+  string token = 5;
+  int64 restrict_time = 6;
+  map<int64, int64> delete_char_ids_left_time = 7;
+}
+
+message AccumulateEnd {
+  string skill_uuid = 1;
+  string end_time = 2;
+}
+
+message Ace {
+}
+
+message AceSdkNtf {
+  NotifyLoginAntiDataRequest v_request = 1;
+}
+
+message Achievement {
+  uint32 finish_num = 1;
+  bool has_received = 2;
+  uint64 begin_progress = 3;
+}
+
+message AchievementDateTableBase {
+  int32 id = 1463;
+  mlstring name = 439;
+  int_array target_id = 1432;
+  int_table condition = 1634;
+  int32 pre_achievement = 327;
+  int32 reward_id = 212;
+  string des = 266;
+  string type_icon = 1596;
+  int32 season_id = 1669;
+}
+
+message AchievementDateTableMgr {
+  map<int32, bokura.AchievementDateTableBase> datas = 1;
+}
+
+message AchievementEntryTableBase {
+  int32 id = 1463;
+  int_array achievement_list = 1797;
+}
+
+message AchievementEntryTableMgr {
+  map<int32, bokura.AchievementEntryTableBase> datas = 1;
+}
+
+message AchievementSeasonClassTableBase {
+  int32 id = 1463;
+  mlstring class_name = 1286;
+  string class_background = 1637;
+  string class_des = 1765;
+  int_array entry_list = 343;
+  int32 sort_id = 504;
+}
+
+message AchievementSeasonClassTableMgr {
+  map<int32, bokura.AchievementSeasonClassTableBase> datas = 1;
+}
+
+message AchievementTableBase {
+  int32 id = 1463;
+  string name = 176;
+  int32 main_type = 1850;
+  int32 sub_type = 1973;
+  string desc = 483;
+  int32 show = 601;
+  int32 time_limit = 1869;
+  int_table award = 149;
+  string icon = 1210;
+}
+
+message AchievementTableMgr {
+  map<int32, bokura.AchievementTableBase> datas = 1;
+}
+
+message ActionInfo {
+  int32 action_id = 1;
+  int32 period = 2;
+  float percent = 3;
+}
+
+message ActionSampleTableBase {
+  int64 id = 1463;
+  string name = 439;
+  number_table motion_info = 264;
+  bool has_motion = 1733;
+}
+
+message ActionSampleTableMgr {
+  map<int64, bokura.ActionSampleTableBase> datas = 1;
+}
+
+message ActionShowDataTableBase {
+  int64 id = 1463;
+  float start = 678;
+  float duration = 544;
+  float end = 1415;
+  bool is_attacker = 920;
+  int32 state_id = 308;
+  int32 group_id = 196;
+  string action_name = 1340;
+  string res_path = 548;
+  int32 action_type = 830;
+  bool is_loop = 109;
+  bool is_upend = 494;
+  bool enhance_damping = 1754;
+}
+
+message ActionShowDataTableMgr {
+  map<int64, bokura.ActionShowDataTableBase> datas = 1;
+}
+
+message ActorBodyPartInfo {
+  optional int32 part_id = 1;
+  optional uint64 hp = 2;
+  optional uint64 max_hp = 3;
+  optional BodyPartState state = 4;
+  optional int32 fleshy_id = 5;
+}
+
+message ActorBodyPartInfos {
+  optional int64 uuid = 1;
+  repeated ActorBodyPartInfo infos = 2;
+}
+
+message ActorUuidStru {
+  int32 actor_type = 1;
+  bool is_summon = 2;
+  int32 instance_id = 3;
+}
+
+message AffixData {
+  repeated int32 affix_ids = 1;
+}
+
+message AiBotActiveTrigger {
+  BotActiveTrigger active_trigger_param = 1;
+}
+
+message AiBotAddBuffByConfigId {
+  BotAddBuff add_buff_param = 1;
+}
+
+message AiBotMove {
+  BotMoveInfo move_param = 1;
+}
+
+message AiBotPlayAction {
+  BotPlayActionParam play_action_param = 1;
+}
+
+message AiBotRemoveBuffByConfigId {
+  BotRemoveBuff remove_buff_param = 1;
+}
+
+message AiBotResurrection {
+  BotResurrectionParam v_request = 1;
+}
+
+message AiBotSendChitChatMsg {
+  BotSendChitChatMsgReq v_request = 1;
+}
+
+message AiBotSendGmMsg {
+  GmCmd msg = 1;
+}
+
+message AiBotStartRide {
+  BotStartRideParam start_ride_param = 1;
+}
+
+message AiBotTeleportToPos {
+  BotTeleportParam teleport_param = 1;
+}
+
+message AiBotUseSkill {
+  BotUseSkillInfo use_skill_param = 1;
+}
+
+message AnswerList {
+  repeated int32 answers = 1;
+}
+
+message AntiAddictionInfo {
+  uint32 last_time = 1;
+}
+
+message AoiSyncDelta {
+  optional int64 uuid = 1;
+  AttrCollection attrs = 2;
+  TempAttrCollection temp_attrs = 3;
+  EventDataList event_data_list = 4;
+  BulletEvent bullet_event = 5;
+  ActorBodyPartInfos body_part_infos = 6;
+  SkillEffect skill_effects = 7;
+  SeqPassiveSkillInfo passive_skill_infos = 8;
+  SeqPassiveSkillEndInfo passive_skill_end_infos = 9;
+  BuffInfoSync buff_infos = 10;
+  BuffEffectSync buff_effect = 11;
+  repeated FakeBulletInfo fake_bullets = 12;
+  repeated MagneticRideQueueChangeInfo magnetic_ride_queue_change_info_list = 13;
+}
+
+message AoiSyncToMeDelta {
+  AoiSyncDelta base_delta = 1;
+  repeated int64 sync_hate_ids = 2;
+  repeated SkillCd sync_skill_c_ds = 3;
+  repeated FightResCd fight_res_c_ds = 4;
+  optional int64 uuid = 5;
+}
+
+message AttachVelocity {
+  string attach_speed = 1;
+  string vel_dir_x = 2;
+  string vel_dir_y = 3;
+  string vel_dir_z = 4;
+  string attach_source = 5;
+  string source_ent_uuid = 6;
+}
+
+message Attr {
+  optional int32 id = 1;
+  optional bytes raw_data = 2;
+}
+
+message AttrCollection {
+  optional int64 uuid = 1;
+  repeated Attr attrs = 2;
+  repeated MapAttr map_attrs = 3;
+}
+
+message AttrInBattleShowSync {
+  string attr_in_battle_show = 1;
+}
+
+message AvatarInfo {
+  int32 avatar_id = 1;
+  PictureInfo profile = 2;
+  PictureInfo half_body = 3;
+  int32 business_card_style_id = 4;
+  int32 avatar_frame_id = 5;
+}
+
+message BasicData {
+  int64 char_id = 1;
+  int64 show_id = 2;
+  string name = 3;
+  int32 gender = 4;
+  EBodySize body_size = 5;
+  int32 level = 6;
+  int32 scene_id = 7;
+  repeated int32 personal_state = 8;
+  int64 offline_time = 9;
+  string scene_guid = 10;
+  int64 create_time = 11;
+  uint32 cur_talent_pool_id = 12;
+  uint32 bot_ai_id = 13;
+  int32 register_channel = 14;
+  uint64 char_state = 15;
+  int64 online_time = 16;
+  int64 sum_save_diamond = 17;
+  bool is_newbie = 18;
+}
+
+message BattlePass {
+  int32 id = 1;
+  int32 level = 2;
+  int32 curexp = 3;
+  int32 week_exp = 4;
+  int32 exp_last_time = 5;
+  bool is_unlock = 6;
+  bool buy_normal_pas = 7;
+  bool buy_prime_pass = 8;
+  map<int32, BattlePassAwardInfo> award = 9;
+  bool is_valid = 10;
+  bool is_sended_mail = 11;
+}
+
+message BattlePassAwardInfo {
+  bool free_award = 1;
+  bool paid_award = 2;
+}
+
+message BattlePassData {
+  map<int32, BattlePass> battle_map = 1;
+}
+
+message BossProgress {
+  int32 total_award_cnt = 1;
+}
+
+message BotActiveTrigger {
+  string trigger_id = 1;
+}
+
+message BotAddBuff {
+  string actor_id = 1;
+  string buff_id = 2;
+  string layer = 3;
+  string duration = 4;
+}
+
+message BotMoveInfo {
+  Vector3 dest_pos = 1;
+  EMoveType move_type = 2;
+  bool is_set_dir = 3;
+  string cur_move_flag = 4;
+}
+
+message BotPlayActionParam {
+  string action_id = 1;
+  string action_source = 2;
+}
+
+message BotRemoveBuff {
+  string buff_id = 1;
+}
+
+message BotResurrectionParam {
+  string target_id = 1;
+  string revive_id = 2;
+}
+
+message BotSendChitChatMsgReq {
+  string emoji_id = 1;
+}
+
+message BotStartRideParam {
+  string ride_id = 1;
+}
+
+message BotTeleportParam {
+  string actor_id = 1;
+  Position pos = 2;
+}
+
+message BotUseSkillInfo {
+  string actor_id = 1;
+  string skill_id = 2;
+  string begin_time = 3;
+  string target_uuid = 4;
+  Vector3 target_pos = 5;
+  Vector3 dmg_target_pos = 6;
+  Vector3 face_target_pos = 7;
+}
+
+message BounceJump {
+  string bounce_jump_id = 1;
+  string axis_ref_uuid = 2;
+  string vel_dir_x = 3;
+  string vel_dir_y = 4;
+  string vel_dir_z = 5;
+}
+
+message BubbleActData {
+  map<int32, BubbleInfo> bubble_info = 5;
+}
+
+message BubbleInfo {
+  uint32 bubble_score = 1;
+  uint32 bubble_award_count = 2;
+  repeated uint64 additional_target_uuid_list = 3;
+  int64 last_refresh_time = 4;
+}
+
+message BuffAttrEffect {
+  repeated BuffAttrShowInfo attr_show_info = 1;
+}
+
+message BuffAttrShowInfo {
+  int32 id = 1;
+  bool is_gain = 2;
+}
+
+message BuffDBData {
+  int64 buff_uuid = 1;
+  int64 firer_id = 2;
+  uint32 buff_config_id = 3;
+  uint32 base_id = 4;
+  uint32 level = 5;
+  uint32 layer = 6;
+  int32 duration = 7;
+  int32 count = 8;
+  int64 create_time = 9;
+  int32 part_id = 10;
+  int32 create_scene_id = 11;
+  repeated string custom_params_key = 12;
+  repeated int32 custom_params = 13;
+}
+
+message BuffDBInfo {
+  uint32 max_id = 1;
+  map<uint32, BuffDBData> all_buff_db_data = 2;
+}
+
+message BuffDbData {
+  string buff_uuid = 1;
+  string firer_id = 2;
+  string buff_config_id = 3;
+  string base_id = 4;
+  string level = 5;
+  string layer = 6;
+  string duration = 7;
+  string count = 8;
+  string create_time = 9;
+  string part_id = 10;
+  string create_scene_id = 11;
+  repeated string custom_params_key = 12;
+  repeated string custom_params = 13;
+}
+
+message BuffDbInfo {
+  string max_id = 1;
+  map<string, string> all_buff_db_data = 2;
+}
+
+message BuffEffect {
+  optional EBuffEventType type = 1;
+  optional int32 buff_uuid = 2;
+  optional int64 host_uuid = 3;
+  optional int64 trigger_time = 4;
+  repeated BuffEffectLogicInfo logic_effect = 5;
+}
+
+message BuffEffectLogicInfo {
+  optional EBuffEffectLogicPbType effect_type = 1;
+  optional bytes raw_data = 2;
+  optional bool is_loop = 3;
+}
+
+message BuffEffectLogicTension {
+  int64 target_uuid = 1;
+  repeated int32 strength = 2;
+  int32 strength_length = 3;
+  int32 max_length = 4;
+}
+
+message BuffEffectSync {
+  optional int64 uuid = 1;
+  repeated BuffEffect buff_effects = 2;
+}
+
+message BuffInfo {
+  optional int32 buff_uuid = 1;
+  optional int32 base_id = 2;
+  optional int32 level = 3;
+  optional int64 host_uuid = 4;
+  optional int32 table_uuid = 5;
+  optional int64 create_time = 6;
+  optional int64 fire_uuid = 7;
+  optional int32 layer = 8;
+  optional int32 part_id = 9;
+  optional int32 count = 10;
+  optional int32 duration = 11;
+  FightSourceInfo fight_source_info = 12;
+  repeated BuffEffectLogicInfo logic_effect = 13;
+}
+
+message BuffInfoSync {
+  optional int64 uuid = 1;
+  repeated BuffInfo buff_infos = 2;
+}
+
+message BuffProfessionEffectData {
+  int32 profession_type = 1;
+  repeated int32 profession_point = 2;
+  repeated bool profession_switch = 3;
+}
+
+message BufferStream {
+  bytes buffer_s = 1;
+}
+
+message BulletEvent {
+  optional int64 uuid = 1;
+  optional int32 enter_stage_id = 2;
+}
+
+message CameraSchemeCache {
+  map<string, string> camera_scheme_dict = 1;
+}
+
+message CameraSchemeInfo {
+  CameraPatternType camera_pattern_type = 1;
+  CameraSchemeType camera_scheme_type = 2;
+  string scheme_key = 3;
+  string scheme_name = 4;
+  string scheme_time = 5;
+  string exposure = 6;
+  string contrast = 7;
+  string saturation = 8;
+  string horizontal = 9;
+  string vertical = 10;
+  string angle = 11;
+  bool depth_tag = 12;
+  string aperture = 13;
+  string near_blend = 14;
+  string far_blend = 15;
+  bool focus_tag = 16;
+  string focus = 17;
+  string world_time = 18;
+  bool is_head_follow = 19;
+  bool is_eye_follow = 20;
+  map<string, bool> show_entity_dicts = 21;
+  map<string, bool> show_ui_dicts = 22;
+  string filter_path = 23;
+  string id = 24;
+}
+
+message CameraSelectSchemeCache {
+  CameraSchemeInfo camera_scheme_cache = 1;
+}
+
+message ChallengeDungeonInfo {
+  map<int32, DungeonInfo> dungeon_info = 1;
+  map<int32, DungeonTargetAward> dungeon_target_award = 2;
+}
+
+message ChangeCharFunctionState {
+  EActorState state_type = 1;
+}
+
+message ChannelingEnd {
+  string skill_uuid = 1;
+  string time = 2;
+}
+
+message CharBaseInfo {
+  int64 char_id = 1;
+  string account_id = 2;
+  int64 show_id = 3;
+  uint32 server_id = 4;
+  string name = 5;
+  EGender gender = 6;
+  bool is_deleted = 7;
+  bool is_forbid = 8;
+  bool is_mute = 9;
+  float x = 10;
+  float y = 11;
+  float z = 12;
+  float dir = 13;
+  FaceData face_data = 14;
+  uint32 card_id = 15;
+  int64 create_time = 16;
+  int64 online_time = 17;
+  int64 offline_time = 18;
+  ProfileInfo profile_info = 19;
+  CharTeam team_info = 20;
+  uint64 char_state = 21;
+  EBodySize body_size = 22;
+  UserUnion union_info = 23;
+  repeated int32 personal_state = 24;
+  AvatarInfo avatar_info = 25;
+  uint64 total_online_time = 26;
+  string open_id = 27;
+  int32 sdk_type = 28;
+  int32 os = 29;
+  int32 init_profession_id = 31;
+  uint64 last_cal_total_time = 32;
+  int32 area_id = 33;
+  string client_version = 34;
+  int32 fight_point = 35;
+  int64 sum_save = 36;
+  string client_resource_version = 37;
+  int64 last_offline_time = 38;
+  int32 day_acc_dur_time = 39;
+  int64 last_acc_dur_timestamp = 40;
+  int64 save_serial = 41;
+  int64 last_online_time = 42;
+}
+
+message CharSerialize {
+  int64 char_id = 1;
+  CharBaseInfo char_base = 2;
+  SceneData scene_data = 3;
+  SceneLuaData scene_lua_data = 4;
+  PioneerData pioneer_data = 5;
+  BuffDBInfo buff_info = 6;
+  ItemPackage item_package = 7;
+  QuestDataList quest_list = 8;
+  SettingData setting_data = 9;
+  MiscInfo misc_info = 10;
+  ExchangeItem exchange_items = 11;
+  EquipList equip = 12;
+  EnergyItem energy_item = 13;
+  MapData map_data = 14;
+  DungeonList dungeon_list = 15;
+  UserFightAttr attr = 16;
+  FashionMgr fashion = 17;
+  ProfileList profile_list = 18;
+  PlayHelper help = 19;
+  CounterList counter_list = 20;
+  PersonalObject personal_obj = 21;
+  RoleLevel role_level = 22;
+  Pivot pivot = 23;
+  TransferPoint transfer_point = 24;
+  PlanetMemory planet_memory = 25;
+  SeasonTarget planet_memory_target = 26;
+  RedDotData red_dot = 27;
+  Resonance resonance = 28;
+  CutsState cuts_state = 29;
+  InvestigateList investigate_list = 30;
+  ParkourRecordList records = 31;
+  InteractionInfo interaction = 32;
+  SeasonQuestList season_quest_list = 33;
+  RoleFace role_face = 34;
+  MapBookInfoList map_book_list = 35;
+  FunctionData function_data = 36;
+  AntiAddictionInfo anti_info = 37;
+  MonsterExploreList monster_explore_list = 38;
+  ShowPieceData show_piece_data = 39;
+  CollectionBook collection_book = 42;
+  NotGetProceedAwardInfo not_get_proceed_award_times = 43;
+  CookList cook_list = 44;
+  TimerRefreshDataList refresh_data_list = 45;
+  ChallengeDungeonInfo challenge_dungeon_info = 46;
+  SyncAwardData sync_award_data = 47;
+  SeasonAchievementList season_achievement_list = 48;
+  SeasonRankList season_rank_list = 49;
+  SeasonCenter season_center = 50;
+  PersonalZone personal_zone = 51;
+  SeasonMedalInfo season_medal_info = 52;
+  CommunityHomeData community_home_info = 53;
+  SeasonActivation season_activation = 54;
+  Slot slots = 55;
+  MonsterHuntInfo monster_hunt_info = 56;
+  Mod mod = 57;
+  WorldEventMap world_event_map = 58;
+  FishSetting fish_setting = 59;
+  FreightData freight_data = 60;
+  ProfessionList profession_list = 61;
+  TrialRoad trial_road = 62;
+  GashaData gasha_data = 63;
+  ShopData shop_data = 64;
+  PersonalWorldBossInfo personal_world_boss_info = 65;
+  CraftEnergyRecord craft_energy = 66;
+  WeeklyTowerRecord weekly_tower = 67;
+  CutSceneInfos cut_scene_infos = 68;
+  UserRecommendPlayData recommend_play_data = 69;
+  RideList ride_list = 70;
+  PayOrderList pay_order_list = 71;
+  LifeProfession life_profession = 72;
+  LifeProfessionWork life_profession_work = 73;
+  UserActivityList user_activity_list = 74;
+  PlayerRecord player_record = 75;
+  DropContainerInfo drop_container = 76;
+  MonthlyCard monthly_card = 77;
+  FashionBenefit fashion_benefit = 78;
+  ItemCurrency item_currency = 79;
+  PrivilegeEffectData privilege_effect_data = 80;
+  Treasure treasure = 81;
+  UnlockEmojiData unlock_emoji_data = 82;
+  PlayerOrderComtainerInfo player_order_comtainer_info = 83;
+  PlayerBox player_box = 84;
+  LaunchPrivilegeData launch_privilege_data = 85;
+  BattlePassData battle_pass_data = 86;
+  RechargeData recharge_data = 87;
+  LuckyValueMgr lucky_value_mgr = 88;
+  HandbookData handbook_data = 89;
+  MasterModeDungeonInfo master_mode_dungeon_info = 90;
+  StatisticsData statistics_data = 91;
+  CompensationStatistics compenstion_statistics = 92;
+  BubbleActData bubble_act_data = 93;
+  MailClaimedInfo mail_claimed_info = 94;
+  NewbieData newbie_data = 95;
+  FightPoint fight_point = 96;
+  SignInfo sign = 97;
+  CharStatisticsData char_statistics_data = 98;
+}
+
+message CharStatisticsData {
+  int32 login_days = 1;
+  uint64 last_login_time = 2;
+}
+
+message CharTeam {
+  int64 team_id = 1;
+  int64 leader_id = 2;
+  uint32 team_target_id = 3;
+  uint32 team_num = 4;
+  repeated int64 char_ids = 5;
+  bool is_matching = 6;
+  int32 char_team_version = 7;
+  map<int64, TeamMemData> team_member_data = 8;
+  ETeamMemberType team_member_type = 9;
+}
+
+message ClientBreakState {
+  string v_operator = 1;
+}
+
+message ClientHitInfo {
+  EDamageSource source_type = 1;
+  string uuid = 2;
+  string id = 3;
+  string level = 4;
+  string stage = 5;
+  string event_id = 6;
+  string attack_time = 7;
+  string attack_uuid = 8;
+  string target_uuid = 9;
+  Vector3 attack_pos = 10;
+  Vector3 target_pos = 11;
+  Vector3 damage_pos = 12;
+  repeated ClientHitPartInfo part_infos = 13;
+  bool is_dodge_success = 14;
+  string skill_uuid = 15;
+}
+
+message ClientHitPartInfo {
+  optional int32 part_id = 1;
+  Vector3 damage_pos = 2;
+  optional int64 damage_val = 3;
+}
+
+message ClientStageEnd {
+  string cur_stage_index = 1;
+  string next_stage_index = 2;
+  string time = 3;
+  string condition_id = 4;
+  string skill_uuid = 5;
+}
+
+message ClientTargetChange {
+  string skillid = 1;
+  string skill_level = 2;
+  string cur_stage_index = 3;
+  string target_uuid = 4;
+  Position target_pos = 5;
+  Position cur_pos = 6;
+  string target_part_id = 7;
+  Position target_part_pos = 8;
+  string skill_uuid = 9;
+}
+
+message Clutter {
+  int64 uuid = 1;
+  int32 config_id = 2;
+  int32 position_id = 3;
+}
+
+message ClutterGenerationRecord {
+  bool generated = 1;
+}
+
+message CollectingItem {
+  int32 item_id = 1;
+  int64 collected_num = 2;
+  int32 collect_price = 3;
+  bool is_high = 4;
+}
+
+message CollectionBook {
+  map<uint32, bool> mod_book_map = 1;
+}
+
+message CommonAwardInfo {
+  int32 id = 1;
+  EReceiveRewardStatus award_status = 2;
+}
+
+message CommunityAuthorityInfo {
+  map<int32, bool> authority = 1;
+}
+
+message CommunityBuildFurnitureInfo {
+  int64 build_uuid = 1;
+  int32 furniture_id = 2;
+  int32 furniture_count = 3;
+  int64 char_id = 4;
+  int64 start_time = 5;
+  int64 end_time = 6;
+  int32 accelerate_count = 7;
+  map<int32, int32> accelerate_items = 8;
+  repeated Item consume_items = 9;
+}
+
+message CommunityCharBasicData {
+  BasicData basic_data = 1;
+  AvatarInfo avatar_info = 2;
+  ProfessionData profession_data = 3;
+}
+
+message CommunityData {
+  int64 community_id = 1;
+  int64 homeland_id = 2;
+  repeated int64 cohabitant_ids = 3;
+  int64 last_exit_cohabitation_time = 4;
+  int32 buy_count = 5;
+  int32 level = 6;
+}
+
+message CommunityGetHomeLandBaseInfo {
+  CommunityGetHomeLandBaseInfoRequest v_request = 1;
+}
+
+message CommunityGetHomeLandBaseInfoReply {
+  HomelandBaseInfo homeland_base_info = 1;
+  EErrorCode err_code = 2;
+}
+
+message CommunityGetHomeLandBaseInfoRequest {
+  int64 community_id = 1;
+  int64 homeland_id = 2;
+}
+
+message CommunityGrainUpdateStructureReply {
+  EErrorCode err_code = 1;
+  repeated CommunityUpdateStructureReplyOpt structures = 2;
+}
+
+message CommunityHomeData {
+  int64 community_id = 1;
+  int64 homeland_id = 2;
+  int32 buy_count = 3;
+  map<int32, CommunityHomelandRecipe> unlocked_recipes = 4;
+  int32 level = 5;
+}
+
+message CommunityHomelandRecipe {
+  int32 id = 1;
+}
+
+message CommunityPlayerAuthorityInfo {
+  map<int32, bool> authority = 1;
+}
+
+message CommunityPlayerInfo {
+  CommunityCharBasicData community_char = 1;
+  CommunityPlayerAuthorityInfo player_authority_info = 2;
+  CommunityQuitCohabitant quit_cohabitant = 3;
+  HomeLandPlayerTaskInfo home_land_player_task_info = 4;
+}
+
+message CommunityQuitCohabitant {
+  bool is_initiative_quit = 1;
+  int64 time = 2;
+}
+
+message CommunityTransfer {
+  int64 char_id = 1;
+  int64 time = 2;
+  int64 last_time = 3;
+}
+
+message CommunityUpdateStructureReplyOpt {
+  EErrorCode err_code = 1;
+  StructureOp structure_op = 2;
+}
+
+message CompensationData {
+  int64 overflow_energy = 1;
+  int32 finish_times = 2;
+  int32 climb_up_layer_id = 3;
+}
+
+message CompensationRecord {
+  map<uint32, CompensationData> compensation_data = 1;
+}
+
+message CompensationSeasonStatistics {
+  map<uint32, CompensationRecord> week_data = 1;
+  map<uint32, int32> compensation = 2;
+  int32 max_climb_up_layer_id = 3;
+  repeated int64 raid_boss_ids = 4;
+  map<int64, int64> raid_boss_kill_time = 5;
+}
+
+message CompensationStatistics {
+  map<uint32, CompensationSeasonStatistics> season_data = 1;
+  uint32 last_season_id = 2;
+  int64 cur_point = 3;
+  int64 max_point = 4;
+  map<uint32, int32> last_week = 5;
+}
+
+message CompletedTargetInfo {
+  map<int32, bool> completed_target_list = 1;
+}
+
+message ConnectWorld {
+  RequestConnectWorld v_request = 1;
+}
+
+message ConnectWorldResult {
+  WorldReconnectStatus result = 1;
+  EErrorCode err_code = 2;
+  string ack_client_sequence = 3;
+  string session_token = 4;
+  string connect_guid = 5;
+}
+
+message CookBook {
+  uint32 create_time = 1;
+}
+
+message CookList {
+  map<uint32, CookBook> book_data = 1;
+}
+
+message CounterInfo {
+  int32 id = 1;
+  int64 counter = 2;
+  int64 accumulate_limit = 3;
+}
+
+message CounterList {
+  map<int32, CounterInfo> counter_map = 1;
+}
+
+message CraftEnergyRecord {
+  map<int32, int32> records = 1;
+}
+
+message CurrencyData {
+  int32 config_id = 1;
+  int64 count = 2;
+}
+
+message CutSceneInfo {
+  int32 cut_scene_id = 1;
+  uint32 flag = 2;
+  uint32 scene_id = 3;
+  EventData event_data = 4;
+}
+
+message CutSceneInfos {
+  map<int32, CutSceneInfo> cut_scene_infos = 1;
+  map<int32, bool> finished_cut_scenes = 2;
+  map<int64, bool> finished_infos = 3;
+}
+
+message CutScenePlayEnd {
+  string v_cut_scene_id = 1;
+}
+
+message CutScenePointInfo {
+  int32 cut_scene_id = 1;
+}
+
+message CutsState {
+  map<int32, int32> state_info = 1;
+}
+
+message DanceBall {
+  int32 dance_id = 1;
+  int64 begin_time = 2;
+  int64 end_time = 3;
+  int32 rand_index = 4;
+  map<int64, DancerInfo> dancers = 5;
+  int32 buff_id = 6;
+  int32 npc_id = 7;
+  int32 npc_pos_index = 8;
+  int32 sum_dance_score = 9;
+  bool has_notify_npc = 10;
+}
+
+message DancerInfo {
+  int64 char_id = 1;
+  int32 dance_secs = 2;
+  bool is_dancing = 3;
+  bool has_drawn = 4;
+  bool has_send = 5;
+}
+
+message DelayHitInfo {
+  int32 effect_id = 1;
+  int32 buff_uuid = 2;
+  int32 event_id = 3;
+  float play_time = 4;
+  repeated DelayHitTargetInfo target_infos = 5;
+}
+
+message DelayHitTargetInfo {
+  int64 target_uuid = 1;
+  Vec3 hit_pos = 2;
+  float delay_time = 3;
+}
+
+message DetachRideMagnetic {
+  EDetachMagneticType detach_type = 1;
+}
+
+message DirtyMask {
+  repeated int64 dirty_key = 1;
+}
+
+message DisappearEntity {
+  optional int64 uuid = 1;
+  optional EDisappearType type = 2;
+}
+
+message DrawingLines {
+  Vector3 color = 1;
+  string width = 2;
+  string delete_time = 3;
+  repeated Position points = 4;
+}
+
+message DropAwardHistory {
+  int32 id = 1;
+  int32 count = 2;
+  int64 cycle_time = 3;
+}
+
+message DropContainerInfo {
+  map<int32, DropContainerSingle> drop_containers = 1;
+  map<int32, DropAwardHistory> drop_award_histories = 2;
+}
+
+message DropContainerSingle {
+  int32 id = 1;
+  int32 count = 2;
+  int64 cycle_time = 3;
+  int32 history_count = 4;
+}
+
+message DroughtRecord {
+  int64 trigger_time = 1;
+  int32 segment_id = 2;
+  int64 duration = 3;
+  int64 actual_end_time = 4;
+  bool is_watered = 5;
+  bool is_expired = 6;
+}
+
+message DungeonAffixData {
+  repeated uint32 affix_data = 1;
+}
+
+message DungeonAward {
+  map<int64, Item> items = 1;
+  int32 flag_assist = 2;
+  int32 award_count = 3;
+  repeated int64 first_items = 4;
+}
+
+message DungeonBossRank {
+  map<int32, RankData> boss_rank = 1;
+}
+
+message DungeonDamage {
+  map<int64, int64> damages = 1;
+}
+
+message DungeonEnterCount {
+  uint32 enter_time = 1;
+  int32 enter_count = 2;
+}
+
+message DungeonEnterLimit {
+  map<int32, DungeonEnterCount> enter_count = 1;
+}
+
+message DungeonEvent {
+  map<int32, DungeonEventData> dungeon_event_data = 1;
+}
+
+message DungeonEventData {
+  int32 event_id = 1;
+  int32 start_time = 2;
+  DungeonEventState state = 3;
+  DungeonEventResult result = 4;
+  map<int32, DungeonTargetData> dungeon_target = 5;
+}
+
+message DungeonFlowInfo {
+  EDungeonState state = 1;
+  int32 active_time = 2;
+  int32 ready_time = 3;
+  int32 play_time = 4;
+  int32 end_time = 5;
+  int32 settlement_time = 6;
+  int32 dungeon_times = 7;
+  int32 result = 8;
+}
+
+message DungeonHeroKeyInfo {
+  int64 char_id = 1;
+  repeated Item hero_key_item = 2;
+  map<uint32, HeroKeyItemInfo> key_info = 3;
+  Item use_item = 4;
+  repeated Item hero_key_award_item = 5;
+}
+
+message DungeonInfo {
+  int32 dungeon_id = 1;
+  int32 complete_count = 2;
+  int32 award_flg = 3;
+  int32 score = 4;
+  int32 pass_time = 5;
+}
+
+message DungeonList {
+  map<int32, DungeonInfo> complete_dungeon = 1;
+  uint32 reset_time = 2;
+  uint32 normal_dungeon_pass_count = 3;
+  DungeonEnterLimit dungeon_enter_limit = 4;
+  DungeonWeekTargetList week_target = 5;
+  bool is_assist = 6;
+  map<int32, RaidRecord> raid_record_table = 7;
+}
+
+message DungeonPioneer {
+  map<int32, CompletedTargetInfo> completed_target_this_time = 1;
+}
+
+message DungeonPlanetMemoryRoom {
+  int32 room_id = 1;
+}
+
+message DungeonPlayerInfo {
+  int64 char_id = 1;
+  SocialData social_data = 2;
+}
+
+message DungeonPlayerList {
+  map<uint32, DungeonPlayerInfo> player_infos = 1;
+}
+
+message DungeonRaidInfo {
+}
+
+message DungeonRandomEntityConfigIdInfo {
+  map<int64, int32> random_entity_map = 1;
+}
+
+message DungeonRankInfo {
+  int32 num = 1;
+  int32 rank = 2;
+}
+
+message DungeonRankList {
+  map<int32, DungeonRankInfo> dungeon_rank_map = 1;
+}
+
+message DungeonReviveInfo {
+  repeated int32 revive_ids = 1;
+  map<int32, int32> revive_map = 2;
+}
+
+message DungeonSceneInfo {
+  int32 difficulty = 1;
+}
+
+message DungeonScore {
+  int32 total_score = 1;
+  int32 cur_ratio = 2;
+}
+
+message DungeonSettlement {
+  int32 pass_time = 1;
+  map<int64, DungeonAward> award = 2;
+  map<uint32, SettlementPosition> settlement_pos = 3;
+  DungeonWorldBossSettlement world_boss_settlement = 4;
+  int32 master_mode_score = 5;
+}
+
+message DungeonSyncData {
+  int64 scene_uuid = 1;
+  DungeonFlowInfo flow_info = 2;
+  DungeonTitle title = 3;
+  DungeonTarget target = 4;
+  DungeonDamage damage = 5;
+  DungeonVote vote = 6;
+  DungeonSettlement settlement = 7;
+  DungeonPioneer dungeon_pioneer = 8;
+  DungeonPlanetMemoryRoom planet_room_info = 9;
+  DungeonVar dungeon_var = 10;
+  DungeonRankList dungeon_rank = 11;
+  DungeonAffixData dungeon_affix_data = 12;
+  DungeonEvent dungeon_event = 13;
+  DungeonScore dungeon_score = 14;
+  DungeonTimerInfo timer_info = 15;
+  DungeonHeroKeyInfo hero_key = 16;
+  DungeonUnionInfo dungeon_union_info = 17;
+  DungeonPlayerList dungeon_player_list = 18;
+  DungeonReviveInfo revive_info = 19;
+  DungeonRandomEntityConfigIdInfo random_entity_config_id_info = 20;
+  DungeonSceneInfo dungeon_scene_info = 21;
+  DungeonVarAll dungeon_var_all = 22;
+  DungeonRaidInfo dungeon_raid_info = 23;
+  EErrorCode err_code = 24;
+}
+
+message DungeonTarget {
+  map<int32, DungeonTargetData> target_data = 1;
+}
+
+message DungeonTargetAward {
+  map<int32, DungeonTargetProgress> dungeon_target_progress = 1;
+}
+
+message DungeonTargetData {
+  int32 target_id = 1;
+  int32 nums = 2;
+  int32 complete = 3;
+}
+
+message DungeonTargetProgress {
+  int32 target_id = 1;
+  int32 target_progress = 2;
+  int32 award_state = 3;
+}
+
+message DungeonTimerInfo {
+  EDungeonTimerType type = 1;
+  int32 start_time = 2;
+  int32 dungeon_times = 3;
+  EDungeonTimerDirection direction = 4;
+  int32 index = 5;
+  int32 change_time = 6;
+  EDungeonTimerEffectType effect_type = 7;
+  int32 pause_time = 8;
+  int32 pause_total_time = 9;
+  EDungeonTimerTimerLookType out_look_type = 10;
+  int32 cur_pause_timestamp = 11;
+}
+
+message DungeonTitle {
+  map<int64, DungeonTitleList> title_list = 1;
+}
+
+message DungeonTitleInfo {
+  int64 uuid = 1;
+  int32 title_id = 2;
+}
+
+message DungeonTitleList {
+  map<int32, DungeonTitleInfo> title_info = 1;
+}
+
+message DungeonUnionInfo {
+  int64 union_id = 1;
+  map<int32, UnionBuilding> union_buildings = 2;
+  map<int32, UnionEScreenInfo> e_screen_infos = 3;
+  DanceBall dance_ball = 4;
+}
+
+message DungeonVar {
+  repeated DungeonVarData dungeon_var_data = 1;
+}
+
+message DungeonVarAll {
+  map<int64, DungeonVar> dungeon_var_all_map = 1;
+}
+
+message DungeonVarData {
+  string name = 1;
+  int32 value = 2;
+}
+
+message DungeonVote {
+  map<int64, int32> vote = 1;
+}
+
+message DungeonWeekTargetList {
+  map<int32, DungeonTargetProgress> week_target = 1;
+  uint32 refresh_time = 2;
+}
+
+message DungeonWorldBossSettlement {
+  int32 boss_hp_percent = 1;
+  DungeonBossRank dungeon_boss_rank = 2;
+  map<int64, DungeonAward> award = 3;
+  map<int64, DungeonAward> boss_rank_award = 4;
+  map<int64, DungeonAward> last_hit_award = 5;
+}
+
+message EditorUIPosition {
+  int32 id = 1;
+  float x = 2;
+  float y = 3;
+}
+
+message EditorUiPosition {
+  string id = 1;
+  string x = 2;
+  string y = 3;
+}
+
+message EnergyInfo {
+  uint32 energy_value = 1;
+  uint32 unlock_num = 2;
+  map<uint32, EnergyItemInfo> energy_item_info = 3;
+}
+
+message EnergyItem {
+  uint32 energy_limit = 1;
+  uint32 extra_energy_limit = 2;
+  map<uint32, EnergyInfo> energy_info = 3;
+}
+
+message EnergyItemInfo {
+  uint32 queue_id = 1;
+  uint32 column_id = 2;
+  uint32 refine_state = 3;
+  int64 gain_time = 4;
+}
+
+message EnterScene {
+  EnterSceneInfo enter_scene_info = 1;
+}
+
+message EnterSceneInfo {
+  AttrCollection scene_attrs = 1;
+  Entity player_ent = 2;
+  string scene_guid = 3;
+  string connect_guid = 4;
+  AttrCollection subscene_attrs = 5;
+}
+
+message Entity {
+  optional int64 uuid = 1;
+  optional EEntityType ent_type = 2;
+  AttrCollection attrs = 3;
+  TempAttrCollection temp_attrs = 4;
+  ActorBodyPartInfos body_part_infos = 5;
+  SeqPassiveSkillInfo passive_skill_infos = 6;
+  BuffInfoSync buff_infos = 7;
+  BuffEffectSync buff_effect = 8;
+  optional EAppearType appear_type = 9;
+  map<int64, MagneticQueueAppearInfo> magnetic_ride_queue_change_info_dict = 10;
+}
+
+message EquipAttr {
+  map<uint32, uint32> base_attrs = 4;
+  int32 perfection_value = 7;
+  int32 recast_count = 8;
+  int32 total_recast_count = 9;
+  map<int32, int32> basic_attr = 10;
+  map<int32, int32> advance_attr = 11;
+  map<int32, int32> recast_attr = 12;
+  int32 perfection_level = 13;
+  map<int32, int32> rare_quality_attr = 14;
+  int32 max_perfection_value = 15;
+  EquipAttrSet equip_attr_set = 17;
+  int32 break_through_time = 18;
+}
+
+message EquipAttrSet {
+  map<int32, int32> basic_attr = 1;
+  map<int32, int32> advance_attr = 2;
+  map<int32, int32> recast_attr = 3;
+  map<int32, int32> rare_quality_attr = 4;
+}
+
+message EquipData {
+  repeated EquipNine equip_infos = 1;
+}
+
+message EquipEnchantInfo {
+  int32 enchant_item_type_id = 1;
+  int32 enchant_level = 2;
+  EEquipEnchantType enchant_type = 3;
+}
+
+message EquipInfo {
+  int32 equip_slot = 1;
+  uint64 item_uuid = 2;
+  uint32 equip_slot_refine_level = 3;
+  uint32 equip_slot_refine_failed_count = 4;
+}
+
+message EquipList {
+  map<int32, EquipInfo> equip_list = 1;
+  EquipAttr equip_attr = 2;
+  map<uint64, EquipAttr> equip_recast_info = 4;
+  map<int64, EquipEnchantInfo> equip_enchant = 5;
+  map<int32, EquipSuitInfo> suit_info_dict = 6;
+}
+
+message EquipNine {
+  int32 slot = 1;
+  int32 equip_id = 2;
+}
+
+message EquipSuitInfo {
+  map<int32, int32> suit_attr = 3;
+  int32 attr_type = 4;
+}
+
+message EventData {
+  optional int32 event_type = 1;
+  repeated int32 int_params = 2;
+  repeated int64 long_params = 3;
+  repeated float float_params = 4;
+  repeated string str_params = 5;
+}
+
+message EventDataList {
+  optional int64 uuid = 1;
+  repeated EventData events = 2;
+}
+
+message ExchangeData {
+  int32 item_config_id = 1;
+  int32 unlock = 2;
+  int32 cur_exchange_count = 3;
+  int64 expire_time = 4;
+  int64 last_refresh_time = 5;
+}
+
+message ExchangeInfo {
+  int32 id = 1;
+  map<int32, ExchangeData> exchange_data = 2;
+}
+
+message ExchangeItem {
+  map<int32, ExchangeInfo> exchange_info = 1;
+}
+
+message FaceData {
+  map<int32, int32> face_info = 1;
+  map<int32, IntVec3> color_info = 2;
+  float height = 3;
+}
+
+message FaceDataDb {
+  map<int32, int32> face_info = 1;
+  map<int32, IntVec3Db> color_info = 2;
+  float height = 3;
+}
+
+message FakeBulletInfo {
+  optional int32 uuid = 1;
+  optional int32 bullet_id = 2;
+  optional int64 target_id = 3;
+  optional int32 part_id = 4;
+  Vector3 offset = 5;
+  Vector3 rotate = 6;
+  optional int32 skin_id = 7;
+}
+
+message FashionAdvanceInfo {
+  int32 fashion_id = 1;
+  int32 using_advance_id = 2;
+  repeated int32 advance_ids = 3;
+}
+
+message FashionBenefit {
+  int32 last_reward_id = 1;
+  int32 level = 2;
+  int32 points_task = 3;
+  int32 points_cycle = 4;
+  int32 points_collection = 5;
+  map<int32, FashionBenefitTaskInfo> task_list = 6;
+  repeated FashionBenefitCollectionHistory collection_history = 7;
+  int64 next_refresh_time = 8;
+  int32 max_points = 9;
+  int64 last_add_time = 10;
+  int32 cur_day_max_points = 11;
+  int32 expire_cycle = 12;
+  int32 last_level = 13;
+  int64 firt_expire_time = 14;
+  repeated int32 last_reward_ids = 15;
+}
+
+message FashionBenefitCollectionHistory {
+  int32 fashion_id = 1;
+  int64 time = 2;
+  int32 type = 3;
+  int32 parameter = 4;
+}
+
+message FashionBenefitTaskInfo {
+  int32 id = 1;
+  int32 count = 2;
+  int32 progress = 3;
+}
+
+message FashionColorInfo {
+  int32 id = 1;
+  map<int32, IntVec3> colors = 2;
+  map<int32, IntVec3> attachment_color = 3;
+}
+
+message FashionData {
+  repeated FashionInfo fashion_infos = 1;
+}
+
+message FashionInfo {
+  int32 slot = 1;
+  int32 fashion_id = 2;
+  FashionColorInfo colors = 3;
+}
+
+message FashionMgr {
+  map<int32, int32> wear_info = 1;
+  map<int32, FashionColorInfo> fashion_datas = 2;
+  map<int32, UnlockColorInfo> unlock_color = 3;
+  map<int32, bool> fashion_reward = 4;
+  map<int32, bool> all_fashion = 5;
+  map<int32, bool> all_ride = 6;
+  map<int32, bool> all_weapon_skin = 7;
+  map<int32, FashionAdvanceInfo> fashion_advance = 8;
+  int32 fashion_collect_point = 9;
+  int32 ride_collect_point = 10;
+  int32 weapon_skin_collect_point = 11;
+  map<int32, int32> all_fashion_num = 12;
+  map<int32, int32> all_ride_num = 13;
+  map<int32, int32> all_weapon_skin_num = 14;
+  bool is_fashion_init = 15;
+  bool is_ride_init = 16;
+  bool is_weapon_skin_init = 17;
+}
+
+message FashionQualityCollectInfo {
+  map<int32, int32> quality_count = 1;
+}
+
+message FightPoint {
+  int32 total_fight_point = 1;
+  map<int32, FightPointData> fight_point_data = 2;
+}
+
+message FightPointData {
+  int32 function_type = 1;
+  int32 total_point = 2;
+  int32 point = 3;
+  map<int32, FightPointSubData> sub_function_data = 4;
+}
+
+message FightPointSubData {
+  int32 function_type = 1;
+  int32 root_function_type = 2;
+  int32 point = 3;
+}
+
+message FightResCD {
+  int32 res_id = 1;
+  int64 begin_time = 2;
+  int32 duration = 3;
+  int32 valid_cd_time = 4;
+}
+
+message FightResCd {
+  optional int32 res_id = 1;
+  optional int64 begin_time = 2;
+  optional int32 duration = 3;
+  optional int32 valid_cd_time = 4;
+}
+
+message FightSourceInfo {
+  optional int32 fight_source_type = 1;
+  optional int32 source_config_id = 2;
+}
+
+message FirstPayInfo {
+  int32 first_pay_type = 1;
+  int64 timestamp = 2;
+}
+
+message FishRecord {
+  int32 fish_id = 1;
+  bool first_flag = 2;
+  int32 size = 3;
+  int64 millisecond = 4;
+  int32 research = 5;
+  uint32 count = 6;
+  int32 min_size = 7;
+  int64 min_sizemillisecond = 8;
+  map<int32, int64> star_cnts = 9;
+}
+
+message FishSetting {
+  int32 bait_id = 2;
+  int32 experiences = 3;
+  int32 research_fish_id = 4;
+  map<int32, FishRecord> fish_records = 5;
+  map<uint64, int32> fish_rod_durability = 6;
+  uint64 rod_uuid = 7;
+  map<int32, bool> level_reward = 8;
+  map<int32, int64> zero_fish_times = 9;
+}
+
+message FishSocialData {
+  map<int32, FishRecord> fish_records = 1;
+}
+
+message FishingData {
+  int32 rod_id = 1;
+  int32 area_id = 2;
+  int32 fish_id = 3;
+  int32 stage = 4;
+  bool is_get_fish = 5;
+  int32 size = 6;
+}
+
+message FishingSetStage {
+  FishingSetStageRequest v_request = 1;
+}
+
+message FishingSetStageRequest {
+  int32 stage = 1;
+}
+
+message FlowPlayEnd {
+  string v_flow_id = 1;
+}
+
+message ForcedPullBack {
+  Position cur_pos = 1;
+  bool force = 2;
+}
+
+message FreightData {
+  int64 refresh_time = 1;
+  int32 goods_value = 2;
+  bool set_off = 3;
+  bool can_receive = 4;
+  repeated int32 up_goods_list = 5;
+  repeated int32 keep_goods_list = 6;
+  repeated int32 down_goods_list = 7;
+  int64 can_reward_time = 8;
+}
+
+message FunctionData {
+  map<int32, bool> unlocked_map = 1;
+  repeated int32 drawn_function_ids = 2;
+}
+
+message FunctionTimeData {
+  uint32 times = 1;
+  uint32 timestamp = 2;
+}
+
+message GameFunctionData {
+  uint32 id = 1;
+  bool state = 2;
+  uint32 product_id = 3;
+  map<uint32, FunctionTimeData> function_times = 4;
+}
+
+message GashaData {
+  map<uint32, GashaInfo> gasha_infos = 1;
+  map<uint32, GashaGuaranteeInfo> gasha_guarantee_infos = 2;
+}
+
+message GashaGuaranteeInfo {
+  uint32 id = 1;
+  uint32 guaranteex = 2;
+  uint32 guaranteey = 3;
+  int32 residue_guarantee_timex = 4;
+  int32 residue_guarantee_timey = 5;
+  int32 residue_guarantee_timez = 6;
+  uint32 guaranteez = 7;
+}
+
+message GashaInfo {
+  uint32 id = 1;
+  uint32 draw_count = 4;
+  int64 refresh_time = 5;
+  uint32 wish_id = 8;
+  uint32 wish_value = 9;
+  uint32 wish_finish_count = 10;
+  int64 wish_reset_time = 11;
+  uint32 wish_limit = 12;
+}
+
+message GetClientOptions {
+  GetClientOptionsRequest v_request = 1;
+}
+
+message GetClientOptionsReply {
+  map<string, string> options = 1;
+  EErrorCode err_code = 2;
+}
+
+message GetClientOptionsRequest {
+  repeated string keys = 1;
+}
+
+message GetGitVersion {
+  GetGitVersionRequest v_request = 1;
+}
+
+message GetGitVersionReply {
+  string git_version = 1;
+  EErrorCode err_code = 2;
+}
+
+message GetGitVersionRequest {
+}
+
+message GetHomelandBuildFurnitureInfo {
+  GetHomelandBuildFurnitureInfoRequest v_request = 1;
+}
+
+message GetHomelandBuildFurnitureInfoReply {
+  repeated CommunityBuildFurnitureInfo furniture_info = 1;
+  EErrorCode err_code = 2;
+}
+
+message GetHomelandBuildFurnitureInfoRequest {
+  int32 build_type = 1;
+}
+
+message GetLuaSceneAttr {
+  string v_attribute_name = 1;
+}
+
+message GetPath {
+  GetPathRequest v_request = 1;
+}
+
+message GetPathReply {
+  EErrorCode err_code = 1;
+  bytes reply_bytes = 2;
+}
+
+message GetPathRequest {
+  bytes request_bytes = 1;
+}
+
+message GetSocialData {
+  GetSocialDataRequest v_request = 1;
+}
+
+message GetSocialDataReply {
+  int64 mask = 1;
+  SocialData data = 2;
+  EErrorCode err_code = 3;
+}
+
+message GetSocialDataRequest {
+  int64 char_id = 1;
+  int64 mask = 2;
+}
+
+message GmCmd {
+  string command = 1;
+  int64 target_char_id = 2;
+  EGmParsingType parsing_type = 3;
+  string parameter = 4;
+}
+
+message GmCommand {
+  GmCmd cmd = 1;
+}
+
+message GmResult {
+  bool success = 1;
+  string fail_reason = 2;
+  repeated string ret_params = 3;
+  EErrorCode err_code = 4;
+}
+
+message HandBookStruct {
+  int32 id = 1;
+  bool unlock = 2;
+}
+
+message HandbookData {
+  map<int32, HandBookStruct> unlock_note_important_role_map = 1;
+  map<int32, HandBookStruct> unlock_note_reading_book_map = 2;
+  map<int32, HandBookStruct> unlock_note_dictionary_map = 3;
+  map<int32, HandBookStruct> unlock_note_post_card_map = 4;
+  map<int32, HandBookStruct> unlock_note_month_card_map = 5;
+}
+
+message HeroKeyItemInfo {
+  Item item = 1;
+  map<uint32, HeroKeyRollInfo> roll_info = 2;
+}
+
+message HeroKeyRollInfo {
+  EHeroKeyRollType type = 1;
+  int64 char_id = 2;
+  string name = 3;
+  AvatarInfo avatar = 4;
+  uint32 roll_value = 5;
+}
+
+message HomeLandClutterGenerationRecord {
+  map<int32, ClutterGenerationRecord> home_land_clutter_record = 1;
+}
+
+message HomeLandClutterInfo {
+  map<int64, Clutter> home_land_clutter = 1;
+}
+
+message HomeLandItemInstance {
+  int64 instance_id = 1;
+  int32 config_id = 2;
+  map<int64, Item> owner_to_stack_map = 3;
+}
+
+message HomeLandPlayerTaskInfo {
+  int64 next_task_reflush_time = 1;
+  int32 cur_left_times = 2;
+  map<int32, HomeLandTask> cur_task_map = 3;
+}
+
+message HomeLandSellShopInfo {
+  bool is_init = 1;
+  int64 next_reflush_time = 2;
+  map<int32, CollectingItem> collecting_items = 3;
+}
+
+message HomeLandTask {
+  bool finished = 1;
+}
+
+message HomelandBaseInfo {
+  int64 homeland_id = 1;
+  int32 level = 2;
+  int64 exp = 3;
+  int64 home_resource = 4;
+  int32 cleanliness = 5;
+  int64 lastsubtractcleanlinesstime = 6;
+  HomeLandClutterInfo home_land_clutter = 7;
+  HomeLandClutterGenerationRecord home_land_clutter_generation_record = 8;
+  HomeLandSellShopInfo home_land_sell_shop_info = 9;
+  map<int64, HomeLandItemInstance> items = 10;
+  map<int64, int64> slots = 11;
+  map<int64, int64> item_to_slot = 12;
+  int64 capacity = 13;
+  int64 used_slots = 14;
+  int64 house_owner_char_id = 15;
+  string name = 16;
+  string check_in_content = 17;
+  string introduction = 18;
+  CommunityTransfer transfer_community = 19;
+  map<int64, CommunityPlayerInfo> cohabitant = 20;
+  map<int32, int32> furniture_state = 21;
+  CommunityAuthorityInfo authority_info = 22;
+  int32 field_id = 23;
+  HomelandDecorationInfo outer_decoration_info = 24;
+  HomelandDecorationInfo inner_decoration_info = 25;
+  repeated int32 unlocked_areas = 26;
+  int32 housing_type = 27;
+  int32 outer_empty_land = 28;
+  int32 inner_empty_land = 29;
+  int32 flowers_num = 30;
+}
+
+message HomelandDecorationInfo {
+  HomelandLamplightInfo lamplight_info = 1;
+  map<int32, HomelandMaterialInfo> material_infos = 2;
+}
+
+message HomelandLamplightInfo {
+  int32 lamplight_level = 1;
+  IntVec3 lamplight_color = 2;
+  int32 day_night_id = 3;
+  int32 mode = 4;
+}
+
+message HomelandMaterialInfo {
+  int32 material_id = 1;
+  int64 char_id = 2;
+}
+
+message HttpCachePhotoInfo {
+  map<string, string> http_cache_photo_info_dict = 1;
+}
+
+message ImageInfo {
+  EPictureType type = 1;
+  uint32 size = 2;
+  uint32 version = 3;
+  string cos_url = 4;
+  string extra_info = 5;
+  uint32 review_start_time = 6;
+}
+
+message InitHomeLandInfo {
+  bool is_outer = 1;
+  map<int64, Structure> structures = 2;
+  HomelandDecorationInfo decoration_info = 3;
+}
+
+message InstallResonanceSkillReq {
+  string v_position = 1;
+  string v_resonance_id = 2;
+}
+
+message IntVec3 {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message IntVec3Db {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message Interaction {
+  InteractionTemplateData v_info = 1;
+}
+
+message InteractionActionEnd {
+  string cur_stage = 1;
+  EInteractionAction action_type = 2;
+  bool is_success = 3;
+}
+
+message InteractionInfo {
+  int32 interaction_stage = 1;
+  int32 action_id = 2;
+  int64 originator_id = 3;
+  int64 invitee_id = 4;
+  bool is_originator = 5;
+  int32 interaction_type = 6;
+}
+
+message InteractionTemplateData {
+  EInteractionTemplateAction type = 1;
+  uint64 object_id = 2;
+  int32 template_id = 3;
+  int64 homeland_id = 4;
+  int32 pos_id = 5;
+  int32 sub_template_id = 6;
+}
+
+message InteractionWithNotPlayer {
+  string v_entity_config_id = 1;
+  string v_entity_type = 2;
+  string v_action_id = 3;
+}
+
+message InvestigateData {
+  uint32 id = 1;
+  map<int32, InvestigateStep> step_ids = 2;
+}
+
+message InvestigateList {
+  map<uint32, InvestigateData> investigate_map = 1;
+  map<uint32, bool> comp_investigate_map = 2;
+  repeated uint32 comp_reasoning_map = 3;
+}
+
+message InvestigateStep {
+  repeated int32 clues = 1;
+  map<int32, AnswerList> reasoning_map = 2;
+}
+
+message Item {
+  int64 uuid = 1;
+  int32 config_id = 2;
+  int64 count = 3;
+  int32 invalid = 4;
+  EItemBindFlag bind_flag = 5;
+  int64 create_time = 6;
+  int64 expire_time = 7;
+  int32 opt_src = 8;
+  int32 quality = 9;
+  EquipAttr equip_attr = 10;
+  ModAttr mod_attr = 11;
+  int64 cool_down_expire_time = 12;
+  ModNewAttr mod_new_attr = 13;
+  AffixData affix_data = 14;
+  map<int32, ItemExtendData> extend_attr = 15;
+  int32 reward_id = 16;
+  map<int32, int32> gene_sequence = 17;
+}
+
+message ItemCurrency {
+  bool is_init = 1;
+  map<int32, CurrencyData> currency_datas = 2;
+}
+
+message ItemExtendData {
+  int32 id = 1;
+  int32 value = 2;
+}
+
+message ItemPackage {
+  map<int32, Package> packages = 1;
+  map<int32, int32> unlock_items = 2;
+  int32 quick_bar = 3;
+  int32 item_uuid = 4;
+  map<int32, int64> use_group_cd = 5;
+}
+
+message LastSceneData {
+  uint32 scene_id = 1;
+  Position pos = 2;
+  int32 scene_area_id = 3;
+}
+
+message LaunchPrivilegeData {
+  LaunchPlatform launch_platform = 1;
+  bool is_privilege = 2;
+  LaunchPlatform bak_launch_platform = 3;
+  bool bak_privilege = 4;
+}
+
+message LearnExpressionAction {
+  string expression_id = 1;
+}
+
+message LevelProficiency {
+  map<int32, int32> using_proficiency_map = 1;
+  map<int32, UnlockProficiency> unlock_proficiency_map = 2;
+}
+
+message LevelUpAward {
+  uint32 drop_times = 1;
+  int64 last_drop_time = 2;
+}
+
+message LifeProfession {
+  map<int32, LifeProfessionBasic> profession_info = 1;
+  map<int32, LifeProfessionTargetInfo> life_target_info = 2;
+  map<int32, LifeProfessionRecipe> life_profession_recipe = 3;
+  LifeProfessionAlchemyInfo life_profession_alchemy_info = 4;
+  map<int32, int32> spare_energy = 5;
+  int32 point = 6;
+}
+
+message LifeProfessionAlchemyInfo {
+  uint32 failure_count = 1;
+  uint32 rd_count = 2;
+  int64 last_reset_time = 3;
+}
+
+message LifeProfessionBasic {
+  int32 id = 1;
+  int32 level = 2;
+  int32 exp = 3;
+  map<int32, LiftProfessionSpecialization> specialization = 5;
+  int32 current_specialization_point = 6;
+}
+
+message LifeProfessionRecipe {
+  int32 id = 1;
+  int64 unlock_time = 2;
+}
+
+message LifeProfessionTargetInfo {
+  int32 id = 1;
+  int32 value = 2;
+  int32 level = 3;
+  repeated uint32 life_target_reward_states = 4;
+}
+
+message LifeProfessionWork {
+  LifeProfessionWorkInfo life_profession_work_info = 1;
+  repeated LifeProfessionWorkInfo life_profession_work_history_info = 2;
+}
+
+message LifeProfessionWorkInfo {
+  uint32 life_profession_id = 1;
+  uint32 begin_time = 2;
+  uint32 end_time = 3;
+  uint32 count = 4;
+  uint32 cost = 5;
+  repeated Item reward = 6;
+  uint32 cost_id = 7;
+}
+
+message LiftProfessionSpecialization {
+  int32 id = 1;
+  int32 level = 2;
+}
+
+message LineDrawing {
+  DrawingLines lines = 1;
+}
+
+message LinkingInfo {
+  bool is_delete = 1;
+  int32 effectid = 2;
+  int32 buff_uuid = 3;
+  repeated ActorUuidStru target_uuids = 4;
+}
+
+message LoadMapSuccess {
+  LoadMapSuccessParam v_param = 1;
+}
+
+message LoadMapSuccessParam {
+  string scene_guid = 1;
+  string aoi_sync_count = 2;
+  string connect_guid = 3;
+}
+
+message LuaSceneAttrReply {
+  string attr = 1;
+  EErrorCode err_code = 2;
+}
+
+message LuckyValueInfo {
+  int32 luck_id = 1;
+  int32 luck_value = 2;
+  int64 next_time = 3;
+}
+
+message LuckyValueMgr {
+  map<int32, LuckyValueInfo> luck_value_info = 1;
+  bool init_value = 2;
+}
+
+message MagneticQueueAppearInfo {
+  repeated int64 passenger_uuid_list = 1;
+  optional bool is_circle = 2;
+  optional float path_length = 3;
+}
+
+message MagneticRidePassengerChangeInfo {
+  repeated PassengerChangeParam passenger_change_list = 1;
+}
+
+message MagneticRidePathPointChangeInfo {
+  repeated PathPointChangeParam path_point_change_list = 1;
+}
+
+message MagneticRideQueueChangeInfo {
+  optional int64 queue_uuid = 1;
+  MagneticRidePassengerChangeInfo passenger_change_info = 2;
+  MagneticRidePathPointChangeInfo path_point_change_info = 3;
+  optional bool is_circle = 4;
+  optional bool is_remove = 5;
+  optional float path_length = 6;
+}
+
+message MailClaimedInfo {
+  repeated int64 attachment_mail_list = 1;
+  map<int64, int64> claimed_mails = 2;
+}
+
+message MapAttr {
+  optional bool is_clear = 1;
+  optional int32 id = 2;
+  repeated MapAttrValue attrs = 3;
+}
+
+message MapAttrValue {
+  optional bool is_remove = 1;
+  optional bytes key = 2;
+  optional bytes value = 3;
+}
+
+message MapBookInfo {
+  uint32 id = 1;
+  map<uint32, MapStickerInfo> map_sticker_map = 2;
+  uint32 award_flag = 3;
+}
+
+message MapBookInfoList {
+  map<uint32, MapBookInfo> map_book_map = 1;
+}
+
+message MapData {
+  map<int32, MarkData> mark_data_map = 1;
+  map<int32, bool> ares_map = 2;
+  int32 mark_uuid = 3;
+}
+
+message MapStickerInfo {
+  map<uint32, MapStickerTaskInfo> sticker_map = 1;
+  repeated uint32 finish_map = 2;
+  uint32 award_flag = 3;
+}
+
+message MapStickerTaskInfo {
+  uint32 task_id = 1;
+  map<int32, int32> target_num = 2;
+}
+
+message MarkData {
+  int32 id = 1;
+  map<int64, MarkInfo> mark_info_map = 2;
+  int32 mark_uuid = 3;
+}
+
+message MarkInfo {
+  int64 tag_id = 1;
+  string title = 2;
+  string content = 3;
+  uint32 icon_id = 4;
+  MarkPosition position = 5;
+}
+
+message MarkPosition {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message MasterModeDiffDungeonInfo {
+  map<int32, DungeonInfo> dungeon_info = 1;
+}
+
+message MasterModeDungeonData {
+  int32 season_score = 1;
+  bool is_show = 2;
+}
+
+message MasterModeDungeonInfo {
+  map<int32, SeasonMasterModeDungeonInfo> master_mode_dungeon_info = 1;
+  bool is_show = 2;
+}
+
+message MedalHole {
+  uint32 hole_id = 1;
+  uint32 hole_level = 2;
+  uint32 cur_exp = 3;
+}
+
+message MedalNode {
+  uint32 node_id = 1;
+  uint32 node_level = 2;
+  bool choose = 3;
+  int32 slot = 4;
+}
+
+message MiscInfo {
+  map<int32, int32> expression_ids_learned = 1;
+}
+
+message Mlstring {
+  int64 id = 1;
+}
+
+message Mod {
+  map<int32, int64> mod_slots = 1;
+  map<int64, ModInfo> mod_infos = 2;
+}
+
+message ModAttr {
+  int32 load_flag = 1;
+  int32 type = 2;
+  int32 level = 3;
+  repeated ModAttrInfo mod_attr_info = 4;
+}
+
+message ModAttrInfo {
+  int32 type = 1;
+  int32 id = 2;
+  int32 value = 3;
+  map<uint32, string> effect_parameter = 4;
+}
+
+message ModInfo {
+  repeated int32 part_ids = 1;
+  repeated ModPartUpgradeRecord upgrade_records = 2;
+  int32 success_rate = 3;
+  repeated int32 init_link_nums = 4;
+}
+
+message ModNewAttr {
+  repeated int32 mod_parts = 1;
+  repeated ModPartUpgradeRecord upgrade_records = 2;
+}
+
+message ModPartUpgradeRecord {
+  int32 part_id = 1;
+  bool is_success = 2;
+}
+
+message MonitorBehaviorTreeOfEntity {
+  string entity_id = 1;
+}
+
+message MonsterCastSkill {
+  string self_uuid = 1;
+  string skill_id = 2;
+  string target_uuid = 3;
+}
+
+message MonsterExploreInfo {
+  bool is_unlock = 1;
+  map<int32, int32> target_num = 2;
+  uint32 award_flag = 3;
+  bool is_flag = 4;
+}
+
+message MonsterExploreList {
+  map<int32, MonsterExploreInfo> monster_explore_list = 1;
+}
+
+message MonsterHuntInfo {
+  map<int32, MonsterHuntTarget> monster_hunt_list = 1;
+  int32 cur_level = 2;
+  int32 cur_exp = 3;
+  map<int32, int32> level_award_flag = 4;
+  map<int32, int64> monster_hunt_refrsh_time = 6;
+}
+
+message MonsterHuntTarget {
+  int32 monster_id = 1;
+  map<int32, MonsterTargetInfo> target_info_list = 2;
+}
+
+message MonsterHuntUnlockMonster {
+  UnlockInfo info = 1;
+}
+
+message MonsterTargetInfo {
+  int32 id = 1;
+  int32 target_uuid = 2;
+  int32 target_type = 3;
+  int32 target_num = 4;
+  MonsterTargetAward award_flag = 5;
+}
+
+message MonthCardItem {
+  int32 item_id = 1;
+  int64 create_time = 2;
+}
+
+message MonthlyCard {
+  int64 expire_time = 1;
+  map<int32, MonthlyCardInfo> monthly_card_info = 2;
+  int32 last_award_monthly_card_time = 3;
+  int32 tips_clicked = 4;
+  int32 tips_day = 5;
+  repeated Item items = 6;
+  map<int64, MonthlyCardBuyList> monthly_card_buy_list = 7;
+}
+
+message MonthlyCardBuyList {
+  int64 begin_time = 1;
+  int64 end_time = 2;
+  int64 last_award_day_time = 3;
+}
+
+message MonthlyCardInfo {
+  EReceiveRewardStatus limit_award_status = 1;
+  EReceiveRewardStatus award_status = 2;
+  MonthCardItem month_card_item = 3;
+  int64 begin_time = 4;
+  int64 end_time = 5;
+}
+
+message NewMove {
+  UserControlInfo info = 1;
+}
+
+message NewbieData {
+  int64 total_online_time = 1;
+  bool is_newbie = 2;
+  bool is_cancel_newbie = 3;
+}
+
+message NotGetProceedAwardInfo {
+  map<uint32, uint32> award_id_times = 1;
+}
+
+message NotifyAntiData {
+  NotifyAntiDataRequest v_request = 1;
+}
+
+message NotifyAntiDataRequest {
+  TssAccountInfoProto tss_info = 1;
+}
+
+message NotifyBuffChange {
+  string old_buff_id = 1;
+  string new_buff_id = 2;
+}
+
+message NotifyBuildFurnitureOp {
+  BuildFurnitureOpType op_type = 1;
+  CommunityBuildFurnitureInfo furniture = 2;
+}
+
+message NotifyClientKickOff {
+  EErrorCode err_code = 1;
+}
+
+message NotifyCommunityHomeLandDecorationInfo {
+  NotifyCommunityHomeLandDecorationInfoRequest request = 1;
+}
+
+message NotifyCommunityHomeLandDecorationInfoRequest {
+  bool is_outer = 1;
+  HomelandDecorationInfo decoration_info = 2;
+}
+
+message NotifyCommunityHomeLandHousingTypeUpdate {
+  NotifyCommunityHomeLandHousingTypeUpdateRequest request = 1;
+}
+
+message NotifyCommunityHomeLandHousingTypeUpdateRequest {
+  string community_id = 1;
+  string old_housing_type = 3;
+}
+
+message NotifyCommunityHomeLandUnlockedAreasUpdate {
+  NotifyCommunityHomeLandUnlockedAreasUpdateRequest request = 1;
+}
+
+message NotifyCommunityHomeLandUnlockedAreasUpdateRequest {
+  string community_id = 1;
+  repeated string unlock_outer_areas = 3;
+}
+
+message NotifyEnterWorld {
+  NotifyEnterWorldRequest v_request = 1;
+}
+
+message NotifyEnterWorldRequest {
+  string account_id = 1;
+  string token = 2;
+  string scene_ip = 3;
+  int32 scene_port = 4;
+  TransferParam transform = 5;
+  SceneLineData scene_line_data = 6;
+}
+
+message NotifyFunctionParams {
+  repeated int32 close_function = 1;
+}
+
+message NotifyHomelandBuildFurnitureOp {
+  NotifyHomelandBuildFurnitureOpRequest request = 1;
+}
+
+message NotifyHomelandBuildFurnitureOpRequest {
+  int64 community_id = 1;
+  int64 homeland_id = 2;
+  bool is_outer = 3;
+  string scene_guid = 4;
+  repeated NotifyBuildFurnitureOp build_furniture_infos = 5;
+}
+
+message NotifyKickOutOff {
+  NotifyKickOutOffRequest v_request = 1;
+}
+
+message NotifyKickOutOffRequest {
+  EErrorCode err_code = 1;
+}
+
+message NotifyLoadSceneEnd {
+  NotifyLoadSceneEndResponse resp = 1;
+}
+
+message NotifyLoadSceneEndResponse {
+  string scene_id = 1;
+  string scene_guid = 2;
+}
+
+message NotifyPlayerBeginInteraction {
+  NotifyPlayerBeginInteractionParam v_param = 1;
+}
+
+message NotifyPlayerBeginInteractionParam {
+  string object_id = 1;
+  string template_id = 2;
+}
+
+message NotifyReviveUser {
+  string v_actor_uuid = 1;
+}
+
+message NotifyServerCloseFunction {
+  NotifyFunctionParams v_param = 1;
+}
+
+message NotifySwitchScene {
+  NotifySwitchSceneRequest request = 1;
+}
+
+message NotifySwitchSceneEnd {
+  SwitchSceneResponse resp = 1;
+}
+
+message NotifySwitchSceneRequest {
+  TransferParam transfer_param = 1;
+}
+
+message NotifyTimerList {
+  NotifyTimerListParam timer_info = 1;
+}
+
+message NotifyTimerListParam {
+  repeated TimerInfo timer_info_list = 1;
+}
+
+message NotifyTimerUpdate {
+  TimerInfo timer_info = 1;
+}
+
+message NotifyUserCloseFunction {
+  NotifyFunctionParams v_param = 1;
+}
+
+message Package {
+  int32 type = 1;
+  int32 max_capacity = 2;
+  map<int32, int64> item_cd = 3;
+  map<int64, Item> items = 4;
+  int64 public_cd = 5;
+  int32 change_version = 6;
+}
+
+message ParkourRecord {
+  uint32 time = 1;
+  uint32 state = 2;
+  uint32 perfect_time = 3;
+}
+
+message ParkourRecordList {
+  map<uint32, ParkourRecord> record_list = 1;
+}
+
+message PassengerChangeParam {
+  optional bool is_add_passenger = 1;
+  optional int64 add_or_remove_uuid = 2;
+}
+
+message PassiveSkillInfo {
+  optional int32 uuid = 1;
+  optional int64 target_uuid = 2;
+  optional int64 stage_begin_time = 3;
+  optional int64 begin_time = 4;
+  optional int32 stage_play_num = 5;
+  optional int32 skill_id = 6;
+  optional int32 skill_level = 7;
+  optional int32 skill_stage = 8;
+}
+
+message PathNode {
+  string x = 1;
+  string y = 2;
+  string z = 3;
+  bool is_before = 4;
+  bool is_ground = 5;
+}
+
+message PathNodeList {
+  string uuid = 1;
+  repeated PathNode nodes = 2;
+  EErrorCode err_code = 3;
+}
+
+message PathPointChangeParam {
+  optional int32 operation = 1;
+  Position add_point = 2;
+  optional int32 remove_point_count = 3;
+}
+
+message PayData {
+  map<int32, FirstPayInfo> pay_data = 1;
+}
+
+message PayOrderList {
+  repeated string pay_order_list = 1;
+  repeated string pay_refund_list = 2;
+  PayData first_pay = 3;
+  map<string, int32> order_list = 4;
+  map<int64, int32> order_index_list = 5;
+  map<int64, RefundItemInfo> order_index_refund_list = 6;
+}
+
+message PersonalGroupObjectUpdate {
+  ServerStateObjectInteractionList v_param_list = 1;
+}
+
+message PersonalObject {
+  map<int32, ScenePersonalObject> scene_obj_data = 1;
+}
+
+message PersonalObjectAction {
+  string v_obj_uuid = 1;
+}
+
+message PersonalObjectUpdate {
+  ServerStateObjectInteractionParam v_param = 1;
+}
+
+message PersonalWorldBossInfo {
+  int32 score = 1;
+  map<int32, CommonAwardInfo> score_award_info = 2;
+  map<int32, CommonAwardInfo> boss_award_info = 3;
+  int32 uuid = 4;
+}
+
+message PersonalZone {
+  repeated int32 online_periods = 2;
+  repeated int32 online_periods = 2;
+  repeated int32 tags = 3;
+  map<int32, int32> medals = 5;
+  int32 theme_id = 6;
+  int32 theme_id = 6;
+  int32 business_card_style_id = 7;
+  int32 avatar_frame_id = 8;
+  ActionInfo action_info = 9;
+  repeated EditorUIPosition ui_position = 10;
+  int32 title_id = 11;
+  bool fashion_refresh_flag = 12;
+  int32 fashion_collect_point = 13;
+  map<int32, FashionQualityCollectInfo> fashion_collect_quality_count = 14;
+  repeated int32 photos = 15;
+  map<int32, int32> unlock_target_record = 16;
+  map<int32, bool> unlock_get_reward_record = 17;
+  int32 ride_collect_point = 18;
+  map<int32, RideQualityCollectInfo> ride_collect_quality_count = 19;
+  int32 weapon_skin_collect_point = 20;
+  map<int32, int32> photos_wall = 21;
+}
+
+message PersonalZoneShow {
+  map<int32, int32> medals = 1;
+}
+
+message PhotoGraphShow {
+  uint32 photo_id = 1;
+  repeated ImageInfo images = 2;
+  string render_info = 3;
+  string photo_desc = 4;
+  PhotoOwnerData owner_info = 5;
+}
+
+message PhotoInfo {
+  repeated string temp_photo_keys = 1;
+}
+
+message PhotoOwnerData {
+  int64 upload_char_id = 1;
+  int64 expire_time = 2;
+  int64 show_id = 3;
+  string name = 4;
+}
+
+message PictureInfo {
+  string url = 1;
+  PictureVerify verify = 2;
+}
+
+message PictureVerify {
+  uint32 size = 1;
+  uint32 review_start_time = 3;
+  uint32 review_start_time = 3;
+  int64 version = 4;
+}
+
+message PioneerData {
+  map<uint32, PioneerInfo> info_map = 1;
+}
+
+message PioneerInfo {
+  uint32 current_total = 1;
+  map<uint32, uint32> targets = 2;
+  map<int32, bool> awards = 3;
+  map<uint32, bool> entered_zones = 4;
+  uint32 id = 5;
+  EErrorCode err_code = 6;
+}
+
+message Pivot {
+  map<int32, PivotInfo> pivots = 1;
+  map<int32, PivotInfo> map_pivots = 2;
+}
+
+message PivotInfo {
+  int32 id = 1;
+  repeated int32 break_point = 2;
+  repeated int32 reward_stage = 3;
+  int32 reward_full_state = 4;
+}
+
+message PlaceHolderBuff {
+  int32 buff_id = 1;
+}
+
+message PlaceHolderFishItem {
+  int32 fish_id = 1;
+  int32 size = 2;
+}
+
+message PlaceHolderFishPersonalTotal {
+  int64 total = 1;
+  int64 myth_total = 2;
+  int32 sum_fish_type = 3;
+  int32 sum_sea_life_type = 4;
+  int32 sum_trash_type = 5;
+  int32 most_fish_id = 6;
+  int32 favour_zero = 7;
+  string user_name = 8;
+  string union_name = 9;
+  bool is_newbie = 10;
+}
+
+message PlaceHolderFishRank {
+  int32 fish_id = 1;
+  int32 size = 2;
+  int32 rank = 3;
+}
+
+message PlaceHolderItem {
+  uint32 config_id = 1;
+  Item item_detail = 2;
+}
+
+message PlaceHolderMasterMode {
+  map<int32, MasterModeDiffDungeonInfo> master_mode_info = 1;
+  string user_name = 2;
+  int32 season_id = 3;
+}
+
+message PlaceHolderPlayer {
+  int64 char_id = 1;
+  string name = 2;
+}
+
+message PlaceHolderStr {
+  string text = 1;
+}
+
+message PlaceHolderTimestamp {
+  int64 timestamp = 1;
+}
+
+message PlaceHolderUnion {
+  uint32 build = 1;
+}
+
+message PlaceHolderVal {
+  uint32 value = 1;
+}
+
+message PlanetMemory {
+  repeated int32 pass_room = 1;
+}
+
+message PlayAction {
+  PlayActionParam play_action_param = 1;
+}
+
+message PlayActionParam {
+  int32 action_id = 1;
+  bool is_upper = 2;
+  bool is_dance_together = 3;
+  int32 mount_id = 4;
+  int32 mount_size = 5;
+}
+
+message PlayEmote {
+  string emote_id = 1;
+}
+
+message PlayHelper {
+  map<int32, bool> displayed_helper_list = 1;
+  map<int32, bool> completed_guide = 2;
+}
+
+message PlayerBox {
+  map<uint64, PlayerBoxData> scenes = 1;
+}
+
+message PlayerBoxData {
+  uint64 scene_uuid = 1;
+  map<int64, int64> boxs = 2;
+}
+
+message PlayerBuyRecord {
+  int32 count = 2;
+  int64 buy_timestamp = 3;
+}
+
+message PlayerOrderComtainerInfo {
+  int32 index = 1;
+}
+
+message PlayerRecord {
+  map<int32, PlayerRecordInfo> player_record_infos = 1;
+}
+
+message PlayerRecordInfo {
+  map<int32, PlayerRecordSingle> player_records = 1;
+}
+
+message PlayerRecordSingle {
+  int32 id = 1;
+  int32 total_count = 2;
+  int64 cycle_count = 3;
+  int64 cycle_time = 4;
+}
+
+message PlayerRefreshShopRecord {
+  repeated int32 items = 2;
+}
+
+message Position {
+  optional float x = 1;
+  optional float y = 2;
+  optional float z = 3;
+  optional float dir = 4;
+}
+
+message PositionParam {
+  ScenePointInfo scene_point_info = 2;
+  ScenePointInfo scene_point_info = 2;
+  ScenePosIdInfo scene_pos_info = 3;
+  CutScenePointInfo cut_scene_point_info = 4;
+}
+
+message PrivilegeData {
+  LaunchPlatform launch_platform = 1;
+  bool is_privilege = 2;
+  int64 last_update_time = 3;
+}
+
+message PrivilegeEffectData {
+  int32 normal_pass_id = 1;
+  int32 prime_pass_id = 2;
+  map<int32, bool> normal_pass_id_map = 3;
+  map<int32, bool> prime_pass_id_map = 4;
+}
+
+message ProfessionData {
+  int32 profession_id = 1;
+  int32 weapon_skin = 2;
+}
+
+message ProfessionInfo {
+  int32 profession_id = 1;
+  int32 level = 2;
+  int64 experience = 3;
+  map<int32, ProfessionSkillInfo> skill_info_map = 4;
+  repeated int32 active_skill_ids = 6;
+  map<int32, int32> slot_skill_info_map = 7;
+  int32 use_skin_id = 8;
+}
+
+message ProfessionList {
+  int32 cur_profession_id = 1;
+  repeated int32 cur_assist_professions = 3;
+  map<int32, ProfessionInfo> profession_list = 4;
+  map<int32, ProfessionSkillInfo> aoyi_skill_info_map = 7;
+  uint32 total_talent_points = 8;
+  uint32 total_talent_reset_count = 9;
+  map<int32, ProfessionTalentInfo> talent_list = 10;
+}
+
+message ProfessionSkillInfo {
+  int32 skill_id = 1;
+  int32 level = 2;
+  repeated int32 replace_skill_ids = 3;
+  int32 remodel_level = 4;
+  int32 cur_skill_skin = 5;
+  map<int32, bool> active_skill_skins = 6;
+}
+
+message ProfessionTalentInfo {
+  uint32 used_talent_points = 1;
+  repeated uint32 talent_node_ids = 2;
+  int32 talent_stage_cfg_id = 4;
+  int32 talent_ilegal_reset_count = 5;
+}
+
+message ProfileInfo {
+  int32 profile_id = 1;
+  string profile_url = 2;
+  string half_body_url = 3;
+}
+
+message ProfileList {
+  map<int32, bool> unlock_profile_list = 1;
+}
+
+message QuestData {
+  uint32 id = 1;
+  uint32 step_id = 2;
+  uint32 state = 3;
+  map<int32, int32> target_num = 4;
+  map<int32, int32> target_max_num = 5;
+  int64 step_limit_time = 6;
+  EQuestStepStatus step_status = 7;
+  uint32 add_limit_time = 8;
+  map<int32, int32> target_type = 9;
+}
+
+message QuestDataList {
+  map<uint32, QuestData> quest_map = 1;
+  map<uint32, bool> finish_quest = 2;
+  uint32 tracking_id = 3;
+  map<uint32, uint32> finish_reset_quest = 4;
+  map<uint32, QuestHistory> history_map = 5;
+  int64 world_quest_time_stamp = 6;
+  map<uint32, WorldQuestInfo> world_quest_info = 7;
+  map<uint32, uint32> all_world_quest_list = 8;
+  map<uint32, uint32> blue_world_quest_map = 9;
+  map<int32, worldQuestList> filter_event_id = 10;
+  repeated uint32 accept_quest_list = 11;
+  repeated uint32 follow_world_quest_list = 12;
+  map<uint32, uint32> track_optional_quest = 13;
+  map<uint32, uint32> finish_reset_quest_count = 14;
+  map<uint32, bool> accept_quest_map = 15;
+  uint64 version = 16;
+}
+
+message QuestHistory {
+  map<uint32, uint32> step_history = 1;
+}
+
+message RaidRecord {
+  map<int32, BossProgress> boss_progress = 2;
+}
+
+message RankData {
+  int32 rank = 1;
+  int64 char_id = 2;
+  int32 score = 3;
+}
+
+message RechargeData {
+  int64 accumulate_amount = 1;
+  int64 last_recharge_time = 2;
+  int64 last_recharge_amount = 3;
+  int64 last_diamond_amount = 4;
+}
+
+message RecommendPlayData {
+  int64 start_timestamp = 1;
+  int64 end_timestamp = 2;
+  bool is_open = 4;
+  int64 last_time_stamp = 5;
+  int64 last_end_time_stamp = 6;
+  int64 next_time_stamp = 7;
+  int64 next_end_time_stamp = 8;
+  ETimerExeType cur_type = 9;
+  ETimerType timer_type = 10;
+}
+
+message RecvAntiData {
+  RecvAntiDataRequest v_request = 1;
+}
+
+message RecvAntiDataRequest {
+  TssAccountInfoProto tss_info = 1;
+}
+
+message RedDotData {
+  map<int32, bool> permanent_closed_red_dot = 1;
+  map<int32, int32> red_dot_count = 2;
+}
+
+message RefundItemInfo {
+  map<int32, int64> item_list = 1;
+}
+
+message ReqServerTime {
+  string client_milliseconds = 1;
+}
+
+message ReqSwitchScene {
+  SwitchSceneRequest resp = 1;
+}
+
+message RequestConnectWorld {
+  string account_id = 1;
+  string char_id = 2;
+  string token = 3;
+  string ack_server_sequence = 4;
+  bool is_ai_bot = 6;
+  string client_resource_version = 8;
+  string os = 9;
+}
+
+message ResetAttachVelocity {
+  string attach_source = 1;
+  string source_ent_uuid = 2;
+}
+
+message Resonance {
+  map<uint32, int64> resonances = 1;
+  repeated uint32 installed = 2;
+}
+
+message ReturnMessageWrapper {
+  GetSocialDataReply message = 1;
+}
+
+message ReviveInfo {
+  map<int32, int32> revive_count = 1;
+}
+
+message RideData {
+  int32 ride_id = 1;
+}
+
+message RideList {
+  map<int32, RideData> rides = 1;
+  ERidePropertyType type = 2;
+  map<int32, RideSkinContainer> skin_data = 3;
+}
+
+message RideMagneticAttachTo {
+  string target_uuid = 1;
+}
+
+message RideQualityCollectInfo {
+  map<int32, int32> quality_count = 1;
+}
+
+message RideSkinContainer {
+  int32 ride_skin_id = 1;
+  map<uint32, RideSkinData> sinks = 2;
+}
+
+message RideSkinData {
+  int64 activate_time = 1;
+}
+
+message RoleFace {
+  map<int32, bool> unlock_item_map = 1;
+  bool save_need_consume = 2;
+}
+
+message RoleLevel {
+  int32 level = 1;
+  int64 cur_level_exp = 2;
+  map<int32, bool> received_level_list = 3;
+  LevelProficiency proficiency_info = 4;
+  map<int32, int64> active_exp_map = 5;
+  int32 last_season_day = 6;
+  int64 bless_exp_pool = 7;
+  int64 grant_bless_exp = 8;
+  int64 accumulate_bless_exp = 9;
+  int64 accumulate_exp = 10;
+  int32 prev_season_max_lv = 11;
+}
+
+message SaveUserSingleSceneCutsState {
+  string cuts_key = 1;
+  string cuts_value = 2;
+}
+
+message SceneData {
+  uint32 map_id = 1;
+  uint32 channel_id = 2;
+  Position pos = 3;
+  int64 level_uuid = 4;
+  Position level_pos = 5;
+  uint32 level_map_id = 6;
+  uint32 level_revive_id = 7;
+  map<uint32, uint32> record_id = 8;
+  uint32 plane_id = 9;
+  uint32 scene_layer = 10;
+  bool can_switch_layer = 11;
+  Position before_fall_pos = 12;
+  string scene_guid = 13;
+  string dungeon_guid = 14;
+  uint32 line_id = 15;
+  uint32 visual_layer_config_id = 16;
+  LastSceneData last_scene_data = 17;
+  int32 scene_area_id = 18;
+  int32 level_area_id = 19;
+  int32 before_fall_scene_area_id = 20;
+}
+
+message SceneInteractionInfo {
+  int32 obj_id = 1;
+  int32 pos_id = 2;
+  Vec3 pos = 3;
+}
+
+message SceneLineData {
+  uint32 line_id = 1;
+  ESceneLineStatus status = 2;
+  string scene_guid = 3;
+}
+
+message SceneLuaData {
+  map<uint32, string> scene_lua_info = 1;
+}
+
+message ScenePersonalObject {
+  map<int64, ServerStateObjectInteractionParam> personal_obj_data = 1;
+}
+
+message ScenePointInfo {
+  Position position = 1;
+  int32 camera_id = 2;
+  int32 scene_area_id = 3;
+}
+
+message ScenePosIdInfo {
+  int32 scene_pos_id = 1;
+}
+
+message SceneRecord {
+  uint64 cnt = 1;
+  map<int32, uint64> group_cnts = 2;
+}
+
+message SchemeInfo {
+  repeated string scheme_info_keys = 1;
+}
+
+message SeasonAchievement {
+  map<uint32, Achievement> season_achievement = 1;
+}
+
+message SeasonAchievementList {
+  map<uint32, SeasonAchievement> season_achievement_list = 1;
+  map<uint32, bool> has_init_dones = 2;
+  uint64 version = 3;
+}
+
+message SeasonActivation {
+  int32 season_id = 1;
+  int32 activation_point = 2;
+  int32 refresh_time = 3;
+  map<int32, SeasonActivationTarget> activation_targets = 4;
+  map<uint32, int32> stage_reward_status = 5;
+}
+
+message SeasonActivationTarget {
+  int32 id = 1;
+  int32 target_type = 2;
+  int32 target_uuid = 3;
+  int32 reward_rate = 4;
+  int32 progress = 5;
+  int32 completed_times = 6;
+}
+
+message SeasonBpQuestData {
+  uint32 id = 1;
+  int32 target_num = 2;
+  int32 award = 3;
+}
+
+message SeasonBpQuestList {
+  map<uint32, SeasonBpQuestData> season_map = 1;
+  repeated uint32 random_map = 2;
+  int64 refresh_time_stamp = 3;
+}
+
+message SeasonCenter {
+  int32 season_id = 1;
+  BattlePass battle_pass = 2;
+  SeasonBpQuestList bp_quest_list = 3;
+  map<uint32, SeasonCenterHistory> season_history = 4;
+}
+
+message SeasonCenterHistory {
+  BattlePass battle_pass = 1;
+  SeasonBpQuestList bp_quest_list = 2;
+}
+
+message SeasonMasterModeDungeonInfo {
+  map<int32, MasterModeDiffDungeonInfo> master_mode_diff_info = 1;
+  int64 dungeon_info_update_time = 2;
+  map<int32, int32> season_awards = 3;
+}
+
+message SeasonMedalInfo {
+  uint32 season_id = 1;
+  map<uint32, MedalHole> normal_hole_infos = 2;
+  MedalHole core_hole_info = 3;
+  map<uint32, MedalNode> core_hole_node_infos = 4;
+}
+
+message SeasonQuestData {
+  uint32 id = 1;
+  int32 target_num = 2;
+  int32 award = 3;
+}
+
+message SeasonQuestList {
+  map<uint32, SeasonQuestData> season_map = 1;
+  int32 refresh_week = 2;
+  int64 refresh_time_stamp = 3;
+}
+
+message SeasonRankData {
+  map<uint32, uint32> season_ranks = 1;
+}
+
+message SeasonRankInfo {
+  uint32 cur_ran_k_star = 1;
+  repeated uint32 received_rank_star = 2;
+}
+
+message SeasonRankList {
+  map<uint32, SeasonRankInfo> season_rank_list = 1;
+  uint32 show_armband_id = 2;
+}
+
+message SeasonTarget {
+  map<int32, SeasonTargetInfo> target_info = 1;
+}
+
+message SeasonTargetInfo {
+  int32 target_id = 1;
+  int32 target_progress = 2;
+  int32 award_state = 3;
+}
+
+message SeqPassiveSkillEndInfo {
+  optional int64 actor_uuid = 1;
+  repeated int64 uuids = 2;
+}
+
+message SeqPassiveSkillInfo {
+  optional int64 actor_uuid = 1;
+  repeated PassiveSkillInfo passive_infos = 2;
+}
+
+message ServerData {
+  string open_server_time = 1;
+}
+
+message ServerSkillStageEnd {
+  string skill_uuid = 1;
+  string stage_id = 2;
+  string new_stage_id = 3;
+  string condition_id = 4;
+}
+
+message ServerStateObjectInteractionList {
+  repeated ServerStateObjectInteractionParam personal_obj_list = 1;
+}
+
+message ServerStateObjectInteractionParam {
+  int64 obj_uuid = 1;
+  int32 state_value = 2;
+  int64 last_interaction_time = 3;
+}
+
+message ServerStateObjectUpdate {
+  ServerStateObjectInteractionList v_object = 1;
+}
+
+message SetAiming {
+  bool is_aiming = 1;
+}
+
+message SetAoiSyncUserCount {
+  string v_count = 1;
+}
+
+message SetInteractionPartnerPos {
+  Position v_cur_pos = 1;
+  Position v_dest_pos = 2;
+  EMoveType v_move_type = 3;
+  string v_time_stamp = 4;
+}
+
+message SetPersonalState {
+  string v_personal_state = 1;
+  bool v_is_remove = 2;
+}
+
+message SetSlotAutoBattle {
+  SetSlotAutoBattleRequest v_request = 1;
+}
+
+message SetSlotAutoBattleRequest {
+  map<int32, bool> slots = 1;
+}
+
+message SetTunnel {
+  string tunnel_id = 1;
+}
+
+message SettingData {
+  map<int32, string> setting_map = 1;
+}
+
+message SettlementPosition {
+  Position pos = 1;
+  Position rotate = 2;
+}
+
+message ShopCompensationData {
+  map<uint32, ShopCompensationInfo> items = 1;
+}
+
+message ShopCompensationInfo {
+  int64 entor_store_num = 1;
+  int64 buy_num = 2;
+}
+
+message ShopData {
+  map<int32, ShopRefreshRecord> refresh_list = 1;
+  map<int32, PlayerBuyRecord> normal_shop_records = 2;
+  map<int32, PlayerBuyRecord> season_shop_records = 3;
+  ShopCompensationData compensation_item_data = 4;
+}
+
+message ShopRefreshRecord {
+  int64 refresh_timestamp = 3;
+  int32 refresh_count = 4;
+  map<int32, PlayerRefreshShopRecord> shop_refresh_records = 5;
+}
+
+message ShowPieceAttr {
+  ShowPiecePair piece_info = 1;
+  int64 begin_time = 2;
+  int64 end_time = 3;
+}
+
+message ShowPieceAttrList {
+  repeated ShowPieceAttr show_piece_attrs = 1;
+}
+
+message ShowPieceData {
+  map<int32, ShowPieceIdList> often_use_type_list = 1;
+  map<int32, ShowPieceIdList> unlock_type_list = 2;
+  map<int32, ShowPiecePair> roulette_pos_piece_info = 3;
+}
+
+message ShowPieceIdList {
+  repeated int32 piece_ids = 1;
+}
+
+message ShowPiecePair {
+  EShowPieceType piece_type = 1;
+  int32 piece_id = 2;
+}
+
+message SignInfo {
+  map<int32, SignStatusList> sign_info = 1;
+}
+
+message SignStatus {
+  bool is_signed = 1;
+  bool is_rewarded = 2;
+  bool is_supplement = 3;
+  int64 sign_time = 4;
+  int64 reward_time = 5;
+}
+
+message SignStatusList {
+  map<int32, SignStatus> sign_status_data = 1;
+}
+
+message SkillCD {
+  int32 skill_level_id = 1;
+  int64 begin_time = 2;
+  int32 duration = 3;
+  ESkillCDType skill_cd_type = 4;
+  int32 valid_cd_time = 5;
+}
+
+message SkillCDInfo {
+  int32 skill_level_id = 1;
+  int64 skill_begin_time = 2;
+  int32 duration = 3;
+  uint32 skill_cd_type = 4;
+  int64 profession_hold_begin_time = 6;
+  int64 profession_hold_begin_time = 6;
+  int32 charge_count = 7;
+  int32 valid_cd_time = 8;
+  int32 sub_cd_ratio = 9;
+  int64 sub_cd_fixed = 10;
+  int32 accelerate_cd_ratio = 11;
+}
+
+message SkillCd {
+  optional int32 skill_level_id = 1;
+  optional int64 begin_time = 2;
+  optional int32 duration = 3;
+  optional ESkillCdType skill_cd_type = 4;
+  optional int32 valid_cd_time = 5;
+}
+
+message SkillCdInfo {
+  string skill_level_id = 1;
+  string skill_begin_time = 2;
+  string duration = 3;
+  string skill_cd_type = 4;
+  string profession_hold_begin_time = 6;
+  string charge_count = 7;
+  string valid_cd_time = 8;
+  string sub_cd_ratio = 9;
+  string sub_cd_fixed = 10;
+  string accelerate_cd_ratio = 11;
+}
+
+message SkillEffect {
+  optional int64 uuid = 1;
+  repeated SyncDamageInfo damages = 2;
+  optional int64 total_damage = 3;
+}
+
+message SkillSkin {
+  uint32 skill_id = 1;
+  uint32 skin_id = 2;
+}
+
+message Slot {
+  map<int32, SlotInfo> slots = 1;
+}
+
+message SlotData {
+  map<int32, SlotInfoData> slots = 1;
+}
+
+message SlotInfo {
+  int32 id = 1;
+  int32 skill_id = 2;
+  bool is_auto_battle_close = 3;
+}
+
+message SlotInfoData {
+  int32 id = 1;
+  int32 skill_id = 2;
+  bool is_replace = 3;
+  bool show_effect = 4;
+  int64 cd = 5;
+  bool is_auto_battle_close = 6;
+}
+
+message SocialData {
+  int64 char_id = 1;
+  string account_id = 2;
+  BasicData basic_data = 3;
+  AvatarInfo avatar_info = 4;
+  FaceData face_data = 5;
+  ProfessionData profession_data = 6;
+  EquipData equip_data = 7;
+  FashionData fashion_data = 8;
+  SettingData setting_data = 9;
+  SceneData scene_data = 10;
+  UserAttrData user_attr_data = 11;
+  CharTeam team_data = 12;
+  UnionData union_data = 13;
+  AccountData account_data = 14;
+  FunctionData function_data = 15;
+  PersonalZone personal_zone = 16;
+  WarehouseData warehouse = 17;
+  SeasonRankData season_rank = 18;
+  FishSocialData fish_data = 19;
+  CommunityData community_data = 20;
+  PrivilegeData privilege_data = 21;
+  MasterModeDungeonData master_mode_dungeon_data = 22;
+}
+
+message StartPlayAction {
+  string v_invitee_id = 1;
+  string v_action_id = 2;
+  bool v_is_upper = 3;
+}
+
+message StatRecord {
+  uint64 cnt = 1;
+  map<int32, uint64> group_cnts = 2;
+  map<int32, SceneRecord> scene_records = 3;
+}
+
+message StatisticsData {
+  map<int32, StatRecord> stat_record_map = 1;
+}
+
+message StopRide {
+  bool is_force = 1;
+}
+
+message Structure {
+  int64 uuid = 1;
+  int64 client_uuid = 2;
+  int64 group_id = 3;
+  int32 item_id = 4;
+  int64 char_id = 5;
+  IntVec3 position = 6;
+  Vec4 quaternion = 7;
+  int64 operator_char_id = 8;
+  string name = 9;
+  StructureMaterialInfo material_info = 10;
+  StructureLamplightInfo lamplight_info = 11;
+  StructureFarmlandInfo farmland_info = 12;
+}
+
+message StructureFarmlandInfo {
+  int64 operator_char_id = 1;
+  HomeLandItemInstance seed_instance = 2;
+  bool need_water = 3;
+  EFarmlandState farmland_state = 4;
+  int64 seeding_time = 5;
+  int64 grow_end_time = 6;
+  int64 pollinate_begin_time = 7;
+  int64 pollinate_end_time = 8;
+  int64 harvest_begin_time = 9;
+  int64 harvest_end_time = 10;
+  bool is_end = 11;
+  HomeLandItemInstance flower_instance = 12;
+  int32 next_segment_index = 13;
+  repeated DroughtRecord records = 14;
+  repeated int32 fertilizes = 15;
+  HomeLandItemInstance pollen_instance = 16;
+  map<int64, int32> pick_up_players = 17;
+}
+
+message StructureLamplightInfo {
+  EHomelandLamplightState state = 1;
+}
+
+message StructureMaterialInfo {
+  int32 material_id = 1;
+  int64 char_id = 2;
+}
+
+message StructureOp {
+  StructureOpType op_type = 1;
+  Structure structure = 2;
+}
+
+message SwitchSceneRequest {
+  TransferParam transfer_param = 1;
+}
+
+message SwitchSceneResponse {
+  TransferParam transfer_param = 1;
+  EErrorCode err_code = 2;
+}
+
+message SyncAllServerStateObject {
+  ServerStateObjectInteractionList v_object = 1;
+}
+
+message SyncAwardData {
+  map<uint32, LevelUpAward> level_up_award_infos = 1;
+}
+
+message SyncBulletHitInfo {
+  repeated ClientHitInfo hit_infos = 1;
+}
+
+message SyncCirclePathLength {
+  string path_length = 1;
+}
+
+message SyncClientUseSkill {
+  string skill_target_uuid = 1;
+  string skill_level_id = 2;
+}
+
+message SyncContainerData {
+  optional bytes v_data = 1;
+}
+
+message SyncContainerDirtyData {
+  optional bytes v_data = 1;
+}
+
+message SyncDamageInfo {
+  optional EDamageSource damage_source = 1;
+  optional bool is_miss = 2;
+  optional bool is_crit = 3;
+  optional EDamageType type = 4;
+  optional int32 type_flag = 5;
+  optional int64 value = 6;
+  optional int64 actual_value = 7;
+  optional int64 lucky_value = 8;
+  optional int64 hp_lessen_value = 9;
+  optional int64 shield_lessen_value = 10;
+  optional int64 attacker_uuid = 11;
+  optional int32 owner_id = 12;
+  optional int32 owner_level = 13;
+  optional int32 owner_stage = 14;
+  optional int32 hit_event_id = 15;
+  optional bool is_normal = 16;
+  optional bool is_dead = 17;
+  optional EDamageProperty property = 18;
+  Vector3 damage_pos = 19;
+  repeated ClientHitPartInfo part_infos = 20;
+  optional int64 top_summoner_id = 21;
+  Vector2 damage_weight = 22;
+  optional uint32 passive_uuid = 23;
+  optional bool is_rainbow = 24;
+  optional EDamageMode damage_mode = 25;
+}
+
+message SyncDirWhenAiming {
+  string dir = 1;
+  string aim_dir = 2;
+}
+
+message SyncDungeonData {
+  DungeonSyncData v_data = 1;
+}
+
+message SyncDungeonDirtyData {
+  BufferStream v_data = 1;
+}
+
+message SyncEntityBehaviorTree {
+  string entity_id = 1;
+  string json = 2;
+}
+
+message SyncFakeBulletHitInfo {
+  repeated ClientHitInfo hit_infos = 1;
+}
+
+message SyncFieldOfView {
+  string json = 1;
+}
+
+message SyncHitInfo {
+  repeated ClientHitInfo hit_infos = 1;
+}
+
+message SyncLog {
+  string log = 1;
+}
+
+message SyncNearDeltaInfo {
+  repeated AoiSyncDelta delta_infos = 1;
+}
+
+message SyncNearEntities {
+  repeated Entity appear = 1;
+  repeated DisappearEntity disappear = 2;
+}
+
+message SyncPathNode {
+  string entity_id = 1;
+}
+
+message SyncPersonalObject {
+  ScenePersonalObject v_datas = 1;
+}
+
+message SyncPlayCameraAnimation {
+  string id = 1;
+}
+
+message SyncSceneArea {
+  string scene_area_id = 1;
+}
+
+message SyncSceneAttrs {
+  AttrCollection attrs = 1;
+}
+
+message SyncSceneEvents {
+  EventDataList evt = 1;
+}
+
+message SyncServerData {
+  ServerData server_data = 1;
+}
+
+message SyncServerSkillEnd {
+  string skill_uuid = 1;
+}
+
+message SyncServerSkillSingingTimeSub {
+  string skill_uuid = 1;
+  string time = 2;
+}
+
+message SyncServerSkillStageEnd {
+  ServerSkillStageEnd skill_stage_end_info = 1;
+}
+
+message SyncServerTime {
+  optional int64 client_milliseconds = 1;
+  optional int64 server_milliseconds = 2;
+}
+
+message SyncSkillLocation {
+  string skill_uuid = 1;
+  string skill_stage = 2;
+  Position cur_pos = 3;
+  Position dest_pos = 4;
+}
+
+message SyncSkillStageTrigger {
+  string trigger_type = 1;
+  string time = 2;
+  string skill_uuid = 3;
+}
+
+message SyncSubSceneAttrs {
+  AttrCollection attrs = 1;
+  bool is_first_enter = 2;
+}
+
+message SyncToMeDeltaInfo {
+  AoiSyncToMeDelta delta_info = 1;
+}
+
+message SyncUserBeHitInfo {
+  repeated ClientHitInfo behit_infos = 1;
+}
+
+message TakeOffShowPiece {
+  EShowPieceType v_piece_type = 1;
+  string v_piece_id = 2;
+}
+
+message TakeOnActivateRideSkin {
+  TakeOnActivateRideSkinParam param = 1;
+}
+
+message TakeOnActivateRideSkinParam {
+  int32 skin_id = 1;
+}
+
+message TakeOnSetRideSkin {
+  TakeOnSetRideSkinParam param = 1;
+}
+
+message TakeOnSetRideSkinParam {
+  int32 skin_id = 1;
+}
+
+message TakeOnShowPiece {
+  EShowPieceType v_piece_type = 1;
+  string v_piece_id = 2;
+}
+
+message TeamMemData {
+  int64 char_id = 1;
+  uint32 enter_time = 2;
+  int32 call_status = 3;
+  int32 talent_id = 4;
+  int32 online_status = 5;
+  int32 scene_id = 6;
+  bool voice_is_open = 7;
+  int32 group_id = 8;
+  TeamMemberSocialData social_data = 9;
+}
+
+message TeamMemberSocialData {
+  BasicData basic_data = 1;
+  AvatarInfo avatar_info = 2;
+  FaceData face_data = 3;
+  ProfessionData profession_data = 4;
+  EquipData equip_data = 5;
+  FashionData fashion_data = 6;
+  UserSceneInfo user_scene_info = 7;
+  UserAttrData user_attr_data = 8;
+  PersonalZoneShow personal_zone = 9;
+}
+
+message Teleport {
+  TeleportParams teleport_params = 1;
+}
+
+message TeleportParams {
+  TransferParam transfer_params = 1;
+}
+
+message TempAttr {
+  optional int32 id = 1;
+  optional int32 value = 2;
+}
+
+message TempAttrCollection {
+  repeated TempAttr attrs = 1;
+}
+
+message TempPhotoCache {
+  map<string, string> temp_photo_cache_dict = 1;
+}
+
+message TempPhotoCacheInfo {
+  string id = 1;
+  string temp_photo = 2;
+  string temp_ori_photo = 3;
+  string temp_thumb_photo = 4;
+  string shot_time = 5;
+  string shot_time_str = 6;
+  string shot_place = 7;
+  string decorate_data = 8;
+  string height = 9;
+}
+
+message ThrowMoveInfo {
+  int64 target_uuid = 1;
+  int32 skill_id = 2;
+  int32 skill_level = 3;
+  int32 stage_id = 4;
+  int32 event_id = 5;
+}
+
+message TimerInfo {
+  string cfg_id = 1;
+  ETimerType timer_type = 2;
+  ETimerExeType cur_type = 3;
+  string start_timestamp = 4;
+  string end_timestamp = 5;
+  string last_time_stamp = 6;
+  string last_end_time_stamp = 7;
+  string next_time_stamp = 8;
+  string next_end_time_stamp = 9;
+  repeated string offset_list = 10;
+  string duration = 11;
+}
+
+message TimerRefreshDataList {
+  map<uint32, TimerRefreshList> refresh_data_list = 1;
+}
+
+message TimerRefreshInfo {
+  int64 last_refresh_time = 1;
+}
+
+message TimerRefreshList {
+  map<uint32, TimerRefreshInfo> refresh_data = 1;
+}
+
+message TransferParam {
+  int32 scene_id = 1;
+  EUserTransferType transfer_type = 2;
+  PositionParam position_param = 3;
+  int64 change_flag = 4;
+  bool is_server_switch = 5;
+  int32 visual_layer_config_id = 6;
+  string scene_guid = 7;
+  string connect_guid = 8;
+  int64 sub_scene_uuid = 9;
+  bool is_revive = 10;
+}
+
+message TransferPoint {
+  map<int32, int32> points = 1;
+}
+
+message Treasure {
+  map<int32, TreasureItemRow> rows = 1;
+  map<int32, TreasureItemRow> history_rows = 2;
+  bool flag = 3;
+  int64 refresh_time = 4;
+  repeated int32 selected_reward = 5;
+  int32 season_id = 6;
+  int32 last_season_id = 7;
+  int64 last_refresh_time = 8;
+}
+
+message TreasureItem {
+  repeated Item items = 1;
+  int32 type = 2;
+}
+
+message TreasureItemRow {
+  int32 config_id = 1;
+  map<int32, TreasureItemTarget> main_targets = 2;
+  map<int32, TreasureItemTarget> sub_targets = 3;
+}
+
+message TreasureItemTarget {
+  int32 target_id = 1;
+  int32 target_num = 2;
+  TreasureItem reward = 3;
+}
+
+message TrialRoad {
+  repeated int32 pass_room = 1;
+  map<int32, TrialRoadRoomTargetAward> room_target_award = 2;
+  TrialRoadTargetAward target_award = 3;
+}
+
+message TrialRoadRoomTargetAward {
+  map<int32, TrialRoadTargetProgress> target_progress = 1;
+}
+
+message TrialRoadTargetAward {
+  map<int32, TrialRoadTargetProgress> target_progress = 1;
+}
+
+message TrialRoadTargetProgress {
+  int32 target_id = 1;
+  int32 target_progress = 2;
+  int32 award_state = 3;
+}
+
+message TssAccountInfoProto {
+  string account = 1;
+  uint32 account_type = 2;
+  uint32 plat_id = 3;
+  uint32 game_id = 4;
+  uint32 world_id = 5;
+  uint32 channel_id = 6;
+  int64 role_id = 7;
+  bytes anti_data = 8;
+  string account_id = 9;
+  string client_ip = 10;
+  string role_name = 11;
+  uint32 index = 12;
+}
+
+message UnionBuilding {
+  int32 building_id = 1;
+  int32 building_level = 2;
+  int64 upgrade_finish_time = 3;
+  int64 has_speed_up_sec = 4;
+}
+
+message UnionDanceHistory {
+  int64 dance_end_time = 1;
+  bool sent_dance_award = 2;
+  bool drawn_dance_award = 3;
+}
+
+message UnionData {
+  int64 unionid = 1;
+  string name = 2;
+  int32 union_hunt_rank = 3;
+}
+
+message UnionEScreenInfo {
+  int32 e_screen_id = 1;
+  repeated PhotoGraphShow photo_graphs = 2;
+}
+
+message UnionHistoryActive {
+  int64 union_id = 1;
+  int64 active_points = 2;
+}
+
+message UnlockColorInfo {
+  map<int32, bool> color_info_map = 1;
+  map<int32, bool> color_block_info_map = 2;
+}
+
+message UnlockEmojiData {
+  map<int32, bool> unlock_map = 1;
+}
+
+message UnlockInfo {
+  uint64 object_id = 1;
+}
+
+message UnlockProficiency {
+  repeated int32 unlock_buffer_id = 1;
+}
+
+message UpdateStructure {
+  UpdateStructureRequest v_request = 1;
+}
+
+message UpdateStructureRequest {
+  int64 home_id = 1;
+  repeated StructureOp ops = 2;
+}
+
+message UploadTLogBody {
+  string t_log_name = 1;
+  string t_log_body = 2;
+}
+
+message UseSkill {
+  UseSkillParam param = 1;
+}
+
+message UseSkillParam {
+  string skill_uuid = 1;
+  string skillid = 2;
+  string skill_level = 3;
+  string begin_time = 4;
+  string target_uuid = 5;
+  Position target_pos = 6;
+  Position cur_pos = 7;
+  string target_part_id = 8;
+  Position target_part_pos = 9;
+  bool is_passive = 10;
+  bool is_activate_roulette = 11;
+}
+
+message UseSlot {
+  UseSlotRequest v_request = 1;
+}
+
+message UseSlotRequest {
+  int32 slot_id = 1;
+  EUseSlotType use_type = 2;
+  bytes extra_data = 3;
+}
+
+message UserActivityInfo {
+  uint64 start_time = 2;
+  uint64 end_time = 3;
+  map<uint32, UserActivityRewardInfo> rewards = 4;
+}
+
+message UserActivityList {
+  map<int64, UserActivityInfo> activities = 1;
+}
+
+message UserActivityRewardInfo {
+  uint32 id = 1;
+  uint32 status = 2;
+  map<uint32, GameFunctionData> functions = 3;
+}
+
+message UserAttrData {
+  int32 state = 3;
+  int64 fight_point = 4;
+}
+
+message UserControlInfo {
+  bool is_begin = 1;
+  string type = 2;
+  string secondary_type = 3;
+  string remain_time = 4;
+  string step = 5;
+  string hor_velocity = 6;
+  string ver_velocity = 7;
+  string pitch_angle = 8;
+  string time_stamp = 9;
+  Vector2 run_dir = 10;
+  Vector3 normal = 11;
+  Position cur_pos = 12;
+  Position dest_pos = 13;
+  string move_version = 14;
+}
+
+message UserDoAction {
+  string v_selected_str = 1;
+}
+
+message UserFightAttr {
+  int64 cur_hp = 1;
+  int64 max_hp = 2;
+  float origin_energy = 3;
+  repeated uint32 resource_ids = 4;
+  repeated uint32 resources = 5;
+  int32 is_dead = 6;
+  int64 dead_time = 7;
+  int32 revive_id = 8;
+  repeated SkillCDInfo cd_info = 9;
+}
+
+message UserNotifyTrigger {
+  UserNotifyTriggerInfo v_info = 1;
+}
+
+message UserNotifyTriggerInfo {
+  ENotifyTrigger type = 1;
+  string target_uuid = 2;
+  EEntityType trigger_actor_type = 3;
+  bool trigger_actor_is_summon = 4;
+  string trigger_actor_instance_id = 5;
+  string trigger_actor_table_uid = 6;
+}
+
+message UserRecommendPlayData {
+  map<int32, int64> play_mail = 1;
+}
+
+message UserSceneInfo {
+  int32 scene_id = 1;
+  string scene_guid = 2;
+  int32 line_id = 3;
+}
+
+message UserUnion {
+  int64 union_id = 1;
+  uint64 next_join_time = 2;
+  map<int64, uint64> req_union_times = 3;
+  bool join_flag = 4;
+  repeated int64 collected_ids = 5;
+  int64 active_award_reset_time = 6;
+  repeated int32 received_award_ids = 7;
+  repeated UnionHistoryActive history_active_points = 8;
+  int64 active_last_refresh_time = 9;
+  repeated int32 finish_daily_active_ids = 10;
+  uint64 leave_time = 11;
+  UnionDanceHistory dance_record = 13;
+  UserUnionHuntInfo user_union_hunt_info = 14;
+}
+
+message UserUnionHuntInfo {
+  int32 hunt_rank = 1;
+}
+
+message Vector2 {
+  optional float x = 1;
+  optional float y = 2;
+}
+
+message Vector3 {
+  optional float x = 1;
+  optional float y = 2;
+  optional float z = 3;
+}
+
+message Vector4 {
+  string x = 1;
+  string y = 2;
+  string z = 3;
+  string w = 4;
+}
+
+message WarehouseData {
+  int64 warehouse_id = 1;
+}
+
+message WeeklyTowerRecord {
+  int64 begin_time = 1;
+  int32 max_climb_up_id = 2;
+  repeated int32 award_climb_up_ids = 3;
+  int32 rule_id = 4;
+}
+
+message WorldEventData {
+  uint32 id = 1;
+  int32 target_num = 2;
+  int32 award = 3;
+}
+
+message WorldEventMap {
+  map<uint32, worldEventData> event_map = 1;
+  int32 accept_count = 2;
+  int64 last_update_time = 3;
+  int64 refresh_time = 4;
+}
+
+message WorldNtfSyncPathNode {
+  PathNodeList lists = 1;
+}
+
+message WorldQuestInfo {
+  uint32 finish_points = 1;
+  repeated uint32 rewards = 2;
+  uint32 exceeding_points = 3;
+}
+
+message WorldQuestList {
+  repeated int32 quest_list = 1;
+}

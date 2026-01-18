@@ -6,14 +6,14 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, Clone)]
 struct CacheEntry {
-    timestamp: u128,
+    timestamp: u64,
     last_reported_hp: Option<i32>,
     is_pending: bool,
 }
 
 #[derive(serde::Deserialize)]
 struct MobRecord {
-    monster_id: i32,
+    monster_id: u32,
     name: String,
     location: Option<bool>,
 }
@@ -28,10 +28,10 @@ pub struct BPTimerClient {
     api_key: String,
 }
 
-const CACHE_EXPIRY_MS: u128 = 5 * 60 * 1000; // 5 minutes
+const CACHE_EXPIRY_MS: u64 = 5 * 60 * 1000; // 5 minutes
 
 // Fallback mob mappings
-const FALLBACK_MOB_MAPPINGS: &[(i32, &str)] = &[
+const FALLBACK_MOB_MAPPINGS: &[(u32, &str)] = &[
     (10007, "Storm Goblin King"),
     (10009, "Frost Ogre"),
     (10010, "Tempest Ogre"),
@@ -54,12 +54,12 @@ const FALLBACK_MOB_MAPPINGS: &[(i32, &str)] = &[
 ];
 
 // Fallback location-tracked mob IDs
-const FALLBACK_LOCATION_TRACKED_MOBS: &[i32] = &[10900, 10901, 10904];
+const FALLBACK_LOCATION_TRACKED_MOBS: &[u32] = &[10900, 10901, 10904];
 
 static HP_REPORT_CACHE: LazyLock<Mutex<HashMap<String, CacheEntry>>> =
     LazyLock::new(|| Mutex::new(HashMap::new()));
 
-static MOB_MAPPING: LazyLock<Mutex<HashMap<i32, String>>> = LazyLock::new(|| {
+static MOB_MAPPING: LazyLock<Mutex<HashMap<u32, String>>> = LazyLock::new(|| {
     let mut map = HashMap::new();
     for (id, name) in FALLBACK_MOB_MAPPINGS {
         map.insert(*id, name.to_string());
@@ -67,7 +67,7 @@ static MOB_MAPPING: LazyLock<Mutex<HashMap<i32, String>>> = LazyLock::new(|| {
     Mutex::new(map)
 });
 
-static LOCATION_TRACKED_MOBS: LazyLock<Mutex<HashSet<i32>>> = LazyLock::new(|| {
+static LOCATION_TRACKED_MOBS: LazyLock<Mutex<HashSet<u32>>> = LazyLock::new(|| {
     let mut set = HashSet::new();
     for &id in FALLBACK_LOCATION_TRACKED_MOBS {
         set.insert(id);
@@ -75,23 +75,23 @@ static LOCATION_TRACKED_MOBS: LazyLock<Mutex<HashSet<i32>>> = LazyLock::new(|| {
     Mutex::new(set)
 });
 
-fn get_mob_name(mob_id: i32) -> Option<String> {
+fn get_mob_name(mob_id: u32) -> Option<String> {
     MOB_MAPPING.lock().unwrap().get(&mob_id).cloned()
 }
 
-fn is_location_tracked_mob(mob_id: i32) -> bool {
+fn is_location_tracked_mob(mob_id: u32) -> bool {
     LOCATION_TRACKED_MOBS.lock().unwrap().contains(&mob_id)
 }
 
-fn is_mob_tracked(mob_id: i32) -> bool {
+fn is_mob_tracked(mob_id: u32) -> bool {
     MOB_MAPPING.lock().unwrap().contains_key(&mob_id)
 }
 
-fn set_mob_mapping(mapping: HashMap<i32, String>) {
+fn set_mob_mapping(mapping: HashMap<u32, String>) {
     *MOB_MAPPING.lock().unwrap() = mapping;
 }
 
-fn set_location_tracked_mobs(mobs: HashSet<i32>) {
+fn set_location_tracked_mobs(mobs: HashSet<u32>) {
     *LOCATION_TRACKED_MOBS.lock().unwrap() = mobs;
 }
 
@@ -154,10 +154,10 @@ impl BPTimerClient {
     /// Report HP to bptimer API
     pub fn report_hp(
         &self,
-        monster_id: Option<i32>,
-        curr_hp: Option<i32>,
-        max_hp: Option<i32>,
-        line: Option<u32>,
+        monster_id: Option<u32>,
+        curr_hp: Option<u64>,
+        max_hp: Option<u64>,
+        line: Option<i32>,
         pos_x: Option<f32>,
         pos_y: Option<f32>,
         pos_z: Option<f32>,
@@ -177,6 +177,9 @@ impl BPTimerClient {
         let Some(line) = line else {
             return;
         };
+        if line <= 0 {
+            return;
+        }
 
         // Only process tracked monsters
         if !is_mob_tracked(monster_id) {
@@ -195,17 +198,16 @@ impl BPTimerClient {
         if max_hp == 0 {
             return;
         }
-        let hp_pct = (curr_hp * 100 / max_hp).clamp(0, 100);
+        let hp_pct = (curr_hp as f32 / max_hp as f32) * 100.0;
 
         // Round to nearest 5%
-        let rounded_hp_pct = ((hp_pct as f32 / 5.0).round() * 5.0) as i32;
-        let rounded_hp_pct = rounded_hp_pct.clamp(0, 100);
+        let rounded_hp_pct = (((hp_pct / 5.0).round() * 5.0) as i32).clamp(0, 100);
 
-        let cache_key = format!("{}-{}", monster_id, line as i32);
+        let cache_key = format!("{}-{}", monster_id, line);
         let now = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .expect("Time went backwards")
-            .as_millis();
+            .as_millis() as u64;
 
         // Check cache
         let should_report = {

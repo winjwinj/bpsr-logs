@@ -86,17 +86,22 @@ pub async fn start(app_handle: AppHandle) {
 
                     // Extract and store account_id and uid
                     if let Some(char_base) = &v_data.char_base {
-                        if let (Some(account_id), Some(uid)) =
-                            (&char_base.account_id, v_data.char_id)
-                        {
-                            player_state.set_account_info(account_id.clone(), uid);
+                        if !char_base.account_id.is_empty() && v_data.char_id != 0 {
+                            player_state
+                                .set_account_info(char_base.account_id.clone(), v_data.char_id);
                         }
                     }
 
                     // Extract and store line_id
                     if let Some(scene_data) = &v_data.scene_data {
-                        if let Some(line_id) = scene_data.line_id {
-                            player_state.set_line_id(line_id);
+                        if scene_data.line_id != 0 {
+                            let old_line_id = player_state.get_line_id_opt();
+                            player_state.set_line_id(scene_data.line_id);
+                            if old_line_id != Some(scene_data.line_id) {
+                                let encounter_state = app_handle.state::<EncounterMutex>();
+                                let mut encounter_state = encounter_state.lock().unwrap();
+                                encounter_state.entity_uid_to_entity.clear();
+                            }
                         }
                     }
                 }
@@ -132,19 +137,6 @@ pub async fn start(app_handle: AppHandle) {
             //         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
             //     }
             // }
-            packets::opcodes::Pkt::SyncServerTime => {
-                // info!("Received {op:?}");
-                // trace!("Received {op:?} and data {data:?}");
-                let _sync_server_time =
-                    match blueprotobuf::SyncServerTime::decode(Bytes::from(data)) {
-                        Ok(v) => v,
-                        Err(e) => {
-                            warn!("Error decoding SyncServerTime.. ignoring: {e}");
-                            continue;
-                        }
-                    };
-                // todo: this is skipped, not sure what info it has
-            }
             packets::opcodes::Pkt::SyncToMeDeltaInfo => {
                 // todo: fix this, attrs dont include name, no idea why
                 // trace!("Received {op:?}");
@@ -159,15 +151,16 @@ pub async fn start(app_handle: AppHandle) {
                     };
 
                 if let Some(delta_info) = &sync_to_me_delta_info.delta_info {
-                    if let Some(uuid) = delta_info.uuid {
+                    let uuid = delta_info.uuid;
+                    if uuid != 0 {
                         let local_player_uid = uuid >> 16;
                         let player_state_mutex = app_handle.state::<PlayerStateMutex>();
                         let mut player_state = player_state_mutex.lock().unwrap();
 
                         // Update uid if not yet set or if different (shouldn't change but be defensive)
-                        if player_state.uid.is_none() || player_state.uid != Some(local_player_uid)
-                        {
-                            player_state.uid = Some(local_player_uid);
+                        let current_uid = player_state.get_uid_opt();
+                        if current_uid != Some(local_player_uid) {
+                            player_state.set_uid(local_player_uid);
                         }
                     }
                 }

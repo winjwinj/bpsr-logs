@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package blueprotobuf_package;
+
+enum EDamageType {
+  Normal = 0;
+  Miss = 1;
+  Heal = 2;
+}
+
+enum EEntityType {
+  EntErrType = 0;
+  EntMonster = 1;
+  EntChar = 10;
+}
+
+message Attr {
+  int32 id = 1;
+  bytes raw_data = 2;
+}
+
+message AttrCollection {
+  int64 uuid = 1;
+  repeated Attr attrs = 2;
+}
+
+message AoiSyncDelta {
+  int64 uuid = 1;
+  AttrCollection attrs = 2;
+  SkillEffect skill_effects = 7;
+}
+
+message AoiSyncToMeDelta {
+  AoiSyncDelta base_delta = 1;
+  int64 uuid = 5;
+}
+
+message CharBaseInfo {
+  int64 char_id = 1;
+  string account_id = 2;
+  string name = 5;
+  int32 fight_point = 35;
+}
+
+message CharSerialize {
+  int64 char_id = 1;
+  CharBaseInfo char_base = 2;
+  SceneData scene_data = 3;
+  ItemPackage item_package = 7;
+  Mod mod = 57;
+  ProfessionList profession_list = 61;
+}
+
+message DisappearEntity {
+  int64 uuid = 1;
+}
+
+message Entity {
+  int64 uuid = 1;
+  EEntityType ent_type = 2;
+  AttrCollection attrs = 3;
+}
+
+message Item {
+  ModNewAttr mod_new_attr = 13;
+}
+
+message ItemPackage {
+  map<int32, Package> packages = 1;
+}
+
+message Mod {
+  map<int64, ModInfo> mod_infos = 2;
+}
+
+message ModInfo {
+  repeated int32 init_link_nums = 4;
+}
+
+message ModNewAttr {
+  repeated int32 mod_parts = 1;
+}
+
+message Package {
+  map<int64, Item> items = 4;
+}
+
+message ProfessionList {
+  int32 cur_profession_id = 1;
+}
+
+message SceneData {
+  uint32 line_id = 15;
+}
+
+message SkillEffect {
+  repeated SyncDamageInfo damages = 2;
+}
+
+message SyncContainerData {
+  CharSerialize v_data = 1;
+}
+
+message SyncDamageInfo {
+  bool is_miss = 2;
+  EDamageType type = 4;
+  int32 type_flag = 5;
+  int64 value = 6;
+  int64 lucky_value = 8;
+  int64 hp_lessen_value = 9;
+  int64 attacker_uuid = 11;
+  int32 owner_id = 12;
+  bool is_dead = 17;
+  int64 top_summoner_id = 21;
+}
+
+message SyncNearDeltaInfo {
+  repeated AoiSyncDelta delta_infos = 1;
+}
+
+message SyncNearEntities {
+  repeated Entity appear = 1;
+  repeated DisappearEntity disappear = 2;
+}
+
+message SyncToMeDeltaInfo {
+  AoiSyncToMeDelta delta_info = 1;
+}
+
+message Vector3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}

@@ -39,9 +39,9 @@ pub struct Entity {
     pub ability_score: Option<i32>,
 
     // Monsters
-    pub monster_id: Option<i32>,
-    pub curr_hp: Option<i32>, // also available for players in packets
-    pub max_hp: Option<i32>,  // also available for players in packets
+    pub monster_id: Option<u32>,
+    pub curr_hp: Option<u64>, // also available for players in packets
+    pub max_hp: Option<u64>,  // also available for players in packets
     pub monster_pos: blueprotobuf::Vector3,
 }
 
@@ -69,7 +69,7 @@ impl CombatStats {
     }
 }
 
-pub static MONSTER_NAMES_BOSS: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+pub static MONSTER_NAMES_BOSS: Lazy<HashMap<u32, String>> = Lazy::new(|| {
     let data = include_str!("../../../src/lib/data/json/MonsterNameBoss.json");
     serde_json::from_str(data).expect("invalid MonsterName.json")
 });

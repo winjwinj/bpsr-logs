@@ -9,7 +9,7 @@ use blueprotobuf_lib::blueprotobuf;
 use bytes::Bytes;
 use log::{debug, info, warn};
 use prost::Message;
-use std::default::Default;
+use std::io::Cursor;
 use std::sync::LazyLock;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -56,7 +56,10 @@ pub fn process_sync_near_entities(
     player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     for pkt_entity in sync_near_entities.appear {
-        let target_uuid = pkt_entity.uuid?;
+        let target_uuid = pkt_entity.uuid;
+        if target_uuid == 0 {
+            continue;
+        }
         let target_uid = target_uuid >> 16;
         let target_entity_type = blueprotobuf::EEntityType::from(target_uuid);
 
@@ -66,20 +69,22 @@ pub fn process_sync_near_entities(
             .or_default();
         target_entity.entity_type = target_entity_type;
 
-        match target_entity_type {
-            blueprotobuf::EEntityType::EntChar => process_player_attrs(
-                target_entity,
-                target_uid,
-                pkt_entity.attrs?.attrs,
-                player_cache,
-            ),
-            blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
-                target_entity,
-                pkt_entity.attrs?.attrs,
-                player_state,
-                is_bptimer_enabled,
-            ),
-            _ => {}
+        if let Some(attrs) = &pkt_entity.attrs {
+            match target_entity_type {
+                blueprotobuf::EEntityType::EntChar => process_player_attrs(
+                    target_entity,
+                    target_uid,
+                    attrs.attrs.clone(),
+                    player_cache,
+                ),
+                blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
+                    target_entity,
+                    attrs.attrs.clone(),
+                    player_state,
+                    is_bptimer_enabled,
+                ),
+                _ => {}
+            }
         }
     }
     Some(())
@@ -90,26 +95,45 @@ pub fn process_sync_container_data(
     sync_container_data: blueprotobuf::SyncContainerData,
     player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
-    let v_data = sync_container_data.v_data?;
-    let player_uid = v_data.char_id?;
+    let Some(v_data) = &sync_container_data.v_data else {
+        return None;
+    };
+
+    let player_uid = v_data.char_id;
+    if player_uid == 0 {
+        return None;
+    }
 
     let target_entity = encounter
         .entity_uid_to_entity
         .entry(player_uid)
         .or_default();
-    let char_base = v_data.char_base?;
-    let player_name = char_base.name?;
-    target_entity.name = Some(player_name.clone());
     target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
-    let player_class = Class::from(v_data.profession_list?.cur_profession_id?);
-    target_entity.class = Some(player_class);
-    let ability_score = char_base.fight_point?;
-    target_entity.ability_score = Some(ability_score);
 
-    if let Some(cache) = player_cache {
-        if let Ok(mut cache) = cache.lock() {
-            cache.set_both(player_uid, Some(player_name), Some(player_class));
-            cache.set_ability_score(player_uid, ability_score);
+    if let Some(char_base) = &v_data.char_base {
+        if !char_base.name.is_empty() {
+            target_entity.name = Some(char_base.name.clone());
+        }
+        if char_base.fight_point != 0 {
+            target_entity.ability_score = Some(char_base.fight_point);
+        }
+    }
+
+    if let Some(profession_list) = &v_data.profession_list {
+        if profession_list.cur_profession_id != 0 {
+            let player_class = Class::from(profession_list.cur_profession_id);
+            target_entity.class = Some(player_class);
+
+            if let Some(cache) = player_cache {
+                if let Ok(mut cache) = cache.lock() {
+                    if let Some(name) = &target_entity.name {
+                        cache.set_both(player_uid, Some(name.clone()), Some(player_class));
+                    }
+                    if let Some(ability_score) = target_entity.ability_score {
+                        cache.set_ability_score(player_uid, ability_score);
+                    }
+                }
+            }
         }
     }
 
@@ -130,10 +154,15 @@ pub fn process_sync_to_me_delta_info(
     is_bptimer_enabled: bool,
     player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
-    let delta_info = sync_to_me_delta_info.delta_info?;
+    let Some(delta_info) = &sync_to_me_delta_info.delta_info else {
+        return None;
+    };
+    let Some(base_delta) = &delta_info.base_delta else {
+        return None;
+    };
     process_aoi_sync_delta(
         encounter,
-        delta_info.base_delta?,
+        base_delta.clone(),
         player_state,
         is_bptimer_enabled,
         player_cache,
@@ -147,7 +176,10 @@ pub fn process_aoi_sync_delta(
     is_bptimer_enabled: bool,
     player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
-    let target_uuid = aoi_sync_delta.uuid?; // UUID =/= uid (have to >> 16)
+    let target_uuid = aoi_sync_delta.uuid;
+    if target_uuid == 0 {
+        return None;
+    }
     let target_uid = target_uuid >> 16;
 
     // Process attributes
@@ -192,10 +224,11 @@ pub fn process_aoi_sync_delta(
             .and_then(|e| e.monster_id)
             .is_some_and(|id| MONSTER_NAMES_BOSS.contains_key(&id));
 
-        let Some(attacker_uuid) = sync_damage_info
-            .top_summoner_id
-            .or(sync_damage_info.attacker_uuid)
-        else {
+        let attacker_uuid = if sync_damage_info.top_summoner_id != 0 {
+            sync_damage_info.top_summoner_id
+        } else if sync_damage_info.attacker_uuid != 0 {
+            sync_damage_info.attacker_uuid
+        } else {
             continue; // Skip this damage packet if no attacker
         };
         let attacker_uid = attacker_uuid >> 16;
@@ -207,9 +240,10 @@ pub fn process_aoi_sync_delta(
                 ..Default::default()
             });
 
-        let Some(skill_uid) = sync_damage_info.owner_id else {
+        let skill_uid = sync_damage_info.owner_id;
+        if skill_uid == 0 {
             continue; // Skip this damage packet if no skill_uid
-        };
+        }
         if attacker_entity
             .class_spec
             .is_none_or(|class_spec| class_spec == ClassSpec::Unknown)
@@ -244,8 +278,7 @@ pub fn process_aoi_sync_delta(
         }
 
         // Skills
-        let is_heal =
-            sync_damage_info.r#type.unwrap_or(0) == blueprotobuf::EDamageType::Heal as i32;
+        let is_heal = sync_damage_info.r#type == blueprotobuf::EDamageType::Heal as i32;
         if is_heal {
             let heal_skill = attacker_entity
                 .skill_uid_to_heal_stats
@@ -254,10 +287,6 @@ pub fn process_aoi_sync_delta(
             process_stats(&sync_damage_info, heal_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.heal_stats); // update total entity heal stats
             process_stats(&sync_damage_info, &mut encounter.heal_stats); // update total encounter heal stats
-            debug!(
-                "dmg packet: {attacker_uid} to {target_uid}: {} total heal",
-                heal_skill.value
-            );
         } else {
             let dps_skill = attacker_entity
                 .skill_uid_to_dps_stats
@@ -265,7 +294,7 @@ pub fn process_aoi_sync_delta(
                 .or_default();
             process_stats(&sync_damage_info, dps_skill);
             process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats); // update total entity dmg stats
-            process_stats(&sync_damage_info, &mut encounter.dmg_stats); // update total encounter heal stats
+            process_stats(&sync_damage_info, &mut encounter.dmg_stats); // update total encounter dmg stats
             if is_boss {
                 let skill_boss_only = attacker_entity
                     .skill_uid_to_dps_stats_boss_only
@@ -273,12 +302,8 @@ pub fn process_aoi_sync_delta(
                     .or_default();
                 process_stats(&sync_damage_info, skill_boss_only);
                 process_stats(&sync_damage_info, &mut attacker_entity.dmg_stats_boss_only); // update total entity boss only dmg stats
-                process_stats(&sync_damage_info, &mut encounter.dmg_stats_boss_only); // update total encounter heal stats
+                process_stats(&sync_damage_info, &mut encounter.dmg_stats_boss_only); // update total encounter dmg stats
             }
-            debug!(
-                "dmg packet: {attacker_uid} to {target_uid}: {} total dmg",
-                dps_skill.value
-            );
         }
     }
 
@@ -287,7 +312,7 @@ pub fn process_aoi_sync_delta(
         .duration_since(UNIX_EPOCH)
         .expect("Time went backwards")
         .as_millis();
-    if encounter.time_fight_start_ms == Default::default() {
+    if encounter.time_fight_start_ms == 0 {
         encounter.time_fight_start_ms = timestamp_ms;
     }
     encounter.time_last_combat_packet_ms = timestamp_ms;
@@ -298,12 +323,15 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     // TODO: from testing, first bit is set when there's crit, 3rd bit for if it causes lucky (no idea what that means), require more testing here
     const CRIT_BIT: i32 = 0b00_00_00_01; // 1st bit
 
-    let non_lucky_dmg = sync_damage_info.value;
-    let lucky_value = sync_damage_info.lucky_value;
-    let actual_value = non_lucky_dmg.or(lucky_value).unwrap_or(0); // The damage is either non-lucky or lucky (exclusive)
+    // Prefer lucky damage value if available (non-zero), otherwise use regular value
+    let actual_value = if sync_damage_info.lucky_value != 0 {
+        sync_damage_info.lucky_value
+    } else {
+        sync_damage_info.value
+    };
 
-    let is_lucky = lucky_value.is_some();
-    let flag = sync_damage_info.type_flag.unwrap_or_default();
+    let is_lucky = sync_damage_info.lucky_value != 0;
+    let flag = sync_damage_info.type_flag;
     let is_crit = (flag & CRIT_BIT) != 0; // No idea why, but SyncDamageInfo.is_crit isn't correct
     if is_crit {
         stats.crit_hits += 1;
@@ -315,6 +343,26 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     }
     stats.hits += 1;
     stats.value += actual_value;
+}
+
+fn decode_protobuf_int32(data: &[u8]) -> Result<i32, Box<dyn std::error::Error>> {
+    if data.is_empty() {
+        return Err("Empty data".into());
+    }
+    let mut cursor = Cursor::new(data);
+    prost::encoding::decode_varint(&mut cursor)
+        .map(|v| v as i32)
+        .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
+}
+
+fn decode_protobuf_int64(data: &[u8]) -> Result<i64, Box<dyn std::error::Error>> {
+    if data.is_empty() {
+        return Err("Empty data".into());
+    }
+    let mut cursor = Cursor::new(data);
+    prost::encoding::decode_varint(&mut cursor)
+        .map(|v| v as i64)
+        .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
 }
 
 fn process_player_attrs(
@@ -341,16 +389,17 @@ fn process_player_attrs(
     }
 
     for attr in attrs {
-        let Some(mut raw_bytes) = attr.raw_data else {
+        if attr.raw_data.is_empty() {
             continue;
-        };
-        let Some(attr_id) = attr.id else {
+        }
+        if attr.id == 0 {
             continue;
-        };
+        }
 
         // info!("{} {}", attr_type::(attr_id),hex::encode(raw_bytes.read_remaining()));
-        match attr_id {
+        match attr.id {
             attr_type::ATTR_NAME => {
+                let mut raw_bytes = attr.raw_data;
                 raw_bytes.remove(0); // not sure why, there's some weird character as the first e.g. "\u{6}Sketal"
                 let player_name_result = BinaryReader::from(raw_bytes).read_string();
                 if let Ok(player_name) = player_name_result {
@@ -365,29 +414,27 @@ fn process_player_attrs(
                     warn!("Failed to read player name for UID {player_uid}");
                 }
             }
-            #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_PROFESSION_ID => {
-                let player_class = Class::from(
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32,
-                );
-                player_entity.class = Some(player_class);
+                if let Ok(class_id) = decode_protobuf_int32(&attr.raw_data) {
+                    let player_class = Class::from(class_id);
+                    player_entity.class = Some(player_class);
 
-                // Cache the class
-                if let Some(cache) = player_cache {
-                    if let Ok(mut cache) = cache.lock() {
-                        cache.set_class(player_uid, player_class);
+                    // Cache the class
+                    if let Some(cache) = player_cache {
+                        if let Ok(mut cache) = cache.lock() {
+                            cache.set_class(player_uid, player_class);
+                        }
                     }
                 }
             }
-            #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_FIGHT_POINT => {
-                let ability_score =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-                player_entity.ability_score = Some(ability_score);
+                if let Ok(ability_score) = decode_protobuf_int32(&attr.raw_data) {
+                    player_entity.ability_score = Some(ability_score);
 
-                if let Some(cache) = player_cache {
-                    if let Ok(mut cache) = cache.lock() {
-                        cache.set_ability_score(player_uid, ability_score);
+                    if let Some(cache) = player_cache {
+                        if let Ok(mut cache) = cache.lock() {
+                            cache.set_ability_score(player_uid, ability_score);
+                        }
                     }
                 }
             }
@@ -403,62 +450,80 @@ fn process_monster_attrs(
     is_bptimer_enabled: bool,
 ) {
     // Track if HP was updated during this attribute batch
-    // Prevents unnecessary report_hp calls even if catched in the api client itself
-    // Also prevents calls if HP does not change, but the other attributes do
     let mut hp_updated = false;
 
     // Process all attributes and update entity state
     for attr in attrs {
-        let Some(raw_bytes) = attr.raw_data else {
+        if attr.raw_data.is_empty() {
             continue;
-        };
-        let Some(attr_id) = attr.id else {
+        }
+        if attr.id == 0 {
             continue;
-        };
+        }
 
-        #[allow(clippy::cast_possible_truncation)]
-        match attr_id {
+        match attr.id {
             attr_type::ATTR_ID => {
-                monster_entity.monster_id =
-                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+                if let Ok(id) = decode_protobuf_int32(&attr.raw_data) {
+                    if id >= 0 {
+                        monster_entity.monster_id = Some(id as u32);
+                    }
+                }
             }
             attr_type::ATTR_HP => {
-                let curr_hp =
-                    prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32;
-                monster_entity.curr_hp = Some(curr_hp);
-                hp_updated = true;
+                if let Ok(curr_hp) = decode_protobuf_int64(&attr.raw_data) {
+                    if curr_hp >= 0 {
+                        monster_entity.curr_hp = Some(curr_hp as u64);
+                        hp_updated = true;
+                    }
+                }
             }
-            #[allow(clippy::cast_possible_truncation)]
             attr_type::ATTR_MAX_HP => {
-                monster_entity.max_hp =
-                    Some(prost::encoding::decode_varint(&mut raw_bytes.as_slice()).unwrap() as i32)
+                if let Ok(max_hp) = decode_protobuf_int64(&attr.raw_data) {
+                    if max_hp >= 0 {
+                        monster_entity.max_hp = Some(max_hp as u64);
+                    }
+                }
             }
             attr_type::ATTR_POS => {
-                monster_entity.monster_pos =
-                    blueprotobuf::Vector3::decode(Bytes::from(raw_bytes)).unwrap()
+                if let Ok(pos) =
+                    blueprotobuf::Vector3::decode(Bytes::copy_from_slice(&attr.raw_data))
+                {
+                    monster_entity.monster_pos = pos;
+                }
             }
             _ => (),
         }
     }
 
-    // Report to bptimer if HP was updated and feature is enabled
+    // Report to bptimer if HP was updated and both current_hp and max_hp are available
     // bptimer client handles all validation internally
-    if hp_updated && is_bptimer_enabled && BP_TIMER_CLIENT.is_some() {
-        let client = BP_TIMER_CLIENT.as_ref().unwrap();
-        let line = player_state.get_line_id();
-        let account_id = player_state.get_account_id();
-        let uid = player_state.get_uid();
+    if hp_updated
+        && monster_entity.curr_hp.is_some()
+        && monster_entity.max_hp.is_some()
+        && is_bptimer_enabled
+    {
+        if let Some(client) = BP_TIMER_CLIENT.as_ref() {
+            let line = player_state.get_line_id_opt().and_then(|id| {
+                if id <= i32::MAX as u32 {
+                    Some(id as i32)
+                } else {
+                    None
+                }
+            });
+            let account_id = player_state.get_account_id();
+            let uid = player_state.get_uid_opt();
 
-        client.report_hp(
-            monster_entity.monster_id,
-            monster_entity.curr_hp,
-            monster_entity.max_hp,
-            line,
-            monster_entity.monster_pos.x,
-            monster_entity.monster_pos.y,
-            monster_entity.monster_pos.z,
-            account_id,
-            uid,
-        );
+            client.report_hp(
+                monster_entity.monster_id,
+                monster_entity.curr_hp,
+                monster_entity.max_hp,
+                line,
+                Some(monster_entity.monster_pos.x),
+                Some(monster_entity.monster_pos.y),
+                Some(monster_entity.monster_pos.z),
+                account_id,
+                uid,
+            );
+        }
     }
 }

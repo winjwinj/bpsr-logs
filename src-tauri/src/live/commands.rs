@@ -166,7 +166,7 @@ pub fn get_player_window(
     #[allow(clippy::cast_precision_loss)]
     let mut player_window = PlayersWindow {
         player_rows: Vec::new(),
-        local_player_uid: player_state.get_local_player_uid().unwrap_or(-1) as f64,
+        local_player_uid: player_state.get_uid() as f64,
         top_value: 0.0,
     };
     for (&entity_uid, entity) in &encounter.entity_uid_to_entity {
@@ -383,7 +383,7 @@ pub fn get_skill_window(
             hits: player_stats.hits as f64,
             hits_per_minute: nan_is_zero(player_stats.hits as f64 / time_elapsed_secs * 60.0),
         },
-        local_player_uid: player_state.get_local_player_uid().unwrap_or(-1) as f64,
+        local_player_uid: player_state.get_uid() as f64,
         skill_rows: Vec::new(),
         top_value: 0.0,
     };

@@ -1,6 +1,6 @@
 [package]
 name = "bpsr-logs"
-version = "0.22.4"
+version = "0.23.0"
 description = "Blue Protocol: Star Resonance DPS Meter written in Rust"
 authors = ["winjwinj"]
 edition = "2024"
@@ -20,23 +20,23 @@ tauri-build = { version = "2.5.3", features = [] }
 [dependencies]
 tauri = { version = "2.9.5", features = ["tray-icon", "image-png"] }
 serde = { version = "1.0.228", features = ["derive"] }
-tauri-plugin-single-instance = "2.3.6"
-tauri-plugin-log = { version = "2.7.1", features = ["colored"] }
-chrono = "0.4.42"
+tauri-plugin-single-instance = "2.3.7"
+tauri-plugin-log = { version = "2.8.0", features = ["colored"] }
+chrono = "0.4.43"
 windivert = { version = "0.6.0", features = ["vendored"] }
 etherparse = "0.19.0"
-tokio = { version = "1.48.0", features = ["macros"] }
+tokio = { version = "1.49.0", features = ["macros"] }
 log = "0.4.29"
 bytes = "1.11.0"
 zstd = "0.13.3"
 byteorder = "1.5.0"
-prost = "0.14.1"
+prost = "0.14.3"
 specta = "2.0.0-rc.22"
 specta-typescript = "0.0.9"
 tauri-specta = { version = "2.0.0-rc.21", features = ["typescript"] }
 tauri-plugin-window-state = "2.4.1"
 once_cell = "1.21.3"
-serde_json = { version = "1.0.148", features = ["arbitrary_precision"] }
+serde_json = { version = "1.0.149", features = ["arbitrary_precision"] }
 window-vibrancy = "0.7.1"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-svelte = "3"

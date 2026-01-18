@@ -9,7 +9,6 @@ pub enum Pkt {
     SyncNearEntities = 0x00000006,  // NPCNearbyNotify SyncNearEntities
     SyncContainerData = 0x00000015, // Container DataNotifySyncContainerData - similar to DirtyData, but has detailed like level, curr hp, max hp
     // SyncContainerDirtyData = 0x00000016, // DirtyDataNotify SyncContainerDirtyData - Name, AP, Class, SubClass
-    SyncServerTime = 0x0000002b,    // ServerTimeNotify SyncServerTime
     SyncToMeDeltaInfo = 0x0000002e, // PlayerSelfNotify SyncToMeDeltaInfo
     SyncNearDeltaInfo = 0x0000002d, // PlayerNearbyNotify SyncNearDeltaInfo
 }
@@ -22,7 +21,6 @@ impl TryFrom<u32> for Pkt {
             0x00000006 => Ok(Pkt::SyncNearEntities),
             0x00000015 => Ok(Pkt::SyncContainerData),
             // 0x00000016 => Ok(Pkt::SyncContainerDirtyData),
-            0x0000002b => Ok(Pkt::SyncServerTime),
             0x0000002e => Ok(Pkt::SyncToMeDeltaInfo),
             0x0000002d => Ok(Pkt::SyncNearDeltaInfo),
             _ => Err(ParseError),

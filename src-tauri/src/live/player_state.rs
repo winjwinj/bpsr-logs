@@ -4,39 +4,49 @@ use std::sync::Mutex;
 
 #[derive(Debug, Default)]
 pub struct PlayerState {
-    pub account_id: Option<String>,
-    pub uid: Option<i64>,
-    pub line_id: Option<u32>,
+    account_id: Option<String>,
+    uid: Option<i64>,
+    line_id: Option<u32>,
 }
 
 impl PlayerState {
     pub fn set_account_info(&mut self, account_id: String, uid: i64) {
-        if self.account_id.as_ref() != Some(&account_id) {
+        self.set_account_id(account_id);
+        self.set_uid(uid);
+    }
+
+    pub fn set_account_id(&mut self, account_id: String) {
+        if self.account_id.as_deref() != Some(account_id.as_str()) {
             self.account_id = Some(account_id);
         }
+    }
+
+    pub fn set_uid(&mut self, uid: i64) {
         if self.uid != Some(uid) {
             self.uid = Some(uid);
         }
     }
 
     pub fn set_line_id(&mut self, line_id: u32) {
-        self.line_id = Some(line_id);
+        if self.line_id != Some(line_id) {
+            self.line_id = Some(line_id);
+        }
     }
 
     pub fn get_account_id(&self) -> Option<String> {
         self.account_id.clone()
     }
 
-    pub fn get_uid(&self) -> Option<i64> {
+    pub fn get_uid(&self) -> i64 {
+        self.uid.unwrap_or(-1)
+    }
+
+    pub fn get_uid_opt(&self) -> Option<i64> {
         self.uid
     }
 
-    pub fn get_line_id(&self) -> Option<u32> {
+    pub fn get_line_id_opt(&self) -> Option<u32> {
         self.line_id
-    }
-
-    pub fn get_local_player_uid(&self) -> Option<i64> {
-        self.uid
     }
 }
 
@@ -56,7 +66,7 @@ pub struct PlayerCache {
 impl PlayerCache {
     pub fn set_name(&mut self, uid: i64, name: String) {
         let entry = self.cache.entry(uid).or_default();
-        if entry.name.as_ref() != Some(&name) {
+        if entry.name.as_deref() != Some(name.as_str()) {
             entry.name = Some(name);
         }
     }
@@ -85,7 +95,7 @@ impl PlayerCache {
     pub fn set_both(&mut self, uid: i64, name: Option<String>, class: Option<Class>) {
         let entry = self.cache.entry(uid).or_default();
         if let Some(n) = name {
-            if entry.name.as_ref() != Some(&n) {
+            if entry.name.as_deref() != Some(n.as_str()) {
                 entry.name = Some(n);
             }
         }

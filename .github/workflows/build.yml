@@ -27,6 +27,25 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
 
+      - name: Install protoc
+        run: |
+          $protocVersion = "33.4"
+          $protocUrl = "https://github.com/protocolbuffers/protobuf/releases/download/v$protocVersion/protoc-$protocVersion-win64.zip"
+          $protocZip = "$env:TEMP\protoc.zip"
+          $protocDir = "$env:TEMP\protoc"
+          Write-Host "Downloading protoc from $protocUrl"
+          Invoke-WebRequest -Uri $protocUrl -OutFile $protocZip
+          Expand-Archive -Path $protocZip -DestinationPath $protocDir -Force
+          $protocPath = "$protocDir\bin\protoc.exe"
+          if (Test-Path $protocPath) {
+            echo "$protocDir\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            echo "PROTOC=$protocPath" >> $env:GITHUB_ENV
+            Write-Host "protoc installed successfully"
+          } else {
+            Write-Error "protoc.exe not found after extraction"
+            exit 1
+          }
+
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:

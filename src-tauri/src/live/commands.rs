@@ -7,11 +7,11 @@ use crate::live::opcodes_models::class::{Class, ClassSpec};
 use crate::live::opcodes_models::{CombatStats, Encounter, EncounterMutex, class};
 use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets::packet_capture::request_restart;
-use blueprotobuf_lib::blueprotobuf::EEntityType;
+use crate::protocol::pb::EEntityType;
+use crate::utils::modules::{encode_module_data, extract_modules};
 use log::info;
 use std::sync::MutexGuard;
 use tauri::Manager;
-use tauri_plugin_clipboard_manager::ClipboardExt;
 use window_vibrancy::{apply_blur, clear_blur};
 
 fn nan_is_zero(value: f64) -> f64 {
@@ -40,20 +40,6 @@ pub fn disable_blur(app: tauri::AppHandle) {
 
 #[tauri::command]
 #[specta::specta]
-pub fn copy_sync_container_data(app: tauri::AppHandle) {
-    let state = app.state::<EncounterMutex>();
-    let encounter = state.lock().unwrap();
-    if let Some(local_player) = &encounter.local_player
-        && let Ok(json) = serde_json::to_string_pretty(local_player)
-        && app.clipboard().write_text(json).is_err()
-    {
-        info!("No SyncContainerData found. Nothing copied to the clipboard.");
-    }
-}
-
-#[tauri::command]
-#[specta::specta]
-#[allow(clippy::cast_precision_loss)]
 pub fn get_header_info(state: tauri::State<'_, EncounterMutex>) -> HeaderInfo {
     let encounter = state.lock().unwrap();
     if encounter.dmg_stats.value == 0 {
@@ -160,10 +146,8 @@ pub fn get_player_window(
     player_state: &std::sync::MutexGuard<crate::live::player_state::PlayerState>,
 ) -> PlayersWindow {
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
-    #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
-    #[allow(clippy::cast_precision_loss)]
     let mut player_window = PlayersWindow {
         player_rows: Vec::new(),
         local_player_uid: player_state.get_uid() as f64,
@@ -182,14 +166,13 @@ pub fn get_player_window(
             continue;
         }
         player_window.top_value = player_window.top_value.max(entity_stats.value as f64);
-        #[allow(clippy::cast_precision_loss)]
         let damage_row = PlayerRow {
             uid: entity_uid as f64,
             name: entity
                 .name
                 .clone()
                 .or_else(|| player_cache.get_name(entity_uid))
-                .unwrap_or_else(|| format!("Player {}", entity_uid)),
+                .unwrap_or_else(|| format!("Player {entity_uid}")),
             class_name: class::get_class_name(
                 entity
                     .class
@@ -202,10 +185,12 @@ pub fn get_player_window(
                     .or_else(|| player_cache.get_class_spec(entity_uid))
                     .unwrap_or(ClassSpec::Unknown),
             ),
-            ability_score: entity
-                .ability_score
-                .or_else(|| player_cache.get_ability_score(entity_uid))
-                .unwrap_or(-1) as f64,
+            ability_score: f64::from(
+                entity
+                    .ability_score
+                    .or_else(|| player_cache.get_ability_score(entity_uid))
+                    .unwrap_or(-1),
+            ),
             total_value: entity_stats.value as f64,
             value_per_sec: nan_is_zero(entity_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(
@@ -316,7 +301,6 @@ pub fn get_skill_window(
     };
 
     let time_elapsed_ms = encounter.time_last_combat_packet_ms - encounter.time_fight_start_ms;
-    #[allow(clippy::cast_precision_loss)]
     let time_elapsed_secs = time_elapsed_ms as f64 / 1000.0;
 
     let (player_stats, encounter_stats, skill_uid_to_stats) = match stat_type {
@@ -338,7 +322,6 @@ pub fn get_skill_window(
     };
 
     // Player DPS Stats
-    #[allow(clippy::cast_precision_loss)]
     let mut skill_window = SkillsWindow {
         inspected_player: PlayerRow {
             uid: player_uid as f64,
@@ -346,7 +329,7 @@ pub fn get_skill_window(
                 .name
                 .clone()
                 .or_else(|| player_cache.get_name(player_uid))
-                .unwrap_or_else(|| format!("Player {}", player_uid)),
+                .unwrap_or_else(|| format!("Player {player_uid}")),
             class_name: class::get_class_name(
                 player
                     .class
@@ -359,10 +342,12 @@ pub fn get_skill_window(
                     .or_else(|| player_cache.get_class_spec(player_uid))
                     .unwrap_or(ClassSpec::Unknown),
             ),
-            ability_score: player
-                .ability_score
-                .or_else(|| player_cache.get_ability_score(player_uid))
-                .unwrap_or(-1) as f64,
+            ability_score: f64::from(
+                player
+                    .ability_score
+                    .or_else(|| player_cache.get_ability_score(player_uid))
+                    .unwrap_or(-1),
+            ),
             total_value: player_stats.value as f64,
             value_per_sec: nan_is_zero(player_stats.value as f64 / time_elapsed_secs),
             value_pct: nan_is_zero(
@@ -391,9 +376,8 @@ pub fn get_skill_window(
     // Skills for this player
     for (&skill_uid, skill_stat) in skill_uid_to_stats {
         skill_window.top_value = skill_window.top_value.max(skill_stat.value as f64);
-        #[allow(clippy::cast_precision_loss)]
         let skill_row = SkillRow {
-            uid: skill_uid as f64,
+            uid: f64::from(skill_uid),
             name: CombatStats::get_skill_name(skill_uid),
             total_value: skill_stat.value as f64,
             value_per_sec: nan_is_zero(skill_stat.value as f64 / time_elapsed_secs),
@@ -426,19 +410,17 @@ pub fn get_skill_window(
 
 #[tauri::command]
 #[specta::specta]
-#[allow(clippy::cast_precision_loss)]
-#[allow(clippy::too_many_lines)]
 pub fn get_test_player_window() -> PlayersWindow {
     PlayersWindow {
         player_rows: vec![
             PlayerRow {
-                uid: 10_000_001.0,
+                uid: 10000001.0,
                 name: "Name Stormblade (You)".to_string(),
                 class_name: "Stormblade".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 100_000.0,
-                value_per_sec: 10_000.6,
+                total_value: 100000.0,
+                value_per_sec: 10000.6,
                 value_pct: 100.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -448,13 +430,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_002.0,
+                uid: 10000002.0,
                 name: "Name Frost Mage".to_string(),
                 class_name: "Frost Mage".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 90_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 90000.0,
+                value_per_sec: 6000.6,
                 value_pct: 90.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -464,13 +446,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_003.0,
+                uid: 10000003.0,
                 name: "Name Wind Knight".to_string(),
                 class_name: "Wind Knight".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 80_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 80000.0,
+                value_per_sec: 6000.6,
                 value_pct: 80.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -480,13 +462,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_004.0,
+                uid: 10000004.0,
                 name: "Name Verdant Oracle".to_string(),
                 class_name: "Verdant Oracle".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 70_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 70000.0,
+                value_per_sec: 6000.6,
                 value_pct: 70.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -496,13 +478,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_005.0,
+                uid: 10000005.0,
                 name: "Name Heavy Guardian".to_string(),
                 class_name: "Heavy Guardian".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 60_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 60000.0,
+                value_per_sec: 6000.6,
                 value_pct: 60.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -512,13 +494,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_006.0,
+                uid: 10000006.0,
                 name: "Name Marksman".to_string(),
                 class_name: "Marksman".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 60_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 60000.0,
+                value_per_sec: 6000.6,
                 value_pct: 50.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -528,13 +510,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_007.0,
+                uid: 10000007.0,
                 name: "Name Shield Knight".to_string(),
                 class_name: "Shield Knight".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 50_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 50000.0,
+                value_per_sec: 6000.6,
                 value_pct: 40.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -544,13 +526,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_008.0,
+                uid: 10000008.0,
                 name: "Name Beat Performer".to_string(),
                 class_name: "Beat Performer".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 10_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 10000.0,
+                value_per_sec: 6000.6,
                 value_pct: 30.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -560,13 +542,13 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
             PlayerRow {
-                uid: 10_000_009.0,
+                uid: 10000009.0,
                 name: "Blank Class".to_string(),
                 class_name: "blank".to_string(),
-                class_spec_name: "".to_string(),
+                class_spec_name: String::new(),
                 ability_score: 1500.0,
-                total_value: 10_000.0,
-                value_per_sec: 6_000.6,
+                total_value: 10000.0,
+                value_per_sec: 6000.6,
                 value_pct: 20.0,
                 crit_rate: 0.25,
                 crit_value_rate: 2.0,
@@ -576,8 +558,8 @@ pub fn get_test_player_window() -> PlayersWindow {
                 hits_per_minute: 3.3,
             },
         ],
-        local_player_uid: 10_000_001.0,
-        top_value: 100_000.0,
+        local_player_uid: 10000001.0,
+        top_value: 100000.0,
     }
 }
 
@@ -593,17 +575,16 @@ pub fn set_bptimer_enabled(state: tauri::State<BPTimerEnabledMutex>, enabled: bo
 
 #[tauri::command]
 #[specta::specta]
-#[allow(clippy::too_many_lines)]
 pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String> {
     Ok(SkillsWindow {
         inspected_player: PlayerRow {
-            uid: 10_000_001.0,
+            uid: 10000001.0,
             name: "Name Stormblade".to_string(),
             class_name: "Stormblade".to_string(),
             class_spec_name: "Iaido".to_string(),
             ability_score: 1500.0,
-            total_value: 100_000.0,
-            value_per_sec: 10_000.6,
+            total_value: 100000.0,
+            value_per_sec: 10000.6,
             value_pct: 90.0,
             crit_rate: 0.25,
             crit_value_rate: 2.0,
@@ -616,8 +597,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 1".to_string(),
-                total_value: 100_000.0,
-                value_per_sec: 5_000.0,
+                total_value: 100000.0,
+                value_per_sec: 5000.0,
                 value_pct: 80.0,
                 crit_rate: 0.30,
                 crit_value_rate: 2.1,
@@ -629,8 +610,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 2".to_string(),
-                total_value: 50_000.0,
-                value_per_sec: 7_345.6,
+                total_value: 50000.0,
+                value_per_sec: 7345.6,
                 value_pct: 70.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -642,8 +623,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 3".to_string(),
-                total_value: 33_000.0,
-                value_per_sec: 7_345.6,
+                total_value: 33000.0,
+                value_per_sec: 7345.6,
                 value_pct: 60.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -655,8 +636,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 4".to_string(),
-                total_value: 23_000.0,
-                value_per_sec: 7_345.6,
+                total_value: 23000.0,
+                value_per_sec: 7345.6,
                 value_pct: 50.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -668,8 +649,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 5".to_string(),
-                total_value: 11_000.0,
-                value_per_sec: 7_345.6,
+                total_value: 11000.0,
+                value_per_sec: 7345.6,
                 value_pct: 40.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -681,8 +662,8 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
             SkillRow {
                 uid: 3602.0,
                 name: "Skill 6".to_string(),
-                total_value: 1_000.0,
-                value_per_sec: 7_345.6,
+                total_value: 1000.0,
+                value_per_sec: 7345.6,
                 value_pct: 30.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -695,7 +676,7 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
                 uid: 3602.0,
                 name: "Skill 7".to_string(),
                 total_value: 400.0,
-                value_per_sec: 7_345.6,
+                value_per_sec: 7345.6,
                 value_pct: 20.0,
                 crit_rate: 0.20,
                 crit_value_rate: 1.9,
@@ -705,7 +686,34 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
                 hits_per_minute: 1.8,
             },
         ],
-        local_player_uid: 10_000_001.0,
-        top_value: 100_000.0,
+        local_player_uid: 10000001.0,
+        top_value: 100000.0,
     })
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn extract_modules_from_local_player(
+    state: tauri::State<'_, EncounterMutex>,
+) -> Result<String, String> {
+    let encounter = state.lock().unwrap();
+    let Some(local_player) = &encounter.local_player else {
+        return Err("No local player data available".to_string());
+    };
+
+    match extract_modules(local_player) {
+        Ok(modules) => {
+            if modules.is_empty() {
+                return Err("No modules found".to_string());
+            }
+            match encode_module_data(&modules) {
+                Ok(encoded) => {
+                    let base_url = "https://bptimer.com/modules-optimizer";
+                    Ok(format!("{}?data={}", base_url, encoded))
+                }
+                Err(e) => Err(format!("Failed to encode modules: {}", e)),
+            }
+        }
+        Err(e) => Err(format!("Failed to extract modules: {}", e)),
+    }
 }

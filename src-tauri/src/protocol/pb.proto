@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package blueprotobuf_package;
+package pb;
 
 enum EDamageType {
   Normal = 0;
@@ -51,9 +51,7 @@ message CharSerialize {
   ProfessionList profession_list = 61;
 }
 
-message DisappearEntity {
-  int64 uuid = 1;
-}
+message DisappearEntity { int64 uuid = 1; }
 
 message Entity {
   int64 uuid = 1;
@@ -61,45 +59,25 @@ message Entity {
   AttrCollection attrs = 3;
 }
 
-message Item {
-  ModNewAttr mod_new_attr = 13;
-}
+message Item { ModNewAttr mod_new_attr = 13; }
 
-message ItemPackage {
-  map<int32, Package> packages = 1;
-}
+message ItemPackage { map<int32, Package> packages = 1; }
 
-message Mod {
-  map<int64, ModInfo> mod_infos = 2;
-}
+message Mod { map<int64, ModInfo> mod_infos = 2; }
 
-message ModInfo {
-  repeated int32 init_link_nums = 4;
-}
+message ModInfo { repeated int32 init_link_nums = 4; }
 
-message ModNewAttr {
-  repeated int32 mod_parts = 1;
-}
+message ModNewAttr { repeated int32 mod_parts = 1; }
 
-message Package {
-  map<int64, Item> items = 4;
-}
+message Package { map<int64, Item> items = 4; }
 
-message ProfessionList {
-  int32 cur_profession_id = 1;
-}
+message ProfessionList { int32 cur_profession_id = 1; }
 
-message SceneData {
-  uint32 line_id = 15;
-}
+message SceneData { uint32 line_id = 15; }
 
-message SkillEffect {
-  repeated SyncDamageInfo damages = 2;
-}
+message SkillEffect { repeated SyncDamageInfo damages = 2; }
 
-message SyncContainerData {
-  CharSerialize v_data = 1;
-}
+message SyncContainerData { CharSerialize v_data = 1; }
 
 message SyncDamageInfo {
   bool is_miss = 2;
@@ -114,18 +92,14 @@ message SyncDamageInfo {
   int64 top_summoner_id = 21;
 }
 
-message SyncNearDeltaInfo {
-  repeated AoiSyncDelta delta_infos = 1;
-}
+message SyncNearDeltaInfo { repeated AoiSyncDelta delta_infos = 1; }
 
 message SyncNearEntities {
   repeated Entity appear = 1;
   repeated DisappearEntity disappear = 2;
 }
 
-message SyncToMeDeltaInfo {
-  AoiSyncToMeDelta delta_info = 1;
-}
+message SyncToMeDeltaInfo { AoiSyncToMeDelta delta_info = 1; }
 
 message Vector3 {
   float x = 1;

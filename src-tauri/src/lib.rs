@@ -1,6 +1,10 @@
 mod build_app;
 mod live;
 mod packets;
+mod protocol;
+#[cfg(target_os = "windows")]
+mod service;
+mod utils;
 
 use crate::build_app::build;
 use crate::live::bptimer_state::create_bptimer_enabled;
@@ -9,13 +13,11 @@ use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use chrono::Utc;
 use log::{info, warn};
 use std::fs;
-use std::process::Command;
 
 use crate::live::commands::{disable_blur, enable_blur};
 use tauri::menu::MenuBuilder;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
-use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_svelte::ManagerExt;
 use tauri_plugin_window_state::{AppHandleExt, StateFlags};
@@ -35,8 +37,11 @@ pub fn run() {
 
     std::panic::set_hook(Box::new(|info| {
         info!("App crashed! Info: {info:?}");
-        info!("Unloading and removing WinDivert...");
-        cleanup_windivert();
+        #[cfg(target_os = "windows")]
+        {
+            info!("Unloading and removing WinDivert...");
+            service::cleanup_windivert();
+        }
     }));
 
     let builder = Builder::<tauri::Wry>::new()
@@ -44,7 +49,6 @@ pub fn run() {
         .commands(collect_commands![
             live::commands::enable_blur,
             live::commands::disable_blur,
-            live::commands::copy_sync_container_data,
             live::commands::get_header_info,
             live::commands::get_dps_player_window,
             live::commands::get_dps_skill_window,
@@ -58,6 +62,7 @@ pub fn run() {
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
             live::commands::set_bptimer_enabled,
+            live::commands::extract_modules_from_local_player,
         ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
@@ -69,6 +74,16 @@ pub fn run() {
                 "../src/lib/bindings.ts",
             )
             .expect("Failed to export typescript bindings");
+
+        // Add @ts-nocheck comment to suppress type checking for generated file
+        let bindings_path = "../src/lib/bindings.ts";
+        if let Ok(content) = fs::read_to_string(bindings_path) {
+            if !content.starts_with("// @ts-nocheck") {
+                let updated_content = format!("// @ts-nocheck\n{}", content);
+                fs::write(bindings_path, updated_content)
+                    .expect("Failed to add @ts-nocheck to bindings.ts");
+            }
+        }
     }
 
     let tauri_builder = tauri::Builder::default()
@@ -80,7 +95,8 @@ pub fn run() {
         .setup(|app| {
             info!("starting app v{}", app.package_info().version);
             // Clean up any leftover WinDivert resources from previous runs
-            cleanup_windivert();
+            #[cfg(target_os = "windows")]
+            service::cleanup_windivert();
 
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
@@ -114,10 +130,6 @@ pub fn run() {
             Ok(())
         })
         .on_window_event(on_window_event_fn)
-        .plugin(tauri_plugin_autostart::init(
-            MacosLauncher::LaunchAgent,
-            Some(vec![]),
-        ))
         .plugin(tauri_plugin_clipboard_manager::init()) // used to read/write to the clipboard
         .plugin(tauri_plugin_updater::Builder::new().build()) // used for auto updating the app
         .plugin(tauri_plugin_window_state::Builder::default().build()) // used to remember window size/position https://v2.tauri.app/plugin/window-state/
@@ -129,96 +141,13 @@ pub fn run() {
         .run(|_app_handle, event| {
             // https://stackoverflow.com/questions/77856626/close-tauri-window-without-closing-the-entire-app
             if let tauri::RunEvent::ExitRequested { /* api, */ .. } = event {
-                info!("App is closing! Cleaning up WinDivert resources...");
-                cleanup_windivert();
+                #[cfg(target_os = "windows")]
+                {
+                    info!("App is closing! Cleaning up WinDivert resources...");
+                    service::cleanup_windivert();
+                }
             }
         });
-}
-
-#[allow(unused)]
-fn start_windivert() {
-    let status = Command::new("sc")
-        .args([
-            "create",
-            "windivert",
-            "type=",
-            "kernel",
-            "binPath=",
-            "WinDivert64.sys",
-            "start=",
-            "demand",
-        ])
-        .status();
-    if status.is_ok_and(|status| status.success()) {
-        info!("started driver");
-    } else {
-        warn!("could not execute command to stop driver");
-    }
-}
-
-fn stop_windivert() -> bool {
-    let output = Command::new("sc").args(["stop", "windivert"]).output();
-
-    match output {
-        Ok(output) if output.status.success() => {
-            info!("stopped WinDivert driver service");
-            true
-        }
-        Ok(output) => {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let combined = format!("{} {}", stdout, stderr);
-            // Error 1061 = service already stopping, 1060 = service doesn't exist
-            if !combined.contains("1061") && !combined.contains("1060") {
-                let msg = combined.trim();
-                if !msg.is_empty() {
-                    warn!("could not stop WinDivert driver service: {}", msg);
-                }
-            }
-            false
-        }
-        Err(e) => {
-            warn!("failed to execute stop command: {}", e);
-            false
-        }
-    }
-}
-
-fn remove_windivert() -> bool {
-    let output = Command::new("sc").args(["delete", "windivert"]).output();
-
-    match output {
-        Ok(output) if output.status.success() => {
-            info!("deleted WinDivert driver service");
-            true
-        }
-        Ok(output) => {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let combined = format!("{} {}", stdout, stderr);
-            // Error 1072 = service already marked for deletion, 1060 = service doesn't exist
-            if !combined.contains("1072") && !combined.contains("1060") {
-                let msg = combined.trim();
-                if !msg.is_empty() {
-                    warn!("could not delete WinDivert driver service: {}", msg);
-                }
-            }
-            false
-        }
-        Err(e) => {
-            warn!("failed to execute delete command: {}", e);
-            false
-        }
-    }
-}
-
-pub fn cleanup_windivert() {
-    info!("Cleaning up WinDivert resources...");
-    let stopped = stop_windivert();
-    if stopped {
-        std::thread::sleep(std::time::Duration::from_millis(200));
-    }
-    remove_windivert();
 }
 
 #[cfg(not(debug_assertions))]
@@ -254,7 +183,7 @@ fn cleanup_old_logs(app: &tauri::AppHandle) {
     };
 
     let current_version = app.package_info().version.to_string();
-    let version_prefix = format!("bpsr-logs-v{}-", current_version);
+    let version_prefix = format!("bpsr-logs-v{current_version}-");
 
     let mut session_logs: Vec<_> = Vec::new();
     let mut other_logs_to_delete: Vec<_> = Vec::new();
@@ -295,7 +224,7 @@ fn cleanup_old_logs(app: &tauri::AppHandle) {
     // Delete all old/unwanted log files
     for path in other_logs_to_delete {
         if let Err(e) = fs::remove_file(&path) {
-            eprintln!("Failed to delete old log file {:?}: {}", path, e);
+            eprintln!("Failed to delete old log file {path:?}: {e}");
         }
     }
 }
@@ -303,7 +232,7 @@ fn cleanup_old_logs(app: &tauri::AppHandle) {
 fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
     let app_version = &app.package_info().version;
     let timestamp = Utc::now().format("%Y-%m-%d_%H-%M-%S").to_string();
-    let log_file_name = format!("bpsr-logs-v{}-{}", app_version, timestamp);
+    let log_file_name = format!("bpsr-logs-v{app_version}-{timestamp}");
 
     app.plugin(
         tauri_plugin_log::Builder::new() // https://v2.tauri.app/plugin/logging/
@@ -319,7 +248,7 @@ fn setup_logs(app: &tauri::AppHandle) -> tauri::Result<()> {
                 .filter(|metadata| metadata.level() <= log::LevelFilter::Info), // Exclude DEBUG logs from file
             ])
             .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-            .max_file_size(104_857_600 /* 100 MB */)
+            .max_file_size(104857600)
             .build(),
     )?;
     Ok(())
@@ -399,7 +328,8 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                 }
             }
             "quit" => {
-                stop_windivert();
+                #[cfg(target_os = "windows")]
+                service::stop_windivert();
                 tray_app.exit(0);
             }
             _ => {}

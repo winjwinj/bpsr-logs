@@ -105,31 +105,59 @@ struct HpReportTask {
 
 static HP_REPORT_SENDER: OnceLock<Sender<HpReportTask>> = OnceLock::new();
 
+fn create_client() -> reqwest::blocking::Client {
+    let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
+    reqwest::blocking::Client::builder()
+        .user_agent(&user_agent)
+        .tls_backend_rustls()
+        .build()
+        .unwrap_or_else(|_| reqwest::blocking::Client::new())
+}
+
 fn get_hp_report_sender() -> &'static Sender<HpReportTask> {
     HP_REPORT_SENDER.get_or_init(|| {
         let (tx, rx) = mpsc::channel::<HpReportTask>();
 
         std::thread::spawn(move || {
-            let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
-            let client = reqwest::blocking::Client::builder()
-                .user_agent(&user_agent)
-                .tls_backend_rustls()
-                .build()
-                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+            let client = create_client();
 
             while let Ok(task) = rx.recv() {
-                let res = client
+                match client
                     .post(&task.api_url)
                     .header("X-API-Key", &task.api_key)
                     .header("Content-Type", "application/json")
                     .json(&task.body)
-                    .send();
-
-                if let Err(e) = &res {
-                    error!("HP report failed: {}", e);
-                } else if let Ok(resp) = &res {
-                    if !resp.status().is_success() {
-                        error!("HP report failed: HTTP {}", resp.status());
+                    .send()
+                {
+                    Ok(resp) => {
+                        if resp.status().is_success() {
+                            // Success - no logging needed for normal operation
+                        } else {
+                            let status = resp.status();
+                            if status.as_u16() == 409 {
+                                // 409 Conflict is expected when multiple clients are on the same line
+                                info!("HP report skipped: Already reported by another user.");
+                            } else {
+                                let message = resp.text().ok().and_then(|body| {
+                                    serde_json::from_str::<serde_json::Value>(&body)
+                                        .ok()
+                                        .and_then(|json| {
+                                            json.get("message")
+                                                .or_else(|| json.get("error"))
+                                                .and_then(|v| v.as_str())
+                                                .map(ToString::to_string)
+                                        })
+                                });
+                                let error_msg = message.map_or_else(
+                                    || status.to_string(),
+                                    |m| format!("{status} - {m}"),
+                                );
+                                warn!("HP report failed: {error_msg}");
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        warn!("HP report failed: {e}");
                     }
                 }
 
@@ -152,6 +180,7 @@ impl BPTimerClient {
     }
 
     /// Report HP to bptimer API
+    #[allow(clippy::too_many_arguments)]
     pub fn report_hp(
         &self,
         monster_id: Option<u32>,
@@ -203,7 +232,7 @@ impl BPTimerClient {
         // Round to nearest 5%
         let rounded_hp_pct = (((hp_pct / 5.0).round() * 5.0) as i32).clamp(0, 100);
 
-        let cache_key = format!("{}-{}", monster_id, line);
+        let cache_key = format!("{monster_id}-{line}");
         let now = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .expect("Time went backwards")
@@ -270,7 +299,7 @@ impl BPTimerClient {
             };
 
             if let Err(e) = get_hp_report_sender().send(task) {
-                error!("Failed to queue HP report: {}", e);
+                error!("Failed to queue HP report: {e}");
                 //  Worker thread died - reset cache to prevent blocking future reports
                 let mut cache = HP_REPORT_CACHE.lock().unwrap();
                 if let Some(entry) = cache.get_mut(&cache_key) {
@@ -288,19 +317,13 @@ impl BPTimerClient {
         }
 
         let api_url = self.api_url.clone();
-        let user_agent = format!("BPSR-Logs/{}", env!("CARGO_PKG_VERSION"));
 
         std::thread::spawn(move || {
-            let client = reqwest::blocking::Client::builder()
-                .user_agent(&user_agent)
-                .tls_backend_rustls()
-                .build()
-                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+            let client = create_client();
 
             let fields = "monster_id,name,location";
             let url = format!(
-                "{}/api/collections/mobs/records?fields={}&perPage=100&skipTotal=true",
-                api_url, fields
+                "{api_url}/api/collections/mobs/records?fields={fields}&perPage=100&skipTotal=true"
             );
 
             match client.get(&url).send() {
@@ -332,17 +355,16 @@ impl BPTimerClient {
                             set_location_tracked_mobs(location_tracked_mobs);
 
                             info!(
-                                "Prefetched {} mobs ({} location-tracked)",
-                                mob_count, location_count
+                                "Prefetched {mob_count} mobs ({location_count} location-tracked)"
                             );
                         }
                         Err(e) => {
-                            warn!("Prefetch failed to parse response: {}", e);
+                            warn!("Prefetch failed to parse response: {e}");
                         }
                     }
                 }
                 Err(e) => {
-                    warn!("Prefetch failed: {}", e);
+                    warn!("Prefetch failed: {e}");
                 }
             }
         });

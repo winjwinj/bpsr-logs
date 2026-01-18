@@ -6,20 +6,24 @@ use etherparse::NetSlice::Ipv4;
 use etherparse::SlicedPacket;
 use etherparse::TransportSlice::Tcp;
 use log::{debug, error, info, warn};
-use once_cell::sync::OnceCell;
+use std::sync::OnceLock;
 use tokio::sync::watch;
 use windivert::WinDivert;
 use windivert::prelude::WinDivertFlags;
 
 // Global sender for restart signal
-static RESTART_SENDER: OnceCell<watch::Sender<bool>> = OnceCell::new();
+static RESTART_SENDER: OnceLock<watch::Sender<bool>> = OnceLock::new();
+
+fn send_server_change_info(packet_sender: &tokio::sync::mpsc::Sender<(Pkt, Vec<u8>)>) {
+    let _ = packet_sender.try_send((Pkt::ServerChangeInfo, Vec::new()));
+}
 
 // Delay between handle cleanup and recreation to allow kernel cleanup
 const HANDLE_CLEANUP_DELAY_MS: u64 = 500;
 
 pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Vec<u8>)> {
     let (packet_sender, packet_receiver) =
-        tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(1);
+        tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(64);
     let (restart_sender, mut restart_receiver) = watch::channel(false);
     RESTART_SENDER.set(restart_sender.clone()).ok();
     tauri::async_runtime::spawn(async move {
@@ -38,7 +42,6 @@ pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Ve
     packet_receiver
 }
 
-#[allow(clippy::too_many_lines)]
 async fn read_packets(
     packet_sender: &tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>,
     restart_receiver: &mut watch::Receiver<bool>,
@@ -53,7 +56,7 @@ async fn read_packets(
             windivert_handle
         }
         Err(e) => {
-            error!("Failed to initialize WinDivert: {}", e);
+            error!("Failed to initialize WinDivert: {e}");
             return;
         }
     };
@@ -65,31 +68,21 @@ async fn read_packets(
     // Note: windivert.recv() is blocking, so we can't check restart signal while it's blocking.
     // The restart will be detected after the next packet is received.
     while let Ok(packet) = windivert.recv(Some(&mut windivert_buffer)) {
-        // info!("{}", line!());
         let Ok(network_slices) = SlicedPacket::from_ip(packet.data.as_ref()) else {
             continue; // if it's not ip, go next packet
         };
-        // info!("{}", line!());
         let Some(Ipv4(ip_packet)) = network_slices.net else {
             continue;
         };
-        // info!("{}", line!());
         let Some(Tcp(tcp_packet)) = network_slices.transport else {
             continue;
         };
-        // info!("{}", line!());
         let curr_server = Server::new(
             ip_packet.header().source(),
             tcp_packet.to_header().source_port,
             ip_packet.header().destination(),
             tcp_packet.to_header().destination_port,
         );
-        // trace!(
-        //     "{} ({}) => {:?}",
-        //     curr_server,
-        //     tcp_packet.payload().len(),
-        //     tcp_packet.payload(),
-        // );
 
         // 1. Try to identify game server via small packets
         if known_server != Some(curr_server) {
@@ -100,7 +93,6 @@ async fn read_packets(
                     Ok(bytes) => {
                         if bytes[4] == 0 {
                             const FRAG_LENGTH_SIZE: usize = 4;
-                            const SIGNATURE: [u8; 6] = [0x00, 0x63, 0x33, 0x53, 0x42, 0x00];
                             let mut i = 0;
                             while tcp_payload_reader.remaining() >= FRAG_LENGTH_SIZE {
                                 i += 1;
@@ -120,8 +112,11 @@ async fn read_packets(
                                 if tcp_payload_reader.remaining() >= tcp_frag_payload_len {
                                     match tcp_payload_reader.read_bytes(tcp_frag_payload_len) {
                                         Ok(tcp_frag) => {
-                                            if tcp_frag.len() >= 5 + SIGNATURE.len()
-                                                && tcp_frag[5..5 + SIGNATURE.len()] == SIGNATURE
+                                            let signature = crate::protocol::constants::server_detection::SERVER_SIGNATURE;
+                                            let offset = crate::protocol::constants::packet_layout::SERVER_SIGNATURE_OFFSET;
+                                            if tcp_frag.len() >= offset + signature.len()
+                                                && tcp_frag[offset..offset + signature.len()]
+                                                    == signature[..]
                                             {
                                                 info!(
                                                     "Got Scene Server Address (by change): {curr_server}"
@@ -131,12 +126,7 @@ async fn read_packets(
                                                     tcp_packet.sequence_number() as usize
                                                         + tcp_payload_reader.len(),
                                                 );
-                                                if let Err(err) = packet_sender
-                                                    .send((Pkt::ServerChangeInfo, Vec::new()))
-                                                    .await
-                                                {
-                                                    debug!("Failed to send packet: {err}");
-                                                }
+                                                send_server_change_info(packet_sender);
                                             }
                                         }
                                         Err(e) => {
@@ -158,25 +148,21 @@ async fn read_packets(
                 }
             }
             // 2. Payload length is 98 = Login packets?
-            if tcp_payload.len() == 98 {
-                const SIGNATURE_1: [u8; 10] =
-                    [0x00, 0x00, 0x00, 0x62, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01];
-                const SIGNATURE_2: [u8; 6] = [0x00, 0x00, 0x00, 0x00, 0x0a, 0x4e];
+            if tcp_payload.len()
+                == crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_SIZE
+            {
+                let sig1 = crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_1;
+                let sig2 = crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_2;
                 if tcp_payload.len() >= 20
-                    && tcp_payload[0..10] == SIGNATURE_1
-                    && tcp_payload[14..20] == SIGNATURE_2
+                    && tcp_payload[0..10] == sig1[..]
+                    && tcp_payload[14..20] == sig2[..]
                 {
                     info!("Got Scene Server Address by Login Return Packet: {curr_server}");
                     known_server = Some(curr_server);
                     tcp_reassembler.clear_reassembler(
                         tcp_packet.sequence_number() as usize + tcp_payload.len(),
                     );
-                    if let Err(err) = packet_sender
-                        .send((Pkt::ServerChangeInfo, Vec::new()))
-                        .await
-                    {
-                        debug!("Failed to send packet: {err}");
-                    }
+                    send_server_change_info(packet_sender);
                 }
             }
             continue;
@@ -245,7 +231,7 @@ async fn read_packets(
                 let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
                 let packet = left.to_vec();
                 tcp_reassembler._data = right.to_vec();
-                process_packet(BinaryReader::from(packet), packet_sender.clone()).await;
+                process_packet(BinaryReader::from(packet), packet_sender.clone());
             }
         }
         if *restart_receiver.borrow() {

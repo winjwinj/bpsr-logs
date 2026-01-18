@@ -1,9 +1,8 @@
 use crate::live::opcodes_models::class::{Class, ClassSpec};
-use blueprotobuf_lib::blueprotobuf;
-use blueprotobuf_lib::blueprotobuf::{EEntityType, SyncContainerData};
-use once_cell::sync::Lazy;
+use crate::protocol::pb;
+use crate::protocol::pb::{EEntityType, SyncContainerData};
 use std::collections::HashMap;
-use std::sync::Mutex;
+use std::sync::{LazyLock, Mutex};
 
 pub type EncounterMutex = Mutex<Encounter>;
 
@@ -42,7 +41,7 @@ pub struct Entity {
     pub monster_id: Option<u32>,
     pub curr_hp: Option<u64>, // also available for players in packets
     pub max_hp: Option<u64>,  // also available for players in packets
-    pub monster_pos: blueprotobuf::Vector3,
+    pub monster_pos: pb::Vector3,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -55,7 +54,7 @@ pub struct CombatStats {
     pub lucky_hits: i64,
 }
 
-static SKILL_NAMES: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+static SKILL_NAMES: LazyLock<HashMap<i32, String>> = LazyLock::new(|| {
     let data = include_str!("../../../src/lib/data/json/SkillName.json");
     serde_json::from_str(data).expect("invalid SkillName.json")
 });
@@ -69,30 +68,11 @@ impl CombatStats {
     }
 }
 
-pub static MONSTER_NAMES_BOSS: Lazy<HashMap<u32, String>> = Lazy::new(|| {
+pub static MONSTER_NAMES_BOSS: LazyLock<HashMap<u32, String>> = LazyLock::new(|| {
     let data = include_str!("../../../src/lib/data/json/MonsterNameBoss.json");
     serde_json::from_str(data).expect("invalid MonsterName.json")
 });
 
-pub mod attr_type {
-    pub const ATTR_NAME: i32 = 0x01;
-    pub const ATTR_ID: i32 = 0x0a;
-    pub const ATTR_PROFESSION_ID: i32 = 0xdc;
-    pub const ATTR_FIGHT_POINT: i32 = 0x272e;
-    // pub const ATTR_LEVEL: i32 = 0x2710;
-    // pub const ATTR_RANK_LEVEL: i32 = 0x274c;
-    // pub const ATTR_CRI: i32 = 0x2b66;
-    // pub const ATTR_LUCKY: i32 = 0x2b7a;
-    pub const ATTR_HP: i32 = 0x2c2e;
-    pub const ATTR_MAX_HP: i32 = 0x2c38;
-    // pub const ATTR_ELEMENT_FLAG: i32 = 0x646d6c;
-    // pub const ATTR_REDUCTION_LEVEL: i32 = 0x64696d;
-    // pub const ATTR_REDUCTION_ID: i32 = 0x6f6c65;
-    // pub const ATTR_ENERGY_FLAG: i32 = 0x543cd3c6;
-    pub const ATTR_POS: i32 = 0x34;
-}
-
-// TODO: this logic needs to be severely cleaned up
 pub mod class {
 
     #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
@@ -174,29 +154,22 @@ pub mod class {
 
     pub fn get_class_spec_from_skill_id(skill_id: i32) -> ClassSpec {
         match skill_id {
-            1714 | 1734 => ClassSpec::Iaido, // Iaido Slash, Thunder Iaido Slash
-            44701 | 179_906 => ClassSpec::Moonstrike, // AI: Moon Blade, Moonstrike Whirl
-
-            120_901 | 120_902 => ClassSpec::Icicle, // AI: Through the ice spear, AI: Ice spear
-            1241 => ClassSpec::Frostbeam,           // Frostbeam
-
-            1405 | 1418 => ClassSpec::Vanguard, // Gale Thrust, Gale Thrust
-            1419 => ClassSpec::Skyward,         // Skyfall
-
-            1518 | 1541 | 21402 => ClassSpec::Smite, // Wild Bloom, Wild Bloom, AI: Blooming wildly
-            20301 => ClassSpec::Lifebind,            // AI: Life blooms
-
-            199_902 => ClassSpec::Earthfort, // Rage Burst Stone
-            1930 | 1931 | 1934 | 1935 => ClassSpec::Block, // Countercrush, Countercrush, Countercrush, Countercrush
-
-            220_112 | 2_203_622 => ClassSpec::Falconry, // AI: Photoelectric cracks, AI: Light lip sputtering
-            2292 | 1_700_820 | 1_700_825 | 1_700_827 => ClassSpec::Wildpack, // Phantom Direwolves, Wild Wolf - Assist, Pet - Foxen Pounce, Pet - Basic Attack
-
-            2405 => ClassSpec::Recovery, // Valor Bash
-            2406 => ClassSpec::Shield,   // Vanguard Strike
-
-            2306 => ClassSpec::Dissonance, // Amplified Beat
-            2307 | 2361 | 55302 => ClassSpec::Concerto, // Healing Beat, Healing Beat copy, AI: Healing beat
+            1714 | 1734 => ClassSpec::Iaido,
+            44701 | 179906 => ClassSpec::Moonstrike,
+            120901 | 120902 => ClassSpec::Icicle,
+            1241 => ClassSpec::Frostbeam,
+            1405 | 1418 => ClassSpec::Vanguard,
+            1419 => ClassSpec::Skyward,
+            1518 | 1541 | 21402 => ClassSpec::Smite,
+            20301 => ClassSpec::Lifebind,
+            199902 => ClassSpec::Earthfort,
+            1930 | 1931 | 1934 | 1935 => ClassSpec::Block,
+            220112 | 2203622 => ClassSpec::Falconry,
+            2292 | 1700820 | 1700825 | 1700827 => ClassSpec::Wildpack,
+            2405 => ClassSpec::Recovery,
+            2406 => ClassSpec::Shield,
+            2306 => ClassSpec::Dissonance,
+            2307 | 2361 | 55302 => ClassSpec::Concerto,
             _ => ClassSpec::Unknown,
         }
     }

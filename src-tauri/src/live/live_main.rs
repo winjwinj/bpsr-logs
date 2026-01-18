@@ -6,17 +6,24 @@ use crate::live::opcodes_process::{
 };
 use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets;
-use blueprotobuf_lib::blueprotobuf;
+use crate::protocol::pb;
 use bytes::Bytes;
 use log::warn;
 use prost::Message;
 use tauri::{AppHandle, Manager};
 
+fn decode_packet<T: Message + Default>(data: Vec<u8>, packet_name: &str) -> Option<T> {
+    match T::decode(Bytes::from(data)) {
+        Ok(v) => Some(v),
+        Err(e) => {
+            warn!("Error decoding {packet_name}.. ignoring: {e}");
+            None
+        }
+    }
+}
+
 pub async fn start(app_handle: AppHandle) {
-    // todo: add app_handle?
-    // https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
-    // 1. Start capturing packets and send to rx
-    let mut rx = packets::packet_capture::start_capture(); // Since live meter is not critical, it's ok to just log it // TODO: maybe bubble an error up to the frontend instead?
+    let mut rx = packets::packet_capture::start_capture();
 
     let bptimer_enabled_state = app_handle.state::<BPTimerEnabledMutex>();
 
@@ -26,11 +33,9 @@ pub async fn start(app_handle: AppHandle) {
             let state = app_handle.state::<EncounterMutex>();
             let encounter = state.lock().unwrap();
             if encounter.is_encounter_paused {
-                // info!("packet dropped due to encounter paused");
                 continue;
             }
         }
-        // error!("Received Pkt {op:?}");
         match op {
             packets::opcodes::Pkt::ServerChangeInfo => {
                 let encounter_state = app_handle.state::<EncounterMutex>();
@@ -38,22 +43,16 @@ pub async fn start(app_handle: AppHandle) {
                 on_server_change(&mut encounter_state);
             }
             packets::opcodes::Pkt::SyncNearEntities => {
-                // info!("Received {op:?}");
-                // info!("Received {op:?} and data {data:?}");
-                // trace!("Received {op:?} and data {data:?}");
-                let sync_near_entities =
-                    match blueprotobuf::SyncNearEntities::decode(Bytes::from(data)) {
-                        Ok(v) => v,
-                        Err(e) => {
-                            warn!("Error decoding SyncNearEntities.. ignoring: {e}");
-                            continue;
-                        }
-                    };
+                let Some(sync_near_entities) =
+                    decode_packet::<pb::SyncNearEntities>(data, "SyncNearEntities")
+                else {
+                    continue;
+                };
                 let player_state_mutex = app_handle.state::<PlayerStateMutex>();
                 let player_state = player_state_mutex.lock().unwrap();
-                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 if process_sync_near_entities(
                     &mut encounter_state,
                     sync_near_entities,
@@ -67,19 +66,14 @@ pub async fn start(app_handle: AppHandle) {
                 }
             }
             packets::opcodes::Pkt::SyncContainerData => {
-                // info!("Received {op:?}");
-                // info!("Received {op:?} and data {data:?}");
-                // trace!("Received {op:?} and data {data:?}");
-                let sync_container_data =
-                    match blueprotobuf::SyncContainerData::decode(Bytes::from(data)) {
-                        Ok(v) => v,
-                        Err(e) => {
-                            warn!("Error decoding SyncContainerData.. ignoring: {e}");
-                            continue;
-                        }
-                    };
+                let Some(sync_container_data) =
+                    decode_packet::<pb::SyncContainerData>(data, "SyncContainerData")
+                else {
+                    continue;
+                };
 
                 // Store persistent player identity data
+                let mut should_clear_entities = false;
                 if let Some(v_data) = &sync_container_data.v_data {
                     let player_state_mutex = app_handle.state::<PlayerStateMutex>();
                     let mut player_state = player_state_mutex.lock().unwrap();
@@ -98,17 +92,18 @@ pub async fn start(app_handle: AppHandle) {
                             let old_line_id = player_state.get_line_id_opt();
                             player_state.set_line_id(scene_data.line_id);
                             if old_line_id != Some(scene_data.line_id) {
-                                let encounter_state = app_handle.state::<EncounterMutex>();
-                                let mut encounter_state = encounter_state.lock().unwrap();
-                                encounter_state.entity_uid_to_entity.clear();
+                                should_clear_entities = true;
                             }
                         }
                     }
                 }
 
-                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                if should_clear_entities {
+                    encounter_state.entity_uid_to_entity.clear();
+                }
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 encounter_state.local_player = Some(sync_container_data.clone());
                 if process_sync_container_data(
                     &mut encounter_state,
@@ -134,30 +129,25 @@ pub async fn start(app_handle: AppHandle) {
             //     let encounter_state = app_handle.state::<EncounterMutex>();
             //     let mut encounter_state = encounter_state.lock().unwrap();
             //     if process_sync_container_dirty_data(&mut encounter_state, sync_container_dirty_data).is_none() {
-            //         warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
+            //         warn!("Error processing SyncContainerDirtyData.. ignoring.");
             //     }
             // }
             packets::opcodes::Pkt::SyncToMeDeltaInfo => {
-                // todo: fix this, attrs dont include name, no idea why
-                // trace!("Received {op:?}");
-                // info!("Received {op:?} and data {data:?}");
-                let sync_to_me_delta_info =
-                    match blueprotobuf::SyncToMeDeltaInfo::decode(Bytes::from(data)) {
-                        Ok(sync_to_me_delta_info) => sync_to_me_delta_info,
-                        Err(e) => {
-                            warn!("Error decoding SyncToMeDeltaInfo.. ignoring: {e}");
-                            continue;
-                        }
-                    };
+                let Some(sync_to_me_delta_info) =
+                    decode_packet::<pb::SyncToMeDeltaInfo>(data, "SyncToMeDeltaInfo")
+                else {
+                    continue;
+                };
 
+                let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                let mut player_state = player_state_mutex.lock().unwrap();
+
+                // Update uid if present in delta_info
                 if let Some(delta_info) = &sync_to_me_delta_info.delta_info {
                     let uuid = delta_info.uuid;
                     if uuid != 0 {
-                        let local_player_uid = uuid >> 16;
-                        let player_state_mutex = app_handle.state::<PlayerStateMutex>();
-                        let mut player_state = player_state_mutex.lock().unwrap();
-
-                        // Update uid if not yet set or if different (shouldn't change but be defensive)
+                        let local_player_uid =
+                            crate::protocol::constants::entity::get_player_uid(uuid);
                         let current_uid = player_state.get_uid_opt();
                         if current_uid != Some(local_player_uid) {
                             player_state.set_uid(local_player_uid);
@@ -165,11 +155,9 @@ pub async fn start(app_handle: AppHandle) {
                     }
                 }
 
-                let player_state_mutex = app_handle.state::<PlayerStateMutex>();
-                let player_state = player_state_mutex.lock().unwrap();
-                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 if process_sync_to_me_delta_info(
                     &mut encounter_state,
                     sync_to_me_delta_info,
@@ -183,21 +171,16 @@ pub async fn start(app_handle: AppHandle) {
                 }
             }
             packets::opcodes::Pkt::SyncNearDeltaInfo => {
-                // trace!("Received {op:?}");
-                // info!("Received {op:?} and data {data:?}");
-                let sync_near_delta_info =
-                    match blueprotobuf::SyncNearDeltaInfo::decode(Bytes::from(data)) {
-                        Ok(v) => v,
-                        Err(e) => {
-                            warn!("Error decoding SyncNearDeltaInfo.. ignoring: {e}");
-                            continue;
-                        }
-                    };
+                let Some(sync_near_delta_info) =
+                    decode_packet::<pb::SyncNearDeltaInfo>(data, "SyncNearDeltaInfo")
+                else {
+                    continue;
+                };
                 let player_state_mutex = app_handle.state::<PlayerStateMutex>();
                 let player_state = player_state_mutex.lock().unwrap();
-                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
+                let player_cache_mutex = app_handle.state::<PlayerCacheMutex>();
                 for aoi_sync_delta in sync_near_delta_info.delta_infos {
                     if process_aoi_sync_delta(
                         &mut encounter_state,
@@ -208,7 +191,7 @@ pub async fn start(app_handle: AppHandle) {
                     )
                     .is_none()
                     {
-                        warn!("Error processing SyncToMeDeltaInfo.. ignoring.");
+                        warn!("Error processing SyncNearDeltaInfo.. ignoring.");
                     }
                 }
             }

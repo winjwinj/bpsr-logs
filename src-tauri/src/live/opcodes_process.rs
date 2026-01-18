@@ -2,10 +2,11 @@ use crate::live::bptimer::BPTimerClient;
 use crate::live::opcodes_models::class::{
     Class, ClassSpec, get_class_from_spec, get_class_spec_from_skill_id,
 };
-use crate::live::opcodes_models::{CombatStats, Encounter, Entity, MONSTER_NAMES_BOSS, attr_type};
+use crate::live::opcodes_models::{CombatStats, Encounter, Entity, MONSTER_NAMES_BOSS};
 use crate::live::player_state::{PlayerCacheMutex, PlayerState};
 use crate::packets::utils::BinaryReader;
-use blueprotobuf_lib::blueprotobuf;
+use crate::protocol::constants::{attr_type, damage, entity};
+use crate::protocol::pb;
 use bytes::Bytes;
 use log::{debug, info, warn};
 use prost::Message;
@@ -29,7 +30,7 @@ static BP_TIMER_CLIENT: LazyLock<Option<BPTimerClient>> = LazyLock::new(|| {
 
     match (endpoint, api_key) {
         (Some(endpoint), Some(api_key)) => {
-            info!("BPTimer Client enabled: {}", endpoint);
+            info!("BPTimer Client enabled: {endpoint}");
             let client = BPTimerClient::new(endpoint, api_key);
             client.prefetch_mobs();
             Some(client)
@@ -50,7 +51,7 @@ pub fn on_server_change(encounter: &mut Encounter) {
 
 pub fn process_sync_near_entities(
     encounter: &mut Encounter,
-    sync_near_entities: blueprotobuf::SyncNearEntities,
+    sync_near_entities: pb::SyncNearEntities,
     player_state: &PlayerState,
     is_bptimer_enabled: bool,
     player_cache: Option<&PlayerCacheMutex>,
@@ -60,8 +61,8 @@ pub fn process_sync_near_entities(
         if target_uuid == 0 {
             continue;
         }
-        let target_uid = target_uuid >> 16;
-        let target_entity_type = blueprotobuf::EEntityType::from(target_uuid);
+        let target_uid = entity::get_player_uid(target_uuid);
+        let target_entity_type = pb::EEntityType::from(target_uuid);
 
         let target_entity = encounter
             .entity_uid_to_entity
@@ -71,13 +72,13 @@ pub fn process_sync_near_entities(
 
         if let Some(attrs) = &pkt_entity.attrs {
             match target_entity_type {
-                blueprotobuf::EEntityType::EntChar => process_player_attrs(
+                pb::EEntityType::EntChar => process_player_attrs(
                     target_entity,
                     target_uid,
                     attrs.attrs.clone(),
                     player_cache,
                 ),
-                blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
+                pb::EEntityType::EntMonster => process_monster_attrs(
                     target_entity,
                     attrs.attrs.clone(),
                     player_state,
@@ -92,7 +93,7 @@ pub fn process_sync_near_entities(
 
 pub fn process_sync_container_data(
     encounter: &mut Encounter,
-    sync_container_data: blueprotobuf::SyncContainerData,
+    sync_container_data: pb::SyncContainerData,
     player_cache: Option<&PlayerCacheMutex>,
 ) -> Option<()> {
     let Some(v_data) = &sync_container_data.v_data else {
@@ -108,7 +109,7 @@ pub fn process_sync_container_data(
         .entity_uid_to_entity
         .entry(player_uid)
         .or_default();
-    target_entity.entity_type = blueprotobuf::EEntityType::EntChar;
+    target_entity.entity_type = pb::EEntityType::EntChar;
 
     if let Some(char_base) = &v_data.char_base {
         if !char_base.name.is_empty() {
@@ -124,16 +125,14 @@ pub fn process_sync_container_data(
             let player_class = Class::from(profession_list.cur_profession_id);
             target_entity.class = Some(player_class);
 
-            if let Some(cache) = player_cache {
-                if let Ok(mut cache) = cache.lock() {
-                    if let Some(name) = &target_entity.name {
-                        cache.set_both(player_uid, Some(name.clone()), Some(player_class));
-                    }
-                    if let Some(ability_score) = target_entity.ability_score {
-                        cache.set_ability_score(player_uid, ability_score);
-                    }
+            with_cache(player_cache, |cache| {
+                if let Some(name) = &target_entity.name {
+                    cache.set_both(player_uid, Some(name.clone()), Some(player_class));
                 }
-            }
+                if let Some(ability_score) = target_entity.ability_score {
+                    cache.set_ability_score(player_uid, ability_score);
+                }
+            });
         }
     }
 
@@ -149,7 +148,7 @@ pub fn process_sync_container_data(
 
 pub fn process_sync_to_me_delta_info(
     encounter: &mut Encounter,
-    sync_to_me_delta_info: blueprotobuf::SyncToMeDeltaInfo,
+    sync_to_me_delta_info: pb::SyncToMeDeltaInfo,
     player_state: &PlayerState,
     is_bptimer_enabled: bool,
     player_cache: Option<&PlayerCacheMutex>,
@@ -171,7 +170,7 @@ pub fn process_sync_to_me_delta_info(
 
 pub fn process_aoi_sync_delta(
     encounter: &mut Encounter,
-    aoi_sync_delta: blueprotobuf::AoiSyncDelta,
+    aoi_sync_delta: pb::AoiSyncDelta,
     player_state: &PlayerState,
     is_bptimer_enabled: bool,
     player_cache: Option<&PlayerCacheMutex>,
@@ -180,10 +179,10 @@ pub fn process_aoi_sync_delta(
     if target_uuid == 0 {
         return None;
     }
-    let target_uid = target_uuid >> 16;
+    let target_uid = entity::get_player_uid(target_uuid);
 
     // Process attributes
-    let target_entity_type = blueprotobuf::EEntityType::from(target_uuid);
+    let target_entity_type = crate::protocol::pb::EEntityType::from(target_uuid);
     {
         let target_entity = encounter
             .entity_uid_to_entity
@@ -195,13 +194,13 @@ pub fn process_aoi_sync_delta(
 
         if let Some(attrs_collection) = aoi_sync_delta.attrs {
             match target_entity_type {
-                blueprotobuf::EEntityType::EntChar => process_player_attrs(
+                pb::EEntityType::EntChar => process_player_attrs(
                     target_entity,
                     target_uid,
                     attrs_collection.attrs,
                     player_cache,
                 ),
-                blueprotobuf::EEntityType::EntMonster => process_monster_attrs(
+                pb::EEntityType::EntMonster => process_monster_attrs(
                     target_entity,
                     attrs_collection.attrs,
                     player_state,
@@ -231,12 +230,12 @@ pub fn process_aoi_sync_delta(
         } else {
             continue; // Skip this damage packet if no attacker
         };
-        let attacker_uid = attacker_uuid >> 16;
+        let attacker_uid = entity::get_player_uid(attacker_uuid);
         let attacker_entity = encounter
             .entity_uid_to_entity
             .entry(attacker_uid)
             .or_insert_with(|| Entity {
-                entity_type: blueprotobuf::EEntityType::from(attacker_uuid),
+                entity_type: pb::EEntityType::from(attacker_uuid),
                 ..Default::default()
             });
 
@@ -264,21 +263,20 @@ pub fn process_aoi_sync_delta(
             };
 
             // Cache the inferred class and class_spec (only for players)
-            if blueprotobuf::EEntityType::from(attacker_uuid) == blueprotobuf::EEntityType::EntChar
+            if crate::protocol::pb::EEntityType::from(attacker_uuid)
+                == crate::protocol::pb::EEntityType::EntChar
             {
-                if let Some(cache) = player_cache {
-                    if let Ok(mut cache) = cache.lock() {
-                        if let Some(inferred_class) = should_cache_class {
-                            cache.set_class(attacker_uid, inferred_class);
-                        }
-                        cache.set_class_spec(attacker_uid, class_spec);
+                with_cache(player_cache, |cache| {
+                    if let Some(inferred_class) = should_cache_class {
+                        cache.set_class(attacker_uid, inferred_class);
                     }
-                }
+                    cache.set_class_spec(attacker_uid, class_spec);
+                });
             }
         }
 
         // Skills
-        let is_heal = sync_damage_info.r#type == blueprotobuf::EDamageType::Heal as i32;
+        let is_heal = sync_damage_info.r#type == pb::EDamageType::Heal as i32;
         if is_heal {
             let heal_skill = attacker_entity
                 .skill_uid_to_heal_stats
@@ -319,10 +317,7 @@ pub fn process_aoi_sync_delta(
     Some(())
 }
 
-fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut CombatStats) {
-    // TODO: from testing, first bit is set when there's crit, 3rd bit for if it causes lucky (no idea what that means), require more testing here
-    const CRIT_BIT: i32 = 0b00_00_00_01; // 1st bit
-
+fn process_stats(sync_damage_info: &pb::SyncDamageInfo, stats: &mut CombatStats) {
     // Prefer lucky damage value if available (non-zero), otherwise use regular value
     let actual_value = if sync_damage_info.lucky_value != 0 {
         sync_damage_info.lucky_value
@@ -332,7 +327,7 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
 
     let is_lucky = sync_damage_info.lucky_value != 0;
     let flag = sync_damage_info.type_flag;
-    let is_crit = (flag & CRIT_BIT) != 0; // No idea why, but SyncDamageInfo.is_crit isn't correct
+    let is_crit = (flag & damage::CRIT_BIT) != 0;
     if is_crit {
         stats.crit_hits += 1;
         stats.crit_value += actual_value;
@@ -343,6 +338,17 @@ fn process_stats(sync_damage_info: &blueprotobuf::SyncDamageInfo, stats: &mut Co
     }
     stats.hits += 1;
     stats.value += actual_value;
+}
+
+fn with_cache<F>(cache: Option<&PlayerCacheMutex>, f: F)
+where
+    F: FnOnce(&mut crate::live::player_state::PlayerCache),
+{
+    if let Some(cache) = cache {
+        if let Ok(mut cache) = cache.lock() {
+            f(&mut cache);
+        }
+    }
 }
 
 fn decode_protobuf_int32(data: &[u8]) -> Result<i32, Box<dyn std::error::Error>> {
@@ -368,7 +374,7 @@ fn decode_protobuf_int64(data: &[u8]) -> Result<i64, Box<dyn std::error::Error>>
 fn process_player_attrs(
     player_entity: &mut Entity,
     player_uid: i64,
-    attrs: Vec<blueprotobuf::Attr>,
+    attrs: Vec<pb::Attr>,
     player_cache: Option<&PlayerCacheMutex>,
 ) {
     // Restore from cache if not already set
@@ -405,11 +411,9 @@ fn process_player_attrs(
                 if let Ok(player_name) = player_name_result {
                     player_entity.name = Some(player_name.clone());
                     debug!("Found player {player_name} with UID {player_uid}");
-                    if let Some(cache) = player_cache {
-                        if let Ok(mut cache) = cache.lock() {
-                            cache.set_name(player_uid, player_name);
-                        }
-                    }
+                    with_cache(player_cache, |cache| {
+                        cache.set_name(player_uid, player_name);
+                    });
                 } else {
                     warn!("Failed to read player name for UID {player_uid}");
                 }
@@ -418,24 +422,17 @@ fn process_player_attrs(
                 if let Ok(class_id) = decode_protobuf_int32(&attr.raw_data) {
                     let player_class = Class::from(class_id);
                     player_entity.class = Some(player_class);
-
-                    // Cache the class
-                    if let Some(cache) = player_cache {
-                        if let Ok(mut cache) = cache.lock() {
-                            cache.set_class(player_uid, player_class);
-                        }
-                    }
+                    with_cache(player_cache, |cache| {
+                        cache.set_class(player_uid, player_class);
+                    });
                 }
             }
             attr_type::ATTR_FIGHT_POINT => {
                 if let Ok(ability_score) = decode_protobuf_int32(&attr.raw_data) {
                     player_entity.ability_score = Some(ability_score);
-
-                    if let Some(cache) = player_cache {
-                        if let Ok(mut cache) = cache.lock() {
-                            cache.set_ability_score(player_uid, ability_score);
-                        }
-                    }
+                    with_cache(player_cache, |cache| {
+                        cache.set_ability_score(player_uid, ability_score);
+                    });
                 }
             }
             _ => (),
@@ -445,7 +442,7 @@ fn process_player_attrs(
 
 fn process_monster_attrs(
     monster_entity: &mut Entity,
-    attrs: Vec<blueprotobuf::Attr>,
+    attrs: Vec<pb::Attr>,
     player_state: &PlayerState,
     is_bptimer_enabled: bool,
 ) {
@@ -485,9 +482,7 @@ fn process_monster_attrs(
                 }
             }
             attr_type::ATTR_POS => {
-                if let Ok(pos) =
-                    blueprotobuf::Vector3::decode(Bytes::copy_from_slice(&attr.raw_data))
-                {
+                if let Ok(pos) = pb::Vector3::decode(Bytes::copy_from_slice(&attr.raw_data)) {
                     monster_entity.monster_pos = pos;
                 }
             }

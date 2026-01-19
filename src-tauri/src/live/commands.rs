@@ -1,4 +1,3 @@
-use crate::WINDOW_LIVE_LABEL;
 use crate::live::bptimer_state::{
     BPTimerEnabledMutex, set_bptimer_enabled as update_bptimer_state,
 };
@@ -11,30 +10,12 @@ use crate::protocol::pb::EEntityType;
 use crate::utils::modules::{encode_module_data, extract_modules};
 use log::info;
 use std::sync::MutexGuard;
-use tauri::Manager;
-use window_vibrancy::{apply_blur, clear_blur};
 
 fn nan_is_zero(value: f64) -> f64 {
     if value.is_nan() || value.is_infinite() {
         0.0
     } else {
         value
-    }
-}
-
-#[tauri::command]
-#[specta::specta]
-pub fn enable_blur(app: tauri::AppHandle) {
-    if let Some(meter_window) = app.get_webview_window(WINDOW_LIVE_LABEL) {
-        apply_blur(&meter_window, Some((10, 10, 10, 50))).ok();
-    }
-}
-
-#[tauri::command]
-#[specta::specta]
-pub fn disable_blur(app: tauri::AppHandle) {
-    if let Some(meter_window) = app.get_webview_window(WINDOW_LIVE_LABEL) {
-        clear_blur(&meter_window).ok();
     }
 }
 
@@ -86,6 +67,12 @@ pub fn reset_encounter(state: tauri::State<'_, EncounterMutex>) {
 pub fn toggle_pause_encounter(state: tauri::State<'_, EncounterMutex>) {
     let mut encounter = state.lock().unwrap();
     encounter.is_encounter_paused = !encounter.is_encounter_paused;
+}
+
+#[tauri::command]
+#[specta::specta]
+pub fn quit_app(app: tauri::AppHandle) {
+    app.exit(0);
 }
 
 #[derive(Debug, Clone, Copy)]

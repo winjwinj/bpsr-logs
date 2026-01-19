@@ -22,8 +22,9 @@ fn send_server_change_info(packet_sender: &tokio::sync::mpsc::Sender<(Pkt, Vec<u
 const HANDLE_CLEANUP_DELAY_MS: u64 = 500;
 
 pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Vec<u8>)> {
+    const PACKET_CHANNEL_CAPACITY: usize = 256;
     let (packet_sender, packet_receiver) =
-        tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(64);
+        tokio::sync::mpsc::channel::<(packets::opcodes::Pkt, Vec<u8>)>(PACKET_CHANNEL_CAPACITY);
     let (restart_sender, mut restart_receiver) = watch::channel(false);
     RESTART_SENDER.set(restart_sender.clone()).ok();
     tauri::async_runtime::spawn(async move {
@@ -231,7 +232,10 @@ async fn read_packets(
                 let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
                 let packet = left.to_vec();
                 tcp_reassembler._data = right.to_vec();
-                process_packet(BinaryReader::from(packet), packet_sender.clone());
+                let sender = packet_sender.clone();
+                tauri::async_runtime::spawn(async move {
+                    process_packet(BinaryReader::from(packet), sender).await;
+                });
             }
         }
         if *restart_receiver.borrow() {

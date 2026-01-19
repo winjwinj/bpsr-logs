@@ -8,6 +8,6 @@
 	} = $props();
 </script>
 
-{typeof val === 'number' ? val.toFixed(fractionDigits) : val}<span class="text-tiny text-gray-300"
-	>%</span
+{typeof val === 'number' ? val.toFixed(fractionDigits) : val}<span
+	class="text-tiny text-muted-foreground">%</span
 >

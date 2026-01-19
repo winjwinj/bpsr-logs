@@ -3,7 +3,7 @@ use crate::packets::opcodes::{FragmentType, Pkt};
 use crate::packets::utils::BinaryReader;
 use log::debug;
 
-pub fn process_packet(
+pub async fn process_packet(
     mut packets_reader: BinaryReader,
     packet_sender: tokio::sync::mpsc::Sender<(packets::opcodes::Pkt, Vec<u8>)>,
 ) {
@@ -90,11 +90,8 @@ pub fn process_packet(
                     }
                 };
 
-                if packet_sender
-                    .try_send((method_id, tcp_fragment_vec))
-                    .is_err()
-                {
-                    // Channel full - silently drop packet
+                if let Err(err) = packet_sender.send((method_id, tcp_fragment_vec)).await {
+                    debug!("Failed to send packet: {err}");
                 }
             }
             FragmentType::FrameDown => {
@@ -138,15 +135,15 @@ mod tests {
     use crate::packets::packet_process::process_packet;
     use crate::packets::utils::BinaryReader;
 
-    #[test]
-    fn test_add() {
+    #[tokio::test]
+    async fn test_add() {
         use std::fs;
         let (packet_sender, _) = tokio::sync::mpsc::channel::<(Pkt, Vec<u8>)>(1);
         let filename = "src/packets/test_add_packet.json";
         let v: Vec<u8> = serde_json::from_str(
-            &fs::read_to_string(filename).unwrap_or_else(|_| panic!("Failed to open {filename}")),
+            &fs::read_to_string(filename).expect(&format!("Failed to open {filename}")),
         )
         .expect("Invalid JSON in test_packet.json");
-        process_packet(BinaryReader::from(v), packet_sender);
+        process_packet(BinaryReader::from(v), packet_sender).await;
     }
 }

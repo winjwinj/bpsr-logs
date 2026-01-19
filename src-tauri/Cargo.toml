@@ -1,6 +1,6 @@
 [package]
 name = "bpsr-logs"
-version = "0.23.0"
+version = "0.23.1"
 description = "Blue Protocol: Star Resonance DPS Meter written in Rust"
 authors = ["winjwinj"]
 edition = "2024"
@@ -43,7 +43,6 @@ tauri-plugin-svelte = "3"
 tauri-plugin-window-state = "2.4.1"
 tauri-specta = { version = "2.0.0-rc.21", features = ["typescript"] }
 tokio = { version = "1.49.0", features = ["macros"] }
-window-vibrancy = "0.7.1"
 zstd = "0.13.3"
 
 [target.'cfg(target_os = "windows")'.dependencies]

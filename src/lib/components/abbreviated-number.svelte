@@ -16,4 +16,6 @@
 	let abbreviatedNumberTuple = $derived(abbreviateNumberSplit(num));
 </script>
 
-{abbreviatedNumberTuple[0]}<span class="text-tiny text-gray-300">{abbreviatedNumberTuple[1]}</span>
+{abbreviatedNumberTuple[0]}<span class="text-tiny text-muted-foreground"
+	>{abbreviatedNumberTuple[1]}</span
+>

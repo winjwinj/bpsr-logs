@@ -14,7 +14,7 @@ use chrono::Utc;
 use log::{info, warn};
 use std::fs;
 
-use crate::live::commands::{disable_blur, enable_blur};
+use tauri::Emitter;
 use tauri::menu::MenuBuilder;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{LogicalPosition, LogicalSize, Manager, Position, Size, Window, WindowEvent};
@@ -24,7 +24,6 @@ use tauri_plugin_window_state::{AppHandleExt, StateFlags};
 use tauri_specta::{Builder, collect_commands};
 
 pub const WINDOW_LIVE_LABEL: &str = "live";
-pub const WINDOW_MAIN_LABEL: &str = "main";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -40,15 +39,13 @@ pub fn run() {
         #[cfg(target_os = "windows")]
         {
             info!("Unloading and removing WinDivert...");
-            service::cleanup_windivert();
+            service::stop_windivert();
         }
     }));
 
     let builder = Builder::<tauri::Wry>::new()
         // Then register them (separated by a comma)
         .commands(collect_commands![
-            live::commands::enable_blur,
-            live::commands::disable_blur,
             live::commands::get_header_info,
             live::commands::get_dps_player_window,
             live::commands::get_dps_skill_window,
@@ -59,6 +56,7 @@ pub fn run() {
             live::commands::reset_encounter,
             live::commands::toggle_pause_encounter,
             live::commands::hard_reset,
+            live::commands::quit_app,
             live::commands::get_test_player_window,
             live::commands::get_test_skill_window,
             live::commands::set_bptimer_enabled,
@@ -96,7 +94,7 @@ pub fn run() {
             info!("starting app v{}", app.package_info().version);
             // Clean up any leftover WinDivert resources from previous runs
             #[cfg(target_os = "windows")]
-            service::cleanup_windivert();
+            service::stop_windivert();
 
             // Check app updates
             // https://v2.tauri.app/plugin/updater/#checking-for-updates
@@ -115,7 +113,6 @@ pub fn run() {
             setup_logs(&app_handle).expect("failed to setup logs");
             setup_tray(&app_handle).expect("failed to setup tray");
             setup_autostart(&app_handle);
-            setup_blur(&app_handle);
 
             // Live Meter
             // https://v2.tauri.app/learn/splashscreen/#start-some-setup-tasks
@@ -144,7 +141,7 @@ pub fn run() {
                 #[cfg(target_os = "windows")]
                 {
                     info!("App is closing! Cleaning up WinDivert resources...");
-                    service::cleanup_windivert();
+                    service::stop_windivert();
                 }
             }
         });
@@ -266,8 +263,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
     }
 
     let menu = MenuBuilder::new(app)
-        .text("show-settings", "Show Settings")
-        .separator()
+        .text("toggle-settings", "Toggle Settings")
         .text("show-live", "Show Live Meter")
         .text("reset", "Reset Window")
         .text("disable-clickthrough", "Disable Clickthrough")
@@ -280,14 +276,14 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
         .show_menu_on_left_click(false)
         .icon(app.default_window_icon().unwrap().clone())
         .on_menu_event(|tray_app, event| match event.id.as_ref() {
-            "show-settings" => {
+            "toggle-settings" => {
                 let tray_app_handle = tray_app.app_handle();
-                let Some(main_meter_window) = tray_app_handle.get_webview_window(WINDOW_MAIN_LABEL)
+                let Some(live_meter_window) = tray_app_handle.get_webview_window(WINDOW_LIVE_LABEL)
                 else {
                     return;
                 };
-                if let Err(e) = show_window(&main_meter_window) {
-                    warn!("failed to show main meter window: {e}");
+                if let Err(e) = live_meter_window.emit("toggle-settings", ()) {
+                    warn!("failed to emit toggle-settings event: {e}");
                 }
             }
             "show-live" => {
@@ -347,7 +343,7 @@ fn setup_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
                     return;
                 };
                 if let Err(e) = show_window(&live_meter_window) {
-                    warn!("failed to show main meter window: {e}");
+                    warn!("failed to show live meter window: {e}");
                 }
             }
         })
@@ -372,23 +368,13 @@ fn setup_autostart(app: &tauri::AppHandle) {
     }
 }
 
-fn setup_blur(app: &tauri::AppHandle) {
-    if app.svelte().get_or::<bool>("accessibility", "blur", true) {
-        enable_blur(app.clone());
-    } else {
-        disable_blur(app.clone());
-    }
-}
-
 fn on_window_event_fn(window: &Window, event: &WindowEvent) {
     match event {
         // when you click the X button to close a window, don't close it - hide it!
         WindowEvent::CloseRequested { api, .. } => {
             api.prevent_close();
-            if window.label() == WINDOW_MAIN_LABEL {
-                if let Err(e) = window.hide() {
-                    warn!("failed to hide main meter window: {e}");
-                }
+            if let Err(e) = window.hide() {
+                warn!("failed to hide window: {e}");
             }
         }
         WindowEvent::Focused(focused) if !focused => {

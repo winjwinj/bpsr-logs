@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
 	"productName": "bpsr-logs",
-	"version": "0.23.0",
+	"version": "0.23.1",
 	"identifier": "com.bpsr-logs",
 	"build": {
 		"beforeDevCommand": "npm run dev",
@@ -14,7 +14,7 @@
 			{
 				"title": "BPSR Logs - Live",
 				"label": "live",
-				"url": "live",
+				"url": "/",
 				"shadow": false,
 				"decorations": false,
 				"transparent": true,
@@ -22,14 +22,6 @@
 				"minHeight": 120,
 				"alwaysOnTop": true,
 				"skipTaskbar": true
-			},
-			{
-				"title": "BPSR Logs - Main",
-				"label": "main",
-				"url": "main",
-				"minWidth": 650,
-				"minHeight": 300,
-				"visible": false
 			}
 		],
 		"security": {

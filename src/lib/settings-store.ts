@@ -1,7 +1,4 @@
-import { version } from '@tauri-apps/plugin-os';
 import { RuneStore } from '@tauri-store/svelte';
-
-const IS_WIN_11 = parseInt(version().split('.')[2] || '0', 10) >= 22000;
 
 export const DEFAULT_STATS = {
 	totalValue: true,
@@ -27,19 +24,15 @@ const DEFAULT_SETTINGS = {
 		autostart: true
 	},
 	accessibility: {
-		blur: !IS_WIN_11,
-		transparency: false
+		transparencyOpacity: 60,
+		theme: 'dark' // 'dark' | 'light'
 	},
 	shortcuts: {
-		showLiveMeter: '',
-		hideLiveMeter: '',
 		toggleLiveMeter: '',
-		showDpsTab: '',
-		showHealTab: '',
-		enableClickthrough: '',
-		disableClickthrough: '',
 		toggleClickthrough: '',
 		resetEncounter: '',
+		showDpsTab: '',
+		showHealTab: '',
 		hardReset: ''
 	},
 	live: {

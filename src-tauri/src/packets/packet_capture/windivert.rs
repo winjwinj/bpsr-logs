@@ -225,6 +225,18 @@ async fn read_packets(
                     break;
                 }
             };
+            // Defensive re-sync: if the stream gets misaligned/corrupted, avoid spin
+            // and attempt to realign by dropping one byte.
+            const MIN_PACKET_SIZE: u32 = 6;
+            const MAX_PACKET_SIZE: u32 = 10 * 1024 * 1024;
+            if packet_size < MIN_PACKET_SIZE || packet_size > MAX_PACKET_SIZE {
+                warn!(
+                    "Malformed reassembled packet: invalid packet_size={packet_size}, _data_len={}",
+                    tcp_reassembler._data.len()
+                );
+                tcp_reassembler._data.drain(0..1);
+                continue;
+            }
             if tcp_reassembler._data.len() < packet_size as usize {
                 break;
             }

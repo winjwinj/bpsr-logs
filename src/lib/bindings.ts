@@ -68,7 +68,7 @@ async getTestSkillWindow(playerUid: string) : Promise<Result<SkillsWindow, strin
 async setBptimerEnabled(enabled: boolean) : Promise<void> {
     await TAURI_INVOKE("set_bptimer_enabled", { enabled });
 },
-async extractModulesFromLocalPlayer() : Promise<Result<string, string>> {
+async extractModulesFromLocalPlayer() : Promise<Result<ModuleOptimizerExportResult, string>> {
     try {
     return { status: "ok", data: await TAURI_INVOKE("extract_modules_from_local_player") };
 } catch (e) {
@@ -89,6 +89,7 @@ async extractModulesFromLocalPlayer() : Promise<Result<string, string>> {
 /** user-defined types **/
 
 export type HeaderInfo = { totalDps: number; totalDmg: number; elapsedMs: number; timeLastCombatPacketMs: number }
+export type ModuleOptimizerExportResult = { url: string; exported_path: string | null }
 export type PlayerRow = { uid: number; abilityScore: number; className: string; classSpecName: string; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }
 export type PlayersWindow = { playerRows: PlayerRow[]; localPlayerUid: number; topValue: number }
 export type SkillRow = { uid: number; name: string; totalValue: number; valuePerSec: number; valuePct: number; critRate: number; critValueRate: number; luckyRate: number; luckyValueRate: number; hits: number; hitsPerMinute: number }

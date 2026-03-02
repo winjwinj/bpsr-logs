@@ -13,7 +13,7 @@
 		enable as enableAutostart,
 		disable as disableAutostart
 	} from '@tauri-apps/plugin-autostart';
-	import { openUrl } from '@tauri-apps/plugin-opener';
+	import { openUrl, revealItemInDir } from '@tauri-apps/plugin-opener';
 
 	const SETTINGS_CATEGORY = 'general';
 	// eslint-disable-next-line svelte/prefer-writable-derived
@@ -41,7 +41,13 @@
 		try {
 			const result = await commands.extractModulesFromLocalPlayer();
 			if (result.status === 'ok') {
-				await openUrl(result.data);
+				await openUrl(result.data.url);
+				if (result.data.exported_path) {
+					await revealItemInDir(result.data.exported_path);
+					alert(
+						`Module data exported to:\n${result.data.exported_path}\n\nOn the Module Optimizer page, use "Import From File (.json)".`
+					);
+				}
 			} else {
 				alert(`Failed to extract modules: ${result.error}`);
 			}

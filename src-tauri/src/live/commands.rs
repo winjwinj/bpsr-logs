@@ -7,7 +7,9 @@ use crate::live::opcodes_models::{CombatStats, Encounter, EncounterMutex, class}
 use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets::packet_capture::request_restart;
 use crate::protocol::pb::EEntityType;
-use crate::utils::modules::{encode_module_data, extract_modules};
+use crate::utils::modules::{
+    URL_DATA_LIMIT, encode_module_data, extract_modules, save_module_data_to_file,
+};
 use log::info;
 use std::sync::MutexGuard;
 
@@ -682,7 +684,7 @@ pub fn get_test_skill_window(_player_uid: String) -> Result<SkillsWindow, String
 #[specta::specta]
 pub fn extract_modules_from_local_player(
     state: tauri::State<'_, EncounterMutex>,
-) -> Result<String, String> {
+) -> Result<ModuleOptimizerExportResult, String> {
     let encounter = state.lock().unwrap();
     let Some(local_player) = &encounter.local_player else {
         return Err("No local player data available".to_string());
@@ -696,11 +698,34 @@ pub fn extract_modules_from_local_player(
             match encode_module_data(&modules) {
                 Ok(encoded) => {
                     let base_url = "https://bptimer.com/modules-optimizer";
-                    Ok(format!("{}?data={}", base_url, encoded))
+                    if encoded.len() <= URL_DATA_LIMIT {
+                        Ok(ModuleOptimizerExportResult {
+                            url: format!("{}?data={}", base_url, encoded),
+                            exported_path: None,
+                        })
+                    } else {
+                        let path = save_module_data_to_file(&modules)
+                            .map_err(|e| format!("Failed to save module data: {e}"))?;
+
+                        info!(
+                            "Modules saved to {} - use Import from file on the page",
+                            path.display()
+                        );
+                        Ok(ModuleOptimizerExportResult {
+                            url: base_url.to_string(),
+                            exported_path: Some(path.to_string_lossy().to_string()),
+                        })
+                    }
                 }
                 Err(e) => Err(format!("Failed to encode modules: {}", e)),
             }
         }
         Err(e) => Err(format!("Failed to extract modules: {}", e)),
     }
+}
+
+#[derive(Debug, Clone, serde::Serialize, specta::Type)]
+pub struct ModuleOptimizerExportResult {
+    pub url: String,
+    pub exported_path: Option<String>,
 }

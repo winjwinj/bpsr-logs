@@ -86,7 +86,8 @@ export async function takeScreenshot(target?: HTMLElement): Promise<void> {
 	if (!blob) return;
 
 	try {
-		await writeImage(await image.Image.fromBytes(await blob.arrayBuffer()));
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Image type mismatch between @tauri-apps/api and @tauri-apps/plugin-clipboard-manager
+		await writeImage((await image.Image.fromBytes(await blob.arrayBuffer())) as any);
 	} catch (error) {
 		console.error('Failed to take a screenshot', error);
 	}

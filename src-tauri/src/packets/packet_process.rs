@@ -12,12 +12,12 @@ pub async fn process_packet(
             Ok(sz) => sz,
             Err(e) => {
                 debug!("Malformed packet: failed to peek_u32: {e}");
-                continue;
+                break;
             }
         };
         if packet_size < 6 {
             debug!("Malformed packet: packet_size < 6");
-            continue;
+            break;
         }
 
         let mut reader = match packets_reader.read_bytes(packet_size as usize) {

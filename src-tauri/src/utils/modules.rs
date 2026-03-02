@@ -1,6 +1,9 @@
 use crate::protocol::pb::SyncContainerData;
 use serde::{Deserialize, Serialize};
 
+/// Max URL query length before falling back to file export
+pub const URL_DATA_LIMIT: usize = 4000;
+
 /// Module data structure for encoding/decoding
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ModuleData {
@@ -112,4 +115,30 @@ pub fn encode_module_data(modules: &[Module]) -> Result<String, Box<dyn std::err
     let compressed = encoder.finish()?;
     let encoded = general_purpose::URL_SAFE_NO_PAD.encode(&compressed);
     Ok(encoded)
+}
+
+/// Save module data to a JSON file in the user's Downloads folder.
+/// Returns the file path on success.
+pub fn save_module_data_to_file(
+    modules: &[Module],
+) -> Result<std::path::PathBuf, Box<dyn std::error::Error>> {
+    use std::fs;
+    use std::io::Write;
+
+    let dir = dirs::download_dir().ok_or("Could not find Downloads directory")?;
+    let filename = format!(
+        "bpsr-logs-modules-{}.json",
+        chrono::Utc::now().format("%Y%m%d-%H%M%S")
+    );
+    let path = dir.join(filename);
+
+    let data = ModuleData {
+        modules: modules.to_vec(),
+    };
+    let json = serde_json::to_string_pretty(&data)?;
+    let mut f = fs::File::create(&path)?;
+    f.write_all(json.as_bytes())?;
+    f.sync_all()?;
+
+    Ok(path)
 }

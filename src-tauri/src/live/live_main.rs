@@ -8,7 +8,7 @@ use crate::live::player_state::{PlayerCacheMutex, PlayerStateMutex};
 use crate::packets;
 use crate::protocol::pb;
 use bytes::Bytes;
-use log::warn;
+use log::{info, warn};
 use prost::Message;
 use tauri::{AppHandle, Manager};
 
@@ -41,6 +41,41 @@ pub async fn start(app_handle: AppHandle) {
                 let encounter_state = app_handle.state::<EncounterMutex>();
                 let mut encounter_state = encounter_state.lock().unwrap();
                 on_server_change(&mut encounter_state);
+            }
+            packets::opcodes::Pkt::NotifySocialData => {
+                let Some(notify) = decode_packet::<pb::NotifySocialData>(data, "NotifySocialData")
+                else {
+                    continue;
+                };
+
+                let scene_data = notify
+                    .v_request
+                    .as_ref()
+                    .and_then(|r| r.data.as_ref())
+                    .and_then(|s| s.scene_data.as_ref());
+
+                if let Some(scene) = scene_data {
+                    let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                    let mut player_state = player_state_mutex.lock().unwrap();
+
+                    let old_line = player_state.get_line_id_opt();
+                    if scene.line_id != 0 {
+                        player_state.set_line_id(scene.line_id);
+                    }
+                    if scene.level_map_id != 0 {
+                        player_state.set_level_map_id(scene.level_map_id);
+                    }
+
+                    if old_line != Some(scene.line_id) && scene.line_id != 0 {
+                        info!(
+                            "[SocialNtf] scene changed: line_id={} level_map_id={}",
+                            scene.line_id, scene.level_map_id
+                        );
+                        let encounter_state = app_handle.state::<EncounterMutex>();
+                        let mut encounter_state = encounter_state.lock().unwrap();
+                        encounter_state.entity_uid_to_entity.clear();
+                    }
+                }
             }
             packets::opcodes::Pkt::SyncNearEntities => {
                 let Some(sync_near_entities) =

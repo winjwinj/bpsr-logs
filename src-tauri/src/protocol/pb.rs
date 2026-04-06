@@ -108,6 +108,18 @@ pub struct ModNewAttr {
     pub mod_parts: ::prost::alloc::vec::Vec<i32>,
 }
 #[derive(specta::Type)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct NotifySocialData {
+    #[prost(message, optional, tag = "1")]
+    pub v_request: ::core::option::Option<NotifySocialDataRequest>,
+}
+#[derive(specta::Type)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct NotifySocialDataRequest {
+    #[prost(message, optional, tag = "1")]
+    pub data: ::core::option::Option<SocialData>,
+}
+#[derive(specta::Type)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Package {
     #[prost(map = "int64, message", tag = "4")]
@@ -122,6 +134,8 @@ pub struct ProfessionList {
 #[derive(specta::Type)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SceneData {
+    #[prost(uint32, tag = "6")]
+    pub level_map_id: u32,
     #[prost(uint32, tag = "15")]
     pub line_id: u32,
 }
@@ -130,6 +144,12 @@ pub struct SceneData {
 pub struct SkillEffect {
     #[prost(message, repeated, tag = "2")]
     pub damages: ::prost::alloc::vec::Vec<SyncDamageInfo>,
+}
+#[derive(specta::Type)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SocialData {
+    #[prost(message, optional, tag = "10")]
+    pub scene_data: ::core::option::Option<SceneData>,
 }
 #[derive(specta::Type)]
 #[derive(Clone, PartialEq, ::prost::Message)]

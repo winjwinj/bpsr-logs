@@ -69,13 +69,22 @@ message ModInfo { repeated int32 init_link_nums = 4; }
 
 message ModNewAttr { repeated int32 mod_parts = 1; }
 
+message NotifySocialData { NotifySocialDataRequest v_request = 1; }
+
+message NotifySocialDataRequest { SocialData data = 1; }
+
 message Package { map<int64, Item> items = 4; }
 
 message ProfessionList { int32 cur_profession_id = 1; }
 
-message SceneData { uint32 line_id = 15; }
+message SceneData {
+  uint32 level_map_id = 6;
+  uint32 line_id = 15;
+}
 
 message SkillEffect { repeated SyncDamageInfo damages = 2; }
+
+message SocialData { SceneData scene_data = 10; }
 
 message SyncContainerData { CharSerialize v_data = 1; }
 

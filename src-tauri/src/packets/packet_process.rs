@@ -65,11 +65,6 @@ pub async fn process_packet(
                     }
                 };
 
-                if service_uuid != crate::protocol::constants::SERVICE_UUID {
-                    debug!("Notify: service_uuid mismatch: {service_uuid:x}");
-                    continue;
-                }
-
                 let msg_payload = reader.read_remaining();
                 let mut tcp_fragment_vec = msg_payload.to_vec();
                 if is_zstd_compressed != 0 {
@@ -80,6 +75,23 @@ pub async fn process_packet(
                             continue;
                         }
                     }
+                }
+
+                // SocialNtf scene data
+                if service_uuid == crate::protocol::constants::SOCIAL_NTF_SERVICE_ID
+                    && method_id_raw == crate::protocol::constants::SOCIAL_NTF_NOTIFY_METHOD_ID
+                {
+                    if let Err(err) = packet_sender
+                        .send((Pkt::NotifySocialData, tcp_fragment_vec))
+                        .await
+                    {
+                        debug!("Failed to send SocialNtf packet: {err}");
+                    }
+                    continue;
+                }
+
+                if service_uuid != crate::protocol::constants::SERVICE_UUID {
+                    continue;
                 }
 
                 let method_id = match Pkt::try_from(method_id_raw) {

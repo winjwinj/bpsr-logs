@@ -5,6 +5,7 @@ pub struct ParseError;
 #[derive(Debug)]
 pub enum Pkt {
     ServerChangeInfo,
+    NotifySocialData,
     // TODO: change all these names
     SyncNearEntities = 0x00000006,  // NPCNearbyNotify SyncNearEntities
     SyncContainerData = 0x00000015, // Container DataNotifySyncContainerData - similar to DirtyData, but has detailed like level, curr hp, max hp

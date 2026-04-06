@@ -65,12 +65,9 @@ pub fn run() {
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds
     {
-        use specta_typescript::{BigIntExportBehavior, Typescript};
+        use specta_typescript::Typescript;
         builder
-            .export(
-                Typescript::new().bigint(BigIntExportBehavior::Number),
-                "../src/lib/bindings.ts",
-            )
+            .export(Typescript::default(), "../src/lib/bindings.ts")
             .expect("Failed to export typescript bindings");
 
         // Add @ts-nocheck comment to suppress type checking for generated file

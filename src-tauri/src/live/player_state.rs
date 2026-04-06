@@ -7,6 +7,7 @@ pub struct PlayerState {
     account_id: Option<String>,
     uid: Option<i64>,
     line_id: Option<u32>,
+    level_map_id: Option<u32>,
 }
 
 impl PlayerState {
@@ -30,6 +31,12 @@ impl PlayerState {
     pub fn set_line_id(&mut self, line_id: u32) {
         if self.line_id != Some(line_id) {
             self.line_id = Some(line_id);
+        }
+    }
+
+    pub fn set_level_map_id(&mut self, level_map_id: u32) {
+        if self.level_map_id != Some(level_map_id) {
+            self.level_map_id = Some(level_map_id);
         }
     }
 

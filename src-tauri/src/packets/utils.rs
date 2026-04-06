@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 use std::io::{Cursor, Read};
 use std::{fmt, io};
 
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 pub struct Server {
     src_addr: [u8; 4],
     src_port: u16,
@@ -19,6 +19,18 @@ impl Server {
             dst_addr,
             dst_port,
         }
+    }
+
+    pub fn src_addr(&self) -> [u8; 4] {
+        self.src_addr
+    }
+
+    pub fn dst_addr(&self) -> [u8; 4] {
+        self.dst_addr
+    }
+
+    pub fn src_matches_subnet(&self, prefix: &[u8; 2]) -> bool {
+        self.src_addr[0..2] == prefix[..]
     }
 }
 
@@ -56,7 +68,8 @@ impl TCPReassembler {
 
     pub fn clear_reassembler(&mut self, seq_number: usize) {
         self.cache = BTreeMap::new();
-        self.next_seq = Some(seq_number)
+        self._data.clear();
+        self.next_seq = Some(seq_number);
     }
 }
 

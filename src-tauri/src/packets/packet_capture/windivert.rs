@@ -6,6 +6,7 @@ use etherparse::NetSlice::Ipv4;
 use etherparse::SlicedPacket;
 use etherparse::TransportSlice::Tcp;
 use log::{debug, error, info, warn};
+use std::collections::HashMap;
 use std::sync::OnceLock;
 use tokio::sync::watch;
 use windivert::WinDivert;
@@ -20,6 +21,7 @@ fn send_server_change_info(packet_sender: &tokio::sync::mpsc::Sender<(Pkt, Vec<u
 
 // Delay between handle cleanup and recreation to allow kernel cleanup
 const HANDLE_CLEANUP_DELAY_MS: u64 = 500;
+const MAX_SUBNET_CONNECTIONS: usize = 16;
 
 pub fn start_capture() -> tokio::sync::mpsc::Receiver<(packets::opcodes::Pkt, Vec<u8>)> {
     const PACKET_CHANNEL_CAPACITY: usize = 256;
@@ -65,6 +67,8 @@ async fn read_packets(
     let mut windivert_buffer = vec![0u8; 10 * 1024 * 1024];
     let mut known_server: Option<Server> = None; // nothing at start
     let mut tcp_reassembler: TCPReassembler = TCPReassembler::new();
+    let mut game_subnet: Option<[u8; 2]> = None;
+    let mut subnet_reassemblers: HashMap<Server, TCPReassembler> = HashMap::new();
 
     // Note: windivert.recv() is blocking, so we can't check restart signal while it's blocking.
     // The restart will be detected after the next packet is received.
@@ -85,9 +89,11 @@ async fn read_packets(
             tcp_packet.to_header().destination_port,
         );
 
-        // 1. Try to identify game server via small packets
         if known_server != Some(curr_server) {
             let tcp_payload = tcp_packet.payload();
+            let mut detected = false;
+
+            // 1. Try to identify game server via fragment signature
             let mut tcp_payload_reader = BinaryReader::from(tcp_payload.to_vec());
             if tcp_payload_reader.remaining() >= 10 {
                 match tcp_payload_reader.read_bytes(10) {
@@ -122,12 +128,18 @@ async fn read_packets(
                                                 info!(
                                                     "Got Scene Server Address (by change): {curr_server}"
                                                 );
-                                                known_server = Some(curr_server);
-                                                tcp_reassembler.clear_reassembler(
+                                                update_known_server(
+                                                    &curr_server,
+                                                    &mut known_server,
+                                                    &mut game_subnet,
+                                                    &mut tcp_reassembler,
                                                     tcp_packet.sequence_number() as usize
                                                         + tcp_payload_reader.len(),
+                                                    &mut subnet_reassemblers,
                                                 );
                                                 send_server_change_info(packet_sender);
+                                                detected = true;
+                                                break;
                                             }
                                         }
                                         Err(e) => {
@@ -148,9 +160,12 @@ async fn read_packets(
                     }
                 }
             }
-            // 2. Payload length is 98 = Login packets?
-            if tcp_payload.len()
-                == crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_SIZE
+
+            // 2. Login return packet detection
+            if !detected
+                && known_server.is_none()
+                && tcp_payload.len()
+                    == crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_SIZE
             {
                 let sig1 = crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_1;
                 let sig2 = crate::protocol::constants::server_detection::LOGIN_RETURN_SIGNATURE_2;
@@ -159,109 +174,154 @@ async fn read_packets(
                     && tcp_payload[14..20] == sig2[..]
                 {
                     info!("Got Scene Server Address by Login Return Packet: {curr_server}");
-                    known_server = Some(curr_server);
-                    tcp_reassembler.clear_reassembler(
+                    update_known_server(
+                        &curr_server,
+                        &mut known_server,
+                        &mut game_subnet,
+                        &mut tcp_reassembler,
                         tcp_packet.sequence_number() as usize + tcp_payload.len(),
+                        &mut subnet_reassemblers,
                     );
                     send_server_change_info(packet_sender);
+                    detected = true;
+                }
+            }
+
+            // 3. Auto-track game subnet connections (SocialNtf arrives on a separate connection)
+            if !detected && !tcp_payload.is_empty() {
+                if let Some(prefix) = &game_subnet {
+                    if curr_server.src_matches_subnet(prefix) {
+                        if !subnet_reassemblers.contains_key(&curr_server) {
+                            if subnet_reassemblers.len() < MAX_SUBNET_CONNECTIONS {
+                                subnet_reassemblers.insert(curr_server, TCPReassembler::new());
+                            }
+                        }
+                        if let Some(reassembler) = subnet_reassemblers.get_mut(&curr_server) {
+                            reassemble_and_process(reassembler, &tcp_packet, packet_sender, true);
+                        }
+                    }
                 }
             }
             continue;
         }
 
-        if tcp_reassembler.next_seq.is_none() {
-            tcp_reassembler.next_seq = Some(tcp_packet.sequence_number() as usize);
-        }
-        if tcp_reassembler
-            .next_seq
-            .unwrap()
-            .saturating_sub(tcp_packet.sequence_number() as usize)
-            == 0
-        {
-            tcp_reassembler.cache.insert(
-                tcp_packet.sequence_number() as usize,
-                Vec::from(tcp_packet.payload()),
-            );
-        }
-        let mut i = 0;
-        while tcp_reassembler
-            .cache
-            .contains_key(&tcp_reassembler.next_seq.unwrap())
-        {
-            i += 1;
-            if i % 1000 == 0 {
-                warn!(
-                    "Potential infinite loop in cache processing: iteration={i}, next_seq={:?}, cache_size={}, _data_len={}",
-                    tcp_reassembler.next_seq,
-                    tcp_reassembler.cache.len(),
-                    tcp_reassembler._data.len()
-                );
-            }
-            let seq = &tcp_reassembler.next_seq.unwrap();
-            let cached_tcp_data = tcp_reassembler.cache.get(seq).unwrap();
-            if tcp_reassembler._data.is_empty() {
-                tcp_reassembler._data = cached_tcp_data.clone();
-            } else {
-                tcp_reassembler._data.extend_from_slice(cached_tcp_data);
-            }
-            tcp_reassembler.next_seq = Some(seq.wrapping_add(cached_tcp_data.len()));
-            tcp_reassembler.cache.remove(seq);
-        }
-        i = 0;
-        while tcp_reassembler._data.len() > 4 {
-            i += 1;
-            if i % 1000 == 0 {
-                let sample = &tcp_reassembler._data[..tcp_reassembler._data.len().min(32)];
-                warn!(
-                    "Potential infinite loop in _data processing: iteration={i}, _data_len={}, sample={:?}",
-                    tcp_reassembler._data.len(),
-                    sample
-                );
-            }
-            let packet_size = match BinaryReader::from(tcp_reassembler._data.clone()).read_u32() {
-                Ok(sz) => sz,
-                Err(e) => {
-                    debug!("Malformed reassembled packet: failed to read_u32: {e}");
-                    break;
-                }
-            };
-            // Defensive re-sync: if the stream gets misaligned/corrupted, avoid spin
-            // and attempt to realign by dropping one byte.
-            const MIN_PACKET_SIZE: u32 = 6;
-            const MAX_PACKET_SIZE: u32 = 10 * 1024 * 1024;
-            if packet_size < MIN_PACKET_SIZE || packet_size > MAX_PACKET_SIZE {
-                warn!(
-                    "Malformed reassembled packet: invalid packet_size={packet_size}, _data_len={}",
-                    tcp_reassembler._data.len()
-                );
-                tcp_reassembler._data.drain(0..1);
-                continue;
-            }
-            if tcp_reassembler._data.len() < packet_size as usize {
-                break;
-            }
-            if tcp_reassembler._data.len() >= packet_size as usize {
-                let (left, right) = tcp_reassembler._data.split_at(packet_size as usize);
-                let packet = left.to_vec();
-                tcp_reassembler._data = right.to_vec();
-                let sender = packet_sender.clone();
-                tauri::async_runtime::spawn(async move {
-                    process_packet(BinaryReader::from(packet), sender).await;
-                });
-            }
-        }
+        // Primary server reassembly
+        reassemble_and_process(&mut tcp_reassembler, &tcp_packet, packet_sender, false);
+
         if *restart_receiver.borrow() {
             info!("WinDivert restart requested during packet processing, closing handle");
             break;
         }
     }
 
-    // Explicitly drop the handle to ensure cleanup
     drop(windivert);
     info!("WinDivert handle closed and dropped");
 }
 
-// Function to send restart signal from another thread/task
+fn update_known_server(
+    server: &Server,
+    known_server: &mut Option<Server>,
+    game_subnet: &mut Option<[u8; 2]>,
+    reassembler: &mut TCPReassembler,
+    seq: usize,
+    subnet_reassemblers: &mut HashMap<Server, TCPReassembler>,
+) {
+    *known_server = Some(*server);
+    let src = server.src_addr();
+    let dst = server.dst_addr();
+    let prefix = if src[0] != 10 && src[0] != 172 && src[0] != 192 {
+        [src[0], src[1]]
+    } else {
+        [dst[0], dst[1]]
+    };
+    *game_subnet = Some(prefix);
+    info!("Game server subnet detected: {}.{}.*", prefix[0], prefix[1]);
+    reassembler.clear_reassembler(seq);
+    subnet_reassemblers.clear();
+}
+
+fn reassemble_and_process(
+    reassembler: &mut TCPReassembler,
+    tcp_packet: &etherparse::TcpSlice<'_>,
+    packet_sender: &tokio::sync::mpsc::Sender<(Pkt, Vec<u8>)>,
+    clear_on_malformed: bool,
+) {
+    if tcp_packet.payload().is_empty() {
+        return;
+    }
+    if reassembler.next_seq.is_none() {
+        reassembler.next_seq = Some(tcp_packet.sequence_number() as usize);
+    }
+    if reassembler
+        .next_seq
+        .unwrap()
+        .saturating_sub(tcp_packet.sequence_number() as usize)
+        == 0
+    {
+        reassembler.cache.insert(
+            tcp_packet.sequence_number() as usize,
+            Vec::from(tcp_packet.payload()),
+        );
+    }
+    let mut i = 0;
+    while reassembler
+        .cache
+        .contains_key(&reassembler.next_seq.unwrap())
+    {
+        i += 1;
+        if i % 1000 == 0 {
+            warn!(
+                "Potential infinite loop in cache processing: iteration={i}, next_seq={:?}, cache_size={}, _data_len={}",
+                reassembler.next_seq,
+                reassembler.cache.len(),
+                reassembler._data.len()
+            );
+        }
+        let seq = &reassembler.next_seq.unwrap();
+        let cached_tcp_data = reassembler.cache.get(seq).unwrap();
+        if reassembler._data.is_empty() {
+            reassembler._data = cached_tcp_data.clone();
+        } else {
+            reassembler._data.extend_from_slice(cached_tcp_data);
+        }
+        reassembler.next_seq = Some(seq.wrapping_add(cached_tcp_data.len()));
+        reassembler.cache.remove(seq);
+    }
+    while reassembler._data.len() > 4 {
+        let packet_size = match BinaryReader::from(reassembler._data.clone()).read_u32() {
+            Ok(sz) => sz,
+            Err(e) => {
+                debug!("Malformed reassembled packet: failed to read_u32: {e}");
+                break;
+            }
+        };
+        const MIN_PACKET_SIZE: u32 = 6;
+        const MAX_PACKET_SIZE: u32 = 10 * 1024 * 1024;
+        if packet_size < MIN_PACKET_SIZE || packet_size > MAX_PACKET_SIZE {
+            if clear_on_malformed {
+                reassembler._data.clear();
+                break;
+            }
+            warn!(
+                "Malformed reassembled packet: invalid packet_size={packet_size}, _data_len={}",
+                reassembler._data.len()
+            );
+            reassembler._data.drain(0..1);
+            continue;
+        }
+        if reassembler._data.len() < packet_size as usize {
+            break;
+        }
+        let (left, right) = reassembler._data.split_at(packet_size as usize);
+        let packet = left.to_vec();
+        reassembler._data = right.to_vec();
+        let sender = packet_sender.clone();
+        tauri::async_runtime::spawn(async move {
+            process_packet(BinaryReader::from(packet), sender).await;
+        });
+    }
+}
+
 pub fn request_restart() {
     if let Some(sender) = RESTART_SENDER.get() {
         let _ = sender.send(true);

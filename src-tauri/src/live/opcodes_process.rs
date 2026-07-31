@@ -10,6 +10,7 @@ use crate::protocol::pb;
 use bytes::Bytes;
 use log::{debug, info, warn};
 use prost::Message;
+use std::collections::HashMap;
 use std::io::Cursor;
 use std::sync::LazyLock;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -46,7 +47,10 @@ static BP_TIMER_CLIENT: LazyLock<Option<BPTimerClient>> = LazyLock::new(|| {
 
 pub fn on_server_change(encounter: &mut Encounter) {
     info!("on server change");
+    // Snapshot the (uid -> monster_id, max_hp) shadow map before wiping the encounter.
+    let preserved_monster_info = std::mem::take(&mut encounter.uid_to_monster_info);
     encounter.clone_from(&Encounter::default());
+    encounter.uid_to_monster_info = preserved_monster_info;
 }
 
 pub fn process_sync_near_entities(
@@ -81,8 +85,11 @@ pub fn process_sync_near_entities(
                 pb::EEntityType::EntMonster => process_monster_attrs(
                     target_entity,
                     attrs.attrs.clone(),
+                    target_uid,
                     player_state,
                     is_bptimer_enabled,
+                    player_cache,
+                    &mut encounter.uid_to_monster_info,
                 ),
                 _ => {}
             }
@@ -203,8 +210,11 @@ pub fn process_aoi_sync_delta(
                 pb::EEntityType::EntMonster => process_monster_attrs(
                     target_entity,
                     attrs_collection.attrs,
+                    target_uid,
                     player_state,
                     is_bptimer_enabled,
+                    player_cache,
+                    &mut encounter.uid_to_monster_info,
                 ),
                 _ => {}
             }
@@ -443,8 +453,11 @@ fn process_player_attrs(
 fn process_monster_attrs(
     monster_entity: &mut Entity,
     attrs: Vec<pb::Attr>,
+    target_uid: i64,
     player_state: &PlayerState,
     is_bptimer_enabled: bool,
+    player_cache: Option<&PlayerCacheMutex>,
+    uid_to_monster_info: &mut HashMap<i64, (u32, u64)>,
 ) {
     // Track if HP was updated during this attribute batch
     let mut hp_updated = false;
@@ -490,12 +503,42 @@ fn process_monster_attrs(
         }
     }
 
+    // Update the shadow map with the latest known monster_id and max_hp for this uid.
+    // This survives server-change clears so HP deltas arriving after a channel/line
+    // switch can still resolve monster_id + max_hp.
+    let shadow_entry = uid_to_monster_info.entry(target_uid).or_insert((
+        monster_entity.monster_id.unwrap_or(0),
+        monster_entity.max_hp.unwrap_or(0),
+    ));
+    if let Some(id) = monster_entity.monster_id {
+        shadow_entry.0 = id;
+    }
+    if let Some(max_hp) = monster_entity.max_hp {
+        shadow_entry.1 = max_hp;
+    }
+
+    // Resolve monster_id and max_hp for reporting, falling back to the shadow map
+    // when the live entity's fields are None (which happens after a server-change clear).
+    let report_monster_id = monster_entity.monster_id.or_else(|| {
+        uid_to_monster_info
+            .get(&target_uid)
+            .map(|(id, _)| *id)
+            .filter(|id| *id != 0)
+    });
+    let report_max_hp = monster_entity.max_hp.or_else(|| {
+        uid_to_monster_info
+            .get(&target_uid)
+            .map(|(_, hp)| *hp)
+            .filter(|hp| *hp != 0)
+    });
+
     // Report to bptimer if HP was updated and both current_hp and max_hp are available
     // bptimer client handles all validation internally
     if hp_updated
         && monster_entity.curr_hp.is_some()
-        && monster_entity.max_hp.is_some()
+        && report_max_hp.is_some()
         && is_bptimer_enabled
+        && report_monster_id.is_some_and(crate::live::bptimer::is_mob_tracked)
     {
         if let Some(client) = BP_TIMER_CLIENT.as_ref() {
             let line = player_state.get_line_id_opt().and_then(|id| {
@@ -507,17 +550,25 @@ fn process_monster_attrs(
             });
             let account_id = player_state.get_account_id();
             let uid = player_state.get_uid_opt();
+            let player_name = uid.and_then(|uid| {
+                player_cache
+                    .and_then(|cache| cache.lock().ok())
+                    .and_then(|cache| cache.get_name(uid))
+            });
+            let scene_ip = player_state.get_scene_ip();
 
             client.report_hp(
-                monster_entity.monster_id,
+                report_monster_id,
                 monster_entity.curr_hp,
-                monster_entity.max_hp,
+                report_max_hp,
                 line,
                 Some(monster_entity.monster_pos.x),
                 Some(monster_entity.monster_pos.y),
                 Some(monster_entity.monster_pos.z),
                 account_id,
                 uid,
+                player_name,
+                scene_ip,
             );
         }
     }

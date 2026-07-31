@@ -8,6 +8,7 @@ pub struct PlayerState {
     uid: Option<i64>,
     line_id: Option<u32>,
     level_map_id: Option<u32>,
+    scene_ip: Option<String>,
 }
 
 impl PlayerState {
@@ -25,6 +26,19 @@ impl PlayerState {
     pub fn set_uid(&mut self, uid: i64) {
         if self.uid != Some(uid) {
             self.uid = Some(uid);
+        }
+    }
+
+    /// Returns true if the scene ip changed
+    pub fn set_scene_ip(&mut self, scene_ip: String) -> bool {
+        if scene_ip.is_empty() {
+            return false;
+        }
+        if self.scene_ip.as_deref() != Some(scene_ip.as_str()) {
+            self.scene_ip = Some(scene_ip);
+            true
+        } else {
+            false
         }
     }
 
@@ -50,6 +64,10 @@ impl PlayerState {
 
     pub fn get_uid_opt(&self) -> Option<i64> {
         self.uid
+    }
+
+    pub fn get_scene_ip(&self) -> Option<String> {
+        self.scene_ip.clone()
     }
 
     pub fn get_line_id_opt(&self) -> Option<u32> {

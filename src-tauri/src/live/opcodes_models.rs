@@ -12,6 +12,7 @@ pub struct Encounter {
     pub time_last_combat_packet_ms: u128,
     pub time_fight_start_ms: u128,
     pub entity_uid_to_entity: HashMap<i64, Entity>,
+    pub uid_to_monster_info: HashMap<i64, (u32, u64)>,
     pub dmg_stats: CombatStats,
     pub dmg_stats_boss_only: CombatStats,
     pub heal_stats: CombatStats,

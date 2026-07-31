@@ -90,6 +90,19 @@ pub async fn process_packet(
                     continue;
                 }
 
+                // WorldLoginNtf scene ip
+                if service_uuid == crate::protocol::constants::ENTER_WORLD_SERVICE_ID
+                    && method_id_raw == crate::protocol::constants::ENTER_WORLD_NOTIFY_METHOD_ID
+                {
+                    if let Err(err) = packet_sender
+                        .send((Pkt::NotifyEnterWorld, tcp_fragment_vec))
+                        .await
+                    {
+                        debug!("Failed to send WorldLoginNtf packet: {err}");
+                    }
+                    continue;
+                }
+
                 if service_uuid != crate::protocol::constants::SERVICE_UUID {
                     continue;
                 }

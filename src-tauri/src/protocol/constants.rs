@@ -3,6 +3,9 @@ pub const SERVICE_UUID: u64 = 0x63335342;
 /// SocialNtf (scene line / map via NotifySocialData)
 pub const SOCIAL_NTF_SERVICE_ID: u64 = 0x254C89A3;
 pub const SOCIAL_NTF_NOTIFY_METHOD_ID: u32 = 1;
+/// WorldLoginNtf (scene ip via NotifyEnterWorld)
+pub const ENTER_WORLD_SERVICE_ID: u64 = 0x04A84519;
+pub const ENTER_WORLD_NOTIFY_METHOD_ID: u32 = 3;
 
 pub mod packet {
     pub const COMPRESSION_FLAG: u16 = 0x8000;

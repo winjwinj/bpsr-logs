@@ -1,6 +1,6 @@
 [package]
 name = "bpsr-logs"
-version = "0.24.0"
+version = "0.25.0"
 description = "Blue Protocol: Star Resonance DPS Meter written in Rust"
 authors = ["winjwinj"]
 edition = "2024"
@@ -15,35 +15,35 @@ name = "bpsr_logs_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-prost-build = "0.14.3"
-tauri-build = { version = "2.5.6", features = [] }
+prost-build = "0.14.4"
+tauri-build = { version = "2.6.3", features = [] }
 
 [dependencies]
-base64 = "0.22"
-bytes = "1.11.1"
+base64 = "0.23"
+bytes = "1.12.1"
 byteorder = "1.5.0"
-chrono = "0.4.44"
+chrono = "0.4.45"
 dirs = "6.0.0"
 dotenvy = "0.15.7"
-etherparse = "0.19.0"
+etherparse = "0.21.0"
 flate2 = "1.1"
-log = "0.4.29"
-prost = "0.14.3"
-reqwest = { version = "0.13.2", features = ["json", "blocking", "rustls"], default-features = false }
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = { version = "1.0.149", features = ["arbitrary_precision"] }
-specta = "2.0.0-rc.24"
-specta-typescript = "0.0.11"
-tauri = { version = "2.10.3", features = ["tray-icon", "image-png"] }
+log = "0.4.33"
+prost = "0.14.4"
+reqwest = { version = "0.13.4", features = ["json", "blocking", "rustls"], default-features = false }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.151", features = ["arbitrary_precision"] }
+specta = "2.0.0-rc.25"
+specta-typescript = "0.0.12"
+tauri = { version = "2.11.5", features = ["tray-icon", "image-png"] }
 tauri-plugin-clipboard-manager = "2.3.2"
-tauri-plugin-log = { version = "2.8.0", features = ["colored"] }
-tauri-plugin-opener = "2.5.3"
+tauri-plugin-log = { version = "2.9.0", features = ["colored"] }
+tauri-plugin-opener = "2.5.4"
 tauri-plugin-os = "2.3.2"
-tauri-plugin-single-instance = "2.4.1"
-tauri-plugin-svelte = "3.2.0"
+tauri-plugin-single-instance = "2.4.3"
+tauri-plugin-svelte = "3.2.1"
 tauri-plugin-window-state = "2.4.1"
-tauri-specta = { version = "2.0.0-rc.24", features = ["typescript"] }
-tokio = { version = "1.51.0", features = ["macros"] }
+tauri-specta = { version = "2.0.0-rc.25", features = ["typescript"] }
+tokio = { version = "1.53.1", features = ["macros"] }
 zstd = "0.13.3"
 
 [target.'cfg(target_os = "windows")'.dependencies]
@@ -51,5 +51,5 @@ windivert = { version = "0.6.0", features = ["vendored"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-autostart = "2.5.1"
-tauri-plugin-global-shortcut = "2.3.1"
+tauri-plugin-global-shortcut = "2.3.2"
 tauri-plugin-updater = "2.10.1"

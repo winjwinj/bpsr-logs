@@ -77,6 +77,26 @@ pub async fn start(app_handle: AppHandle) {
                     }
                 }
             }
+            packets::opcodes::Pkt::NotifyEnterWorld => {
+                let Some(notify) = decode_packet::<pb::NotifyEnterWorld>(data, "NotifyEnterWorld")
+                else {
+                    continue;
+                };
+
+                let scene_ip = notify
+                    .v_request
+                    .as_ref()
+                    .map(|r| r.scene_ip.clone())
+                    .unwrap_or_default();
+
+                if !scene_ip.is_empty() {
+                    let player_state_mutex = app_handle.state::<PlayerStateMutex>();
+                    let mut player_state = player_state_mutex.lock().unwrap();
+                    if player_state.set_scene_ip(scene_ip.clone()) {
+                        info!("[NotifyEnterWorld] scene_ip={scene_ip}");
+                    }
+                }
+            }
             packets::opcodes::Pkt::SyncNearEntities => {
                 let Some(sync_near_entities) =
                     decode_packet::<pb::SyncNearEntities>(data, "SyncNearEntities")

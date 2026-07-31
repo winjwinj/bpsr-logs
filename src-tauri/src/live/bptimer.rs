@@ -83,7 +83,7 @@ fn is_location_tracked_mob(mob_id: u32) -> bool {
     LOCATION_TRACKED_MOBS.lock().unwrap().contains(&mob_id)
 }
 
-fn is_mob_tracked(mob_id: u32) -> bool {
+pub(crate) fn is_mob_tracked(mob_id: u32) -> bool {
     MOB_MAPPING.lock().unwrap().contains_key(&mob_id)
 }
 
@@ -192,11 +192,16 @@ impl BPTimerClient {
         pos_z: Option<f32>,
         account_id: Option<String>,
         uid: Option<i64>,
+        player_name: Option<String>,
+        scene_ip: Option<String>,
     ) {
         // Validate all required fields are present
         let Some(monster_id) = monster_id else {
             return;
         };
+        if !is_mob_tracked(monster_id) {
+            return;
+        }
         let Some(curr_hp) = curr_hp else {
             return;
         };
@@ -209,9 +214,10 @@ impl BPTimerClient {
         if line <= 0 {
             return;
         }
-
-        // Only process tracked monsters
-        if !is_mob_tracked(monster_id) {
+        let Some(scene_ip) = scene_ip.as_ref() else {
+            return;
+        };
+        if scene_ip.is_empty() {
             return;
         }
 
@@ -288,6 +294,8 @@ impl BPTimerClient {
                 "pos_z": pos_z,
                 "account_id": account_id,
                 "uid": uid,
+                "player_name": player_name,
+                "scene_ip": scene_ip,
             });
 
             let task = HpReportTask {

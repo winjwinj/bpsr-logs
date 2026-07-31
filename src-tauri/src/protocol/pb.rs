@@ -108,6 +108,24 @@ pub struct ModNewAttr {
     pub mod_parts: ::prost::alloc::vec::Vec<i32>,
 }
 #[derive(specta::Type)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct NotifyEnterWorld {
+    #[prost(message, optional, tag = "1")]
+    pub v_request: ::core::option::Option<NotifyEnterWorldRequest>,
+}
+#[derive(specta::Type)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct NotifyEnterWorldRequest {
+    #[prost(string, tag = "1")]
+    pub account_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub token: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub scene_ip: ::prost::alloc::string::String,
+    #[prost(int32, tag = "4")]
+    pub scene_port: i32,
+}
+#[derive(specta::Type)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NotifySocialData {
     #[prost(message, optional, tag = "1")]

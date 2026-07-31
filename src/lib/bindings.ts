@@ -24,10 +24,10 @@ export const commands = {
 
 /* Types */
 export type HeaderInfo = {
-	totalDps: number,
-	totalDmg: number,
-	elapsedMs: number,
-	timeLastCombatPacketMs: number,
+	totalDps: number | null,
+	totalDmg: number | null,
+	elapsedMs: number | null,
+	timeLastCombatPacketMs: number | null,
 };
 
 export type ModuleOptimizerExportResult = {
@@ -36,47 +36,47 @@ export type ModuleOptimizerExportResult = {
 };
 
 export type PlayerRow = {
-	uid: number,
-	abilityScore: number,
+	uid: number | null,
+	abilityScore: number | null,
 	className: string,
 	classSpecName: string,
 	name: string,
-	totalValue: number,
-	valuePerSec: number,
-	valuePct: number,
-	critRate: number,
-	critValueRate: number,
-	luckyRate: number,
-	luckyValueRate: number,
-	hits: number,
-	hitsPerMinute: number,
+	totalValue: number | null,
+	valuePerSec: number | null,
+	valuePct: number | null,
+	critRate: number | null,
+	critValueRate: number | null,
+	luckyRate: number | null,
+	luckyValueRate: number | null,
+	hits: number | null,
+	hitsPerMinute: number | null,
 };
 
 export type PlayersWindow = {
 	playerRows: PlayerRow[],
-	localPlayerUid: number,
-	topValue: number,
+	localPlayerUid: number | null,
+	topValue: number | null,
 };
 
 export type SkillRow = {
-	uid: number,
+	uid: number | null,
 	name: string,
-	totalValue: number,
-	valuePerSec: number,
-	valuePct: number,
-	critRate: number,
-	critValueRate: number,
-	luckyRate: number,
-	luckyValueRate: number,
-	hits: number,
-	hitsPerMinute: number,
+	totalValue: number | null,
+	valuePerSec: number | null,
+	valuePct: number | null,
+	critRate: number | null,
+	critValueRate: number | null,
+	luckyRate: number | null,
+	luckyValueRate: number | null,
+	hits: number | null,
+	hitsPerMinute: number | null,
 };
 
 export type SkillsWindow = {
 	inspectedPlayer: PlayerRow,
 	skillRows: SkillRow[],
-	localPlayerUid: number,
-	topValue: number,
+	localPlayerUid: number | null,
+	topValue: number | null,
 };
 
 /* Tauri Specta runtime */

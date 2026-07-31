@@ -32,8 +32,9 @@
 			headerInfo = await commands.getHeaderInfo();
 			if (
 				SETTINGS.general.state.resetElapsed &&
-				headerInfo.timeLastCombatPacketMs > 0 &&
-				Date.now() - headerInfo.timeLastCombatPacketMs > SETTINGS.general.state.resetElapsed * 1000
+				(headerInfo.timeLastCombatPacketMs ?? 0) > 0 &&
+				Date.now() - (headerInfo.timeLastCombatPacketMs ?? 0) >
+					SETTINGS.general.state.resetElapsed * 1000
 			) {
 				console.log(`Resetting as ${SETTINGS.general.state.resetElapsed}s has passed.`);
 				await commands.resetEncounter();
@@ -91,22 +92,28 @@
 	<!-- Left side -->
 	<span class="flex items-center gap-2 text-xs font-medium">
 		<span class="text-muted-foreground" {@attach tooltip(() => 'Time Elapsed')}>
-			{formatElapsed(headerInfo.elapsedMs)}
+			{formatElapsed(headerInfo.elapsedMs ?? 0)}
 		</span>
 		<span class="flex items-center gap-1">
 			<span class="text-muted-foreground" {@attach tooltip(() => 'Total Damage Dealt')}>
 				T.DMG
 			</span>
-			<span class="font-semibold" {@attach tooltip(() => headerInfo.totalDmg.toLocaleString())}>
-				<AbbreviatedNumber num={Number(headerInfo.totalDmg)} />
+			<span
+				class="font-semibold"
+				{@attach tooltip(() => (headerInfo.totalDmg ?? 0).toLocaleString())}
+			>
+				<AbbreviatedNumber num={Number(headerInfo.totalDmg ?? 0)} />
 			</span>
 		</span>
 		<span class="flex items-center gap-1">
 			<span class="text-muted-foreground" {@attach tooltip(() => 'Total Damage per Second')}>
 				T.DPS
 			</span>
-			<span class="font-semibold" {@attach tooltip(() => headerInfo.totalDps.toLocaleString())}>
-				<AbbreviatedNumber num={headerInfo.totalDps} />
+			<span
+				class="font-semibold"
+				{@attach tooltip(() => (headerInfo.totalDps ?? 0).toLocaleString())}
+			>
+				<AbbreviatedNumber num={headerInfo.totalDps ?? 0} />
 			</span>
 		</span>
 	</span>

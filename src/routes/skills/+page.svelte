@@ -149,7 +149,7 @@
 							class="pointer-events-none absolute top-0 left-0 h-7"
 							style="background-color: {getClassColor(
 								skillBreakdownWindow.inspectedPlayer.className
-							)}; width: {(row.original.totalValue / skillBreakdownWindow.topValue) *
+							)}; width: {((row.original.totalValue ?? 0) / (skillBreakdownWindow.topValue ?? 1)) *
 								100}%; opacity: {Math.max(
 								0.3,
 								SETTINGS.accessibility.state.transparencyOpacity / 100

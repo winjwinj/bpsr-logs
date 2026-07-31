@@ -41,7 +41,7 @@
 		},
 		meta: {
 			get localPlayerUid() {
-				return healPlayersWindow.localPlayerUid;
+				return healPlayersWindow.localPlayerUid ?? -1;
 			}
 		}
 	});
@@ -94,8 +94,9 @@
 					{/each}
 					<td
 						class="pointer-events-none absolute top-0 left-0 h-7"
-						style="background-color: {getClassColor(className)}; width: {(row.original.totalValue /
-							healPlayersWindow.topValue) *
+						style="background-color: {getClassColor(className)}; width: {((row.original
+							.totalValue ?? 0) /
+							(healPlayersWindow.topValue ?? 1)) *
 							100}%; opacity: {Math.max(
 							0.3,
 							SETTINGS.accessibility.state.transparencyOpacity / 100
